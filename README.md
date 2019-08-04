@@ -1,7 +1,7 @@
 # ![](https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/logo.png)
 
 ## HOOBS, an abbreviation of Homebridge Out Of the Box System
-### Pronounced like "huːbz"
+### Pronounced as "huːbz"
 
 HOOBS declared goal is to make Homebridge more accessible to new inexperienced users. To achieve this HOOBS aim to unify, simplify and make the Homebridge ecosystem more user-friendly.
 Starting with a standardized installation in the form of a free downloadable image file that can be easily written to an sdcard. Up to the complete hardware solution which works out of the box.
@@ -48,7 +48,24 @@ HOOBS to Download (Stretch) v1.1.0 - Release Date: 2019-03-05 (Deprecated – no
 
 HOOBS to Download (Stretch) v1.0.0 - Release Date: 2019-02-27 (Deprecated – no lonnger available)
 
-## Stay Informed | Community
+# HOOBS Team
+Bobby Slope - Founder and CEO - Located in Switzerland - @bobbyslope
+
+Ovidiu Mija - Chief Developer - Located in Canada - @askovi
+
+Michael Kellsy - Core Developer - Located in United States - @mkellsy
+
+Cristine Tran - Marketing / PR - Located in Canada
+
+alexrd - Homebridge-Shelly Plugin- Located in Sweden @alexrd
+
+Ron Polenthon - Homemanager-App for iOS - Located in Germany @rpolenthon
+
+### Past Teammembers
+oznu - Core Developer - Located in Australia - @oznu
+Fookes - Blogger - Located in UK
+
+# Stay Informed | Community
 [HOOBS website](https://hoobs.org)  
 [HOOBS Support Chat](https://m.me/HOOBSofficial)  
 [HOOBS email](mailto:info@hoobs.org)  
@@ -57,7 +74,7 @@ HOOBS to Download (Stretch) v1.0.0 - Release Date: 2019-02-27 (Deprecated – no
 [HOOBS Facebook Support Group](https://www.facebook.com/groups/HOOBSorg/)  
 [Homebridge Subreddit](https://www.reddit.com/r/homebridge/)  
 
-## How to Support us
+# How to Support us
 Like us on Facebook [@HOOBSofficial](https://www.facebook.com/HOOBSofficial)
  
 Join us on Reddit [r/HOOBS](https://www.reddit.com/r/hoobs/) 
