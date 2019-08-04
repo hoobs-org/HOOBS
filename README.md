@@ -171,6 +171,6 @@ Switzerland
 
 VAT Reg.: CHE-251.941.233
 
-#### Terms of Service
+#### [General Terms and Conditions](https://github.com/hoobs-org/HOOBS/wiki/General-Terms-and-Conditions)
 #### Warranty
 #### [Licence](https://github.com/hoobs-org/HOOBS/blob/master/LICENSE)
