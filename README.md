@@ -173,4 +173,4 @@ VAT Reg.: CHE-251.941.233
 
 #### Terms of Service
 #### Warranty
-#### Licences
+#### [Licence](https://github.com/hoobs-org/HOOBS/blob/master/LICENSE)
