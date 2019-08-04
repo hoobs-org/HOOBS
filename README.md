@@ -35,7 +35,7 @@ We are excited to be working on HOOBS version 3.0.0. Stay tuned for the release 
 
 # HOOBS to Download (Free Rpi Image)- for the Experts 
 
-![](https://hoobs.org/wp-content/uploads/2019/06/down.png)
+![](https://github.com/hoobs-org/HOOBS/blob/master/docs/down.png)
 
 ## Latest Release (Stable)
 HOOBS to Download (Buster) v2.1.1 - Release Date: 2019-07-23 - [Changelog](https://github.com/hoobs-org/HOOBS/tree/v2.1.1) - [Download](https://github.com/hoobs-org/HOOBS/releases/download/v2.1.1/Raspbian-HOOBS_v2.1.1.zip)
@@ -52,11 +52,11 @@ HOOBS to Download (Stretch) v1.0.0 - Release Date: 2019-02-27 (Deprecated – no
 
 ## HOOBS in a Box (Starter Kit) - For the Beginners
 
-![](https://hoobs.org/wp-content/uploads/2019/06/hoobsinabox.png)
+![](https://github.com/hoobs-org/HOOBS/blob/master/docs/box.png)
 
 ## HOOBS on microSD (Freflashed SDCard) - For the DIY
 
-![](https://hoobs.org/wp-content/uploads/2019/06/sd.png)
+![](https://github.com/hoobs-org/HOOBS/blob/master/docs/sdc.png)
 
 # HOOBS Team
 Bobby Slope - Founder and CEO - Located in Switzerland - @bobbyslope
