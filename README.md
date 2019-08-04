@@ -70,7 +70,8 @@ Designed in Switzerland. Assembled in Switzerland.
 * Installation Manual
 
 #### Estimated shippingtime: 3-10 Days
-### [Order Now](https://hoobs.org/product/hoobs-in-a-box/)
+### [Order Now](https://hoobs.org/product/hoobs-in-a-box/) 
+$129.00 excl. VAT / shipping
 
 
 
@@ -89,7 +90,8 @@ Designed in Switzerland. Assembled in Switzerland.
 * Installation Manual
 
 #### Estimated shippingtime: 3-10 Days
-### [Order Now](https://hoobs.org/product/hoobs-on-microsd/)
+### [Order Now](https://hoobs.org/product/hoobs-on-microsd/) 
+$12.90 excl. VAT / Shipping
 
 
 
