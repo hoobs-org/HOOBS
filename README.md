@@ -25,7 +25,7 @@ We are excited to be working on HOOBS version 3.0.0. Stay tuned for the release 
 ![](https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/dark/search.png)
 ![](https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/dark/config.png)
 
-## Community
+## Stay Informed | Community
 [HOOBS website](https://hoobs.org)  
 [HOOBS Support Chat](https://m.me/HOOBSofficial)  
 [HOOBS email](mailto:info@hoobs.org)  
