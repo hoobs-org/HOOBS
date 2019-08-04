@@ -55,6 +55,7 @@ HOOBS to Download (Stretch) v1.0.0 - Release Date: 2019-02-27 (Deprecated – no
 for the beginners
 
 ![](https://github.com/hoobs-org/HOOBS/blob/master/docs/box.png)
+[Product Announcemennt - Vimeo](https://vimeo.com/330252973)
 
 Designed in Switzerland. Assembled in Switzerland.
 
