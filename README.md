@@ -48,6 +48,12 @@ HOOBS to Download (Stretch) v1.1.0 - Release Date: 2019-03-05 (Deprecated – no
 
 HOOBS to Download (Stretch) v1.0.0 - Release Date: 2019-02-27 (Deprecated – no lonnger available)
 
+# HOOBS Hardware
+
+## HOOBS in a Box (Starter Kit)
+
+## HOOBS on microSD (Freflashed RaspberryPI image)
+
 # HOOBS Team
 Bobby Slope - Founder and CEO - Located in Switzerland - @bobbyslope
 
@@ -66,7 +72,7 @@ oznu - Core Developer - Located in Australia - @oznu
 
 Fookes - Blogger - Located in UK
 
-# Stay Informed | Community
+# Stay Informed about HOOBS | HOOBS - Community
 [HOOBS website](https://hoobs.org)  
 [HOOBS Support Chat](https://m.me/HOOBSofficial)  
 [HOOBS email](mailto:info@hoobs.org)  
@@ -75,7 +81,7 @@ Fookes - Blogger - Located in UK
 [HOOBS Facebook Support Group](https://www.facebook.com/groups/HOOBSorg/)  
 [Homebridge Subreddit](https://www.reddit.com/r/homebridge/)  
 
-# How to Support us
+# How to Support HOOBS
 Like us on Facebook [@HOOBSofficial](https://www.facebook.com/HOOBSofficial)
  
 Join us on Reddit [r/HOOBS](https://www.reddit.com/r/hoobs/) 
@@ -84,7 +90,7 @@ Donate via Paypal [paypal.me/hoobsofficial](https://paypal.me/hoobsofficial)
 
 Help us translate [HOOBS email](mailto:info@hoobs.org) [subject:Translation, Your language] (we will send you an invitation)
 
-# Credits
+# HOOBS Credits
 
 #### [rocketsmarthome.com](https://rocketsmarthome.com)
 
