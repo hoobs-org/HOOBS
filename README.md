@@ -1,6 +1,6 @@
 # ![](https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/logo.png)
 
-## HOOBS, an abbreviation of Homebridge Out Of the Box System
+## HOOBS - the abbreviation of Homebridge Out Of the Box System
 ### Pronounced as "huːbz"
 
 HOOBS declared goal is to make Homebridge more accessible to new inexperienced users. To achieve this HOOBS aim to unify, simplify and make the Homebridge ecosystem more user-friendly.
