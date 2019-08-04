@@ -35,7 +35,10 @@ We are excited to be working on HOOBS version 3.0.0. Stay tuned for the release 
 [Homebridge Subreddit](https://www.reddit.com/r/homebridge/)  
 
 ## How to Support us
-Like us on Facebook [@HOOBSofficial](https://www.facebook.com/HOOBSofficial) 
+Like us on Facebook [@HOOBSofficial](https://www.facebook.com/HOOBSofficial)
+ 
 Join us on Reddit [r/HOOBS](https://www.reddit.com/r/hoobs/) 
+
 Donate via Paypal [paypal.me/hoobsofficial](https://paypal.me/hoobsofficial)   
+
 Help us translate [HOOBS email](mailto:info@hoobs.org) [subject:Translation, Your language] (we will send you an invitation)
