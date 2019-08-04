@@ -83,3 +83,27 @@ Join us on Reddit [r/HOOBS](https://www.reddit.com/r/hoobs/)
 Donate via Paypal [paypal.me/hoobsofficial](https://paypal.me/hoobsofficial)   
 
 Help us translate [HOOBS email](mailto:info@hoobs.org) [subject:Translation, Your language] (we will send you an invitation)
+
+# Credits
+
+### [rocketsmarhome.com](https://rocketsmarthome.com)
+
+HOOBS Hardware is Manufactured by rocketsmarthome.com
+rocketsmarthome.com is the official Manufacturer of HOOBS in a Box and HOOBS on microSD.
+Rocket Smart Home is an all-in-one home automation service provider with its own technology and certified installers.
+The Smart Home solution for home or office with intuitive user interface.Connects your home with you – your home in just one app
+
+### [homebridge.io](https://homebridge.io)
+
+HOOBS is based on Homebridge. Homebridge is a lightweight NodeJS server that emulates the iOS HomeKit API.
+Homebridge allows you to integrate with smart home devices that do not support the HomeKit protocol. Here are just some of the manufacturers you can integrate with. Homebridge is brought to you by thousands of plugin developers, dozens of core contributors,@pieceofsummer who reverse engineerered HomeKit, @KhaosT who built the HAP server, this guy @nfarina, and home hackers like you.
+
+### [node.js](https://homebridge.io)
+
+HOOBS / Homebride is based on Node JS
+As an asynchronous event driven JavaScript runtime, Node is designed to build scalable network applications. In the following "hello world" example, many connections can be handled concurrently.
+
+### [raspbian.org](https://raspbian.org)
+
+HOOBS is based on Raspbian. Raspbian is a free operating system based on Debian optimized for the Raspberry Pi hardware.
+An operating system is the set of basic programs and utilities that make your Raspberry Pi run. However, Raspbian provides more than a pure OS: it comes with over 35,000 packages, pre-compiled software bundled in a nice format for easy installation on your Raspberry Pi.
