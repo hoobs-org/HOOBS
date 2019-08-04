@@ -35,10 +35,18 @@ We are excited to be working on HOOBS version 3.0.0. Stay tuned for the release 
 
 # Releases
 
-## Latest
+## Latest Release (Stable)
+HOOBS to Download (Buster) v2.1.1 - Release Date: 2019-07-23 - [Changelog](https://github.com/hoobs-org/HOOBS/tree/v2.1.1) - [Download](https://github.com/hoobs-org/HOOBS/releases/download/v2.1.1/Raspbian-HOOBS_v2.1.1.zip)
+
 
 ## Older Releases
+HOOBS to Download (Buster) v2.1.0 - Release Date: 2019-06-06 - [Changelog](https://github.com/hoobs-org/HOOBS/tree/v2.1.0) - [Download](https://github.com/hoobs-org/HOOBS/releases/download/v2.1.0/Raspbian-HOOBS_v2.1.0.zip)
 
+HOOBS to Download (Stretch) v2.0.0 - Release Date: 2019-06-06 - [Changelog](https://github.com/hoobs-org/HOOBS/tree/v2.0.0) - [Download](https://github.com/hoobs-org/HOOBS/releases/download/v2.0.0/Raspbian-HOOBS_v2.0.0.zip)
+
+HOOBS to Download (Stretch) v1.1.0 - Release Date: 2019-03-05 (Deprecated – no lonnger available)
+
+HOOBS to Download (Stretch) v1.0.0 - Release Date: 2019-02-27 (Deprecated – no lonnger available)
 
 ## Stay Informed | Community
 [HOOBS website](https://hoobs.org)  
