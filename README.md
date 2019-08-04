@@ -158,13 +158,16 @@ An operating system is the set of basic programs and utilities that make your Ra
 
 # Legal
 
-HOOBS.org is a department of
-two4you business solution gmbh
+HOOBS.org is a department of two4you business solution gmbh
 
 c/o two4you business solution gmbh
+
 Burgmattstrasse 12
+
 CH-5080 Laufenburg
+
 Switzerland
+
 
 VAT Reg.: CHE-251.941.233
 
