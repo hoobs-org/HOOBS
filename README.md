@@ -155,3 +155,19 @@ As an asynchronous event driven JavaScript runtime, Node is designed to build sc
 
 HOOBS is based on Raspbian. Raspbian is a free operating system based on Debian optimized for the Raspberry Pi hardware.
 An operating system is the set of basic programs and utilities that make your Raspberry Pi run. However, Raspbian provides more than a pure OS: it comes with over 35,000 packages, pre-compiled software bundled in a nice format for easy installation on your Raspberry Pi.
+
+# Legal
+
+HOOBS.org is a department of
+two4you business solution gmbh
+
+c/o two4you business solution gmbh
+Burgmattstrasse 12
+CH-5080 Laufenburg
+Switzerland
+
+VAT Reg.: CHE-251.941.233
+
+#### Terms of Service
+#### Warranty
+#### Licences
