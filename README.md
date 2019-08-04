@@ -33,7 +33,7 @@ We are excited to be working on HOOBS version 3.0.0. Stay tuned for the release 
 ![](https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/dark/search.png)
 ![](https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/dark/config.png)
 
-# Releases
+# HOOBS Releases
 
 ## Latest Release (Stable)
 HOOBS to Download (Buster) v2.1.1 - Release Date: 2019-07-23 - [Changelog](https://github.com/hoobs-org/HOOBS/tree/v2.1.1) - [Download](https://github.com/hoobs-org/HOOBS/releases/download/v2.1.1/Raspbian-HOOBS_v2.1.1.zip)
