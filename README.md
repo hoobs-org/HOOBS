@@ -70,7 +70,7 @@ Designed in Switzerland. Assembled in Switzerland.
 * Ethernet Cable: Cat 7 – 0.5m
 * Installation Manual
 
-#### Estimated shippingtime: 3-10 Days
+#### Estimated [shippingtime](https://github.com/hoobs-org/HOOBS/wiki/Shippingtime---Customs---Taxes): 3-10 Days
 ### [Order Now](https://hoobs.org/product/hoobs-in-a-box/) 
 $129.00 excl. VAT / shipping
 
@@ -90,7 +90,7 @@ Designed in Switzerland. Assembled in Switzerland.
 * Trannsparent Plastic Shell
 * Installation Manual
 
-#### Estimated shippingtime: 3-10 Days
+#### Estimated [shippingtime](https://github.com/hoobs-org/HOOBS/wiki/Shippingtime---Customs---Taxes): 3-10 Days 
 ### [Order Now](https://hoobs.org/product/hoobs-on-microsd/) 
 $12.90 excl. VAT / Shipping
 
@@ -121,7 +121,8 @@ Fookes - Blogger - Located in UK
 [HOOBS Subreddit](https://www.reddit.com/r/hoobs/)  
 [HOOBS Facebook Page](https://www.facebook.com/HOOBSofficial)  
 [HOOBS Facebook Support Group](https://www.facebook.com/groups/HOOBSorg/)  
-[Homebridge Subreddit](https://www.reddit.com/r/homebridge/)  
+[Homebridge Subreddit](https://www.reddit.com/r/homebridge/)
+[HOOBS - WIKI](https://github.com/hoobs-org/HOOBS/wiki)
 
 # How to Support HOOBS
 Like us on Facebook [@HOOBSofficial](https://www.facebook.com/HOOBSofficial)
@@ -172,5 +173,6 @@ Switzerland
 VAT Reg.: CHE-251.941.233
 
 #### [General Terms and Conditions](https://github.com/hoobs-org/HOOBS/wiki/General-Terms-and-Conditions)
-#### Warranty
+#### [Warranty](https://github.com/hoobs-org/HOOBS/wiki/General-Terms-and-Conditions)
 #### [Licence](https://github.com/hoobs-org/HOOBS/blob/master/LICENSE)
+#### [HOOBS - WIKI](https://github.com/hoobs-org/HOOBS/wiki)
