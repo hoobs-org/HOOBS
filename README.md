@@ -63,6 +63,7 @@ Ron Polenthon - Homemanager-App for iOS - Located in Germany @rpolenthon
 
 ### Past Teammembers
 oznu - Core Developer - Located in Australia - @oznu
+
 Fookes - Blogger - Located in UK
 
 # Stay Informed | Community
