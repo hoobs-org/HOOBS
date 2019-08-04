@@ -54,9 +54,37 @@ HOOBS to Download (Stretch) v1.0.0 - Release Date: 2019-02-27 (Deprecated – no
 
 ![](https://github.com/hoobs-org/HOOBS/blob/master/docs/box.png)
 
+Designed in Switzerland. Assembled in Switzerland.
+
+#### Tech Specs:
+* Quad Core 1.2GHz 64bit CPU
+* 16GB Flash Memory (Class 10)
+* 1GB RAM
+* BCM43438 wireless LAN
+* Bluetooth Low Energy (BLE)
+* 100 Base Ethernet
+* Power Supply: 5V 2.5A ( US-Plug / EU-Plug / Only MicroUSB cable)
+* Ethernet Cable: Cat 7 – 0.5m
+* Installation Manual
+
+#### Estimated shippingtime: 3-10 Days
+### [Order Now](https://hoobs.org/product/hoobs-in-a-box/)
+
+
 ## HOOBS on microSD (Freflashed SDCard) - For the DIY
 
 ![](https://github.com/hoobs-org/HOOBS/blob/master/docs/sdc.png)
+
+Designed in Switzerland. Assembled in Switzerland.
+
+#### Tech Specs:
+* 8 GB Flash Memory microSD (Class 10)
+* SDCard Adapter
+* Trannsparent Plastic Shell
+* Installation Manual
+
+#### Estimated shippingtime: 3-10 Days
+### [Order Now](https://hoobs.org/product/hoobs-on-microsd/)
 
 # HOOBS Team
 Bobby Slope - Founder and CEO - Located in Switzerland - @bobbyslope
