@@ -33,7 +33,8 @@ We are excited to be working on HOOBS version 3.0.0. Stay tuned for the release 
 ![](https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/dark/search.png)
 ![](https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/dark/config.png)
 
-# HOOBS to Download (Free Rpi Image)- for the Experts 
+# HOOBS to Download (Free Rpi Image)
+for the experts 
 
 ![](https://github.com/hoobs-org/HOOBS/blob/master/docs/down.png)
 
@@ -50,7 +51,8 @@ HOOBS to Download (Stretch) v1.1.0 - Release Date: 2019-03-05 (Deprecated – no
 
 HOOBS to Download (Stretch) v1.0.0 - Release Date: 2019-02-27 (Deprecated – no lonnger available)
 
-## HOOBS in a Box (Starter Kit) - For the Beginners
+# HOOBS in a Box (Starter Kit)
+for the beginners
 
 ![](https://github.com/hoobs-org/HOOBS/blob/master/docs/box.png)
 
@@ -71,7 +73,10 @@ Designed in Switzerland. Assembled in Switzerland.
 ### [Order Now](https://hoobs.org/product/hoobs-in-a-box/)
 
 
-## HOOBS on microSD (Freflashed SDCard) - For the DIY
+
+
+# HOOBS on microSD (Freflashed SDCard)
+for tinkerers and hobbyists
 
 ![](https://github.com/hoobs-org/HOOBS/blob/master/docs/sdc.png)
 
@@ -85,6 +90,8 @@ Designed in Switzerland. Assembled in Switzerland.
 
 #### Estimated shippingtime: 3-10 Days
 ### [Order Now](https://hoobs.org/product/hoobs-on-microsd/)
+
+
 
 # HOOBS Team
 Bobby Slope - Founder and CEO - Located in Switzerland - @bobbyslope
