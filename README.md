@@ -1,5 +1,13 @@
 # ![](https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/logo.png)
 
+# HOOBS, an abbreviation of Homebridge Out Of the Box System
+# Pronounced like "huːbz"
+
+HOOBS declared goal is to make Homebridge more accessible to new inexperienced users. To achieve this HOOBS aim to unify, simplify and make the Homebridge ecosystem more user-friendly.
+Starting with a standardized installation in the form of a free downloadable image file that can be easily written to an sdcard. Up to the complete hardware solution which works out of the box.
+HOOBS combine hardware and operating system, with server service and user interface for easy installation of your favorite plugins and guide the user with manuals and assistance.
+
+
 Hello, we’re a small team from around the world who are passionate about making the home that you live in a better home – a smart home. That is why we came up with the idea of developing HOOBS which is an out of the box ready to run system for Homebridge. We want to create a solution that even beginners could understand, comfortable with and get a lot of use out of. Our motivation is to serve the homebridge community with a tool that we believe will make their lives easier and we hope our goal will be reached.
 
 ## Version 3.0.0
