@@ -17,7 +17,7 @@ We’re a small team from around the world who are passionate about making the h
 # HOOBS to Download (Free Rpi Image)
 for the experts 
 
-![](https://github.com/hoobs-org/HOOBS/blob/master/docs/down.png) ![](https://github.com/hoobs-org/HOOBS/blob/master/docs/box.png) ![](https://github.com/hoobs-org/HOOBS/blob/master/docs/box.png) 
+![](https://github.com/hoobs-org/HOOBS/blob/master/docs/down.png)
 
 ## Latest Release (Stable)
 HOOBS to Download (Buster) v2.1.1 - Release Date: 2019-07-23 - [Changelog](https://github.com/hoobs-org/HOOBS/tree/v2.1.1) - [Download](https://github.com/hoobs-org/HOOBS/releases/download/v2.1.1/Raspbian-HOOBS_v2.1.1.zip)
