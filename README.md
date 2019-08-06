@@ -13,7 +13,7 @@ HOOBS combines hardware and operating system, with server application and user i
 
 We’re a small team from around the world who are passionate about making the home that you live in a better home – a smart home. That is why we came up with the idea of developing HOOBS which is an out of the box ready to run system for Homebridge. We want to create a solution that even beginners could understand, get comfortable with and get a lot of use out of. Our motivation is to serve the Homebridge community with a tool that we believe will make their lives easier and we hope our goal will be reached.
 
-## Dokumnnetion and more Information see 
+## Dokumentation and more information on
 
 ### [HOOBS - WIKI](https://github.com/hoobs-org/HOOBS/wiki)
 
