@@ -13,6 +13,10 @@ HOOBS combines hardware and operating system, with server application and user i
 
 We’re a small team from around the world who are passionate about making the home that you live in a better home – a smart home. That is why we came up with the idea of developing HOOBS which is an out of the box ready to run system for Homebridge. We want to create a solution that even beginners could understand, get comfortable with and get a lot of use out of. Our motivation is to serve the Homebridge community with a tool that we believe will make their lives easier and we hope our goal will be reached.
 
+## Dokumnnetion and more Information see 
+
+### [HOOBS - WIKI](https://github.com/hoobs-org/HOOBS/wiki)
+
 
 # HOOBS to Download (Free Rpi Image)
 for the experts 
@@ -76,6 +80,7 @@ $12.90 excl. VAT / Shipping
 [HOOBS Facebook Page](https://www.facebook.com/HOOBSofficial)  
 [HOOBS Facebook Support Group](https://www.facebook.com/groups/HOOBSorg/)  
 [Homebridge Subreddit](https://www.reddit.com/r/homebridge/)
+
 [HOOBS - WIKI](https://github.com/hoobs-org/HOOBS/wiki)
 
 # How to Support HOOBS
@@ -103,7 +108,7 @@ Switzerland
 
 VAT Reg.: CHE-251.941.233
 
-#### [General Terms and Conditions](https://github.com/hoobs-org/HOOBS/wiki/General-Terms-and-Conditions)
-#### [Warranty](https://github.com/hoobs-org/HOOBS/wiki/General-Terms-and-Conditions)
+#### [General Terms and Conditions](https://github.com/hoobs-org/HOOBS/wiki/99.3-General-Terms-and-Conditions)
+#### [Warranty](https://github.com/hoobs-org/HOOBS/wiki/99.4-Warranty)
 #### [Licence](https://github.com/hoobs-org/HOOBS/blob/master/LICENSE)
 #### [HOOBS - WIKI](https://github.com/hoobs-org/HOOBS/wiki)
