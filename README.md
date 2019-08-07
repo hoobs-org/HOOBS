@@ -17,6 +17,9 @@ We’re a small team from around the world who are passionate about making the h
 
 ### [HOOBS - WIKI](https://github.com/hoobs-org/HOOBS/wiki)
 
+## Available Languages
+🇺🇸 🇧🇬 🇨🇿 🇳🇱 🇫🇷 🇩🇪 🇮🇹 🇵🇱 🇻🇳
+
 
 # HOOBS to Download (Free Rpi Image)
 for the experts 
