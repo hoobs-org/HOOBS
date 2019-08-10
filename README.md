@@ -20,7 +20,23 @@ We’re a small team from around the world who are passionate about making the h
 ### [HOOBS - WIKI](https://github.com/hoobs-org/HOOBS/wiki)
 
 ## Available Languages
-🇺🇸 🇧🇬 🇨🇿 🇳🇱 🇫🇷 🇩🇪 🇮🇹 🇵🇱 🇻🇳 🇪🇸
+
+* 🇺🇸 English by MKellsy
+* 🇧🇬 Bulgarian by Angelov Nikolay
+* 🇨🇳 Chinese by Bing Feng Yeh
+* 🇨🇿 Czech by Kvasnicka Robert
+* 🇳🇱 Dutch by Jorg de Boer
+* 🇫🇷 French by Frederic Barthelet
+* 🇩🇪 German by Bobby Slope
+* 🇬🇷 Greek by Konstantinos Koukoulakis
+* 🇮🇱 Hebrew by GalZilbermann
+* 🇮🇹 Italian by Luca Sias
+* 🇳🇴 Norwegian by Jahn Juliussen
+* 🇵🇱 Polish by Tomasz Bzymek 
+* 🇪🇸 Spanish by David Muñoz and Felipe Alfaro
+* 🇻🇳 Vietnamese by CiCi
+
+Thanks to all the contibutors for their Help with translating HOOBS
 
 
 # HOOBS to Download (Free Rpi Image)
