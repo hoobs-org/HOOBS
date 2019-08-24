@@ -37,6 +37,7 @@ We’re a small team from around the world who are passionate about making the h
 * 🇻🇳 Vietnamese by CiCi
 * 🇷🇺 Russian by Kunanov
 * 🇷🇴 Romanian by Rãzvan Vizitiu
+* 🇵🇹 Portuguese by João Miguel Luz
 
 Thanks to all the contibutors for their Help with translating HOOBS
 
