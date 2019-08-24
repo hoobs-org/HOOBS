@@ -38,6 +38,7 @@ We’re a small team from around the world who are passionate about making the h
 * 🇷🇺 Russian by Kunanov
 * 🇷🇴 Romanian by Rãzvan Vizitiu
 * 🇵🇹 Portuguese by João Miguel Luz
+* 🇦🇪 Arabic by Ali Hassan
 
 Thanks to all the contibutors for their Help with translating HOOBS
 
