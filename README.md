@@ -15,7 +15,7 @@ We’re a small team from around the world who are passionate about making the h
 
 [![Vue.JS](https://img.shields.io/badge/Vue.JS-2.6.10-%234fc08d.svg)](https://vuejs.org/) [![Express](https://img.shields.io/badge/Express-4.17.1-%23b3b3b3.svg)](https://expressjs.com/) [![Socket.IO](https://img.shields.io/badge/Socket.IO-2.2.0-%23e0bf19.svg)](https://socket.io/)  
 
-## Dokumentation and more information on
+## Documentation and more information on
 
 ### [HOOBS - WIKI](https://github.com/hoobs-org/HOOBS/wiki)
 
