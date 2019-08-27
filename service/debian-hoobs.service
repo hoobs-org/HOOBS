@@ -4,8 +4,8 @@ After=network-online.target
 
 [Service]
 Type=simple
-User=homebridge
-ExecStart=/usr/local/bin/hoobs
+User=hoobs
+ExecStart=/usr/local/bin/homebridge
 Restart=on-failure
 RestartSec=3
 KillMode=process
