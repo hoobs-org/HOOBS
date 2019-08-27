@@ -4,7 +4,7 @@ After=network-online.target
 
 [Service]
 Type=simple
-User=admin
+User=hoobs
 ExecStart=/usr/local/bin/hoobs
 Restart=on-failure
 RestartSec=3
