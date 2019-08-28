@@ -15,6 +15,14 @@ HOOBS combines hardware and operating system, with server application and user i
 
 We’re a small team from around the world who are passionate about making the home that you live in a better home – a smart home. That is why we came up with the idea of developing HOOBS which is an out of the box ready to run system for Homebridge. We want to create a solution that even beginners could understand, get comfortable with and get a lot of use out of. Our motivation is to serve the Homebridge community with a tool that we believe will make their lives easier and we hope our goal will be reached.
 
+## Products
+
+[![](https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/products/hoobs-card.png)](https://github.com/hoobs-org/HOOBS/releases/download/v2.1.1/Raspbian-HOOBS_v2.1.1.zip)
+
+[![](https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/products/hoobs-box.png)](https://hoobs.org/product/hoobs-in-a-box/)
+
+[![](https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/products/hoobs-download.png)](https://hoobs.org/product/hoobs-on-microsd/)
+
 ## Documentation
 * [**Welcome**](https://github.com/hoobs-org/HOOBS/wiki)  
 * [**Community**](https://github.com/hoobs-org/HOOBS/wiki/1.0-Community)
@@ -54,60 +62,6 @@ We’re a small team from around the world who are passionate about making the h
   * [**Shipping & Taxes**](https://github.com/hoobs-org/HOOBS/wiki/7.2-Shipping-and-Taxes)
   * [**Warranty**](https://github.com/hoobs-org/HOOBS/wiki/7.3-Warranty)
 * [**Credits**](https://github.com/hoobs-org/HOOBS/wiki/8.0-Credits)
-
-# HOOBS to Download (Free Rpi Image)
-for the experts 
-
-![](https://github.com/hoobs-org/HOOBS/blob/master/docs/down.png)
-
-## Latest Release (Stable)
-HOOBS to Download (Buster) v2.1.1 - Release Date: 2019-07-23 - [Changelog](https://github.com/hoobs-org/HOOBS/tree/v2.1.1) - [Download](https://github.com/hoobs-org/HOOBS/releases/download/v2.1.1/Raspbian-HOOBS_v2.1.1.zip)
-
-
-# HOOBS in a Box (Starter Kit)
-for the beginners
-
-![](https://github.com/hoobs-org/HOOBS/blob/master/docs/box.png)
-[Product Announcement - Vimeo](https://vimeo.com/330252973)
-
-Designed in Switzerland. Assembled in Switzerland.
-
-#### Tech Specs:
-* Quad Core 1.2GHz 64bit CPU
-* 16GB Flash Memory (Class 10)
-* 1GB RAM
-* BCM43438 wireless LAN
-* Bluetooth Low Energy (BLE)
-* 100 Base Ethernet
-* Power Supply: 5V 2.5A ( US-Plug / EU-Plug / Only MicroUSB cable)
-* Ethernet Cable: Cat 7 – 0.5m
-* Installation Manual
-
-#### Estimated [shippingtime](https://github.com/hoobs-org/HOOBS/wiki/Shippingtime---Customs---Taxes): 3-10 Days
-### [Order Now](https://hoobs.org/product/hoobs-in-a-box/) 
-$129.00 excl. VAT / shipping
-
-
-
-
-# HOOBS on microSD (Pre-Flashed Micro SD Card)
-for tinkerers and hobbyists
-
-![](https://github.com/hoobs-org/HOOBS/blob/master/docs/sdc.png)
-
-Designed in Switzerland. Assembled in Switzerland.
-
-#### Tech Specs:
-* 8 GB Flash Memory microSD (Class 10)
-* SDCard Adapter
-* Trannsparent Plastic Shell
-* Installation Manual
-
-#### Estimated [shippingtime](https://github.com/hoobs-org/HOOBS/wiki/Shippingtime---Customs---Taxes): 3-10 Days 
-### [Order Now](https://hoobs.org/product/hoobs-on-microsd/) 
-$12.90 excl. VAT / Shipping
-
-
 
 ## HOOBS Community
 [HOOBS Website](https://hoobs.org)  
