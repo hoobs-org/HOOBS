@@ -1,9 +1,0 @@
-{
-    "@hoobs/nest": "homebridge-nest",
-    "@hoobs/wink": "homebridge-wink3",
-    "@hoobs/shelly": "homebridge-shelly",
-    "@hoobs/roborock": "homebridge-xiaomi-roborock-vacuum",
-    "@hoobs/ring": "homebridge-ring",
-    "@hoobs/chamberlain": "homebridge-chamberlain",
-    "@hoobs/google-home": "homebridge-gsh"
-}
