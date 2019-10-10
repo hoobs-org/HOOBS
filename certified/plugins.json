@@ -9,6 +9,7 @@
         "@hoobs/google-home": "homebridge-gsh"
     },
     "lookup": {
+        "@kacepe/homebridge-shelly": "@hoobs/shelly",
         "homebridge-nest": "@hoobs/nest",
         "homebridge-wink3": "@hoobs/wink",
         "homebridge-shelly": "@hoobs/shelly",
