@@ -17,11 +17,11 @@ We’re a small team from around the world who are passionate about making the h
 
 ## Products
 
-[![](https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/products/hoobs-card.png)](https://github.com/hoobs-org/HOOBS/releases/download/v2.1.1/Raspbian-HOOBS_v2.1.1.zip)
-
 [![](https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/products/hoobs-box.png)](https://hoobs.org/product/hoobs-in-a-box/)
 
-[![](https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/products/hoobs-download.png)](https://hoobs.org/product/hoobs-on-microsd/)
+[![](https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/products/hoobs-card.png)](https://hoobs.org/product/hoobs-on-microsd/)
+
+[![](https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/products/hoobs-download.png)](https://github.com/hoobs-org/HOOBS/releases/download/v2.1.1/Raspbian-HOOBS_v2.1.1.zip)
 
 ## Documentation
 * [**Welcome**](https://github.com/hoobs-org/HOOBS/wiki)  
