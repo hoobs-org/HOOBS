@@ -32,4 +32,5 @@ HOOBS (simplified as "we") respect and protect users' own privacy. To provide yo
 3. We will change the analytics service that is risky and being used.
 4. If you think one provider has risks in privacy, please contact us. We will consider whether to remove it when upgrading.
 
+## Rights
 **This policy's final interpretation right belongs to HOOBS.**
