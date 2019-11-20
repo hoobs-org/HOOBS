@@ -47,6 +47,7 @@ We’re a small team from around the world who are passionate about making the h
   * [**Plugins**](https://github.com/hoobs-org/HOOBS/wiki/3.7-Plugins)
   * [**Configuration**](https://github.com/hoobs-org/HOOBS/wiki/3.8-Configuration)
   * [**User Accounts**](https://github.com/hoobs-org/HOOBS/wiki/3.9-User-Accounts)
+  * [**Themes**](https://github.com/hoobs-org/HOOBS/wiki/3.10-Themes)
 * [**Plugins**](https://github.com/hoobs-org/HOOBS/wiki/4.0-Plugins)
 * [**Hardware**](https://github.com/hoobs-org/HOOBS/wiki/5.0-Hardware)
   * [**Certified Hardware**](https://github.com/hoobs-org/HOOBS/wiki/5.1-Certified-Hardware)
