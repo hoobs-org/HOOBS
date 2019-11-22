@@ -27,7 +27,9 @@ echo "---------------------------------------------------------"
 spin &
 marker=$!
 
-trap "kill -9 $marker" `seq 0 15`
+if [[ "$os" != "Darwin" ]]; then
+    trap "kill -9 $marker" `seq 0 15`
+fi
 
 sleep 0.2
 
@@ -149,23 +151,16 @@ npm install -g --unsafe-perm @hoobs/hoobs > /dev/null 2>&1
 
 sleep 3
 
-kill -9 $marker
+kill -9 $marker > /dev/null
 
-case $os in
-    "Linux")
-        echo "Configuring"
-        echo "---------------------------------------------------------"
-        echo ""
-        echo ""
-        echo "Initializing HOOBS"
-        echo "---------------------------------------------------------"
+echo "Configuring"
+echo "---------------------------------------------------------"
+echo ""
 
-        hoobs-init
-        ;;
+if [[ "$os" != "Darwin" ]]; then
+    echo ""
+    echo "Initializing HOOBS"
+    echo "---------------------------------------------------------"
 
-    "Darwin")
-        echo "Configuring"
-        echo "---------------------------------------------------------"
-        echo ""
-        ;;
-esac
+    hoobs-init
+fi
