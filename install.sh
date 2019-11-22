@@ -33,8 +33,6 @@ sleep 0.2
 
 echo "Node Version $node"
 
-npm set progress=false
-
 case $os in
     "Linux")
         if command -v dnf > /dev/null; then
