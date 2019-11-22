@@ -147,16 +147,14 @@ echo "Installing HOOBS"
 
 npm install -g --unsafe-perm @hoobs/hoobs > /dev/null 2>&1
 
-sleep 0.2
+sleep 3
 
 kill -9 $marker
 
 echo "Configuring"
 echo "---------------------------------------------------------"
-
 echo ""
 echo ""
-
 echo "Initializing HOOBS"
 echo "---------------------------------------------------------"
 
