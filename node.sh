@@ -1,5 +1,8 @@
 #!/bin/bash
 
+sudo -i
+cd ~/
+
 os=$(uname)
 arch=$(uname -m)
 
