@@ -38,20 +38,22 @@ npm set progress=false
 case $os in
     "Linux")
         if command -v dnf > /dev/null; then
-            echo "Updating Node"
+            if [[ "$node" < "10.17.0" ]]; then
+                echo "Updating Node"
 
-            curl -O https://nodejs.org/dist/v12.13.1/node-v12.13.1-linux-x64.tar.gz > /dev/null 2>&1
-            tar -xzf ./node-v12.13.1-linux-x64.tar.gz -C /usr --strip-components=1 --no-same-owner > /dev/null 2>&1
-            rm -f ./node-v12.13.1-linux-x64.tar.gz > /dev/null 2>&1
+                curl -O https://nodejs.org/dist/v10.17.0/node-v10.17.0-linux-x64.tar.gz > /dev/null 2>&1
+                tar -xzf ./node-v10.17.0-linux-x64.tar.gz -C /usr --strip-components=1 --no-same-owner > /dev/null 2>&1
+                rm -f ./node-v10.17.0-linux-x64.tar.gz > /dev/null 2>&1
 
-            node=$(node -v)
-            node=${node#"v"}
+                node=$(node -v)
+                node=${node#"v"}
 
-            echo "Node Updated to $node"
+                echo "Node Updated to $node"
 
-            source ~/.bashrc
+                source ~/.bashrc
 
-            sleep 0.2
+                sleep 0.2
+            fi
         elif command -v apt-get > /dev/null; then
             sleep 0.2
 
@@ -60,14 +62,14 @@ case $os in
             apt-get update > /dev/null 2>&1
             apt-get install -y curl tar > /dev/null 2>&1
 
-            if [[ "$node" < "12.13.1" ]]; then
+            if [[ "$node" < "10.17.0" ]]; then
                 case $arch in
                     "x86_64")
                         echo "Upgrading Node"
 
-                        curl -O https://nodejs.org/dist/v12.13.1/node-v12.13.1-linux-x64.tar.gz > /dev/null 2>&1
-                        tar -xzf ./node-v12.13.1-linux-x64.tar.gz -C /usr/local --strip-components=1 --no-same-owner > /dev/null 2>&1
-                        rm -f ./node-v12.13.1-linux-x64.tar.gz > /dev/null 2>&1
+                        curl -O https://nodejs.org/dist/v10.17.0/node-v10.17.0-linux-x64.tar.gz > /dev/null 2>&1
+                        tar -xzf ./node-v10.17.0-linux-x64.tar.gz -C /usr/local --strip-components=1 --no-same-owner > /dev/null 2>&1
+                        rm -f ./node-v10.17.0-linux-x64.tar.gz > /dev/null 2>&1
 
                         node=$(node -v)
                         node=${node#"v"}
@@ -78,9 +80,9 @@ case $os in
                     "armv7l")
                         echo "Upgrading Node"
 
-                        curl -O https://nodejs.org/dist/v12.13.1/node-v12.13.1-linux-armv7l.tar.gz > /dev/null 2>&1
-                        tar -xzf ./node-v12.13.1-linux-armv7l.tar.gz -C /usr/local --strip-components=1 --no-same-owner > /dev/null 2>&1
-                        rm -f ./node-v12.13.1-linux-armv7l.tar.gz > /dev/null 2>&1
+                        curl -O https://nodejs.org/dist/v10.17.0/node-v10.17.0-linux-armv7l.tar.gz > /dev/null 2>&1
+                        tar -xzf ./node-v10.17.0-linux-armv7l.tar.gz -C /usr/local --strip-components=1 --no-same-owner > /dev/null 2>&1
+                        rm -f ./node-v10.17.0-linux-armv7l.tar.gz > /dev/null 2>&1
 
                         node=$(node -v)
                         node=${node#"v"}
@@ -91,9 +93,9 @@ case $os in
                     "armv8l")
                         echo "Upgrading Node"
 
-                        curl -O https://nodejs.org/dist/v12.13.1/node-v12.13.1-linux-arm64.tar.gz > /dev/null 2>&1
-                        tar -xzf ./node-v12.13.1-linux-arm64.tar.gz -C /usr/local --strip-components=1 --no-same-owner > /dev/null 2>&1
-                        rm -f ./node-v12.13.1-linux-arm64.tar.gz > /dev/null 2>&1
+                        curl -O https://nodejs.org/dist/v10.17.0/node-v10.17.0-linux-arm64.tar.gz > /dev/null 2>&1
+                        tar -xzf ./node-v10.17.0-linux-arm64.tar.gz -C /usr/local --strip-components=1 --no-same-owner > /dev/null 2>&1
+                        rm -f ./node-v10.17.0-linux-arm64.tar.gz > /dev/null 2>&1
 
                         node=$(node -v)
                         node=${node#"v"}
@@ -119,12 +121,12 @@ case $os in
         ;;
 
     "Darwin")
-        if [[ "$node" < "12.13.1" ]]; then
+        if [[ "$node" < "10.17.0" ]]; then
             echo "Upgrading Node"
 
-            curl -O https://nodejs.org/dist/v12.13.1/node-v12.13.1-darwin-x64.tar.gz
-            tar -xzf ./node-v12.13.1-darwin-x64.tar.gz -C /usr/local --strip-components=1 --no-same-owner
-            rm -f ./node-v12.13.1-darwin-x64.tar.gz
+            curl -O https://nodejs.org/dist/v10.17.0/node-v10.17.0-darwin-x64.tar.gz
+            tar -xzf ./node-v10.17.0-darwin-x64.tar.gz -C /usr/local --strip-components=1 --no-same-owner
+            rm -f ./node-v10.17.0-darwin-x64.tar.gz
 
             node=$(node -v)
             node=${node#"v"}
