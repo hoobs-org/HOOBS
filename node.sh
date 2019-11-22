@@ -1,8 +1,5 @@
 #!/bin/bash
 
-sudo -i
-cd ~/
-
 os=$(uname)
 arch=$(uname -m)
 
@@ -56,6 +53,8 @@ case $os in
 
             sleep 0.2
         elif command -v apt-get > /dev/null; then
+            sleep 0.2
+
             echo "Updating Repositories"
 
             apt-get update > /dev/null 2>&1
