@@ -145,4 +145,6 @@ esac
 
 kill -9 $marker
 
+echo "Node Upgraded"
+
 shutdown -r now
