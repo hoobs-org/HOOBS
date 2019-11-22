@@ -151,11 +151,21 @@ sleep 3
 
 kill -9 $marker
 
-echo "Configuring"
-echo "---------------------------------------------------------"
-echo ""
-echo ""
-echo "Initializing HOOBS"
-echo "---------------------------------------------------------"
+case $os in
+    "Linux")
+        echo "Configuring"
+        echo "---------------------------------------------------------"
+        echo ""
+        echo ""
+        echo "Initializing HOOBS"
+        echo "---------------------------------------------------------"
 
-hoobs-init
+        hoobs-init
+        ;;
+
+    "Darwin")
+        echo "Configuring"
+        echo "---------------------------------------------------------"
+        echo ""
+        ;;
+esac
