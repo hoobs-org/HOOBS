@@ -144,3 +144,5 @@ case $os in
 esac
 
 kill -9 $marker
+
+shutdown -r now
