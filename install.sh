@@ -3,6 +3,8 @@
 os=$(uname)
 arch=$(uname -m)
 
+required="12.13.1"
+
 node=$(node -v)
 node=${node#"v"}
 
@@ -18,6 +20,39 @@ spin()
             sleep 0.2
         done
     done
+}
+
+install_node()
+{
+    case $os in
+        "Linux")
+            case $arch in
+                "x86_64")
+                    curl -O https://nodejs.org/dist/v$required/node-v$required-linux-x64.tar.gz > /dev/null 2>&1
+                    tar -xzf ./node-v$required-linux-x64.tar.gz -C $1 --strip-components=1 --no-same-owner > /dev/null 2>&1
+                    rm -f ./node-v$required-linux-x64.tar.gz > /dev/null 2>&1
+                    ;;
+
+                "armv7l")
+                    curl -O https://nodejs.org/dist/v$required/node-v$required-linux-armv7l.tar.gz > /dev/null 2>&1
+                    tar -xzf ./node-v$required-linux-armv7l.tar.gz -C $1 --strip-components=1 --no-same-owner > /dev/null 2>&1
+                    rm -f ./node-v$required-linux-armv7l.tar.gz > /dev/null 2>&1
+                    ;;
+
+                "armv8l")
+                    curl -O https://nodejs.org/dist/v$required/node-v$required-linux-arm64.tar.gz > /dev/null 2>&1
+                    tar -xzf ./node-v$required-linux-arm64.tar.gz -C $1 --strip-components=1 --no-same-owner > /dev/null 2>&1
+                    rm -f ./node-v$required-linux-arm64.tar.gz > /dev/null 2>&1
+                    ;;
+            esac
+            ;;
+
+        "Darwin")
+            curl -O https://nodejs.org/dist/v$required/node-v$required-darwin-x64.tar.gz > /dev/null 2>&1
+            tar -xzf ./node-v$required-linux-x64.tar.gz -C $1 --strip-components=1 --no-same-owner > /dev/null 2>&1
+            rm -f ./node-v$required-linux-x64.tar.gz > /dev/null 2>&1
+            ;;
+    esac
 }
 
 echo ""
@@ -37,22 +72,32 @@ echo "Node Version $node"
 
 case $os in
     "Linux")
-        if command -v dnf > /dev/null; then
-            if [[ "$node" < "12.13.1" ]]; then
+        if command -v yum > /dev/null; then
+            if [[ "$node" == "" ]]; then
+                sleep 0.2
+
+                echo "Installing Node"
+
+                yum install -y nodejs > /dev/null 2>&1
+
+                node=$(node -v)
+                node=${node#"v"}
+            fi
+
+            if [[ "$node" < "$required" ]]; then
+                sleep 0.2
+
                 echo "Updating Node"
 
-                curl -O https://nodejs.org/dist/v12.13.1/node-v12.13.1-linux-x64.tar.gz > /dev/null 2>&1
-                tar -xzf ./node-v12.13.1-linux-x64.tar.gz -C /usr --strip-components=1 --no-same-owner > /dev/null 2>&1
-                rm -f ./node-v12.13.1-linux-x64.tar.gz > /dev/null 2>&1
+                install_node $required /usr linux-x64
 
                 node=$(node -v)
                 node=${node#"v"}
 
-                echo "Node Updated to $node"
-
-                source ~/.bashrc
-
                 sleep 0.2
+
+                echo "Node $node Installed"
+                source ~/.bashrc
             fi
         elif command -v apt-get > /dev/null; then
             sleep 0.2
@@ -62,53 +107,36 @@ case $os in
             apt-get update > /dev/null 2>&1
             apt-get install -y curl tar > /dev/null 2>&1
 
-            if [[ "$node" < "12.13.1" ]]; then
-                case $arch in
-                    "x86_64")
-                        echo "Upgrading Node"
+            if [[ "$node" == "" ]]; then
+                sleep 0.2
 
-                        curl -O https://nodejs.org/dist/v12.13.1/node-v12.13.1-linux-x64.tar.gz > /dev/null 2>&1
-                        tar -xzf ./node-v12.13.1-linux-x64.tar.gz -C /usr/local --strip-components=1 --no-same-owner > /dev/null 2>&1
-                        rm -f ./node-v12.13.1-linux-x64.tar.gz > /dev/null 2>&1
+                echo "Installing Node"
 
-                        node=$(node -v)
-                        node=${node#"v"}
+                apt-get install -y nodejs npm > /dev/null 2>&1
 
-                        echo "Node Updated to $node"
-                        ;;
+                node=$(node -v)
+                node=${node#"v"}
+            fi
 
-                    "armv7l")
-                        echo "Upgrading Node"
+            if [[ "$node" < "$required" ]]; then
+                sleep 0.2
 
-                        curl -O https://nodejs.org/dist/v12.13.1/node-v12.13.1-linux-armv7l.tar.gz > /dev/null 2>&1
-                        tar -xzf ./node-v12.13.1-linux-armv7l.tar.gz -C /usr/local --strip-components=1 --no-same-owner > /dev/null 2>&1
-                        rm -f ./node-v12.13.1-linux-armv7l.tar.gz > /dev/null 2>&1
+                echo "Upgrading Node"
 
-                        node=$(node -v)
-                        node=${node#"v"}
+                install_node /usr/local
 
-                        echo "Node Updated to $node"
-                        ;;
+                node=$(node -v)
+                node=${node#"v"}
 
-                    "armv8l")
-                        echo "Upgrading Node"
+                sleep 0.2
 
-                        curl -O https://nodejs.org/dist/v12.13.1/node-v12.13.1-linux-arm64.tar.gz > /dev/null 2>&1
-                        tar -xzf ./node-v12.13.1-linux-arm64.tar.gz -C /usr/local --strip-components=1 --no-same-owner > /dev/null 2>&1
-                        rm -f ./node-v12.13.1-linux-arm64.tar.gz > /dev/null 2>&1
-
-                        node=$(node -v)
-                        node=${node#"v"}
-
-                        echo "Node Updated to $node"
-                        ;;
-                esac
+                echo "Node Updated to $node"
             fi
 
             source ~/.bashrc
-
-            sleep 0.2
         fi
+
+        sleep 0.2
 
         echo "Cleaning NPM"
 
@@ -116,20 +144,32 @@ case $os in
         npm install -g npm > /dev/null 2>&1
 
         source ~/.bashrc
-
-        sleep 0.2
         ;;
 
     "Darwin")
-        if [[ "$node" < "12.13.1" ]]; then
+        if [[ "$node" == "" ]]; then
+            kill -9 $marker > /dev/null
+
+            echo "Can Not Install Node"
+            echo "---------------------------------------------------------"
+            echo "Please go to https://nodejs.org/ and download and"
+            echo "install Node for macOS."
+            echo "---------------------------------------------------------"
+
+            exit 1
+        fi
+
+        if [[ "$node" < "$required" ]]; then
+            sleep 0.2
+
             echo "Upgrading Node"
 
-            curl -O https://nodejs.org/dist/v12.13.1/node-v12.13.1-darwin-x64.tar.gz
-            tar -xzf ./node-v12.13.1-darwin-x64.tar.gz -C /usr/local --strip-components=1 --no-same-owner
-            rm -f ./node-v12.13.1-darwin-x64.tar.gz
+            install_node $required /usr/local
 
             node=$(node -v)
             node=${node#"v"}
+
+            sleep 0.2
 
             echo "Node Updated to $node"
         fi
@@ -140,10 +180,10 @@ case $os in
 
         npm cache clean --force > /dev/null 2>&1
         npm install -g npm > /dev/null 2>&1
-
-        sleep 0.2
         ;;
 esac
+
+sleep 0.2
 
 echo "Installing HOOBS"
 
