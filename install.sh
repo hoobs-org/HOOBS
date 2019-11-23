@@ -114,7 +114,7 @@ case $os in
 
                 echo "Installing Node"
 
-                apt-get install -y nodejs npm > /dev/null 2>&1
+                apt-get install -y python make gcc g++ nodejs npm > /dev/null 2>&1
 
                 node=$(node -v)
                 node=${node#"v"}
