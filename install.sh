@@ -78,7 +78,7 @@ case $os in
 
                 echo "Installing Node"
 
-                yum install -y python make gcc nodejs > /dev/null 2>&1
+                yum install -y python make gcc gcc-c++ nodejs > /dev/null 2>&1
 
                 sleep 3
 
