@@ -80,6 +80,8 @@ case $os in
 
                 yum install -y nodejs > /dev/null 2>&1
 
+                sleep 3
+
                 node=$(node -v)
                 node=${node#"v"}
             fi
@@ -89,7 +91,7 @@ case $os in
 
                 echo "Updating Node"
 
-                install_node $required /usr linux-x64
+                install_node /usr
 
                 node=$(node -v)
                 node=${node#"v"}
@@ -130,7 +132,7 @@ case $os in
 
                 sleep 0.2
 
-                echo "Node Updated to $node"
+                echo "Node $node Installed"
             fi
 
             source ~/.bashrc
@@ -164,14 +166,14 @@ case $os in
 
             echo "Upgrading Node"
 
-            install_node $required /usr/local
+            install_node /usr/local
 
             node=$(node -v)
             node=${node#"v"}
 
             sleep 0.2
 
-            echo "Node Updated to $node"
+            echo "Node $node Installed"
         fi
 
         sleep 0.2
