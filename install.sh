@@ -3,10 +3,13 @@
 os=$(uname)
 arch=$(uname -m)
 
-required="12.13.1"
+required_node_version="12.13.1"
+required_npm_version="6.13.1"
 
-node=$(node -v)
-node=${node#"v"}
+node_version=$(node -v)
+node_version=${node_version#"v"}
+
+npm_version=$(npm -v)
 
 spin()
 {
@@ -28,29 +31,29 @@ install_node()
         "Linux")
             case $arch in
                 "x86_64")
-                    curl -O https://nodejs.org/dist/v$required/node-v$required-linux-x64.tar.gz > /dev/null 2>&1
-                    tar -xzf ./node-v$required-linux-x64.tar.gz -C $1 --strip-components=1 --no-same-owner > /dev/null 2>&1
-                    rm -f ./node-v$required-linux-x64.tar.gz > /dev/null 2>&1
+                    curl -O https://nodejs.org/dist/v$required_node_version/node-v$required_node_version-linux-x64.tar.gz > /dev/null 2>&1
+                    tar -xzf ./node-v$required_node_version-linux-x64.tar.gz -C $1 --strip-components=1 --no-same-owner > /dev/null 2>&1
+                    rm -f ./node-v$required_node_version-linux-x64.tar.gz > /dev/null 2>&1
                     ;;
 
                 "armv7l")
-                    curl -O https://nodejs.org/dist/v$required/node-v$required-linux-armv7l.tar.gz > /dev/null 2>&1
-                    tar -xzf ./node-v$required-linux-armv7l.tar.gz -C $1 --strip-components=1 --no-same-owner > /dev/null 2>&1
-                    rm -f ./node-v$required-linux-armv7l.tar.gz > /dev/null 2>&1
+                    curl -O https://nodejs.org/dist/v$required_node_version/node-v$required_node_version-linux-armv7l.tar.gz > /dev/null 2>&1
+                    tar -xzf ./node-v$required_node_version-linux-armv7l.tar.gz -C $1 --strip-components=1 --no-same-owner > /dev/null 2>&1
+                    rm -f ./node-v$required_node_version-linux-armv7l.tar.gz > /dev/null 2>&1
                     ;;
 
                 "armv8l")
-                    curl -O https://nodejs.org/dist/v$required/node-v$required-linux-arm64.tar.gz > /dev/null 2>&1
-                    tar -xzf ./node-v$required-linux-arm64.tar.gz -C $1 --strip-components=1 --no-same-owner > /dev/null 2>&1
-                    rm -f ./node-v$required-linux-arm64.tar.gz > /dev/null 2>&1
+                    curl -O https://nodejs.org/dist/v$required_node_version/node-v$required_node_version-linux-arm64.tar.gz > /dev/null 2>&1
+                    tar -xzf ./node-v$required_node_version-linux-arm64.tar.gz -C $1 --strip-components=1 --no-same-owner > /dev/null 2>&1
+                    rm -f ./node-v$required_node_version-linux-arm64.tar.gz > /dev/null 2>&1
                     ;;
             esac
             ;;
 
         "Darwin")
-            curl -O https://nodejs.org/dist/v$required/node-v$required-darwin-x64.tar.gz > /dev/null 2>&1
-            tar -xzf ./node-v$required-linux-x64.tar.gz -C $1 --strip-components=1 --no-same-owner > /dev/null 2>&1
-            rm -f ./node-v$required-linux-x64.tar.gz > /dev/null 2>&1
+            curl -O https://nodejs.org/dist/v$required_node_version/node-v$required_node_version-darwin-x64.tar.gz > /dev/null 2>&1
+            tar -xzf ./node-v$required_node_version-linux-x64.tar.gz -C $1 --strip-components=1 --no-same-owner > /dev/null 2>&1
+            rm -f ./node-v$required_node_version-linux-x64.tar.gz > /dev/null 2>&1
             ;;
     esac
 }
@@ -68,12 +71,12 @@ fi
 
 sleep 0.2
 
-echo "Node Version $node"
+echo "Node Version $node_version"
 
 case $os in
     "Linux")
         if command -v yum > /dev/null; then
-            if [[ "$node" == "" ]]; then
+            if [[ "$node_version" == "" ]]; then
                 sleep 0.2
 
                 echo "Installing Node"
@@ -82,23 +85,23 @@ case $os in
 
                 sleep 3
 
-                node=$(node -v)
-                node=${node#"v"}
+                node_version=$(node -v)
+                node_version=${node_version#"v"}
             fi
 
-            if [[ "$node" < "$required" ]]; then
+            if [[ "$node_version" < "$required_node_version" ]]; then
                 sleep 0.2
 
                 echo "Updating Node"
 
-                install_node /usr
+                install_node /usr/local
 
-                node=$(node -v)
-                node=${node#"v"}
+                node_version=$(node -v)
+                node_version=${node_version#"v"}
 
                 sleep 0.2
 
-                echo "Node $node Installed"
+                echo "Node $node_version Installed"
                 source ~/.bashrc
             fi
         elif command -v apt-get > /dev/null; then
@@ -109,30 +112,36 @@ case $os in
             apt-get update > /dev/null 2>&1
             apt-get install -y curl tar > /dev/null 2>&1
 
-            if [[ "$node" == "" ]]; then
+            if [[ "$node_version" == "" ]]; then
                 sleep 0.2
 
                 echo "Installing Node"
 
                 apt-get install -y python make gcc g++ nodejs npm > /dev/null 2>&1
 
-                node=$(node -v)
-                node=${node#"v"}
+                node_version=$(node -v)
+                node_version=${node_version#"v"}
             fi
 
-            if [[ "$node" < "$required" ]]; then
+            if [[ "$node_version" < "$required_node_version" ]]; then
                 sleep 0.2
 
                 echo "Upgrading Node"
 
                 install_node /usr/local
 
-                node=$(node -v)
-                node=${node#"v"}
+                rm -f /usr/bin/node > /dev/null 2>&1
+
+                unlink /usr/bin/nodejs > /dev/null 2>&1
+                unlink /usr/bin/npm > /dev/null 2>&1
+                unlink /usr/bin/npx > /dev/null 2>&1
+
+                node_version=$(node -v)
+                node_version=${node_version#"v"}
 
                 sleep 0.2
 
-                echo "Node $node Installed"
+                echo "Node $node_version Installed"
             fi
 
             source ~/.bashrc
@@ -140,16 +149,29 @@ case $os in
 
         sleep 0.2
 
-        echo "Cleaning NPM"
+        npm_version=$(npm -v)
+
+        echo "NPM Version $npm_version"
+
+        if [[ "$npm_version" < "$required_npm_version" ]]; then
+            sleep 0.2
+
+            echo "Upgrading NPM"
+
+            npm install -g npm > /dev/null 2>&1
+
+            npm_version=$(npm -v)
+
+            echo "NPM $npm_version Installed"
+        fi
 
         npm cache clean --force > /dev/null 2>&1
-        npm install -g npm > /dev/null 2>&1
 
         source ~/.bashrc
         ;;
 
     "Darwin")
-        if [[ "$node" == "" ]]; then
+        if [[ "$node_version" == "" ]]; then
             kill -9 $marker > /dev/null
 
             echo "Can Not Install Node"
@@ -161,27 +183,40 @@ case $os in
             exit 1
         fi
 
-        if [[ "$node" < "$required" ]]; then
+        if [[ "$node_version" < "$required_node_version" ]]; then
             sleep 0.2
 
             echo "Upgrading Node"
 
             install_node /usr/local
 
-            node=$(node -v)
-            node=${node#"v"}
+            node_version=$(node -v)
+            node_version=${node_version#"v"}
 
             sleep 0.2
 
-            echo "Node $node Installed"
+            echo "Node $node_version Installed"
         fi
 
         sleep 0.2
 
-        echo "Cleaning NPM"
+        npm_version=$(npm -v)
+
+        echo "NPM Version $npm_version"
+
+        if [[ "$npm_version" < "$required_npm_version" ]]; then
+            sleep 0.2
+
+            echo "Upgrading NPM"
+
+            npm install -g npm > /dev/null 2>&1
+
+            npm_version=$(npm -v)
+
+            echo "NPM $npm_version Installed"
+        fi
 
         npm cache clean --force > /dev/null 2>&1
-        npm install -g npm > /dev/null 2>&1
         ;;
 esac
 
