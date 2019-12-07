@@ -132,11 +132,7 @@ case $os in
 
                 echo "Upgrading Node"
 
-                if [[ -f "/usr/bin/node" ]]; then
-                    install_node /usr
-                else
-                    install_node /usr/local
-                fi
+                install_node /usr/local
 
                 node_version=$(node -v)
                 node_version=${node_version#"v"}
