@@ -65,10 +65,6 @@ echo "------------------------------------------------------------"
 spin &
 marker=$!
 
-if [[ "$os" != "Darwin" ]]; then
-    trap "kill -9 $marker" `seq 0 15`
-fi
-
 sleep 0.2
 
 echo "Node Version $node_version"
