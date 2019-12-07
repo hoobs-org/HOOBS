@@ -31,29 +31,29 @@ install_node()
         "Linux")
             case $arch in
                 "x86_64")
-                    curl -O https://nodejs.org/dist/v$required_node_version/node-v$required_node_version-linux-x64.tar.gz #  > /dev/null 2>&1
-                    tar -xzf ./node-v$required_node_version-linux-x64.tar.gz -C $1 --strip-components=1 --no-same-owner #  > /dev/null 2>&1
-                    rm -f ./node-v$required_node_version-linux-x64.tar.gz #  > /dev/null 2>&1
+                    curl -O https://nodejs.org/dist/v$required_node_version/node-v$required_node_version-linux-x64.tar.gz > /dev/null 2>&1
+                    tar -xzf ./node-v$required_node_version-linux-x64.tar.gz -C $1 --strip-components=1 --no-same-owner > /dev/null 2>&1
+                    rm -f ./node-v$required_node_version-linux-x64.tar.gz > /dev/null 2>&1
                     ;;
 
                 "armv7l")
-                    curl -O https://nodejs.org/dist/v$required_node_version/node-v$required_node_version-linux-armv7l.tar.gz #  > /dev/null 2>&1
-                    tar -xzf ./node-v$required_node_version-linux-armv7l.tar.gz -C $1 --strip-components=1 --no-same-owner #  > /dev/null 2>&1
-                    rm -f ./node-v$required_node_version-linux-armv7l.tar.gz #  > /dev/null 2>&1
+                    curl -O https://nodejs.org/dist/v$required_node_version/node-v$required_node_version-linux-armv7l.tar.gz > /dev/null 2>&1
+                    tar -xzf ./node-v$required_node_version-linux-armv7l.tar.gz -C $1 --strip-components=1 --no-same-owner > /dev/null 2>&1
+                    rm -f ./node-v$required_node_version-linux-armv7l.tar.gz > /dev/null 2>&1
                     ;;
 
                 "armv8l")
-                    curl -O https://nodejs.org/dist/v$required_node_version/node-v$required_node_version-linux-arm64.tar.gz #  > /dev/null 2>&1
-                    tar -xzf ./node-v$required_node_version-linux-arm64.tar.gz -C $1 --strip-components=1 --no-same-owner #  > /dev/null 2>&1
-                    rm -f ./node-v$required_node_version-linux-arm64.tar.gz #  > /dev/null 2>&1
+                    curl -O https://nodejs.org/dist/v$required_node_version/node-v$required_node_version-linux-arm64.tar.gz > /dev/null 2>&1
+                    tar -xzf ./node-v$required_node_version-linux-arm64.tar.gz -C $1 --strip-components=1 --no-same-owner > /dev/null 2>&1
+                    rm -f ./node-v$required_node_version-linux-arm64.tar.gz > /dev/null 2>&1
                     ;;
             esac
             ;;
 
         "Darwin")
-            curl -O https://nodejs.org/dist/v$required_node_version/node-v$required_node_version-darwin-x64.tar.gz #  > /dev/null 2>&1
-            tar -xzf ./node-v$required_node_version-linux-x64.tar.gz -C $1 --strip-components=1 --no-same-owner #  > /dev/null 2>&1
-            rm -f ./node-v$required_node_version-linux-x64.tar.gz #  > /dev/null 2>&1
+            curl -O https://nodejs.org/dist/v$required_node_version/node-v$required_node_version-darwin-x64.tar.gz > /dev/null 2>&1
+            tar -xzf ./node-v$required_node_version-linux-x64.tar.gz -C $1 --strip-components=1 --no-same-owner > /dev/null 2>&1
+            rm -f ./node-v$required_node_version-linux-x64.tar.gz > /dev/null 2>&1
             ;;
     esac
 }
@@ -81,7 +81,7 @@ case $os in
 
                 echo "Installing Node"
 
-                yum install -y python make gcc gcc-c++ nodejs #  > /dev/null 2>&1
+                yum install -y python make gcc gcc-c++ nodejs > /dev/null 2>&1
 
                 sleep 3
 
@@ -113,15 +113,15 @@ case $os in
 
             echo "Updating Repositories"
 
-            apt-get update #  > /dev/null 2>&1
-            apt-get install -y curl tar #  > /dev/null 2>&1
+            apt-get update > /dev/null 2>&1
+            apt-get install -y curl tar > /dev/null 2>&1
 
             if [[ "$node_version" == "" ]]; then
                 sleep 0.2
 
                 echo "Installing Node"
 
-                apt-get install -y python make gcc g++ nodejs npm #  > /dev/null 2>&1
+                apt-get install -y python make gcc g++ nodejs npm > /dev/null 2>&1
 
                 node_version=$(node -v)
                 node_version=${node_version#"v"}
@@ -160,14 +160,14 @@ case $os in
 
             echo "Upgrading NPM"
 
-            npm install -g npm #  > /dev/null 2>&1
+            npm install -g npm > /dev/null 2>&1
 
             npm_version=$(npm -v)
 
             echo "NPM $npm_version Installed"
         fi
 
-        npm cache clean --force #  > /dev/null 2>&1
+        npm cache clean --force > /dev/null 2>&1
 
         source ~/.bashrc
         ;;
@@ -211,14 +211,14 @@ case $os in
 
             echo "Upgrading NPM"
 
-            npm install -g npm #  > /dev/null 2>&1
+            npm install -g npm > /dev/null 2>&1
 
             npm_version=$(npm -v)
 
             echo "NPM $npm_version Installed"
         fi
 
-        npm cache clean --force #  > /dev/null 2>&1
+        npm cache clean --force > /dev/null 2>&1
         ;;
 esac
 
@@ -226,7 +226,7 @@ sleep 0.2
 
 echo "Installing HOOBS"
 
-npm install -g --unsafe-perm @hoobs/hoobs #  > /dev/null 2>&1
+npm install -g --unsafe-perm @hoobs/hoobs > /dev/null 2>&1
 
 sleep 3
 
