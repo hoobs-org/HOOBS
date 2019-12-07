@@ -218,10 +218,8 @@ esac
 
 kill -9 $marker > /dev/null
 
+sleep 1
+
 echo "------------------------------------------------------------"
-echo "Node has been upgraded.                                     "
-echo "If you are on HOOBS 2.1.1 or have homebridge-config-ui-x    "
-echo "installed you need to remove it and reinstall it.           "
-echo "   sudo npm uninstall -g homebridge-config-ui-x             "
-echo "   sudo npm install -g --unsafe-perm homebridge-config-ui-x "
+echo "Node has been upgraded. You now can upgrade HOOBS.          "
 echo "------------------------------------------------------------"
