@@ -59,7 +59,7 @@ install_node()
 }
 
 echo ""
-echo "Thank You for choosing HOOBS"
+echo "Checking Node"
 echo "------------------------------------------------------------"
 
 spin &
