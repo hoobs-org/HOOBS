@@ -142,11 +142,9 @@ if [[ "$node_version" != "" ]]; then
     echo "Node Version $node_version"
 fi
 
-hoobs_installed="false"
 install_hoobs="true"
 
 if command -v hoobs > /dev/null; then
-    hoobs_installed="true"
     install_hoobs="false"
 fi
 
