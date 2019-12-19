@@ -143,10 +143,11 @@ if [[ "$node_version" != "" ]]; then
 fi
 
 hoobs_installed="false"
-reinstall_hoobs="false"
+install_hoobs="true"
 
 if command -v hoobs > /dev/null; then
     hoobs_installed="true"
+    install_hoobs="false"
 fi
 
 if [[ "$os" == "Darwin" && "$node_version" == "" ]]; then
@@ -181,7 +182,7 @@ if [[ "$node_version" != "$required_node_version" ]]; then
 
     echo "Node $node_version Installed"
 
-    reinstall_hoobs="true"   
+    install_hoobs="true"   
 fi
 
 npm_version=$(npm -v)
@@ -201,7 +202,7 @@ npm cache clean --force > /dev/null 2>&1
 
 sleep 1
 
-if [[ "$reinstall_hoobs" == "true" ]]; then
+if [[ "$install_hoobs" == "true" ]]; then
     npm uninstall -g @hoobs/hoobs
     npm install -g @hoobs/hoobs
 
