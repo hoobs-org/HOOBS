@@ -204,7 +204,7 @@ sleep 1
 
 if [[ "$install_hoobs" == "true" ]]; then
     npm uninstall -g @hoobs/hoobs
-    npm install -g @hoobs/hoobs
+    npm install -g --unsafe-perm @hoobs/hoobs
 
     for f in /home/*;
     do 
