@@ -166,7 +166,7 @@ if [[ "$node_version" == "" ]]; then
     node_version=$(get_node_version)
 fi
 
-if [[ "$node_version" < "$required_node_version" ]]; then
+if [[ "$node_version" != "$required_node_version" ]]; then
     echo "Updating Node"
 
     upgrade_node
@@ -179,7 +179,7 @@ npm_version=$(npm -v)
 
 echo "NPM Version $npm_version"
 
-if [[ "$npm_version" < "$required_npm_version" ]]; then
+if [[ "$npm_version" != "$required_npm_version" ]]; then
     echo "Upgrading NPM"
 
     npm install -g npm@$required_npm_version
