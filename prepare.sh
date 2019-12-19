@@ -142,6 +142,13 @@ if [[ "$node_version" != "" ]]; then
     echo "Node Version $node_version"
 fi
 
+hoobs_installed="false"
+reinstall_hoobs="false"
+
+if command -v hoobs > /dev/null; then
+    hoobs_installed="true"
+fi
+
 if [[ "$os" == "Darwin" && "$node_version" == "" ]]; then
     echo "Can Not Install Node"
     echo "------------------------------------------------------------"
@@ -173,6 +180,8 @@ if [[ "$node_version" != "$required_node_version" ]]; then
     node_version=$(get_node_version)
 
     echo "Node $node_version Installed"
+
+    reinstall_hoobs="true"   
 fi
 
 npm_version=$(npm -v)
@@ -192,6 +201,23 @@ npm cache clean --force > /dev/null 2>&1
 
 sleep 1
 
+if [[ "$reinstall_hoobs" == "true" ]]; then
+    npm uninstall -g @hoobs/hoobs
+    npm install -g @hoobs/hoobs
+
+    for f in /home/*;
+    do 
+        [ -d "$f/.hoobs/dist" ] && rm -fR $f/.hoobs/dist
+        [ -d "$f/.hoobs/lib" ] && rm -fR $f/.hoobs/lib
+    done;
+
+    [ -d "/root/.hoobs/dist" ] && rm -fR /root/.hoobs/dist
+    [ -d "/root/.hoobs/lib" ] && rm -fR /root/.hoobs/lib
+
+    [ -d "/var/root/.hoobs/dist" ] && rm -fR /var/root/.hoobs/dist
+    [ -d "/var/root/.hoobs/lib" ] && rm -fR /var/root/.hoobs/lib
+fi
+
 echo "------------------------------------------------------------"
-echo "Node has been upgraded. You now can upgrade HOOBS.          "
+echo "Node has been upgraded.                                     "
 echo "------------------------------------------------------------"
