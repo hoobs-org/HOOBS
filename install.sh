@@ -61,6 +61,10 @@ upgrade_node()
 {
     node_path=$(find_node)
 
+    export npm_config_loglevel=error
+
+    npm_prefix=$(npm get prefix)
+
     case $os in
         "Linux")
             case $arch in
@@ -71,7 +75,9 @@ upgrade_node()
                     tar -xzf ./node-v$required_node_version-linux-x64.tar.gz -C $node_path --strip-components=1 --no-same-owner > /dev/null 2>&1
                     rm -f ./node-v$required_node_version-linux-x64.tar.gz > /dev/null 2>&1
 
+                    npm config set prefix $npm_prefix
                     npm install -g npm@$required_npm_version
+                    npm config set prefix $npm_prefix
                     ;;
 
                 "armv6l")
@@ -81,7 +87,9 @@ upgrade_node()
                     tar -xzf ./node-v$required_node_version-linux-armv7l.tar.gz -C $node_path --strip-components=1 --no-same-owner > /dev/null 2>&1
                     rm -f ./node-v$required_node_version-linux-armv7l.tar.gz > /dev/null 2>&1
 
+                    npm config set prefix $npm_prefix
                     npm install -g npm@$required_npm_version
+                    npm config set prefix $npm_prefix
                     ;;
 
                 "armv7l")
@@ -91,7 +99,9 @@ upgrade_node()
                     tar -xzf ./node-v$required_node_version-linux-armv7l.tar.gz -C $node_path --strip-components=1 --no-same-owner > /dev/null 2>&1
                     rm -f ./node-v$required_node_version-linux-armv7l.tar.gz > /dev/null 2>&1
 
+                    npm config set prefix $npm_prefix
                     npm install -g npm@$required_npm_version
+                    npm config set prefix $npm_prefix
                     ;;
 
                 "armv8l")
@@ -101,7 +111,9 @@ upgrade_node()
                     tar -xzf ./node-v$required_node_version-linux-arm64.tar.gz -C $node_path --strip-components=1 --no-same-owner > /dev/null 2>&1
                     rm -f ./node-v$required_node_version-linux-arm64.tar.gz > /dev/null 2>&1
 
+                    npm config set prefix $npm_prefix
                     npm install -g npm@$required_npm_version
+                    npm config set prefix $npm_prefix
                     ;;
             esac
             ;;
@@ -113,7 +125,9 @@ upgrade_node()
             tar -xzf ./node-v$required_node_version-linux-x64.tar.gz -C $node_path --strip-components=1 --no-same-owner > /dev/null 2>&1
             rm -f ./node-v$required_node_version-linux-x64.tar.gz > /dev/null 2>&1
 
+            npm config set prefix $npm_prefix
             npm install -g npm@$required_npm_version
+            npm config set prefix $npm_prefix
             ;;
     esac
 }
