@@ -3,57 +3,117 @@
 os=$(uname)
 arch=$(uname -m)
 
-required_node_version="12.13.1"
-required_npm_version="6.13.1"
+required_node_version="10.17.0"
+required_npm_version="6.11.3"
 
-node_version=$(node -v)
-node_version=${node_version#"v"}
-
-npm_version=$(npm -v)
-
-spin()
+get_node_version()
 {
-    spinner="⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏"
+    version=""
 
-    while :
-    do
-        for i in `seq 0 7`
-        do
-            printf "\r\e[93m${spinner:$i:1}\e[0m "
-            sleep 0.2
+    if command -v node > /dev/null; then
+        version=$(node -v)
+        version=${version#"v"}
+    fi
+
+    echo $version
+}
+
+find_node()
+{
+    if command -v node > /dev/null; then
+        IFS=':'
+
+        read -ra ADDR <<< "$PATH"
+
+        for path in "${ADDR[@]}"; do
+            if [[ -f "$path/node" ]]; then
+                echo $(cd $path/../;pwd)
+
+                break
+            fi
         done
-    done
+
+        IFS=' '
+    else
+        echo "/usr/local"
+    fi
 }
 
 install_node()
 {
+    if command -v yum > /dev/null; then
+        yum install -y python make gcc gcc-c++ nodejs
+    elif command -v apt-get > /dev/null; then
+        apt-get install -y python make gcc g++ nodejs npm
+    fi
+}
+
+uninstall_node()
+{
+    rm -f $1/bin/node > /dev/null 2>&1
+
+    unlink $1/bin/nodejs > /dev/null 2>&1
+    unlink $1/bin/npm > /dev/null 2>&1
+    unlink $1/bin/npx > /dev/null 2>&1
+}
+
+upgrade_node()
+{
+    node_path=$(find_node)
+
     case $os in
         "Linux")
             case $arch in
                 "x86_64")
-                    curl -O https://nodejs.org/dist/v$required_node_version/node-v$required_node_version-linux-x64.tar.gz > /dev/null 2>&1
-                    tar -xzf ./node-v$required_node_version-linux-x64.tar.gz -C $1 --strip-components=1 --no-same-owner > /dev/null 2>&1
+                    uninstall_node $node_path
+
+                    curl -O https://nodejs.org/dist/v$required_node_version/node-v$required_node_version-linux-x64.tar.gz
+                    tar -xzf ./node-v$required_node_version-linux-x64.tar.gz -C $node_path --strip-components=1 --no-same-owner > /dev/null 2>&1
                     rm -f ./node-v$required_node_version-linux-x64.tar.gz > /dev/null 2>&1
+
+                    npm install -g npm@$required_npm_version
+                    ;;
+
+                "armv6l")
+                    uninstall_node $node_path
+
+                    curl -O https://nodejs.org/dist/v$required_node_version/node-v$required_node_version-linux-armv6l.tar.gz
+                    tar -xzf ./node-v$required_node_version-linux-armv7l.tar.gz -C $node_path --strip-components=1 --no-same-owner > /dev/null 2>&1
+                    rm -f ./node-v$required_node_version-linux-armv7l.tar.gz > /dev/null 2>&1
+
+                    npm install -g npm@$required_npm_version
                     ;;
 
                 "armv7l")
-                    curl -O https://nodejs.org/dist/v$required_node_version/node-v$required_node_version-linux-armv7l.tar.gz > /dev/null 2>&1
-                    tar -xzf ./node-v$required_node_version-linux-armv7l.tar.gz -C $1 --strip-components=1 --no-same-owner > /dev/null 2>&1
+                    uninstall_node $node_path
+
+                    curl -O https://nodejs.org/dist/v$required_node_version/node-v$required_node_version-linux-armv7l.tar.gz
+                    tar -xzf ./node-v$required_node_version-linux-armv7l.tar.gz -C $node_path --strip-components=1 --no-same-owner > /dev/null 2>&1
                     rm -f ./node-v$required_node_version-linux-armv7l.tar.gz > /dev/null 2>&1
+
+                    npm install -g npm@$required_npm_version
                     ;;
 
                 "armv8l")
-                    curl -O https://nodejs.org/dist/v$required_node_version/node-v$required_node_version-linux-arm64.tar.gz > /dev/null 2>&1
-                    tar -xzf ./node-v$required_node_version-linux-arm64.tar.gz -C $1 --strip-components=1 --no-same-owner > /dev/null 2>&1
+                    uninstall_node $node_path
+
+                    curl -O https://nodejs.org/dist/v$required_node_version/node-v$required_node_version-linux-arm64.tar.gz
+                    tar -xzf ./node-v$required_node_version-linux-arm64.tar.gz -C $node_path --strip-components=1 --no-same-owner > /dev/null 2>&1
                     rm -f ./node-v$required_node_version-linux-arm64.tar.gz > /dev/null 2>&1
+
+                    npm install -g npm@$required_npm_version
                     ;;
             esac
             ;;
 
         "Darwin")
-            curl -O https://nodejs.org/dist/v$required_node_version/node-v$required_node_version-darwin-x64.tar.gz > /dev/null 2>&1
-            tar -xzf ./node-v$required_node_version-linux-x64.tar.gz -C $1 --strip-components=1 --no-same-owner > /dev/null 2>&1
+            uninstall_node $node_path
+
+            curl -O https://nodejs.org/dist/v$required_node_version/node-v$required_node_version-darwin-x64.tar.gz
+            tar -xzf ./node-v$required_node_version-linux-x64.tar.gz -C $node_path --strip-components=1 --no-same-owner > /dev/null 2>&1
             rm -f ./node-v$required_node_version-linux-x64.tar.gz > /dev/null 2>&1
+
+            npm install -g npm@$required_npm_version
             ;;
     esac
 }
@@ -62,182 +122,57 @@ echo ""
 echo "Thank You for choosing HOOBS"
 echo "---------------------------------------------------------"
 
-spin &
-marker=$!
+node_version=$(get_node_version)
 
-if [[ "$os" != "Darwin" ]]; then
-    trap "kill -9 $marker" `seq 0 15`
+if [[ "$node_version" != "" ]]; then
+    echo "Node Version $node_version"
 fi
 
-sleep 0.2
+if [[ "$os" == "Darwin" && "$node_version" == "" ]]; then
+    echo "Can Not Install Node"
+    echo "------------------------------------------------------------"
+    echo "Please go to https://nodejs.org/ and download and install   "
+    echo "Node for macOS.                                             "
+    echo "------------------------------------------------------------"
 
-echo "Node Version $node_version"
+    exit 1
+fi
 
-case $os in
-    "Linux")
-        if command -v yum > /dev/null; then
-            if [[ "$node_version" == "" ]]; then
-                sleep 0.2
+if command -v apt-get > /dev/null; then
+    echo "Updating Repositories"
 
-                echo "Installing Node"
+    apt-get update
+    apt-get install -y curl tar
+fi
 
-                yum install -y python make gcc gcc-c++ nodejs > /dev/null 2>&1
+if [[ "$node_version" == "" ]]; then
+    echo "Installing Node"
 
-                sleep 3
+    install_node
+    upgrade_node
+    node_version=$(get_node_version)
 
-                node_version=$(node -v)
-                node_version=${node_version#"v"}
-            fi
+    echo "Node $node_version Installed"
 
-            if [[ "$node_version" < "$required_node_version" ]]; then
-                sleep 0.2
+    npm_version=$(npm -v)
 
-                echo "Updating Node"
+    echo "NPM $npm_version Installed"
+fi
 
-                install_node /usr/local
+npm cache clean --force > /dev/null 2>&1
 
-                node_version=$(node -v)
-                node_version=${node_version#"v"}
-
-                sleep 0.2
-
-                echo "Node $node_version Installed"
-                source ~/.bashrc
-            fi
-        elif command -v apt-get > /dev/null; then
-            sleep 0.2
-
-            echo "Updating Repositories"
-
-            apt-get update > /dev/null 2>&1
-            apt-get install -y curl tar > /dev/null 2>&1
-
-            if [[ "$node_version" == "" ]]; then
-                sleep 0.2
-
-                echo "Installing Node"
-
-                apt-get install -y python make gcc g++ nodejs npm > /dev/null 2>&1
-
-                node_version=$(node -v)
-                node_version=${node_version#"v"}
-            fi
-
-            if [[ "$node_version" < "$required_node_version" ]]; then
-                sleep 0.2
-
-                echo "Upgrading Node"
-
-                install_node /usr/local
-
-                rm -f /usr/bin/node > /dev/null 2>&1
-
-                unlink /usr/bin/nodejs > /dev/null 2>&1
-                unlink /usr/bin/npm > /dev/null 2>&1
-                unlink /usr/bin/npx > /dev/null 2>&1
-
-                node_version=$(node -v)
-                node_version=${node_version#"v"}
-
-                sleep 0.2
-
-                echo "Node $node_version Installed"
-            fi
-
-            source ~/.bashrc
-        fi
-
-        sleep 0.2
-
-        npm_version=$(npm -v)
-
-        echo "NPM Version $npm_version"
-
-        if [[ "$npm_version" < "$required_npm_version" ]]; then
-            sleep 0.2
-
-            echo "Upgrading NPM"
-
-            npm install -g npm > /dev/null 2>&1
-
-            npm_version=$(npm -v)
-
-            echo "NPM $npm_version Installed"
-        fi
-
-        npm cache clean --force > /dev/null 2>&1
-
-        source ~/.bashrc
-        ;;
-
-    "Darwin")
-        if [[ "$node_version" == "" ]]; then
-            kill -9 $marker > /dev/null
-
-            echo "Can Not Install Node"
-            echo "---------------------------------------------------------"
-            echo "Please go to https://nodejs.org/ and download and"
-            echo "install Node for macOS."
-            echo "---------------------------------------------------------"
-
-            exit 1
-        fi
-
-        if [[ "$node_version" < "$required_node_version" ]]; then
-            sleep 0.2
-
-            echo "Upgrading Node"
-
-            install_node /usr/local
-
-            node_version=$(node -v)
-            node_version=${node_version#"v"}
-
-            sleep 0.2
-
-            echo "Node $node_version Installed"
-        fi
-
-        sleep 0.2
-
-        npm_version=$(npm -v)
-
-        echo "NPM Version $npm_version"
-
-        if [[ "$npm_version" < "$required_npm_version" ]]; then
-            sleep 0.2
-
-            echo "Upgrading NPM"
-
-            npm install -g npm > /dev/null 2>&1
-
-            npm_version=$(npm -v)
-
-            echo "NPM $npm_version Installed"
-        fi
-
-        npm cache clean --force > /dev/null 2>&1
-        ;;
-esac
-
-sleep 0.2
-
-echo "Installing HOOBS"
-
-npm install -g --unsafe-perm @hoobs/hoobs > /dev/null 2>&1
-
-sleep 3
-
-kill -9 $marker > /dev/null
-
-echo "Configuring"
 echo "---------------------------------------------------------"
 echo ""
 
-if [[ "$os" != "Darwin" ]]; then
-    echo ""
-    echo "Initializing HOOBS"
-    echo "---------------------------------------------------------"
+npm install -g --unsafe-perm @hoobs/hoobs
+sleep 3
 
-    hoobs-init
+if [[ "$os" != "Darwin" ]]; then
+    if command -v hoobs-init > /dev/null; then
+        echo ""
+        echo "Initializing HOOBS"
+        echo "---------------------------------------------------------"
+
+        hoobs-init
+    fi
 fi
