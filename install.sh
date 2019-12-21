@@ -152,11 +152,13 @@ if [[ "$os" == "Darwin" && "$node_version" == "" ]]; then
     exit 1
 fi
 
-if command -v apt-get > /dev/null; then
-    echo "Updating Repositories"
+echo "Updating Repositories"
 
+if command -v yum > /dev/null; then
+    yum install -y curl tar git
+elif command -v apt-get > /dev/null; then
     apt-get update
-    apt-get install -y curl tar
+    apt-get install -y curl tar git
 fi
 
 if [[ "$node_version" == "" ]]; then
