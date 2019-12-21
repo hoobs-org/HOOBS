@@ -6,7 +6,8 @@
         "@hoobs/roborock": "homebridge-xiaomi-roborock-vacuum",
         "@hoobs/ring": "homebridge-ring",
         "@hoobs/chamberlain": "homebridge-chamberlain",
-        "@hoobs/google-home": "homebridge-gsh"
+        "@hoobs/google-home": "homebridge-gsh",
+        "@hoobs/hue": "homebridge-hue"
     },
     "lookup": {
         "@kacepe/homebridge-shelly": "@hoobs/shelly",
@@ -16,6 +17,7 @@
         "homebridge-xiaomi-roborock-vacuum": "@hoobs/roborock",
         "homebridge-ring": "@hoobs/ring",
         "homebridge-chamberlain": "@hoobs/chamberlain",
-        "homebridge-gsh": "@hoobs/google-home"
+        "homebridge-gsh": "@hoobs/google-home",
+        "homebridge-hue": "@hoobs/hue"
     }
 }
