@@ -7,7 +7,8 @@
         "@hoobs/ring": "homebridge-ring",
         "@hoobs/chamberlain": "homebridge-chamberlain",
         "@hoobs/google-home": "homebridge-gsh",
-        "@hoobs/hue": "homebridge-hue"
+        "@hoobs/hue": "homebridge-hue",
+        "@hoobs/ikea-tradfri": "homebridge-ikea-tradfri-gateway"
     },
     "lookup": {
         "@kacepe/homebridge-shelly": "@hoobs/shelly",
@@ -18,6 +19,7 @@
         "homebridge-ring": "@hoobs/ring",
         "homebridge-chamberlain": "@hoobs/chamberlain",
         "homebridge-gsh": "@hoobs/google-home",
-        "homebridge-hue": "@hoobs/hue"
+        "homebridge-hue": "@hoobs/hue",
+        "homebridge-ikea-tradfri-gateway": "@hoobs/ikea-tradfri"
     }
 }
