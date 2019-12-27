@@ -71,7 +71,7 @@ upgrade_node()
                 "x86_64")
                     uninstall_node $node_path
 
-                    curl -O https://nodejs.org/dist/v$required_node_version/node-v$required_node_version-linux-x64.tar.gz
+                    curl -k -O https://nodejs.org/dist/v$required_node_version/node-v$required_node_version-linux-x64.tar.gz
                     tar -xzf ./node-v$required_node_version-linux-x64.tar.gz -C $node_path --strip-components=1 --no-same-owner > /dev/null 2>&1
                     rm -f ./node-v$required_node_version-linux-x64.tar.gz > /dev/null 2>&1
 
@@ -83,7 +83,7 @@ upgrade_node()
                 "armv6l")
                     uninstall_node $node_path
 
-                    curl -O https://nodejs.org/dist/v$required_node_version/node-v$required_node_version-linux-armv6l.tar.gz
+                    curl -k -O https://nodejs.org/dist/v$required_node_version/node-v$required_node_version-linux-armv6l.tar.gz
                     tar -xzf ./node-v$required_node_version-linux-armv7l.tar.gz -C $node_path --strip-components=1 --no-same-owner > /dev/null 2>&1
                     rm -f ./node-v$required_node_version-linux-armv7l.tar.gz > /dev/null 2>&1
 
@@ -95,7 +95,7 @@ upgrade_node()
                 "armv7l")
                     uninstall_node $node_path
 
-                    curl -O https://nodejs.org/dist/v$required_node_version/node-v$required_node_version-linux-armv7l.tar.gz
+                    curl -k -O https://nodejs.org/dist/v$required_node_version/node-v$required_node_version-linux-armv7l.tar.gz
                     tar -xzf ./node-v$required_node_version-linux-armv7l.tar.gz -C $node_path --strip-components=1 --no-same-owner > /dev/null 2>&1
                     rm -f ./node-v$required_node_version-linux-armv7l.tar.gz > /dev/null 2>&1
 
@@ -107,7 +107,7 @@ upgrade_node()
                 "armv8l")
                     uninstall_node $node_path
 
-                    curl -O https://nodejs.org/dist/v$required_node_version/node-v$required_node_version-linux-arm64.tar.gz
+                    curl -k -O https://nodejs.org/dist/v$required_node_version/node-v$required_node_version-linux-arm64.tar.gz
                     tar -xzf ./node-v$required_node_version-linux-arm64.tar.gz -C $node_path --strip-components=1 --no-same-owner > /dev/null 2>&1
                     rm -f ./node-v$required_node_version-linux-arm64.tar.gz > /dev/null 2>&1
 
