@@ -190,5 +190,11 @@ if [[ "$os" != "Darwin" ]]; then
         echo "---------------------------------------------------------"
 
         hoobs-init
+    elif command -v hoobs > /dev/null; then
+        echo ""
+        echo "Initializing HOOBS"
+        echo "---------------------------------------------------------"
+
+        hoobs service install
     fi
 fi
