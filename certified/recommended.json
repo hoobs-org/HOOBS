@@ -1,0 +1,9 @@
+[
+    "homebridge-shelly",
+    "homebridge-ring",
+    "homebridge-chamberlain",
+    "homebridge-gsh",
+    "homebridge-hue",
+    "homebridge-ikea-tradfri-gateway",
+    "homebridge-wink3"
+]
