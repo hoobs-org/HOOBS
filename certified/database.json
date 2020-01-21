@@ -53,7 +53,7 @@
         "exclude": [
             "@hoobs/hue"
         ],
-        "description": "This plugin exposes ZigBee devices (lights, plugs, sensors, switches, ...) connected to (1) a Philips Hue bridge or (2) a dresden elektronik deCONZ gateway to Apple's Home."
+        "description": "This plugin exposes Hue or deCONZ devices to HOOBS.\n\nThese devices are supported.\n* Lights\n* Plugs\n* Sensors\n* Switches"
     },
     "homebridge-ikea-tradfri-gateway": {
         "version": "1.2.29",
