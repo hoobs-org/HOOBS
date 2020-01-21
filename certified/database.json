@@ -1,0 +1,65 @@
+{
+    "homebridge-nest": {
+        "version": "3.5.1",
+        "exclude": [
+            "@hoobs/nest"
+        ],
+        "description": "Nest plug-in for Homebridge using the native Nest API. See what's new in release 3.5.1.\n\nIntegrate your Nest Thermostat (including Nest Temperature Sensors) and Nest Protect devices into your HomeKit system. Both Nest Accounts (pre-August 2019) and Google Accounts are supported."
+    },
+    "homebridge-wink3": {
+        "version": "2.1.0",
+        "exclude": [
+            "@hoobs/wink"
+        ],
+        "description": "Wink plugin for HOOBS.\n\n* Uses Wink API v2, and local control.\n* Subscribes to Wink push notifications, instead of polling for device updates.\n* Written in ES2018 (arrow functions, async/await, classes, etc).\n* Accessory services and characteristics are defined declaratively.\n* Supports API tokens obtained from developer.wink.com"
+    },
+    "homebridge-shelly": {
+        "version": "0.11.0",
+        "exclude": [
+            "@hoobs/shelly"
+        ],
+        "description": "Shelly plugin for HOOBS, enabling Apple Home support for Shelly devices.\n\nYour Shelly devices will then be automatically discovered, as long as they are on the same network and subnet as the device running homebridge."
+    },
+    "homebridge-xiaomi-roborock-vacuum": {
+        "version": "0.6.4",
+        "exclude": [
+            "@hoobs/roborock"
+        ],
+        "description": "With this plugin can you control the xiaomi vacuum robots as fan in your Apple Home App."
+    },
+    "homebridge-ring": {
+        "version": "6.0.3",
+        "exclude": [
+            "@hoobs/ring"
+        ],
+        "description": "This plugin provides a platform for Ring Doorbells, Ring Cameras, the Ring Alarm System, Ring Smart Lighting, and third party devices that connect to the Ring Alarm System."
+    },
+    "homebridge-chamberlain": {
+        "version": "1.0.8",
+        "exclude": [
+            "@hoobs/chamberlain"
+        ],
+        "description": "A HOOBS plugin for Chamberlain garage door openers with MyQ."
+    },
+    "homebridge-gsh": {
+        "version": "1.1.3",
+        "exclude": [
+            "@hoobs/google-home"
+        ],
+        "description": "Control your supported accessories from any Google Home speaker or the Google Home mobile app."
+    },
+    "homebridge-hue": {
+        "version": "0.11.50",
+        "exclude": [
+            "@hoobs/hue"
+        ],
+        "description": "This plugin exposes ZigBee devices (lights, plugs, sensors, switches, ...) connected to (1) a Philips Hue bridge or (2) a dresden elektronik deCONZ gateway to Apple's Home."
+    },
+    "homebridge-ikea-tradfri-gateway": {
+        "version": "1.2.29",
+        "exclude": [
+            "@hoobs/ikea-tradfri"
+        ],
+        "description": "This plugin simply extracts all lightbulbs, outlets and blinds currently in use by the IKEA Trådfri Gateway and exposes them to Apple Home\n\nThe following IKEA devices are supported.\n* Standard white bulbs\n* RGB bulbs\n* Warm white bulbs with temperature control\n* Outlets\n* Blinds"
+    }
+}
