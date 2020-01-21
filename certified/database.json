@@ -70,5 +70,11 @@
             "@hoobs/ikea-tradfri"
         ],
         "description": "This plugin simply extracts all lightbulbs, outlets and blinds currently in use by the IKEA Trådfri Gateway and exposes them to Apple Home\n\nThe following IKEA devices are supported.\n* Standard white bulbs\n* RGB bulbs\n* Warm white bulbs with temperature control\n* Outlets\n* Blinds"
+    },
+    "homebridge-zp": {
+        "version": null,
+        "certified": false,
+        "exclude": null,
+        "description": "This plugin exposes Sonos ZonePlayers to HOOBS.\n\n* Automatic discovery of Sonos zones, taking into account stereo pairs and home theatre setup\n* Support for Sonos groups, created through the Sonos app\n* Control from HomeKit of play/pause, sleep timer, next/previous track, volume, and mute per Sonos group\n* Control from HomeKit of input selection per group, from Sonos favourites and local sources, like LineIn, Airplay\n* Optional control from HomeKit of volume, mute, balance, bass, treble, loudness, night sound, and speech enhancement per Sonos zone\n* Optional control from HomeKit for Sonos zones leaving Sonos groups, and for Sonos zones creating/joining one Sonos group\n* Optional control from HomeKit to enable/disable Sonos alarms\n* Real-time monitoring from HomeKit of state per Sonos group and, optionally, per Sonos zone. Like the Sonos app, homebridge-zp subscribes to ZonePlayer events to receive * notifications\n* Optional control from HomeKit for the status LED and child lock per ZonePlayer. Note that Sonos doesn't support events for these, so homebridge-zp cannot provide real-time monitoring for this"
     }
 }
