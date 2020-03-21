@@ -21,7 +21,7 @@ We’re a small team from around the world who are passionate about making the h
 
 [![](https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/products/hoobs-card.png)](https://hoobs.org/product/hoobs-on-microsd/)
 
-[![](https://github.com/hoobs-org/HOOBS/releases)](https://hoobs.org/product/hoobs-to-download/)
+[![](https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/products/hoobs-download.png)](https://github.com/hoobs-org/HOOBS/releases)
 
 ## Documentation
 * [**Community**](https://github.com/hoobs-org/HOOBS/wiki/1.0-Community)
@@ -61,12 +61,11 @@ We’re a small team from around the world who are passionate about making the h
 
 ## HOOBS Community
 [HOOBS Website](https://hoobs.org)  
-[HOOBS Support Chat](https://m.me/HOOBSofficial)  
-[HOOBS Email](mailto:info@hoobs.org)  
+[HOOBS Support](https://support.hoobs.org)  
+[Plugin Community](https://plugins.hoobs.org)  
 [HOOBS Subreddit](https://www.reddit.com/r/hoobs/)  
 [HOOBS Facebook Page](https://www.facebook.com/HOOBSofficial)  
 [HOOBS Facebook Support Group](https://www.facebook.com/groups/HOOBSorg/)  
-[HOOBS WIKI](https://github.com/hoobs-org/HOOBS/wiki)  
 [Homebridge Subreddit](https://www.reddit.com/r/homebridge/)  
 
 ## Support HOOBS
