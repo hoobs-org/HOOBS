@@ -1,7 +1,13 @@
+[comment]: <> (image from hoobs-image repo)
+
 ![](https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/logo.png)
+
+[comment]: <> (Plugin Title)
 ## HOOBS plugin for Sonos
+[comment]: <> (Short Plugin Description)
 This plugin exposes [Sonos](http://www.sonos.com) ZonePlayers to HOOBS.
 
+[comment]: <> (List of the Main Features, that can be set in config schema)
 # Features
 - Automatic discovery of Sonos zones, taking into account stereo pairs and home theatre setup;
 - Support for Sonos groups, created through the Sonos app;
@@ -13,6 +19,7 @@ This plugin exposes [Sonos](http://www.sonos.com) ZonePlayers to HOOBS.
 - Real-time monitoring of state per Sonos group and, optionally, per Sonos zone.
 - Optional control for the status LED and child lock per ZonePlayer.
 
+[comment]: <> (List of working Hardware Types and Modelnumbers)
 # Working Hardware
 
 - SONOS Play:1
@@ -27,7 +34,9 @@ This plugin exposes [Sonos](http://www.sonos.com) ZonePlayers to HOOBS.
 - SONOS Amp
 
 
+[comment]: <> (Credit the Pluginauthor and link to npm package)
 # Credits
 Plugin for Homebridge [homebridge-sonos-zp](https://www.npmjs.com/package/homebridge-zp)
+
 Copyright © 2016-2020 Erik Baauw. All rights reserved.
 
