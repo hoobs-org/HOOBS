@@ -49,10 +49,10 @@ All Configuration can be done in the confguration section. No advanced or furhte
 Configured Mowers
 ```
 [
-    {
-        "name": "My Landroid",
-        "dev_name": "S"
-    }
+{
+"name": "My Landroid",
+"dev_name": "S"
+}
 ]
 ```
 
