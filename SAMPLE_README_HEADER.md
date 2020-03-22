@@ -30,6 +30,13 @@ You can see the battery status of your lawn mower in the settings of either the 
 [comment]: <> (List of working Hardware Types and Modelnumbers)
 ### Working Hardware
 
+- Worx Landroid S WR130E 300 m²
+- Worx Landroid M WR141E 500 m²
+- Worx Landroid M WR142E 700 m²
+- Worx Landroid M WR143E 1.000 m²
+- Worx Landroid L WR153E 1.500 m²
+- Worx Landroid L WR155E 2.000 m²
+
 <img src="https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_Landroid_products.png" width="15%"> <img src="https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_Landroid_products2.png" width="15%"> <img src="https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_Landroid_products3.png" width="15%"> <img src="https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_Landroid_products4.png" width="15%"> <img src="https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_Landroid_products5.png" width="15%">
 
 [comment]: <> (configuration)
@@ -39,7 +46,7 @@ All Configuration can be done in the confguration section. No advanced or furhte
 - Fill in Email and Password from your Worx App account data
 - Fill in your Lawnmowers name into "devname", do not use spaces in the name..
 
-Confirured Mowers
+Configured Mowers
 ```
 [
     {
