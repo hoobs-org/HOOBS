@@ -45,16 +45,16 @@ This only supports accessories connected via a homebridge plugin, any 'Homekit' 
 ### Configuration
 All Configuration can be done in the confguration section. No advanced or furhter config editing needed
 
-An account to link your Amazon Alexa to HOOBS needs to created on this website https://www.homebridge.ca/. This account will be used when you enable the home skill in the Alexa App on your mobile, and in the configuration of the plugin in HOOBS.
+1. An account to link your Amazon Alexa to HOOBS needs to created on this website https://www.homebridge.ca/. This account will be used when you enable the home skill in the Alexa App on your mobile, and in the configuration of the plugin in HOOBS.
 
-Go to the Alexa Plugin configuration on HOOBS interface.
+2. Go to the Alexa Plugin configuration on HOOBS interface.
 The login and password nedded in the configuration, are the credentials you created earlier for the https://www.homebridge.ca/ website
 
-In your Amazon Alexa app on your phone, please search for the "Homebridge" skill, and enable the skill. You will need to Enable and link the skill to the account you created earlier on https://www.homebridge.ca/
+3. In your Amazon Alexa app on your phone, please search for the "Homebridge" skill, and enable the skill. You will need to Enable and link the skill to the account you created earlier on https://www.homebridge.ca/
 
-At this point you are ready to have Alexa discover devices. Once you say Alexa, discover devices, the output will get very verbose for a minute. After discovery is complete you should see a line showing the number of devices returned to Alexa.
+4. At this point you are ready to have Alexa discover devices. Once you say Alexa, discover devices, the output will get very verbose for a minute. After discovery is complete you should see a line showing the number of devices returned to Alexa.
 
-Installation is now complete, good luck and enjoy.
+**Installation is now complete, good luck and enjoy.**
 
 
 [comment]: <> (Credit the Pluginauthor and link to npm package)
