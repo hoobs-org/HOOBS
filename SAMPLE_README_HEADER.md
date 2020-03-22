@@ -30,7 +30,7 @@ You can see the battery status of your lawn mower in the settings of either the 
 [comment]: <> (List of working Hardware Types and Modelnumbers)
 ### Working Hardware
 
-<img src="https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_Landroid_products.png" width="20%"> <img src="https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_Landroid_products2.png" width="20%"> <img src="https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_Landroid_products3.png" width="20%"> <img src="https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_Landroid_products4.png" width="20%"> <img src="https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_Landroid_products5.png" width="20%">
+<img src="https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_Landroid_products.png" width="15%"> <img src="https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_Landroid_products2.png" width="15%"> <img src="https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_Landroid_products3.png" width="15%"> <img src="https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_Landroid_products4.png" width="15%"> <img src="https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_Landroid_products5.png" width="15%">
 
 [comment]: <> (configuration)
 ### Configuration
