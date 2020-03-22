@@ -36,6 +36,9 @@ This plugin exposes [Sonos](http://www.sonos.com) ZonePlayers to HOOBS.
 ![](https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_sonos_products.png =250x)![](https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_sonos_products2.png =250x)![](https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_sonos_products3.png =250x)
 
 
+<img src="https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_sonos_products.png" width="250">
+
+
 [comment]: <> (configuration)
 ### Configuration
 All Configuration can be done in the confguration section. No advanced or furhter config editing needed
