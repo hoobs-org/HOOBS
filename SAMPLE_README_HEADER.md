@@ -33,12 +33,14 @@ Note: Google Smart Home does not currently support "sensor" devices such as Temp
 All Configuration can be done in the confguration section. No advanced or furhter config editing needed
 
 **Configuration in HOOBS**
-Navigate to the Plugins page in HOOBS.
-Click the Configuration button for the Google Smart Home plugin.
-Click the Link Account button.
-Sign in with your Google or GitHub account.
-Your account is now linked.
-Add the Homebridge Action using the Google Home mobile app.
+1. Navigate to the Plugins page in HOOBS and click the Configuration button for the Google Smart Home plugin.
+<img src="https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_google_UI.png" width="30%"> 
+3. Click the Link Account button.
+<img src="https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_google_UI2.png" width="30%">
+4. Sign in with your Google or GitHub account.
+<img src="https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_google_UI3.png" width="30%">
+
+Your account is now linked. Now add the Homebridge Action using the Google Home mobile app.
 
 **Configuration in Google Home mobile app**
 
