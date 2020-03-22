@@ -42,7 +42,8 @@ Add the Homebridge Action using the Google Home mobile app.
 
 **Configuration in Google Home mobile app**
 
-<img src="https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_google_app.png" width="30%"> <img src="https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_google_app2.png" width="30%"> <img src="https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_google_app3.png" width="30%"> <img src="https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_google_app4.png" width="30%"> <img src="https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_google_app5.png" width="30%">
+<img src="https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_google_app.png" width="30%"> <img src="https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_google_app2.png" width="30%"> <img src="https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_google_app3.png" width="30%"> 
+<img src="https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_google_app4.png" width="30%"> <img src="https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_google_app5.png" width="30%">
 
 
 [comment]: <> (Credit the Pluginauthor and link to npm package)
