@@ -33,6 +33,9 @@ This plugin exposes [Sonos](http://www.sonos.com) ZonePlayers to HOOBS.
 - SONOS Port
 - SONOS Amp
 
+[comment]: <> (configuration)
+### Configuration
+All Configuration can be done in the confguration section. No advanced or furhter config editing needed
 
 [comment]: <> (Credit the Pluginauthor and link to npm package)
 ### Credits
