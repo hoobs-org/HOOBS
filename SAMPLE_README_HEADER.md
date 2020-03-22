@@ -6,7 +6,7 @@
 # Sonos Zoneplayer plugin for HOOBS
 [comment]: <> (Short Plugin Description)
 This plugin exposes [Sonos](http://www.sonos.com) ZonePlayers to HOOBS.
-a
+
 [comment]: <> (List of the Main Features, that can be set in config schema)
 ### Features
 - Automatic discovery of Sonos zones, taking into account stereo pairs and home theatre setup;
