@@ -45,3 +45,109 @@ Plugin for Homebridge [homebridge-sonos-zp](https://www.npmjs.com/package/homebr
 
 Copyright © 2016-2020 Erik Baauw. All rights reserved.
 
+---
+
+[comment]: <> (image from hoobs-image repo)
+
+
+
+
+![](https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_shelly.svg)
+
+
+
+
+[comment]: <> (Plugin Title)
+# Shelly plugin for HOOBS
+[comment]: <> (Short Plugin Description)
+This plugin exposes [Shelly](http://www.shelly.cloud) Devices to HOOBS.
+
+
+
+
+[comment]: <> (List of the Main Features, that can be set in config schema)
+### Features
+Your Shelly devices will then be automatically discovered, as long as they are on the same network and subnet as the device running homebridge.
+
+
+
+[comment]: <> (List of working Hardware Types and Modelnumbers)
+### Working Hardware
+
+Currently the following devices are supported:
+
+- Shelly 1
+- Shelly 1PM
+- Shelly 2 *1
+- Shelly 2.5 *1
+- Shelly 4Pro
+- Shelly Bulb *2
+- Shelly Dimmer
+- Shelly Door/Window
+- Shelly EM
+- Shelly Flood
+- Shelly HD
+- Shelly H&T
+- Shelly Plug
+- Shelly Plug S
+- Shelly RGBW2
+- Shelly Sense
+
+*1 To use Shelly 2 or Shelly 2.5 in roller shutter mode the device must have been calibrated and be running firmware version 1.4.9 or later.
+*2 Requires firmware version 1.5.1 or later.
+
+
+
+
+<img src="https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_shelly_products.jpg">
+
+
+
+[comment]: <> (configuration)
+### Configuration
+All Configuration can be done in the confguration section.
+
+**Administration interface**
+By default, this plugin will launch an HTTP server on port 8181 to serve an administration interface. 
+You can disable this by setting "admin"."enabled" to false. 
+You can also change the port number using "admin"."port"
+
+**Device specific configurations**
+Configurations for specific Shelly devices can be set using the "devices" array. Each object in the array must contain an "id" property with the ID of the Shelly device that you want to target. IDs are always made up of 6 hexadecimal characters and can be found in the Shelly Cloud app or the web interface of a device, under Settings -> Device info -> Device ID.
+
+**General configurations**
+"exclude" - set to true to exclude the device from Homebridge.
+"username" and "password" - set these if you have restricted the web interface of the device with 
+a username and password. This will override the global "username" and "password" options.
+"name" - sets a custom name for the device.
+
+**Shelly switch configurations**
+Applies to Shelly 1, 1PM, 2 and 2.5 in relay mode, 4Pro, EM, Plug and Plug S.
+
+"type" - sets the type of accessory the device is identified as. 
+Available types are "contactSensor", "motionSensor", "occupancySensor", "outlet", 
+"switch" (default) and "valve".
+
+**Shelly 2.5 configurations**
+"type" - in roller mode, the device can be identified as either "door", "garageDoorOpener", 
+"window" or "windowCovering" (default).
+
+**Shelly RGBW2 configurations**
+"colorMode" - set to "rgbw" (default) to have HomeKit control all four channels of the device (R, G, B, and W), 
+or to "rgb" to omit the W channel.
+
+**Advanced config example**
+```
+"devices": [
+{ "id": "74B5A3", "exclude": true },
+{ "id": "6A78BB", "colorMode": "rgb" },
+{ "id": "1D56AF", "type": "outlet" }
+]
+```
+
+
+[comment]: <> (Credit the Pluginauthor and link to npm package)
+### Credits
+Plugin for Homebridge [homebridge-shelly](https://www.npmjs.com/package/homebridge-shelly)
+
+Copyright © Alexrd. All rights reserved.
