@@ -41,7 +41,7 @@ Your account is now linked.
 Add the Homebridge Action using the Google Home mobile app.
 
 **Configuration in Google Home mobile app**
-
+<img src="https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_google_app.png" width="50%"> <img src="https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_google_app2.png" width="50%"> <img src="https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_google_app3.png" width="50%"> <img src="https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_google_app4.png" width="50%"> <img src="https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_google_app5.png" width="550%">
 
 
 [comment]: <> (Credit the Pluginauthor and link to npm package)
@@ -94,7 +94,7 @@ You can see the battery status of your lawn mower in the settings of either the 
 - Worx Landroid L WR153E 1.500 m²
 - Worx Landroid L WR155E 2.000 m²
 
-<img src="https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_Landroid_products.png" width="15%"> <img src="https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_Landroid_products2.png" width="15%"> <img src="https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_Landroid_products3.png" width="15%"> <img src="https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_Landroid_products4.png" width="15%"> <img src="https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_Landroid_products5.png" width="15%">
+<img src="https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_landroid_products.png" width="15%"> <img src="https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_landroid_products2.png" width="15%"> <img src="https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_landroid_products3.png" width="15%"> <img src="https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_landroid_products4.png" width="15%"> <img src="https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_landroid_products5.png" width="15%">
 
 [comment]: <> (configuration)
 ### Configuration
