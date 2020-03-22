@@ -137,8 +137,8 @@ Available types are "contactSensor", "motionSensor", "occupancySensor", "outlet"
 or to "rgb" to omit the W channel.
 
 **Advanced config example**
+Devices:
 ```
-"devices": [
 { "id": "74B5A3", "exclude": true },
 { "id": "6A78BB", "colorMode": "rgb" },
 { "id": "1D56AF", "type": "outlet" }
