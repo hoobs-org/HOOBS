@@ -1,5 +1,65 @@
 [comment]: <> (image from hoobs-image repo)
 
+![](https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_landroid.svg)
+
+[comment]: <> (Plugin Title)
+# Worx Landroid Lawnmover plugin for HOOBS
+[comment]: <> (Short Plugin Description)
+This plugin exposes [Landroid Lawnmovers](https://www.worx.com/landroid-choose-landroid) to HOOBS.
+Control your Worx Landroid lawn mowers through the Worx Cloud.
+
+[comment]: <> (List of the Main Features, that can be set in config schema)
+### Features
+- Start mower
+- Return mower to home
+- Mowing status (on / off)
+- Battery Status
+- Error status
+
+The mower will appear as a switch and a contact sensor in HOOBBS.
+
+**On/Off Switch**
+The switch shows the current status and allows to control the mower. If the switch is off the mower is either on the home base or on its way to the home base. If it's on the mower is currently mowing. Turn the switch on to start the mowing cycle, turn it off to send the mower back home.
+
+**Contact Sensor**
+The contact sensor is used to display issues with the mower (trapped, outside wire etc.), when the contact sensor is "open" there is some issue that prevents the mower from continuing. Fix the issue to control the mower again.
+
+**Battery Status**
+You can see the battery status of your lawn mower in the settings of either the switch or contact sensor 
+
+[comment]: <> (List of working Hardware Types and Modelnumbers)
+### Working Hardware
+
+<img src="https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_landroid_products.png" width="20%"> <img src="https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_landroid_products2.png" width="20%"> <img src="https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_landroid_products3.png" width="20%"> <img src="https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_landroid_products4.png" width="20%"> <img src="https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_landroid_products5.png" width="20%">
+
+[comment]: <> (configuration)
+### Configuration
+All Configuration can be done in the confguration section. No advanced or furhter config editing needed
+
+- Fill in Email and Password from your Worx App account data
+- Fill in your Lawnmowers name into "devname", do not use spaces in the name..
+
+Confirured Mowers
+```
+[
+    {
+        "name": "My Landroid",
+        "dev_name": "S"
+    }
+]
+```
+
+[comment]: <> (Credit the Pluginauthor and link to npm package)
+### Credits
+Plugin for Homebridge [homebridge-landroid](https://www.npmjs.com/package/homebridge-landroid)
+
+Copyright © normen. All rights reserved.
+
+
+---
+
+[comment]: <> (image from hoobs-image repo)
+
 ![](https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_sonos.svg)
 
 [comment]: <> (Plugin Title)
