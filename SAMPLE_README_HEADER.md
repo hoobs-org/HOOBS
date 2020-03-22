@@ -1,5 +1,74 @@
 [comment]: <> (image from hoobs-image repo)
 
+![](https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_alexa.svg)
+
+[comment]: <> (Plugin Title)
+# Alexa plugin for HOOBS
+Enable Amazon Alexa access and control your hHOOBS controlled devices and accessories. Full support for all Amazon Alexa devices, including the echo 2nd Generation and software based solutions. Uses an Amazon smart home skill based approach for integration between HomeBridge and Amazon Alexa.
+
+Country availability - The plugin is available in these countries, English (AU), German (DE), English (CA), English (US), French (FR), English (UK), Italian (IT), English (IN), Spanish (ES), Japanese (JP), Spanish(US), Portuguese (BR) and Spanish (MX).
+
+[comment]: <> (List of the Main Features, that can be set in config schema)
+### Features
+- Supports multiple HOOBS instances running on your network.
+- Auto-discovery of multiple HOOBS Servers
+- Supports the following HomeKit accessory types Lightbulb, Outlet, Fan, Fan2, Temperature Sensor, Window Coverings and Switch.
+- Supports passing of sensor updates in real time to Alexa for use in routines.
+- Includes support for brightness and colour.
+- Creates a Contact Sensor that monitors the status of the connect to the Homebridge Alexa Cloud Servers.
+- Enables control from non-hardware based alexa devices like Invoxia Triby, and AlexaPI.
+
+### Supported Devices
+
+- Support for Light Bulbs, Switches and outlets
+- Support for Color Light Bulbs and Colour Temperature of white Light bulbs
+- Support for Fans (As Alexa doesn't support Fans coverings I'm using Other)
+- Support for Window coverings/blinds (As Alexa doesn't support window coverings I'm using Other)
+- Support for Garage Doors
+- Support for Temperature, Contact and Motion Sensors.
+- Support for Occupancy Sensors as a Contact sensor.
+- Also supports sending real time updates from Contact, Occupancy and Motion sensors to Alexa, for use in routines.
+- Support for Fan2 aka Dyson fans
+- Support for Valves, Sprinklers and Shower Heads (As Alexa doesn't support these, they are Other)
+- Support for more than 100 accessories
+- Support for generation 2 Echo's and other Alexa devices not supported with the original version
+- Support for Speakers ( Tested with homebridge-yamaha-home, homebridge-soundtouch and homebridge-http-irblaster )
+- Support for Apple TV ( Supports homebridge-apple-tv )
+- Support Spotify playback controls on Yamaha Receivers via homebridge-yamaha-home
+- Support for door locks
+
+Alexa device names are the same as the homebridge device names.
+
+This only supports accessories connected via a homebridge plugin, any 'Homekit' accessories are not supported, and will never be supported.
+
+[comment]: <> (configuration)
+### Configuration
+All Configuration can be done in the confguration section. No advanced or furhter config editing needed
+
+An account to link your Amazon Alexa to HOOBS needs to created on this website https://www.homebridge.ca/. This account will be used when you enable the home skill in the Alexa App on your mobile, and in the configuration of the plugin in HOOBS.
+
+Go to the Alexa Plugin configuration on HOOBS interface.
+The login and password nedded in the configuration, are the credentials you created earlier for the https://www.homebridge.ca/ website
+
+In your Amazon Alexa app on your phone, please search for the "Homebridge" skill, and enable the skill. You will need to Enable and link the skill to the account you created earlier on https://www.homebridge.ca/
+
+At this point you are ready to have Alexa discover devices. Once you say Alexa, discover devices, the output will get very verbose for a minute. After discovery is complete you should see a line showing the number of devices returned to Alexa.
+
+Installation is now complete, good luck and enjoy.
+
+
+[comment]: <> (Credit the Pluginauthor and link to npm package)
+### Credits
+Plugin for Homebridge [homebridge-alexa](https://www.npmjs.com/package/homebridge-alexa)
+
+Copyright © NorthernMan54. All rights reserved.
+
+
+---
+
+
+[comment]: <> (image from hoobs-image repo)
+
 ![](https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_google.svg)
 
 [comment]: <> (Plugin Title)
