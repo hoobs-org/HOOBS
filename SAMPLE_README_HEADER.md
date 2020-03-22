@@ -1,5 +1,62 @@
 [comment]: <> (image from hoobs-image repo)
 
+![](https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_google.svg)
+
+[comment]: <> (Plugin Title)
+# Google Smart Home plugin for HOOBS
+[comment]: <> (Short Plugin Description)
+Control your supported HOOBS accessories from any Google Home speaker or the Google Home mobile app. 
+
+[comment]: <> (List of the Main Features, that can be set in config schema)
+### Features
+- Switch
+- Outlet
+- Light Bulb
+    On / Off
+    Brightness
+    Color (Hue/Saturation)
+- Fan (On / Off)
+- Fan v2 (On / Off)
+- Window
+- Window Coverings
+- Door
+- Garage Door
+- Thermostat
+- Television (On / Off)
+- Lock Mechanism (2FA required)
+- Security System (2FA required)
+
+Note: Google Smart Home does not currently support "sensor" devices such as Temperature Sensors, Motion Sensors, Occupancy Sensors etc.
+
+[comment]: <> (configuration)
+### Configuration
+All Configuration can be done in the confguration section. No advanced or furhter config editing needed
+
+**Configuration in HOOBS**
+Navigate to the Plugins page in HOOBS.
+Click the Configuration button for the Google Smart Home plugin.
+Click the Link Account button.
+Sign in with your Google or GitHub account.
+Your account is now linked.
+Add the Homebridge Action using the Google Home mobile app.
+
+**Configuration in Google Home mobile app**
+
+
+
+[comment]: <> (Credit the Pluginauthor and link to npm package)
+### Credits
+Plugin for Homebridge [homebridge-gsh](https://www.npmjs.com/package/homebridge-gsh)
+
+Copyright © oznu. All rights reserved.
+
+
+
+---
+
+
+[comment]: <> (image from hoobs-image repo)
+
 ![](https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_landroid.svg)
 
 [comment]: <> (Plugin Title)
