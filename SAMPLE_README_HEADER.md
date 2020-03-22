@@ -1,6 +1,6 @@
 [comment]: <> (image from hoobs-image repo)
 
-![](https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/logo.png)
+![](https://github.com/hoobs-org/hoobs-images/blob/master/HOOBS_x_sonos.svg)
 
 [comment]: <> (Plugin Title)
 # HOOBS plugin for Sonos
