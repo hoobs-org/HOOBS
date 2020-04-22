@@ -1,4 +1,4 @@
-![](https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/logo.png)
+![](https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/logo.png)  
 Pronounced as "huːbz"
 
 HOOBS a Homebridge stack with a interface that simplifies configuration and installing plugins. This adds a process wrapper for Homebridge. It also adds an API that can be used as an endpoint for an application.
@@ -73,5 +73,5 @@ We’re a small team from around the world who are passionate about making the h
 HOOBS™ is Located at:
 HOOBS Inc. CP 3211 L’Assomption, QC J5W 4M9, Canada
 
-HOOBS and the HOOBS logo are registered trademarks of HOOBS Inc. 
+HOOBS and the HOOBS logo are registered trademarks of HOOBS Inc.  
 Copyright (C) 2020 HOOBS Inc. All rights reserved.
