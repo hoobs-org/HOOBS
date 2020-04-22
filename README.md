@@ -1,6 +1,4 @@
 ![](https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/logo.png)
-
-## HOOBS - Homebridge Out of the Box
 Pronounced as "huːbz"
 
 HOOBS a Homebridge stack with a interface that simplifies configuration and installing plugins. This adds a process wrapper for Homebridge. It also adds an API that can be used as an endpoint for an application.
