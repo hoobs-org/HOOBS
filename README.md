@@ -1,7 +1,7 @@
 ![](https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/logo.png)  
 Pronounced as "huːbz"
 
-HOOBS a softwaree stack with a interface that simplifies configuration and installing plugins.
+HOOBS a software stack with a interface that simplifies configuration and installing plugins.
 
 ![](https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/dashboard/dashboard.png)
 
