@@ -70,7 +70,7 @@ We’re a small team from around the world who are passionate about making the h
 [Donate With Paypal](https://paypal.me/hoobsofficial)   
 
 ## Legal
-HOOBS™ is Located at:
+HOOBS™ is Located at:  
 HOOBS Inc. CP 3211 L’Assomption, QC J5W 4M9, Canada
 
 HOOBS and the HOOBS logo are registered trademarks of HOOBS Inc.  
