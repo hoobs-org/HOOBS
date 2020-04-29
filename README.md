@@ -52,7 +52,7 @@ If you’re a tinkerer or advanced user, we offer a pre-flashed microSD card, as
 
 [![](https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/products/hoobs-card.png)](https://hoobs.org/product/hoobs-on-microsd/)
 
-[![](https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/products/hoobs-download.png)](https://github.com/hoobs-org/HOOBS/releases)
+[![](https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/products/hoobs-download.png)](https://hoobs.org/product/hoobs-to-download/)
 
 ## Get Started
 * [**Step-by-Step Guide**](https://support.hoobs.org/docs/5e8759a40ab68b0344e872c1)
