@@ -1,4 +1,5 @@
-![](https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/logo.png)  
+![](https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/header.png)  
+
 Pronounced as "huːbz"
 
 ### What is HOOBS?
