@@ -95,6 +95,6 @@ HOOBS and the HOOBS logo are registered trademarks of HOOBS Inc.
 Copyright (C) 2020 HOOBS Inc. All rights reserved.
 
 The products supplied are not certified for/to use with products of Apple Inc. / Alphabet Inc. / Google LLC / Amazon.com, Inc. 
-HOOBS™ assumes no liability for wrong use of delivered products in connection with products from Apple Inc. / Alphabet Inc. / Google LLC / Amazon.com, Inc. or any other third party product. A warranty for legal deficiencies is excluded. HOOBS™ is not in any way afflilated or endorsed by Apple Inc. / Alphabet Inc. / Google LLC / Amazon.com, Inc. or any subsidiary companies related to Companies mentioned.
+HOOBS™ assumes no liability for wrong use of delivered products in connection with products from Apple Inc. / Alphabet Inc. / Google LLC / Amazon.com, Inc. or any other third party product. A warranty for legal deficiencies is excluded. HOOBS™ is not in any way afflilated or endorsed by Apple Inc. / Alphabet Inc. / Google LLC / Amazon.com, Inc. or any subsidiary companies related to companies mentioned.
 
 
