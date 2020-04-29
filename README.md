@@ -8,6 +8,7 @@ HOOBS out of the box system, or HOOBS for short, is a plug and play hub that mak
 
 ![](https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/dashboard/dashboard.png)
 
+![](https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/icon_beginner.svg?sanitize=true)
 **Beginner Friendly**
 
 Plug and play solution, ready to use out of the box.
