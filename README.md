@@ -1,13 +1,35 @@
 ![](https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/logo.png)  
 Pronounced as "huːbz"
 
-HOOBS a software stack with a interface that simplifies configuration and installing plugins.
+### What is HOOBS?
+HOOBS out of the box system, or HOOBS for short, is a plug and play hub that makes smart accessories compatible with your favorite ecosystem. Whether you prefer Apple Homekit™, Google Home™, or Amazon Alexa™, you’re unlikely to find compatible accessories and services that all work together nicely under one roof. We believe your choice of an ecosystem should not dictate which accessories you can purchase and use.
 
-Our goal is to make the smart home more accessible to new and inexperienced users. To achieve this, HOOBS aims to unify, simplify and make the an ecosystem that's more user-friendly. Starting with a standardized installation in the form of a free downloadable image file that can be easily written to an SD card, up to the complete hardware solution which works out of the box. HOOBS combines hardware and operating system, with server application and user interface for easy installation of your favorite plugins and guides the user with manuals and assistance.
+**HOOBS** aims to unify and simplify your smart home. It is designed to be accessible for beginners, yet robust and versatile for advanced users, opening a world of possibilities for automating your home.
 
 ![](https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/dashboard/dashboard.png)
 
-We’re a small team from around the world who are passionate about making the home that you live in a better home – a smart home. That is why we came up with the idea of developing HOOBS which is an out of the box ready to run system for Homebridge. We want to create a solution that even beginners could understand, get comfortable with and get a lot of use out of. Our motivation is to serve the Homebridge community with a tool that we believe will make their lives easier and we hope our goal will be reached.
+**Beginner Friendly**
+Plug and play solution, ready to use out of the box.
+
+
+**Modular and versatile**
+Over 2,000 different plugins to choose from bringing compatibility for most smart accessories on the market.
+
+
+**Secure by design**
+HOOBS runs locally on your network and is not open to the world. All external communication is encrypted with military grade encryption.
+
+
+**Tiny, yet powerful**
+The smallest smart home server ever built. It fits in your pocket, but we recommend you leave it plugged in at home for best results.
+
+
+**Field tested**
+HOOBS is currently used by thousands of people, automating homes and businesses worldwide. Every use case has been accounted for and constant updates keep it ready to deploy with any new accessory that comes out.
+
+
+**DIY solutions available**
+If you’re a tinkerer or advanced user, we offer a pre-flashed microSD card, as well as a Free (donation based) .img file of the HOOBS Software
 
 ## Products
 
@@ -71,3 +93,8 @@ HOOBS Inc. CP 3211 L’Assomption, QC J5W 4M9, Canada
 
 HOOBS and the HOOBS logo are registered trademarks of HOOBS Inc.  
 Copyright (C) 2020 HOOBS Inc. All rights reserved.
+
+The products supplied are not certified for/to use with products of Apple Inc. / Alphabet Inc. / Google LLC / Amazon.com, Inc. 
+HOOBS™ assumes no liability for wrong use of delivered products in connection with products from Apple Inc. / Alphabet Inc. / Google LLC / Amazon.com, Inc. or any other third party product. A warranty for legal deficiencies is excluded. HOOBS™ is not in any way afflilated or endorsed by Apple Inc. / Alphabet Inc. / Google LLC / Amazon.com, Inc. or any subsidiary companies related to Companies mentioned.
+
+
