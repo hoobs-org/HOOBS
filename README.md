@@ -9,32 +9,38 @@ HOOBS out of the box system, or HOOBS for short, is a plug and play hub that mak
 ![](https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/dashboard/dashboard.png)
 
 <img src="https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/icon_beginner.svg?sanitize=true" width="20%">
+
 **Beginner Friendly**
 
 Plug and play solution, ready to use out of the box.
 
 <img src="https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/icon_modular.svg?sanitize=true" width="20%">
+
 **Modular and versatile**
 
 Over 2,000 different plugins to choose from bringing compatibility for most smart accessories on the market.
 
 <img src="https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/icon_secure.svg?sanitize=true" width="20%">
+
 **Secure by design**
 
 HOOBS runs locally on your network and is not open to the world. All external communication is encrypted with military grade encryption.
 
 
 <img src="https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/icon_powerful.svg?sanitize=true" width="20%">
+
 **Tiny, yet powerful**
 
 The smallest smart home server ever built. It fits in your pocket, but we recommend you leave it plugged in at home for best results.
 
 <img src="https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/icon_flied.svg?sanitize=true" width="20%">
+
 **Field tested**
 
 HOOBS is currently used by thousands of people, automating homes and businesses worldwide. Every use case has been accounted for and constant updates keep it ready to deploy with any new accessory that comes out.
 
 <img src="https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/icon_diy.svg?sanitize=true" width="20%">
+
 **DIY solutions available**
 
 If you’re a tinkerer or advanced user, we offer a pre-flashed microSD card, as well as a Free (donation based) .img file of the HOOBS Software
