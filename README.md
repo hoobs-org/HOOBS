@@ -9,26 +9,32 @@ HOOBS out of the box system, or HOOBS for short, is a plug and play hub that mak
 ![](https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/dashboard/dashboard.png)
 
 **Beginner Friendly**
+
 Plug and play solution, ready to use out of the box.
 
 
 **Modular and versatile**
+
 Over 2,000 different plugins to choose from bringing compatibility for most smart accessories on the market.
 
 
 **Secure by design**
+
 HOOBS runs locally on your network and is not open to the world. All external communication is encrypted with military grade encryption.
 
 
 **Tiny, yet powerful**
+
 The smallest smart home server ever built. It fits in your pocket, but we recommend you leave it plugged in at home for best results.
 
 
 **Field tested**
+
 HOOBS is currently used by thousands of people, automating homes and businesses worldwide. Every use case has been accounted for and constant updates keep it ready to deploy with any new accessory that comes out.
 
 
 **DIY solutions available**
+
 If you’re a tinkerer or advanced user, we offer a pre-flashed microSD card, as well as a Free (donation based) .img file of the HOOBS Software
 
 ## Products
