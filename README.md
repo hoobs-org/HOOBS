@@ -28,7 +28,7 @@ Over 2,000 different plugins to choose from bringing compatibility for most smar
 HOOBS runs locally on your network and is not open to the world. All external communication is encrypted with military grade encryption.
 
 
-<img src="https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/icon_powerful.svg?sanitize=true" width="20%">
+<img src="https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/icon_powerful.svg?sanitize=true" width="10%">
 
 **Tiny, yet powerful**
 
