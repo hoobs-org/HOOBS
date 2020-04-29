@@ -9,33 +9,32 @@ HOOBS out of the box system, or HOOBS for short, is a plug and play hub that mak
 ![](https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/dashboard/dashboard.png)
 
 <img src="https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/icon_beginner.svg?sanitize=true" width="20%">
-
-![20%](https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/icon_beginner.svg?sanitize=true)
 **Beginner Friendly**
 
 Plug and play solution, ready to use out of the box.
 
-
+<img src="https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/icon_modular.svg?sanitize=true" width="20%">
 **Modular and versatile**
 
 Over 2,000 different plugins to choose from bringing compatibility for most smart accessories on the market.
 
-
+<img src="https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/icon_secure.svg?sanitize=true" width="20%">
 **Secure by design**
 
 HOOBS runs locally on your network and is not open to the world. All external communication is encrypted with military grade encryption.
 
 
+<img src="https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/icon_powerful.svg?sanitize=true" width="20%">
 **Tiny, yet powerful**
 
 The smallest smart home server ever built. It fits in your pocket, but we recommend you leave it plugged in at home for best results.
 
-
+<img src="https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/icon_flied.svg?sanitize=true" width="20%">
 **Field tested**
 
 HOOBS is currently used by thousands of people, automating homes and businesses worldwide. Every use case has been accounted for and constant updates keep it ready to deploy with any new accessory that comes out.
 
-
+<img src="https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/icon_diy.svg?sanitize=true" width="20%">
 **DIY solutions available**
 
 If you’re a tinkerer or advanced user, we offer a pre-flashed microSD card, as well as a Free (donation based) .img file of the HOOBS Software
@@ -48,36 +47,22 @@ If you’re a tinkerer or advanced user, we offer a pre-flashed microSD card, as
 
 [![](https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/products/hoobs-download.png)](https://github.com/hoobs-org/HOOBS/releases)
 
+## Get Started
+* [**Step-by-Step Guide**](https://support.hoobs.org/docs/5e8759a40ab68b0344e872c1)
+* [**FAQ - Knowledgebase**](https://support.hoobs.org/docs/5e8759f00ab68b0344e872c2)
+
 ## Documentation
-* [**Community**](https://github.com/hoobs-org/HOOBS/wiki/1.0-Community)
-* [**News**](https://github.com/hoobs-org/HOOBS/wiki/1.1-News)
-* [**Getting Started**](https://support.hoobs.org/docs/5e763b10e87d1e02b6c19d29)
-  * [**HOOBS Box**](https://support.hoobs.org/docs/5e763d06e87d1e02b6c19d30)
-  * [**HOOBS SD Card**](https://support.hoobs.org/docs/5e763d92e87d1e02b6c19d31)
-  * [**Upgrading HOOBS**](https://support.hoobs.org/docs/5e763dfbe87d1e02b6c19d32)
-  * [**Upgrading Manually**](https://support.hoobs.org/docs/5e764226e87d1e02b6c19d3b)
-  * [**Installing HOOBS**](https://support.hoobs.org/docs/5e763e30e87d1e02b6c19d33)
-  * [**Remote Access**](https://support.hoobs.org/docs/5e763e4be87d1e02b6c19d34)
-* [**User Interface**](https://support.hoobs.org/docs/5e763b3ee87d1e02b6c19d2a)
-  * [**Administrator Account**](https://support.hoobs.org/docs/5e76440be87d1e02b6c19d3c)
-  * [**Status Dashboard**](https://support.hoobs.org/docs/5e764428e87d1e02b6c19d3d)
-  * [**Accessories**](https://support.hoobs.org/docs/5e76444fe87d1e02b6c19d3e)
-  * [**Room Layout**](https://support.hoobs.org/docs/5e764471e87d1e02b6c19d3f)
-  * [**Log**](https://support.hoobs.org/docs/5e76448ae87d1e02b6c19d40)
-  * [**System Management**](https://support.hoobs.org/docs/5e7644aae87d1e02b6c19d41)
-  * [**Plugin Management**](https://support.hoobs.org/docs/5e7644ece87d1e02b6c19d42)
-  * [**Configuration**](https://support.hoobs.org/docs/5e76450ae87d1e02b6c19d43)
-  * [**User Accounts**](https://support.hoobs.org/docs/5e764529e87d1e02b6c19d44)
-  * [**Themes**](https://support.hoobs.org/docs/5e76454fe87d1e02b6c19d45)
-* [**Plugins**](https://support.hoobs.org/docs/5e763b63e87d1e02b6c19d2b)
-* [**Hardware**](https://support.hoobs.org/docs/5e763b88e87d1e02b6c19d2c)
-  * [**Certified Hardware**](https://support.hoobs.org/docs/5e764858e87d1e02b6c19d46)
-  * [**Certified Accessories**](https://support.hoobs.org/docs/5e764929e87d1e02b6c19d47)
-* [**Developers**](https://support.hoobs.org/docs/5e763bf6e87d1e02b6c19d2d)
-  * [**Building**](https://support.hoobs.org/docs/5e764e50e87d1e02b6c19d4b)
-  * [**Command Line**](https://support.hoobs.org/docs/5e764e72e87d1e02b6c19d4c)
-  * [**API Reference**](https://support.hoobs.org/docs/5e764e96e87d1e02b6c19d4d)
-  * [**Developing Plugins**](https://support.hoobs.org/docs/5e764eb6e87d1e02b6c19d4e)
+* [**HOOBS in a Box**](https://support.hoobs.org/docs/5e763d06e87d1e02b6c19d30)
+* [**HOOBS on microSD**](https://support.hoobs.org/docs/5e763d92e87d1e02b6c19d31)
+* [**HOOBS to Download**](https://support.hoobs.org/docs/5e8599870ab68b0344e872bd)
+* [**Install HOOBS Manually**](https://support.hoobs.org/docs/5e763e30e87d1e02b6c19d33)
+* [**HOOBS Migration Tool**](https://support.hoobs.org/docs/5e763dfbe87d1e02b6c19d32)
+* [**Migrate Manually**](https://support.hoobs.org/docs/5e764226e87d1e02b6c19d3b)
+* [**Installing HOOBS**](https://support.hoobs.org/docs/5e763e30e87d1e02b6c19d33)
+* [**Remote Access**](https://support.hoobs.org/docs/5e763e4be87d1e02b6c19d34)
+
+* [**Features**](https://support.hoobs.org/docs/5e763b3ee87d1e02b6c19d2a)
+
 * [**Legal**](https://support.hoobs.org/docs/5e763c8fe87d1e02b6c19d2e)
   * [**Terms & Conditions**](https://support.hoobs.org/docs/5e7649bee87d1e02b6c19d48)
   * [**Shipping & Taxes**](https://support.hoobs.org/docs/5e764a02e87d1e02b6c19d49)
