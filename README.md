@@ -8,6 +8,8 @@ HOOBS out of the box system, or HOOBS for short, is a plug and play hub that mak
 
 ![](https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/dashboard/dashboard.png)
 
+<img src="https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/icon_beginner.svg?sanitize=true" width="20%">
+
 ![20%](https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/icon_beginner.svg?sanitize=true)
 **Beginner Friendly**
 
