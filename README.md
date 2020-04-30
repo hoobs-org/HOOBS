@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/logo.png" width="100%"> 
+<img src="https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/logo.png" width="20%"> 
 
 Pronounced as "huːbz"
 
