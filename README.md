@@ -1,4 +1,4 @@
-# ![](https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/logo.png)  
+<img src="https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/logo.png" width="100%"> 
 
 Pronounced as "huːbz"
 
