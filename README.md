@@ -86,7 +86,7 @@ If you’re a tinkerer or advanced user, we offer a pre-flashed microSD card, as
 [Homebridge Subreddit](https://www.reddit.com/r/homebridge/)  
 
 ## Support HOOBS
-[Donate With Paypal](https://paypal.me/hoobsofficial)   
+[Donate With Paypal](https://paypal.me/hoobsorg)   
 
 ## Legal
 HOOBS™ is Located at:  
