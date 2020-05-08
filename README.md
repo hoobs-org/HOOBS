@@ -86,7 +86,7 @@ If you’re a tinkerer or advanced user, we offer a pre-flashed microSD card, as
 [Homebridge Subreddit](https://www.reddit.com/r/homebridge/)  
 
 ## Support HOOBS
-[Donate With Paypal](https://paypal.me/hoobsorg)   
+<a href="https://www.buymeacoffee.com/hoobs" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/arial-yellow.png" alt="Buy Me A Coffee" style="height: 51px !important;width: 217px !important;" ></a>  
 
 ## Legal
 HOOBS™ is Located at:  
