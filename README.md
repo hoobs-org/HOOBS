@@ -82,8 +82,7 @@ If you’re a tinkerer or advanced user, we offer a pre-flashed microSD card, as
 [Plugin Community](https://plugins.hoobs.org)  
 [HOOBS Subreddit](https://www.reddit.com/r/hoobs/)  
 [HOOBS Facebook Page](https://www.facebook.com/HOOBSofficial)  
-[HOOBS Facebook Support Group](https://www.facebook.com/groups/HOOBSorg/)  
-[Homebridge Subreddit](https://www.reddit.com/r/homebridge/)  
+[HOOBS Facebook Support Group](https://www.facebook.com/groups/HOOBSorg/)
 
 ## Support HOOBS
 <a href="https://www.buymeacoffee.com/hoobs" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/arial-yellow.png" alt="Buy us A Coffee" style="height: 51px !important;width: 217px !important;" ></a>
