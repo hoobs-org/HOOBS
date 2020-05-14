@@ -68,6 +68,16 @@ usage()
     echo ""
 }
 
+hr()
+{
+    printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
+}
+
+lr()
+{
+    printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
+}
+
 reset()
 {
     echo ""
@@ -359,16 +369,17 @@ check_existing_install
 
 echo ""
 echo "Thank You for choosing HOOBS"
-echo "---------------------------------------------------------"
+hr
 
 if [[ "$NODE_INSTALLED" = "true" ]]; then
     echo "Node Version $NODE_VERSION"
 elif [[ "$OS" == "Darwin" ]]; then
     echo "Can Not Install Node"
-    echo "------------------------------------------------------------"
-    echo "Please go to https://nodejs.org/ and download and install   "
-    echo "Node for macOS.                                             "
-    echo "------------------------------------------------------------"
+
+    lr
+    echo "Please go to https://nodejs.org/ and download and install"
+    echo "Node for macOS."
+    lr
 
     exit
 elif [[ "$NODE_TARGET" == "" ]]; then
@@ -383,26 +394,33 @@ install_prequsits
 if [[ "$NODE_INSTALLED" = "false" || ( "$NODE_TARGET" != "" && "$NODE_VERSION" != "$NODE_TARGET" ) ]]; then
     if [[ "$ARCH" == "armv6l" && "$NODE_TARGET" > "10.18.0" ]]; then
         echo "Can Not Install Node"
-        echo "------------------------------------------------------------"
-        echo "Node $NODE_VERSION is not supported on your system.         "
-        echo "------------------------------------------------------------"
+
+        lr
+        echo "Node $NODE_VERSION is not supported on your system."
+        lr
     fi
 
+    echo ""
     echo "Installing Node"
+    hr
 
     install_node_prequsits
     install_node
     get_node
     get_npm
 
+    lr
     echo "Node $NODE_VERSION Installed"
+    echo ""
 fi
 
 if [[ "$NPM_TARGET" != "" && "$NPM_VERSION" != "$NPM_TARGET" ]]; then
     install_npm
     get_npm
 
+    lr
     echo "NPM $NPM_VERSION Installed"
+    echo ""
 fi
 
 clear_npm_cache
@@ -440,7 +458,7 @@ if [[ "$HOOBS_INSTALLED" = "true" ]]; then
         if command -v hoobs > /dev/null; then
             echo ""
             echo "Restarting HOOBS"
-            echo "---------------------------------------------------------"
+            hr
 
             hoobs switch hoobs
             hoobs service restart
@@ -467,7 +485,7 @@ else
         if command -v hoobs > /dev/null; then
             echo ""
             echo "Initializing HOOBS"
-            echo "---------------------------------------------------------"
+            hr
 
             if [[ "$REBOOT_AFTER" = "true" ]]; then
                 hoobs service install --reboot
