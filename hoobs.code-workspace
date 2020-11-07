@@ -1,0 +1,21 @@
+{
+    "folders": [
+        {
+            "name": "Daemon",
+            "path": "./hoobsd"
+        },
+        {
+            "name": "Command Line",
+            "path": "./cli"
+        },
+        {
+            "name": "Interface",
+            "path": "./gui"
+        },
+        {
+            "name": "Documentation",
+            "path": "./docs"
+        }
+    ],
+    "settings": {}
+}

@@ -1,1 +1,6 @@
 .DS_Store
+
+# Tracked Projects
+/cli
+/gui
+/hoobsd

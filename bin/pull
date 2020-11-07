@@ -1,0 +1,9 @@
+#!/bin/bash
+
+cd ./hoobsd
+git pull
+cd ../gui
+git pull
+cd ../cli
+git pull
+cd ../hoobs

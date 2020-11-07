@@ -1,0 +1,20 @@
+{
+    "name": "@hoobs/hoobs",
+    "version": "4.0.1",
+    "description": "Build your Smart Home with HOOBS. Connect over 2,000 Accessories to your favorite Ecosystem.",
+    "license": "GPL-3.0",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/hoobs-org/hoobsd.git"
+    },
+    "bugs": {
+        "url": "https://github.com/hoobs-org/hoobsd/issues"
+    },
+    "author": {
+        "name": "Michael J Kellsy"
+    },
+    "scripts": {
+        "push": "bin/push",
+        "pull": "bin/pull"
+    }
+}
