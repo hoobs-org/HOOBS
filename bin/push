@@ -1,9 +1,14 @@
 #!/bin/bash
 
+git push
+
 cd ./hoobsd
 git push
-cd ../gui
-git push
+
 cd ../cli
 git push
-cd ../hoobs
+
+cd ../gui
+git push
+
+cd ../

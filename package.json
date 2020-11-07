@@ -15,6 +15,7 @@
     },
     "scripts": {
         "push": "bin/push",
-        "pull": "bin/pull"
+        "pull": "bin/pull",
+        "setup": "bin/setup"
     }
 }

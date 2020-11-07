@@ -1,9 +1,18 @@
 #!/bin/bash
 
+git pull
+
 cd ./hoobsd
 git pull
-cd ../gui
-git pull
+yarn install
+
 cd ../cli
 git pull
-cd ../hoobs
+yarn install
+yarn build
+
+cd ../gui
+git pull
+yarn install
+
+cd ../
