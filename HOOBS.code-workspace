@@ -17,5 +17,7 @@
             "path": "./docs"
         }
     ],
-    "settings": {}
+    "settings": {
+        "vetur.format.defaultFormatter.html": "prettyhtml"
+    }
 }
