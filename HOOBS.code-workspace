@@ -18,6 +18,14 @@
         }
     ],
     "settings": {
-        "vetur.format.defaultFormatter.html": "prettyhtml"
+        "vetur.format.defaultFormatter.html": "prettyhtml",
+        "vetur.format.options.tabSize": 4,
+        "vetur.format.scriptInitialIndent": true,
+        "vetur.format.styleInitialIndent": true,
+        "npm.autoDetect": "off",
+        "npm.packageManager": "yarn",
+        "scss.lint.duplicateProperties": "warning",
+        "scss.lint.ieHack": "warning",
+        "prettier.packageManager": "yarn"
     }
 }
