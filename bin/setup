@@ -2,7 +2,7 @@
 
 [[ -d hoobsd ]] || git clone https://github.com/hoobs-org/hoobsd.git
 [[ -d cli ]] || git clone https://github.com/hoobs-org/cli.git
-[[ -d gui ]] || https://github.com/hoobs-org/gui.git
+[[ -d gui ]] || git clone https://github.com/hoobs-org/gui.git
 
 cd ./hoobsd
 yarn install
