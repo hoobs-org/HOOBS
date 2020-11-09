@@ -1,19 +1,23 @@
 {
     "folders": [
         {
-            "name": "Daemon",
-            "path": "./hoobsd"
+            "name": "sdk",
+            "path": "./sdk"
         },
         {
-            "name": "Command Line",
+            "name": "cli",
             "path": "./cli"
         },
         {
-            "name": "Interface",
+            "name": "hoobsd",
+            "path": "./hoobsd"
+        },
+        {
+            "name": "gui",
             "path": "./gui"
         },
         {
-            "name": "Documentation",
+            "name": "docs",
             "path": "./docs"
         }
     ],

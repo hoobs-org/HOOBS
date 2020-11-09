@@ -15,4 +15,9 @@ cd ../gui
 git pull
 yarn install
 
+cd ../sdk
+git pull
+yarn install
+yarn build
+
 cd ../

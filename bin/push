@@ -11,4 +11,7 @@ git push
 cd ../gui
 git push
 
+cd ../sdk
+git push
+
 cd ../
