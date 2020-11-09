@@ -1,7 +1,7 @@
 ## SDK
 The SDK in this project defines the HOOBS API and added into Vue using a Mixin. Below, defines the properties and methods available in this SDK.
 
-#### **sdk.version()**
+### **sdk.version()**
 This returns the current HOOBS version installed.
 
 #### **sdk.latest()**
