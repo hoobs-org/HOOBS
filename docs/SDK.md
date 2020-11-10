@@ -559,6 +559,7 @@ Returns a list of instances on the device.
         start: number,
         end: number
     },
+    autostart: number,
     host: string,
     plugins: string,
     service: string
@@ -595,6 +596,7 @@ Fetches an instance object. Will return `undefined` is the instance doesn't exis
         start: number,
         end: number
     },
+    autostart: number,
     host: string,
     plugins: string,
     service: string
