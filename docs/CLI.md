@@ -89,6 +89,7 @@ Available options
 | --------------------- | ---------------------------------------------------- |
 | -i, --instance <name> | Defines a name for the instance                      |
 | -p, --port <port>     | Sets the port for the instance                       |
+| -n, --pin <pin>       | Sets the pin for bridge paring                       |
 | -s, --skip            | This will skip the systemd or launchd service create |
 | -c, --container       | This changes the paths needed for Docker containers  |
 

@@ -553,20 +553,28 @@ Returns a list of instances on the device.
     type: string,
     display: string,
     port: number,
+    pin: string,
+    username: string,
+    ports: {
+        start: number,
+        end: number
+    },
     host: string,
     plugins: string,
     service: string
 }]
 ```
 
-## **hoobs.instances.add([name], [port])**
+## **hoobs.instances.add([name], [port], \<pin\>, \<username\>)**
 Adds an instance to the device. This will automatically create a system service and start it.
 
 Parameters
-| Name | Required | Type   | Description                                    |
-| ---- | -------- | ------ | ---------------------------------------------- |
-| name | Yes      | string | The display name for the instance              |
-| port | Yes      | number | The port for the instance, between 1 and 65535 |
+| Name     | Required | Type   | Description                                               |
+| -------- | -------- | ------ | --------------------------------------------------------- |
+| name     | Yes      | string | The display name for the instance                         |
+| port     | Yes      | number | The port for the instance, between 1 and 65535            |
+| pin      | No       | string | The pin used to pair with HomeKit, defaults to 031-45-154 |
+| username | No       | string | The bridge username, will auto generate is not set        |
 
 The name is automatically sanitized and used as an id for the instance.
 
@@ -581,6 +589,12 @@ Fetches an instance object. Will return `undefined` is the instance doesn't exis
     type: string,
     display: string,
     port: number,
+    pin: string,
+    username: string,
+    ports: {
+        start: number,
+        end: number
+    },
     host: string,
     plugins: string,
     service: string
@@ -714,15 +728,31 @@ Plugin queries are the same as NPM or Yarn queries. Use this format `@scope/name
 
 > This method is attached to the instance object you must access this from the `hoobs.instance([name])` command.
 
-## **instance.rename([name])**
-This allows you to rename an instance.
+## **instance.update([name], [autostart], \<pin\>, \<username\>)**
+This allows you to edit the instance information.
 
 Parameters
-| Name | Required | Type   | Description                                |
-| ---- | -------- | ------ | ------------------------------------------ |
-| name | Yes      | string | The desired display name for this instance |
+| Name      | Required | Type    | Description                                                  |
+| --------- | -------- | ------- | ------------------------------------------------------------ |
+| name      | Yes      | string  | The desired display name for this instance                   |
+| autostart | Yes      | number  | Set the number to delay the start of the bridge (in seconds) |
+| pin       | No       | string  | Change the bridge's pin                                      |
+| username  | No       | string  | Change the bridge username                                   |
 
 The name is updated but the id will remain unchanged. We do this so you don't have to change any system services.
+
+> This method is attached to the instance object you must access this from the `hoobs.instance([name])` command.
+
+## **instance.ports([start], [end])**
+This allows you to set the port pool on an instance. Usefull for camera plugins.
+
+Parameters
+| Name  | Required | Type   | Description                                      |
+| ----- | -------- | ------ | ------------------------------------------------ |
+| start | Yes      | number | The start port for the pool, between 1 and 65535 |
+| end   | No       | number | The end port for the pool, between 1 and 65535   |
+
+The end port must be equal to or larger then the start port.
 
 > This method is attached to the instance object you must access this from the `hoobs.instance([name])` command.
 
