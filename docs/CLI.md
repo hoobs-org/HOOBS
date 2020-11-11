@@ -116,6 +116,24 @@ Available options
 
 > If the instance name is not set the CLI will ask for this information.
 
+#### **hoobs instance export**
+This will export an instance to your current working directory.
+
+```
+cd ~/backups
+sudo hoobs instance export
+```
+
+> Note this will need to be ran with elevated permissions. You will need to chmod the file if you want to work with it.
+
+Available options
+| Flag                  | Description                                          |
+| --------------------- | ---------------------------------------------------- |
+| -i, --instance <name> | Defines instance to export                           |
+| -c, --container       | This changes the paths needed for Docker containers  |
+
+> If the instance name is not set the CLI will ask for this information.
+
 #### **hoobs instance list**
 This will show a list of instances on the system including the API. It will also show you if the instance is running.
 
@@ -329,7 +347,7 @@ sudo hoobs system upgrade
 ```
 
 #### **hoobs system backup**
-This will backup your current setup to the filder you run it from.
+This will backup your current setup to the current working directory.
 
 ```
 cd ~/backups

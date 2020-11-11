@@ -59,7 +59,7 @@ This will return an array of user records.
     permissions: {
         accessories: boolean,
         controller: boolean,
-        instnace: boolean,
+        instances: boolean,
         plugins: boolean,
         users: boolean,
         reboot: boolean,
@@ -90,7 +90,7 @@ Fetches a user object by id.
     permissions: {
         accessories: boolean,
         controller: boolean,
-        instnace: boolean,
+        instances: boolean,
         plugins: boolean,
         users: boolean,
         reboot: boolean,
@@ -237,7 +237,7 @@ Fetches the current device status.
 > The instance key is the instance id
 
 ## **hoobs.backup.execute()**
-This will generate a backup file and will return a URL to that backup file. If the backup fails an error object is returned.
+This will generate a backup file and will return a URL to that file. If the backup fails an error object is returned.
 
 ## **hoobs.backup.catalog()**
 Returns an list of backups available.
@@ -637,24 +637,9 @@ Returns this instance's configuration data.
 
 ```js
 {
-    bridge: {
-        name: string,
-        username: string,
-        pin: string,
-        port: number,
-        setupID: [string],
-        manufacturer: string,
-        model: string
-    },
-    description: string,
-    mdns: any,
-    accessories: [any],
-    platforms: [any],
     plugins: [string],
-    ports: {
-        start: number,
-        end: number
-    }
+    accessories: [any],
+    platforms: [any]
 }
 ```
 
@@ -827,6 +812,9 @@ Fetches the accessory and persisted connections cache on this instance.
 ```
 
 > This method is attached to the instance object you must access this from the `hoobs.instance([name])` command.
+
+## **instance.export()**
+This will generate an instance file and will return a URL to that file. If the export fails an error object is returned.
 
 ## **instance.remove()**
 This will remove this instance including all plugins and configurations.
