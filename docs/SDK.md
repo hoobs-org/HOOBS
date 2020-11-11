@@ -581,6 +581,22 @@ The name is automatically sanitized and used as an id for the instance.
 
 > If your operating system doesn't have systemd or launchd the service creation is skipped.
 
+## **hoobs.instances.import([file], [name], [port], \<pin\>, \<username\>)**
+This will add an instance from an export of another instance. This will automatically create a system service and start it.
+
+Parameters
+| Name     | Required | Type   | Description                                                     |
+| -------- | -------- | ------ | --------------------------------------------------------------- |
+| file     | Yes      | Blob   | This can be any backup file stream including an HTTPFile object |
+| name     | Yes      | string | The display name for the instance                               |
+| port     | Yes      | number | The port for the instance, between 1 and 65535                  |
+| pin      | No       | string | The pin used to pair with HomeKit, defaults to 031-45-154       |
+| username | No       | string | The bridge username, will auto generate is not set              |
+
+The name is automatically sanitized and used as an id for the instance.
+
+> If your operating system doesn't have systemd or launchd the service creation is skipped.
+
 ## **hoobs.instance([name])**
 Fetches an instance object. Will return `undefined` is the instance doesn't exist.
 
