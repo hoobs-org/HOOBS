@@ -31,6 +31,7 @@
         "vetur.format.scriptInitialIndent": true,
         "vetur.format.styleInitialIndent": true,
         "npm.packageManager": "yarn",
+        "npm-intellisense.importQuotes": "\"",
         "scss.lint.duplicateProperties": "warning",
         "scss.lint.ieHack": "warning",
         "typescriptHero.imports.stringQuoteStyle": "\"",
