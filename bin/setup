@@ -4,6 +4,7 @@
 [[ -d cli ]] || git clone https://github.com/hoobs-org/cli.git
 [[ -d gui ]] || git clone https://github.com/hoobs-org/gui.git
 [[ -d sdk ]] || git clone https://github.com/hoobs-org/sdk.git
+[[ -d connect ]] || git clone https://github.com/hoobs-org/connect.git
 
 cd ./hoobsd
 yarn install
