@@ -5,10 +5,10 @@
     "license": "GPL-3.0",
     "repository": {
         "type": "git",
-        "url": "git://github.com/hoobs-org/hoobsd.git"
+        "url": "git://github.com/hoobs-org/HOOBS.git"
     },
     "bugs": {
-        "url": "https://github.com/hoobs-org/hoobsd/issues"
+        "url": "https://github.com/hoobs-org/HOOBS/issues"
     },
     "author": {
         "name": "Michael J Kellsy"
