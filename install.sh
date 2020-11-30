@@ -241,6 +241,8 @@ install_node()
                     npm config set -g prefix $NPM_PREFIX
                     npm install -g npm@$NPM_TARGET
                     npm config set -g prefix $NPM_PREFIX
+
+		    setcap CAP_NET_BIND_SERVICE=+eip $NODE_PREFIX/bin/node
                     ;;
 
                 "armv6l")
@@ -251,6 +253,8 @@ install_node()
                     npm config set -g prefix $NPM_PREFIX
                     npm install -g npm@$NPM_TARGET
                     npm config set -g prefix $NPM_PREFIX
+
+		    setcap CAP_NET_BIND_SERVICE=+eip $NODE_PREFIX/bin/node
                     ;;
 
                 "armv7l")
@@ -261,6 +265,8 @@ install_node()
                     npm config set -g prefix $NPM_PREFIX
                     npm install -g npm@$NPM_TARGET
                     npm config set -g prefix $NPM_PREFIX
+
+		    setcap CAP_NET_BIND_SERVICE=+eip $NODE_PREFIX/bin/node
                     ;;
 
                 "armv8l")
@@ -271,6 +277,8 @@ install_node()
                     npm config set -g prefix $NPM_PREFIX
                     npm install -g npm@$NPM_TARGET
                     npm config set -g prefix $NPM_PREFIX
+
+		    setcap CAP_NET_BIND_SERVICE=+eip $NODE_PREFIX/bin/node
                     ;;
             esac
             ;;
