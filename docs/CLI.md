@@ -1,12 +1,27 @@
 ## CLI
 The HOOBS command line interface is the software that managess bridge instances. Below is a list of commands and actions available in the HOOBS CLI.
 
-
 ## **hoobsd start**
-This starts instances. It is also the default command when no other command is defined.
+This starts the control api. This is needed to manage the instances. It is also the default command when no other command is defined.
 
 ```
-sudo hoobsd start -i 'my-instance'
+sudo hoobsd start
+```
+
+Available options
+| Flag                  | Description                                         |
+| --------------------- | --------------------------------------------------- |
+| -d, --debug           | Turn on debug level logging                         |
+| -v, --verbose         | Tuen on insane verbose logging                      |
+| -p, --port <port>     | Override the defined API port                       |
+| -o, --orphans         | Keep cached accessories for orphaned plugins        |
+| -c, --container       | This changes the paths needed for Docker containers |
+
+## **hoobsd instance**
+This starts instances.
+
+```
+sudo hoobsd instance -i 'my-instance'
 ```
 
 Available options
@@ -21,28 +36,11 @@ Available options
 
 > If an instance name is not included the default is **default**
 
-## **hoobsd api**
-This starts the control api. This is needed to manage the instances.
-
-```
-sudo hoobsd api
-```
-
-Available options
-| Flag                  | Description                                         |
-| --------------------- | --------------------------------------------------- |
-| -d, --debug           | Turn on debug level logging                         |
-| -v, --verbose         | Tuen on insane verbose logging                      |
-| -p, --port <port>     | Override the defined API port                       |
-| -c, --container       | This changes the paths needed for Docker containers |
-
 ## **hoobsd service <action>**
-This controls the services installed on teh system. To create the services use the HOOBS CLI.
-
-> If you do not define an instance the default is **default**, also to control the API service, the instance name is **api**.
+This controls the service installed on the system. To create the service use the HOOBS CLI.
 
 ```
-sudo hoobsd service start -i 'my-instance'
+sudo hoobsd service start
 ```
 
 Available actions
@@ -56,7 +54,6 @@ Available options
 | Flag                  | Description                                         |
 | --------------------- | --------------------------------------------------- |
 | -d, --debug           | Turn on debug level logging                         |
-| -i, --instance <name> | Define the instance to start, can be the name or id |
 
 ## **hoobs initilize**
 This initilizes the system. It creates the special API instance. The API instance is a control hub for all other instances.
