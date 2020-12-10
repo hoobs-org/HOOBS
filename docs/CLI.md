@@ -377,12 +377,3 @@ sudo hoobs system reset
 ```
 
 > This will keep you backup folder, so it is wise to create a backup before running this command.
-
-## **hoobs remote**
-This will start a remote terminal session with HOOBS support.
-
-```
-hoobs remote
-```
-
-> It is not wise using this command with sudo.
