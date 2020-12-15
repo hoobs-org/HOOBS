@@ -6,6 +6,8 @@
 [[ -d sdk ]] || git clone https://github.com/hoobs-org/sdk.git
 [[ -d connect ]] || git clone https://github.com/hoobs-org/connect.git
 
+mkdir builds
+
 cd ./hoobsd
 yarn install
 
