@@ -2,10 +2,10 @@
 The SDK in this project defines the HOOBS API and added into Vue using a Mixin. Below, defines the properties and methods available in this SDK.
 
 ## **hoobs.version()**
-This returns the current HOOBS version installed.
+This returns the current HOOBSD version installed.
 
 ## **hoobs.latest()**
-This returns the latest releasesd HOOBS version.
+This returns the latest releasesd HOOBSD version.
 
 ## **hoobs.auth.status()**
 This fetches the status of the authentication system. It will return one of these values.
@@ -175,6 +175,15 @@ Fetches the current device status.
 
 ```js
 {
+    version: string,
+    release: string,
+    upgraded: boolean,
+    cli_version: string,
+    cli_release: string,
+    cli_upgraded: boolean,
+    node_version: string,
+    node_release: string,
+    node_upgraded: boolean,
     instances: {
         instance: {
             version: string,
@@ -279,6 +288,7 @@ Returns a system information object.
     system: {
         manufacturer: string,
         model: string,
+        distribution: string,
         version: string,
         serial: string,
         uuid: string,
