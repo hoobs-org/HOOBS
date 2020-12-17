@@ -1,7 +1,7 @@
 ## CLI
 The HOOBS command line interface is the software that managess bridge instances. Below is a list of commands and actions available in the HOOBS CLI.
 
-## **hoobsd start**
+## Start
 This starts the control api. This is needed to manage the instances. It is also the default command when no other command is defined.
 
 ```
@@ -17,7 +17,7 @@ Available options
 | -o, --orphans         | Keep cached accessories for orphaned plugins        |
 | -c, --container       | This changes the paths needed for Docker containers |
 
-## **hoobsd instance**
+## Instance
 This starts instances.
 
 ```
@@ -36,7 +36,7 @@ Available options
 
 > If an instance name is not included the default is **default**
 
-## **hoobsd service <action>**
+## Service
 This controls the service installed on the system. To create the service use the HOOBS CLI.
 
 ```
@@ -55,11 +55,11 @@ Available options
 | --------------------- | --------------------------------------------------- |
 | -d, --debug           | Turn on debug level logging                         |
 
-## **hoobs initilize**
+## Iinitilize
 This initilizes the system. It creates the special API instance. The API instance is a control hub for all other instances.
 
 ```
-sudo hoobs initilize
+sudo hbs initilize
 ```
 
 Available options
@@ -69,16 +69,18 @@ Available options
 | -s, --skip        | This will skip the systemd or launchd service create       |
 | -c, --container   | This changes the paths needed for Docker containers        |
 
-## **hoobs instance [action]**
+## Instance
 This controls instances on the system. It can be used to list, create and remove instances.
 
 > This also creates and starts systemd and launchd services. If your system doesn't have either of these systems, the CLI will not attempt this.
 
-#### **hoobs instance add**
+#### Add
+*alias **create**  
+
 This will create an instance.
 
 ```
-sudo hoobs instance create
+sudo hbs instance create
 ```
 
 Available options
@@ -92,14 +94,13 @@ Available options
 
 > If the instance name or port is not set the CLI will ask for this information.
 
-#### **hoobs instance create**
-This is an alias for **add**.
+#### Remove
+*alias **rm***  
 
-#### **hoobs instance remove**
 This will remove an instance.
 
 ```
-sudo hoobs instance remove
+sudo hbs instance remove
 ```
 
 > This will remove all configs and plugins.
@@ -113,12 +114,12 @@ Available options
 
 > If the instance name is not set the CLI will ask for this information.
 
-#### **hoobs instance export**
+#### Export
 This will export an instance to your current working directory.
 
 ```
 cd ~/backups
-sudo hoobs instance export
+sudo hbs instance export
 ```
 
 > Note this will need to be ran with elevated permissions. You will need to chmod the file if you want to work with it.
@@ -131,28 +132,29 @@ Available options
 
 > If the instance name is not set the CLI will ask for this information.
 
-#### **hoobs instance list**
+#### List
+*alias **ls***  
+
 This will show a list of instances on the system including the API. It will also show you if the instance is running.
 
 ```
-sudo hoobs instance list
+sudo hbs instance list
 ```
 
-#### **hoobs instance ls**
-This is an aliad for **list**.
-
-## **hoobs plugin [action]**
+## Plugin
 This allows you to install, remove and list plugins from any instance.
 
 This will manage the plugin locations, logging and configs. This important because HOOBS encrypts your config files.
 
 > Even though you can install plugins using npm or yarn, this handles everything that those tools don't This plugin command is a more secure way of installing plugins.
 
-#### **hoobs plugin add [name]**
+#### Add
+*alias **install***  
+
 This will install a plugin into an instance.
 
 ```
-sudo hoobs plugin add my-plugin
+sudo hbs plugin add my-plugin
 ```
 
 You can also define a version using the standard syntax `my-plugin@1.0.0`.
@@ -165,14 +167,14 @@ Available options
 
 > If the instance name is not set the CLI will ask for this information.
 
-#### **hoobs plugin install [name]**
-This is an alias for **add**.
+#### Remove
+*alias **uninstall***  
+*alias **rm***  
 
-#### **hoobs plugin remove [name]**
 This will uninstall a plugin from an instance.
 
 ```
-sudo hoobs plugin remove my-plugin
+sudo hbs plugin remove my-plugin
 ```
 
 Available options
@@ -183,20 +185,19 @@ Available options
 
 > If the instance name is not set the CLI will ask for this information.
 
-#### **hoobs plugin uninstall [name]**
-This is an alias for **remove**.
+#### Update
+*alias **upgrade***  
 
-#### **hoobs plugin upgrade <name>**
 This will upgrade a single plugin or all plugins from an instance.
 
 ```
-sudo hoobs plugin upgrade
+sudo hbs plugin update
 ```
 
 or
 
 ```
-sudo hoobs plugin upgrade my-plugin
+sudo hbs plugin update my-plugin
 ```
 
 You can also define a version using the standard syntax `my-plugin@1.0.0`.
@@ -209,14 +210,13 @@ Available options
 
 > If the instance name is not set the CLI will ask for this information.
 
-#### **hoobs plugin update <name>**
-This is an alias for **upgrade**.
+#### List
+*alias **ls***  
 
-#### **hoobs plugin list**
 This will list plugins for all or a single instance.
 
 ```
-sudo hoobs plugin list
+sudo hbs plugin list
 ```
 
 Available options
@@ -227,15 +227,12 @@ Available options
 
 > If an instance is not defined, the CLI will include the instance in the list.
 
-#### **hoobs plugin ls**
-This is an aliad for **list**.
-
-#### **hoobs plugin create**
+#### Create
 This command is used by developers to quickly create a new plugin project. It will create a new folder for your project and add example files depending on the options you choose.
 
 ```
 cd ~/projects
-hoobs plugin create
+hbs plugin create
 ```
 
 This supports many options.
@@ -247,11 +244,11 @@ This supports many options.
 * GUI plugin
 * Config Schemas
 
-## **hoobs config**
+## Config
 This allows you to manually configure HOOBS. This is the only way other then the GUI to configure HOOBS. HOOBS encrypts config files to project sensitive information.
 
 ```
-sudo hoobs config
+sudo hbs config
 ```
 
 This command can configure the API as well as instances.
@@ -266,11 +263,11 @@ Available options
 
 > If the instance name is not set the CLI will ask for this information.
 
-## **hoobs log**
+## Log
 This will display the log from all instances. You can also use this command to show the log from a single instance.
 
 ```
-sudo hoobs log
+sudo hbs log
 ```
 
 You can also display debug information after the fact. This comes in handy if you can't tuen on debug mode.
@@ -283,16 +280,18 @@ Available options
 | -d, --debug           | Show debug messages                                  |
 | -c, --container       | This changes the paths needed for Docker containers  |
 
-## **hoobs extention [action]**
+## Extention
 This manages HOOBS extentions (features). It can be used to enable system level dependencies, like FFMPEG, and the official GUI.
 
 > Extentions are not the same as plugins. A plugin runs on a bridge, where an extention runs on the system, or modifies the API.
 
-#### **hoobs extention add [name]**
+#### Add
+*alias **install***  
+
 This enables an extention.
 
 ```
-sudo hoobs extention add ffmpeg
+sudo hbs extention add ffmpeg
 ```
 
 Available options
@@ -300,14 +299,14 @@ Available options
 | --------------------- | ---------------------------------------------------- |
 | -c, --container       | This changes the paths needed for Docker containers  |
 
-#### **hoobs extention install [name]**
-This is an alias for **add**.
+#### Remove
+*alias **uninstall***  
+*alias **rm***  
 
-#### **hoobs extention remove [name]**
 This disables an extention.
 
 ```
-sudo hoobs extention remove ffmpeg
+sudo hbs extention remove ffmpeg
 ```
 
 Available options
@@ -315,14 +314,13 @@ Available options
 | --------------------- | ---------------------------------------------------- |
 | -c, --container       | This changes the paths needed for Docker containers  |
 
-#### **hoobs extention uninstall [name]**
-This is an alias for **remove**.
+#### List
+*alias **ls***  
 
-#### **hoobs extention list**
 This will list all available extetntions and if they are enabled.
 
 ```
-sudo hoobs extention list
+sudo hbs extention list
 ```
 
 Available options
@@ -330,50 +328,56 @@ Available options
 | --------------------- | ---------------------------------------------------- |
 | -c, --container       | This changes the paths needed for Docker containers  |
 
-#### **hoobs extention ls**
-This is an aliad for **list**.
-
-## **hoobs system <action>**
+## System
 This command manages the system. You can upgrade HOOBS, backuup and restore the system. You can also clean the caches or completly reset the system.
 
-#### **hoobs system upgrade**
-This will upgrade HOOBS to the latest version.
+#### Info
+This shows system information and version information. This is usefull for checking for Node, HOOBSD and the CLI for updates.
 
 ```
-sudo hoobs system upgrade
+sudo hbs system info
 ```
 
-#### **hoobs system backup**
+#### Upgrade
+*alias **update***  
+
+This will upgrade HOOBS to the latest version. This includes HOOBSD, the CLI and Node.
+
+```
+sudo hbs system upgrade
+```
+
+#### Backup
 This will backup your current setup to the current working directory.
 
 ```
 cd ~/backups
-sudo hoobs system backup
+sudo hbs system backup
 ```
 
 > Note this will need to be ran with elevated permissions. You will need to chmod the file if you want to work with it.
 
-#### **hoobs system restore <file>**
+#### Restore
 This will restore the system with the file you select
 
 ```
-sudo hoobs system restore ~/backups/my-backup.zip
+sudo hbs system restore ~/backups/my-backup.zip
 ```
 
-#### **hoobs system purge**
+#### Purge
 This will purge all persisted and cache files from all instances.
 
 ```
-sudo hoobs system purge
+sudo hbs system purge
 ```
 
 > This will require you to re-pair with Apple Home.
 
-#### **hoobs system reset**
+#### Rreset
 This will remove all configurations, plugins and instances from the system. Yse this with caution.
 
 ```
-sudo hoobs system reset
+sudo hbs system reset
 ```
 
 > This will keep you backup folder, so it is wise to create a backup before running this command.
