@@ -75,7 +75,7 @@ This controls instances on the system. It can be used to list, create and remove
 > This also creates and starts systemd and launchd services. If your system doesn't have either of these systems, the CLI will not attempt this.
 
 #### Add
-*alias **create**  
+*alias **create***  
 
 This will create an instance.
 
