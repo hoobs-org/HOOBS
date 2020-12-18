@@ -340,6 +340,11 @@ This shows system information and version information. This is usefull for check
 sudo hbs system versions
 ```
 
+Available options
+| Flag  | Description                                                      |
+| ----- | ---------------------------------------------------------------- |
+| -beta | This compares installed versions against available beta versions |
+
 #### Upgrade
 *alias **update***  
 
@@ -348,6 +353,12 @@ This will upgrade HOOBS to the latest version. This includes HOOBSD, the CLI and
 ```
 sudo hbs system upgrade
 ```
+
+Available options
+| Flag      | Description                                      |
+| --------- | ------------------------------------------------ |
+| -t, -test | Dry run an upgrade and test network connectivity |
+| -beta     | Install available beta versions                  |
 
 #### Backup
 This will backup your current setup to the current working directory.
