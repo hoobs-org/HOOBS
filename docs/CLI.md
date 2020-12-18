@@ -331,7 +331,9 @@ Available options
 ## System
 This command manages the system. You can upgrade HOOBS, backuup and restore the system. You can also clean the caches or completly reset the system.
 
-#### Info
+#### Versions
+*alias **version***  
+
 This shows system information and version information. This is usefull for checking for Node, HOOBSD and the CLI for updates.
 
 ```
