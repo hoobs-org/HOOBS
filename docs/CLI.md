@@ -337,7 +337,7 @@ This command manages the system. You can upgrade HOOBS, backuup and restore the 
 This shows system information and version information. This is usefull for checking for Node, HOOBSD and the CLI for updates.
 
 ```
-sudo hbs system info
+sudo hbs system versions
 ```
 
 #### Upgrade
