@@ -505,6 +505,18 @@ This will factory reset the device. It will remove all instances, plugins and co
 
 > This method is attached to the system object you must access this from the `hoobs.system()` command.
 
+## **hoobs.hostname.get()**
+This allows you to view the broadcasted hostname.
+
+> Note this is only available on HOOBS devices like the HOOBS Box and the HOOBS SD Card.
+
+## **hoobs.hostname.update([name])**
+This allows you to set the broadcasted hostname.
+
+> Note this doesn't change the system's hostname, it only changes the mDNS broadcasted hostname.
+
+> Note this is only available on HOOBS devices like the HOOBS Box and the HOOBS SD Card.
+
 ## **hoobs.extentions.list()**
 This will fetch a list of available extentions and if the extention is enabled.
 
