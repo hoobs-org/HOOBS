@@ -34,7 +34,6 @@
             "**/node_modules": true
         },
         "typescript.updateImportsOnFileMove.enabled": "never",
-        "vetur.format.defaultFormatter.html": "prettyhtml",
         "vetur.format.options.tabSize": 4,
         "vetur.format.scriptInitialIndent": true,
         "vetur.format.styleInitialIndent": true,
@@ -47,20 +46,37 @@
         "[vue]": {
             "editor.defaultFormatter": "octref.vetur"
         },
+        "[html]": {
+            "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[json]": {
+            "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
         "[scss]": {
             "editor.defaultFormatter": "esbenp.prettier-vscode"
         },
+        "[javascript]": {
+            "editor.defaultFormatter": "vscode.typescript-language-features"
+        },
+        "[typescript]": {
+            "editor.defaultFormatter": "vscode.typescript-language-features"
+        },
         "vetur.format.defaultFormatterOptions": {
-        
             "js-beautify-html": {
                 "wrap_attributes": "force-expand-multiline"
             },
             "prettyhtml": {
-                "printWidth": 100,
+                "printWidth": 220,
                 "singleQuote": false,
                 "wrapAttributes": false,
                 "sortAttributes": false
             }
-        }
+        },
+        "prettier.tabWidth": 4,
+        "html.format.wrapAttributesIndentSize": 4,
+        "html.format.wrapLineLength": 220,
+        "prettier.printWidth": 220,
+        "vetur.format.defaultFormatter.html": "prettyhtml",
+        "vetur.format.defaultFormatter.ts": "vscode-typescript"
     }
 }
