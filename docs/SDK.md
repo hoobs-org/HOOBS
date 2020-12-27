@@ -1,5 +1,27 @@
 ## SDK
-The SDK in this project defines the HOOBS API and added into Vue using a Mixin. Below, defines the properties and methods available in this SDK.
+This SDK is designed to be used with JavaScript and includes a Vue plugin. This SDK doesn't have a default export so you will need to implicitly include it.
+
+```js
+import { hoobs } from "@hoobs/sdk";
+```
+
+To include the SDK in a Vue application, you will also need to include the sdk export and configure the Vuex store.
+
+```js
+import { hoobs, sdk } from "@hoobs/sdk";
+import store from "./store";
+
+hoobs.config.token.get(() => store.state.session);
+hoobs.config.token.set((token) => { store.commit("SESSION:SET", token); });
+
+Vue.use(sdk);
+```
+
+The Vue plugin creates the $hoobs variable.
+
+Below, defines the properties and methods available in this SDK.
+
+> Note: If you are using this within an Vue component, you can access the SDK from `this.$hoobs`.
 
 ## **hoobs.version()**
 This returns the current HOOBSD version installed.
