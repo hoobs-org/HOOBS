@@ -55,11 +55,11 @@ Available options
 | --------------------- | --------------------------------------------------- |
 | -d, --debug           | Turn on debug level logging                         |
 
-## Iinitilize
+## Install
 This initilizes the system. It creates the special API instance. The API instance is a control hub for all other instances.
 
 ```
-sudo hbs initilize
+sudo hbs install
 ```
 
 Available options
