@@ -7,7 +7,7 @@ import hoobs from "@hoobs/sdk";
 const version = await hoobs.sdk.version();
 ```
 
-To include the SDK in a Vue application, you will also need to include the sdk export and configure the Vuex store.
+To include the SDK in a Vue application, simply pass the sdk into a Vue.use() call. You will also need to define a token store. This example uses Vuex.
 
 ```js
 import hoobs from "@hoobs/sdk";
