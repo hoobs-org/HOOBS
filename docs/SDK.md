@@ -1,20 +1,22 @@
 ## SDK
-This SDK is designed to be used with JavaScript and includes a Vue plugin. This SDK doesn't have a default export so you will need to implicitly include it.
+This SDK is designed to be used with JavaScript and includes a Vue plugin.
 
 ```js
-import { hoobs } from "@hoobs/sdk";
+import hoobs from "@hoobs/sdk";
+
+const version = await hoobs.sdk.version();
 ```
 
 To include the SDK in a Vue application, you will also need to include the sdk export and configure the Vuex store.
 
 ```js
-import { hoobs, sdk } from "@hoobs/sdk";
+import hoobs from "@hoobs/sdk";
 import store from "./store";
 
-hoobs.config.token.get(() => store.state.session);
-hoobs.config.token.set((token) => { store.commit("SESSION:SET", token); });
+hoobs.sdk.config.token.get(() => store.state.session);
+hoobs.sdk.config.token.set((token) => { store.commit("SESSION:SET", token); });
 
-Vue.use(sdk);
+Vue.use(hoobs);
 ```
 
 The Vue plugin creates the $hoobs variable.
@@ -23,13 +25,13 @@ Below, defines the properties and methods available in this SDK.
 
 > Note: If you are using this within an Vue component, you can access the SDK from `this.$hoobs`.
 
-## **hoobs.version()**
+## **version()**
 This returns the current HOOBSD version installed.
 
-## **hoobs.latest()**
+## **latest()**
 This returns the latest releasesd HOOBSD version.
 
-## **hoobs.auth.status()**
+## **auth.status()**
 This fetches the status of the authentication system. It will return one of these values.
 
 | Status        | Description                                                                |
@@ -40,19 +42,19 @@ This fetches the status of the authentication system. It will return one of thes
 
 > The disabled status can only be achieved when the auth system is uninitilized.
 
-## **hoobs.auth.validate()**
+## **auth.validate()**
 This validates the token stored in the Vuex store. If the auth system is disabled, this will always return true.
 
 > Tokens are stored on in the API and have a TTL based in teh `inactive_logoff` setting on the API.
 
-## **hoobs.auth.disable()**
+## **auth.disable()**
 This will disable the auth system.
 
 The auth system can only be disabled if there are no users. If you would like to disable the auth system after users have been created, you must first remove the `access` file from the storage path.
 
 This will return the auth system status.
 
-## **hoobs.auth.login([username], [password])**
+## **auth.login([username], [password])**
 This will attempt to login to the API. If the login is successful the token will be added to the Vuex store and stored locally.
 
 If the login fails this function will return `false`.
@@ -63,10 +65,10 @@ Parameters
 | username | Yes      | string | The username defined on the user record |
 | password | Yes      | string | The password defined on the user record |
 
-## **hoobs.auth.logout()**
+## **auth.logout()**
 This takes the session token from the store and logs out the current user.
 
-## **hoobs<span>.</span>io()**
+## **io()**
 This returnes an instance of the web socket used to communicate with the backend.
 
 Events
@@ -82,6 +84,19 @@ Events
 | shell_input      | Emit only, used to send XTerm commands to a PTY shell                     |
 | shell_output     | Is fired when the PTY shell outputs information                           |
 | shell_clear      | Emit only, used to clear the PTY terminal                                 |
+
+To use io in Vue you must add it seperatly in main.
+
+```js
+import hoobs from "@hoobs/sdk";
+
+const io = hoobs.sdk.io();
+
+Vue.use(hoobs);
+Vue.use(io);
+```
+
+Once this is added, `this.io` will be available in your Vue components.
 
 ## **io.on([event], [callback])**
 This adds a listner on the socket for specific events.
@@ -102,7 +117,7 @@ Allows you to emit events from the UI to the backend.
 
 > Arguments are specific to each event
 
-## **hoobs.dates.display([date])**
+## **dates.display([date])**
 Formats a string date or a timestamp into a friendly display.
 
 Parameters
@@ -110,7 +125,7 @@ Parameters
 | ---- | -------- | -------- | -------------------------- |
 | date | Yes      | string   | A date string or timestamp |
 
-## **hoobs.dates.age([date])**
+## **dates.age([date])**
 Formats a string date or a timestamp into an age string line "5 days ago"
 
 Parameters
@@ -118,7 +133,7 @@ Parameters
 | ---- | -------- | -------- | -------------------------- |
 | date | Yes      | string   | A date string or timestamp |
 
-## **hoobs.dates.ordinal([value])**
+## **dates.ordinal([value])**
 Converts a number into an ordinal like "7th"
 
 Parameters
@@ -126,7 +141,7 @@ Parameters
 | ----- | -------- | -------- | ---------------- |
 | value | Yes      | number   | Any number value |
 
-## **hoobs.dates.month([value])**
+## **dates.month([value])**
 Converts a month from Date.getMonth() to a test string.
 
 Parameters
@@ -134,7 +149,7 @@ Parameters
 | ----- | -------- | -------- | ---------------- |
 | value | Yes      | number   | Any number value |
 
-## **hoobs.users.list()**
+## **users.list()**
 This will fetch a list of user records.
 
 > Password hashes and salts are ommited for security purposes.
@@ -158,7 +173,7 @@ This will return an array of user records.
 }]
 ```
 
-## **hoobs.users.add([username], [password], \<name\>, \<permissions\>)**
+## **users.add([username], [password], \<name\>, \<permissions\>)**
 This will add a new user to the system.
 
 Parameters
@@ -169,7 +184,7 @@ Parameters
 | name        | No       | string | The new user's full name, if not set username is used |
 | permissions | No       | string | The new user's permissions settings                   |
 
-## **hoobs.user([id])**
+## **user([id])**
 Fetches a user object by id.
 
 ```js
@@ -214,7 +229,7 @@ This removes the current user record.
 
 > This method is attached to the user object obtained from the `hoobs.user([id])` command.
 
-## **hoobs.config.get()**
+## **config.get()**
 This fetches the current API configuration.
 
 ```js
@@ -230,7 +245,7 @@ This fetches the current API configuration.
 
 > Config files are encrypted on the hard drive. The API and CLI are the only ways to edit these files.
 
-## **hoobs.config.update([data])**
+## **config.update([data])**
 This saves the config.
 
 Parameters
@@ -240,7 +255,7 @@ Parameters
 
 > Config files are encrypted on the hard drive. The API and CLI are the only ways to edit these files.
 
-## **hoobs.log(\<tail\>)**
+## **log(\<tail\>)**
 This fetches the historical log. This returns an array of message objects.
 
 ```js
@@ -260,7 +275,7 @@ Parameters
 | ---- | -------- | ------ | ---------------------------------------- |
 | tail | No       | number | Defines the number of messages to return |
 
-## **hoobs.status()**
+## **status()**
 Fetches the current device status.
 
 ```js
@@ -335,10 +350,10 @@ Fetches the current device status.
 
 > The instance key is the instance id
 
-## **hoobs.backup.execute()**
+## **backup.execute()**
 This will generate a backup file and will return a URL to that file. If the backup fails an error object is returned.
 
-## **hoobs.backup.catalog()**
+## **backup.catalog()**
 Returns an list of backups available.
 
 ```js
@@ -348,7 +363,7 @@ Returns an list of backups available.
 }]
 ```
 
-## **hoobs.restore.file([filename])**
+## **restore.file([filename])**
 This will accept a file name from the backup catalog and will restore it.
 
 > This will reboot the device
@@ -358,7 +373,7 @@ Parameters
 | -------- | -------- | ------ | ------------------------------------------------------ |
 | filename | Yes      | string | The file name without the path from the backup catalog |
 
-## **hoobs.restore.upload([file])**
+## **restore.upload([file])**
 This will accept an uploaded file and restore it to the system.
 
 > This will reboot the device
@@ -368,7 +383,7 @@ Parameters
 | ---- | -------- | ---- | --------------------------------------------------------------- |
 | file | Yes      | Blob | This can be any backup file stream including an HTTPFile object |
 
-## **hoobs.system()**
+## **system()**
 Returns a system information object.
 
 ```js
@@ -595,19 +610,19 @@ This will factory reset the device. It will remove all instances, plugins and co
 
 > This method is attached to the system object you must access this from the `hoobs.system()` command.
 
-## **hoobs.hostname.get()**
+## **hostname.get()**
 This allows you to view the broadcasted hostname.
 
 > Note this is only available on HOOBS devices like the HOOBS Box and the HOOBS SD Card.
 
-## **hoobs.hostname.update([name])**
+## **hostname.update([name])**
 This allows you to set the broadcasted hostname.
 
 > Note this doesn't change the system's hostname, it only changes the mDNS broadcasted hostname.
 
 > Note this is only available on HOOBS devices like the HOOBS Box and the HOOBS SD Card.
 
-## **hoobs.extentions.list()**
+## **extentions.list()**
 This will fetch a list of available extentions and if the extention is enabled.
 
 ```js
@@ -618,7 +633,7 @@ This will fetch a list of available extentions and if the extention is enabled.
 }]
 ```
 
-## **hoobs.extentions.add([name])**
+## **extentions.add([name])**
 This will enable an extention on the system.
 
 Parameters
@@ -626,7 +641,7 @@ Parameters
 | ---- | -------- | ------ | ----------------------------------- |
 | name | Yes      | string | The name of the extention to enable |
 
-## **hoobs.extentions.remove([name])**
+## **extentions.remove([name])**
 This will disable an extention on the system.
 
 Parameters
@@ -634,7 +649,7 @@ Parameters
 | ---- | -------- | ------ | ------------------------------------ |
 | name | Yes      | string | The name of the extention to disable |
 
-## **hoobs.plugins()**
+## **plugins()**
 This will list all plugins installed across all instances.
 
 ```js
@@ -653,13 +668,13 @@ This will list all plugins installed across all instances.
 }]
 ```
 
-## **hoobs.repository.featured()**
+## **repository.featured()**
 Fetches a list of featured plugins from HOOBS Cloud.
 
-## **hoobs.repository.popular()**
+## **repository.popular()**
 Fetches a list of popular plugins from HOOBS Cloud.
 
-## **hoobs.repository.search([query], [skip], [limit])**
+## **repository.search([query], [skip], [limit])**
 Search for plugins on HOOBS Cloud in order of hit rank.
 
 Parameters
@@ -669,7 +684,7 @@ Parameters
 | skip  | Yes      | number | Skip the first number of plugins     |
 | limit | Yes      | number | Limit the number of plugins returned |
 
-## **hoobs.repository.details([identifier])**
+## **repository.details([identifier])**
 Fetches a plugin details including readme and config schemas.
 
 Parameters
@@ -679,7 +694,7 @@ Parameters
 
 > Note plugin identifiers include the scope, like @scope/plugin-name.
 
-## **hoobs.repository.reviews([identifier], [skip], [limit])**
+## **repository.reviews([identifier], [skip], [limit])**
 Fetch a list of reviews for a given plugin ordered by newest review.
 
 Parameters
@@ -689,7 +704,7 @@ Parameters
 | skip       | Yes      | number | Skip the first number of plugins                |
 | limit      | Yes      | number | Limit the number of plugins returned            |
 
-## **hoobs.repository.title([value])**
+## **repository.title([value])**
 Converts a plugin name or identifier into a friendly display name.
 
 Parameters
@@ -697,10 +712,10 @@ Parameters
 | ----- | -------- | ------ | ----------------------------- |
 | value | Yes      | string | The plugin name or identifier |
 
-## **hoobs.instances.count()**
+## **instances.count()**
 Returns the count of instances.
 
-## **hoobs.instances.list()**
+## **instances.list()**
 Returns a list of instances on the device.
 
 ```js
@@ -722,7 +737,7 @@ Returns a list of instances on the device.
 }]
 ```
 
-## **hoobs.instances.add([name], [port], \<pin\>, \<username\>)**
+## **instances.add([name], [port], \<pin\>, \<username\>)**
 Adds an instance to the device. This will automatically create a system service and start it.
 
 Parameters
@@ -737,7 +752,7 @@ The name is automatically sanitized and used as an id for the instance.
 
 > If your operating system doesn't have systemd or launchd the service creation is skipped.
 
-## **hoobs.instances.import([file], [name], [port], \<pin\>, \<username\>)**
+## **instances.import([file], [name], [port], \<pin\>, \<username\>)**
 This will add an instance from an export of another instance. This will automatically create a system service and start it.
 
 Parameters
@@ -753,7 +768,7 @@ The name is automatically sanitized and used as an id for the instance.
 
 > If your operating system doesn't have systemd or launchd the service creation is skipped.
 
-## **hoobs.instance([name])**
+## **instance([name])**
 Fetches an instance object. Will return `undefined` is the instance doesn't exist.
 
 ```js
@@ -993,7 +1008,7 @@ This will remove this instance including all plugins and configurations.
 
 > This method is attached to the instance object you must access this from the `hoobs.instance([name])` command.
 
-## **hoobs.accessories()**
+## **accessories()**
 Returns a list of accessories from all instances.
 
 ```js
@@ -1019,7 +1034,7 @@ Returns a list of accessories from all instances.
 }]
 ```
 
-## **hoobs.accessory([instance], [id])**
+## **accessory([instance], [id])**
 This fetches a single accessory object.
 
 ```js
@@ -1056,7 +1071,7 @@ Parameters
 
 > This method is attached to the accessory object you must access this from the `hoobs.accessory([instance], [id])` command.
 
-## **hoobs.theme.get([name])**
+## **theme.get([name])**
 This fetches the theme colors for the defined name.
 
 ```js
@@ -1154,7 +1169,7 @@ Parameters
 | ---- | -------- | ------ | --------------------- |
 | name | Yes      | string | The name of the theme |
 
-## **hoobs.theme.set([name], [theme])**
+## **theme.set([name], [theme])**
 This will save a theme to the backend.
 
 Parameters
@@ -1163,7 +1178,7 @@ Parameters
 | name  | Yes      | string | The name of the theme |
 | theme | Yes      | Theme  | The theme JSON object |
 
-## **hoobs.theme.backdrop([image])**
+## **theme.backdrop([image])**
 This will upload an image to the backend for use as a backdrop.
 
 Parameters
@@ -1171,7 +1186,7 @@ Parameters
 | ----- | -------- | ---- | --------------------------------------------------------- |
 | image | Yes      | Blob | This can be any image stream including an HTTPFile object |
 
-## **hoobs.plugin([instance], [identifier], \<action\>, \<data\>)**
+## **plugin([instance], [identifier], \<action\>, \<data\>)**
 This allows plugins to interact with their backend code.
 
 Parameters
@@ -1188,7 +1203,7 @@ When opening the UI plugin, your HTML file will have these variables defined for
 * $instance: The instance this dialog if intended.
 * $identifier - The plugin identifier, should match your plugin.
 
-## **hoobs.location([query])**
+## **location([query])**
 This will search for a location by open text search. This is used to set the location for weather forecasts.
 
 ```js
@@ -1203,7 +1218,7 @@ Parameters
 | ----- | -------- | ------ | --------------------------------- |
 | query | Yes      | string | This the desired open text search |
 
-## **hoobs.weather.current()**
+## **weather.current()**
 Fetches the current weather from the configured location in the API config.
 
 ```js
@@ -1226,7 +1241,7 @@ Fetches the current weather from the configured location in the API config.
 }
 ```
 
-## **hoobs.weather.forecast()**
+## **weather.forecast()**
 Fetches the weather forecast from the configured location in the API config.
 
 ```js
@@ -1250,7 +1265,7 @@ Fetches the weather forecast from the configured location in the API config.
 }]
 ```
 
-## **hoobs.remote.status()**
+## **remote.status()**
 Returns the status of a remote session.
 
 ```js
@@ -1261,7 +1276,7 @@ Returns the status of a remote session.
 
 > Only one remote session is allowed per API.
 
-## **hoobs.remote.connect()**
+## **remote.connect()**
 Connects to the HOOBS support server. This will allow HOOBS support to diagnose and run commands on your device.
 
 This will return a registration code or an error object if it can't connect.
@@ -1272,7 +1287,7 @@ This will return a registration code or an error object if it can't connect.
 }
 ```
 
-## **hoobs.remote.disconnect()**
+## **remote.disconnect()**
 This will disconnect a current active session.
 
 > When HOOBS support disconnects this will automatically be called.
