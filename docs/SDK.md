@@ -66,6 +66,74 @@ Parameters
 ## **hoobs.auth.logout()**
 This takes the session token from the store and logs out the current user.
 
+## **hoobs<span>.</span>io()**
+This returnes an instance of the web socket used to communicate with the backend.
+
+Events
+| Name             | Description                                                               |
+| ---------------- | ------------------------------------------------------------------------- |
+| connect          | Fires when the socket connects                                            |
+| disconnect       | Fires when the socket disconnects                                         |
+| reconnect        | Fires when the socket reconnects                                          |
+| log              | This event is fired when the backend writes to the console                |
+| monitor          | This fires on an interval set in the API, sends monitor data to the UI    |
+| notification     | Fires when a notification is generated in the API                         |
+| accessory_change | Every time an accessory is changes this is fired, including on/off states |
+| shell_input      | Emit only, used to send XTerm commands to a PTY shell                     |
+| shell_output     | Is fired when the PTY shell outputs information                           |
+| shell_clear      | Emit only, used to clear the PTY terminal                                 |
+
+## **io.on([event], [callback])**
+This adds a listner on the socket for specific events.
+
+Parameters
+| Name     | Required | Type     | Description                                |
+| -------- | -------- | -------- | ------------------------------------------ |
+| event    | Yes      | string   | Predefined event name                      |
+| callback | Yes      | function | The function to call when event is emitted |
+
+> All events return a JSON payload or undefined
+
+## **io.off([event])**
+Disables all listners for a given event.
+
+## **io.emit([event], [...arguments])**
+Allows you to emit events from the UI to the backend.
+
+> Arguments are specific to each event
+
+## **hoobs.dates.display([date])**
+Formats a string date or a timestamp into a friendly display.
+
+Parameters
+| Name | Required | Type     | Description                |
+| ---- | -------- | -------- | -------------------------- |
+| date | Yes      | string   | A date string or timestamp |
+
+## **hoobs.dates.age([date])**
+Formats a string date or a timestamp into an age string line "5 days ago"
+
+Parameters
+| Name | Required | Type     | Description                |
+| ---- | -------- | -------- | -------------------------- |
+| date | Yes      | string   | A date string or timestamp |
+
+## **hoobs.dates.ordinal([value])**
+Converts a number into an ordinal like "7th"
+
+Parameters
+| Name  | Required | Type     | Description      |
+| ----- | -------- | -------- | ---------------- |
+| value | Yes      | number   | Any number value |
+
+## **hoobs.dates.month([value])**
+Converts a month from Date.getMonth() to a test string.
+
+Parameters
+| Name  | Required | Type     | Description      |
+| ----- | -------- | -------- | ---------------- |
+| value | Yes      | number   | Any number value |
+
 ## **hoobs.users.list()**
 This will fetch a list of user records.
 
@@ -585,6 +653,50 @@ This will list all plugins installed across all instances.
 }]
 ```
 
+## **hoobs.repository.featured()**
+Fetches a list of featured plugins from HOOBS Cloud.
+
+## **hoobs.repository.popular()**
+Fetches a list of popular plugins from HOOBS Cloud.
+
+## **hoobs.repository.search([query], [skip], [limit])**
+Search for plugins on HOOBS Cloud in order of hit rank.
+
+Parameters
+| Name  | Required | Type   | Description                          |
+| ----- | -------- | ------ | ------------------------------------ |
+| query | Yes      | string | The search query                     |
+| skip  | Yes      | number | Skip the first number of plugins     |
+| limit | Yes      | number | Limit the number of plugins returned |
+
+## **hoobs.repository.details([identifier])**
+Fetches a plugin details including readme and config schemas.
+
+Parameters
+| Name       | Required | Type   | Description                                     |
+| ---------- | -------- | ------ | ----------------------------------------------- |
+| identifier | Yes      | string | The plugin identifier as it appears in the repo |
+
+> Note plugin identifiers include the scope, like @scope/plugin-name.
+
+## **hoobs.repository.reviews([identifier], [skip], [limit])**
+Fetch a list of reviews for a given plugin ordered by newest review.
+
+Parameters
+| Name       | Required | Type   | Description                                     |
+| ---------- | -------- | ------ | ----------------------------------------------- |
+| identifier | Yes      | string | The plugin identifier as it appears in the repo |
+| skip       | Yes      | number | Skip the first number of plugins                |
+| limit      | Yes      | number | Limit the number of plugins returned            |
+
+## **hoobs.repository.title([value])**
+Converts a plugin name or identifier into a friendly display name.
+
+Parameters
+| Name  | Required | Type   | Description                   |
+| ----- | -------- | ------ | ----------------------------- |
+| value | Yes      | string | The plugin name or identifier |
+
 ## **hoobs.instances.count()**
 Returns the count of instances.
 
@@ -1058,6 +1170,23 @@ Parameters
 | Name  | Required | Type | Description                                               |
 | ----- | -------- | ---- | --------------------------------------------------------- |
 | image | Yes      | Blob | This can be any image stream including an HTTPFile object |
+
+## **hoobs.plugin([instance], [identifier], \<action\>, \<data\>)**
+This allows plugins to interact with their backend code.
+
+Parameters
+| Name       | Required | Type   | Description                                                   |
+| ---------- | -------- | ------ | ------------------------------------------------------------- |
+| instance   | Yes      | string | The instance id you wish to call.                             |
+| identifier | Yes      | string | This is the plugins repository identifier                     |
+| action     | No       | string | This is an optional action as defined in the plugin           |
+| data       | No       | JSON   | This is JSON data that is posted to the plugin code as needed |
+
+When opening the UI plugin, your HTML file will have these variables defined for you.
+
+* $hoobs: This SDK.
+* $instance: The instance this dialog if intended.
+* $identifier - The plugin identifier, should match your plugin.
 
 ## **hoobs.location([query])**
 This will search for a location by open text search. This is used to set the location for weather forecasts.
