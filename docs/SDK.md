@@ -23,7 +23,7 @@ The Vue plugin creates the $hoobs variable.
 
 Below, defines the properties and methods available in this SDK.
 
-> Note: If you are using this within an Vue component, you can access the SDK from `this.$hoobs`.
+> Note: If you are using this within an Vue component, you can access the SDK from `this.$hoobs`. If you are not using Vue, you can access this from `hoobs.sdk`.
 
 ## **version()**
 This returns the current HOOBSD version installed.
