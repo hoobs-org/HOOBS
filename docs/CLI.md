@@ -1,8 +1,8 @@
 ## CLI
 The HOOBS command line interface is the software that manages bridges. Below is a list of commands and actions available in the HOOBS CLI.
 
-## Start
-This starts the control api. This is needed to manage the bridges. It is also the default command when no other command is defined.
+## Hub
+This starts the hub service. This is needed to manage the bridges. It is also the default command when no other command is defined.
 
 ```
 sudo hoobsd start
@@ -13,7 +13,7 @@ Available options
 | --------------------- | --------------------------------------------------- |
 | -d, --debug           | Turn on debug level logging                         |
 | -v, --verbose         | Tuen on insane verbose logging                      |
-| -p, --port <port>     | Override the defined API port                       |
+| -p, --port <port>     | Override the defined hub port                       |
 | -o, --orphans         | Keep cached accessories for orphaned plugins        |
 | -c, --container       | This changes the paths needed for Docker containers |
 
@@ -56,7 +56,7 @@ Available options
 | -d, --debug           | Turn on debug level logging                         |
 
 ## Install
-This initilizes the system. It creates the special API bridge. The API bridge is a control hub for all other bridges.
+This initilizes the system. It creates the special hub bridge. The hub bridge is a control hub for all other bridges.
 
 ```
 sudo hbs install
@@ -65,7 +65,7 @@ sudo hbs install
 Available options
 | Flag              | Description                                                |
 | ----------------- | ---------------------------------------------------------- |
-| -p, --port <port> | Sets the port for the API, if not set the CLI will ask you |
+| -p, --port <port> | Sets the port for the hub, if not set the CLI will ask you |
 | -s, --skip        | This will skip the systemd or launchd service create       |
 | -c, --container   | This changes the paths needed for Docker containers        |
 
@@ -135,7 +135,7 @@ Available options
 #### List
 *alias **ls***  
 
-This will show a list of bridges on the system including the API. It will also show you if the bridge is running.
+This will show a list of bridges on the system including the hub. It will also show you if the bridge is running.
 
 ```
 sudo hbs bridge list
@@ -251,7 +251,7 @@ This allows you to manually configure HOOBS. This is the only way other then the
 sudo hbs config
 ```
 
-This command can configure the API as well as bridges.
+This command can configure the hub as well as bridges.
 
 > This uses nano, you may need to install it on your system.
 
@@ -283,7 +283,7 @@ Available options
 ## Extention
 This manages HOOBS extentions (features). It can be used to enable system level dependencies, like FFMPEG, and the official GUI.
 
-> Extentions are not the same as plugins. A plugin runs on a bridge, where an extention runs on the system, or modifies the API.
+> Extentions are not the same as plugins. A plugin runs on a bridge, where an extention runs on the system, or modifies the hub.
 
 #### Add
 *alias **install***  

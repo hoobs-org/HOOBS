@@ -45,7 +45,7 @@ This fetches the status of the authentication system. It will return one of thes
 ## **auth.validate()**
 This validates the token stored in the Vuex store. If the auth system is disabled, this will always return true.
 
-> Tokens are stored on in the API and have a TTL based in teh `inactive_logoff` setting on the API.
+> Tokens are stored on the hub and have a TTL based in teh `inactive_logoff` setting.
 
 ## **auth.disable()**
 This will disable the auth system.
@@ -55,7 +55,7 @@ The auth system can only be disabled if there are no users. If you would like to
 This will return the auth system status.
 
 ## **auth.login([username], [password])**
-This will attempt to login to the API. If the login is successful the token will be added to the Vuex store and stored locally.
+This will attempt to login to the hub. If the login is successful the token will be added to the Vuex store and stored locally.
 
 If the login fails this function will return `false`.
 
@@ -78,8 +78,8 @@ Events
 | disconnect       | Fires when the socket disconnects                                         |
 | reconnect        | Fires when the socket reconnects                                          |
 | log              | This event is fired when the backend writes to the console                |
-| monitor          | This fires on an interval set in the API, sends monitor data to the UI    |
-| notification     | Fires when a notification is generated in the API                         |
+| monitor          | This fires on an interval set on the hub, sends monitor data to the UI    |
+| notification     | Fires when a notification is generated on the hub                         |
 | accessory_change | Every time an accessory is changes this is fired, including on/off states |
 | shell_input      | Emit only, used to send XTerm commands to a PTY shell                     |
 | shell_output     | Is fired when the PTY shell outputs information                           |
@@ -230,7 +230,7 @@ This removes the current user record.
 > This method is attached to the user object obtained from the `hoobs.user([id])` command.
 
 ## **config.get()**
-This fetches the current API configuration.
+This fetches the current hub configuration.
 
 ```js
 {
@@ -1219,7 +1219,7 @@ Parameters
 | query | Yes      | string | This the desired open text search |
 
 ## **weather.current()**
-Fetches the current weather from the configured location in the API config.
+Fetches the current weather from the configured location on the hub.
 
 ```js
 {
@@ -1242,7 +1242,7 @@ Fetches the current weather from the configured location in the API config.
 ```
 
 ## **weather.forecast()**
-Fetches the weather forecast from the configured location in the API config.
+Fetches the weather forecast from the configured location on the hub.
 
 ```js
 [{
@@ -1274,7 +1274,7 @@ Returns the status of a remote session.
 }
 ```
 
-> Only one remote session is allowed per API.
+> Only one remote session is allowed per hub.
 
 ## **remote.connect()**
 Connects to the HOOBS support server. This will allow HOOBS support to diagnose and run commands on your device.
