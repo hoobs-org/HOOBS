@@ -69,7 +69,7 @@ Parameters
 This takes the session token from the store and logs out the current user.
 
 ## **io()**
-This returnes an instance of the web socket used to communicate with the backend.
+This returnes an bridge of the web socket used to communicate with the backend.
 
 Events
 | Name             | Description                                                               |
@@ -164,7 +164,7 @@ This will return an array of user records.
     permissions: {
         accessories: boolean,
         controller: boolean,
-        instances: boolean,
+        bridges: boolean,
         plugins: boolean,
         users: boolean,
         reboot: boolean,
@@ -195,7 +195,7 @@ Fetches a user object by id.
     permissions: {
         accessories: boolean,
         controller: boolean,
-        instances: boolean,
+        bridges: boolean,
         plugins: boolean,
         users: boolean,
         reboot: boolean,
@@ -261,7 +261,7 @@ This fetches the historical log. This returns an array of message objects.
 ```js
 [{
     level: LogLevel,
-    instance: string,
+    bridge: string,
     display: string,
     timestamp: number,
     plugin: string,
@@ -289,8 +289,8 @@ Fetches the current device status.
     node_version: string,
     node_release: string,
     node_upgraded: boolean,
-    instances: {
-        instance: {
+    bridges: {
+        bridge: {
             version: string,
             running: boolean,
             status: string,
@@ -348,7 +348,7 @@ Fetches the current device status.
 }
 ```
 
-> The instance key is the instance id
+> The bridge key is the bridge id
 
 ## **backup.execute()**
 This will generate a backup file and will return a URL to that file. If the backup fails an error object is returned.
@@ -606,7 +606,7 @@ This will reboot the device.
 > This method is attached to the system object you must access this from the `hoobs.system()` command.
 
 ## **system.reset()**
-This will factory reset the device. It will remove all instances, plugins and configurations.
+This will factory reset the device. It will remove all bridges, plugins and configurations.
 
 > This method is attached to the system object you must access this from the `hoobs.system()` command.
 
@@ -650,11 +650,11 @@ Parameters
 | name | Yes      | string | The name of the extention to disable |
 
 ## **plugins()**
-This will list all plugins installed across all instances.
+This will list all plugins installed across all bridges.
 
 ```js
 [{
-    instance: string,
+    bridge: string,
     identifier: string,
     scope: string,
     name: string,
@@ -712,11 +712,11 @@ Parameters
 | ----- | -------- | ------ | ----------------------------- |
 | value | Yes      | string | The plugin name or identifier |
 
-## **instances.count()**
-Returns the count of instances.
+## **bridges.count()**
+Returns the count of bridges.
 
-## **instances.list()**
-Returns a list of instances on the device.
+## **bridges.list()**
+Returns a list of bridges on the device.
 
 ```js
 [{
@@ -737,39 +737,39 @@ Returns a list of instances on the device.
 }]
 ```
 
-## **instances.add([name], [port], \<pin\>, \<username\>)**
-Adds an instance to the device. This will automatically create a system service and start it.
+## **bridges.add([name], [port], \<pin\>, \<username\>)**
+Adds an bridge to the device. This will automatically create a system service and start it.
 
 Parameters
 | Name     | Required | Type   | Description                                               |
 | -------- | -------- | ------ | --------------------------------------------------------- |
-| name     | Yes      | string | The display name for the instance                         |
-| port     | Yes      | number | The port for the instance, between 1 and 65535            |
+| name     | Yes      | string | The display name for the bridge                           |
+| port     | Yes      | number | The port for the bridge, between 1 and 65535              |
 | pin      | No       | string | The pin used to pair with HomeKit, defaults to 031-45-154 |
 | username | No       | string | The bridge username, will auto generate is not set        |
 
-The name is automatically sanitized and used as an id for the instance.
+The name is automatically sanitized and used as an id for the bridge.
 
 > If your operating system doesn't have systemd or launchd the service creation is skipped.
 
-## **instances.import([file], [name], [port], \<pin\>, \<username\>)**
-This will add an instance from an export of another instance. This will automatically create a system service and start it.
+## **bridges.import([file], [name], [port], \<pin\>, \<username\>)**
+This will add an bridge from an export of another bridge. This will automatically create a system service and start it.
 
 Parameters
 | Name     | Required | Type   | Description                                                     |
 | -------- | -------- | ------ | --------------------------------------------------------------- |
 | file     | Yes      | Blob   | This can be any backup file stream including an HTTPFile object |
-| name     | Yes      | string | The display name for the instance                               |
-| port     | Yes      | number | The port for the instance, between 1 and 65535                  |
+| name     | Yes      | string | The display name for the bridge                                 |
+| port     | Yes      | number | The port for the bridge, between 1 and 65535                    |
 | pin      | No       | string | The pin used to pair with HomeKit, defaults to 031-45-154       |
 | username | No       | string | The bridge username, will auto generate is not set              |
 
-The name is automatically sanitized and used as an id for the instance.
+The name is automatically sanitized and used as an id for the bridge.
 
 > If your operating system doesn't have systemd or launchd the service creation is skipped.
 
-## **instance([name])**
-Fetches an instance object. Will return `undefined` is the instance doesn't exist.
+## **bridge([name])**
+Fetches an bridge object. Will return `undefined` is the bridge doesn't exist.
 
 ```js
 {
@@ -791,17 +791,17 @@ Fetches an instance object. Will return `undefined` is the instance doesn't exis
 ```
 
 Parameters
-| Name | Required | Type   | Description                            |
-| ---- | -------- | ------ | -------------------------------------- |
-| name | Yes      | string | The name or id of the desired instance |
+| Name | Required | Type   | Description                          |
+| ---- | -------- | ------ | ------------------------------------ |
+| name | Yes      | string | The name or id of the desired bridge |
 
-## **instance.status()**
+## **bridge.status()**
 Fetch the current status of the bridge.
 
 ```js
 {
     id: string,
-    instance: string,
+    bridge: string,
     running: boolean,
     status: string,
     uptime: number,
@@ -817,10 +817,10 @@ Fetch the current status of the bridge.
 }
 ```
 
-> This method is attached to the instance object you must access this from the `hoobs.instance([name])` command.
+> This method is attached to the bridge object you must access this from the `hoobs.bridge([name])` command.
 
-## **instance.config.get()**
-Returns this instance's configuration data.
+## **bridge.config.get()**
+Returns this bridge's configuration data.
 
 ```js
 {
@@ -832,9 +832,9 @@ Returns this instance's configuration data.
 
 Config files are encrypted on the hard drive. The API and CLI are the only ways to edit these files.
 
-> This method is attached to the instance object you must access this from the `hoobs.instance([name])` command.
+> This method is attached to the bridge object you must access this from the `hoobs.bridge([name])` command.
 
-## **instance.config.update([data])**
+## **bridge.config.update([data])**
 This saves the config.
 
 Parameters
@@ -844,10 +844,10 @@ Parameters
 
 Config files are encrypted on the hard drive. The API and CLI are the only ways to edit these files.
 
-> This method is attached to the instance object you must access this from the `hoobs.instance([name])` command.
+> This method is attached to the bridge object you must access this from the `hoobs.bridge([name])` command.
 
-## **instance.plugins.list()**
-Fetch a list of installed plugins on this instance.
+## **bridge.plugins.list()**
+Fetch a list of installed plugins on this bridge.
 
 ```js
 [{
@@ -864,22 +864,10 @@ Fetch a list of installed plugins on this instance.
 }]
 ```
 
-> This method is attached to the instance object you must access this from the `hoobs.instance([name])` command.
+> This method is attached to the bridge object you must access this from the `hoobs.bridge([name])` command.
 
-## **instance.plugins.install([query])**
-Installs a plugin on the current instance.
-
-Parameters
-| Name  | Required | Type   | Description                                                |
-| ----- | -------- | ------ | ---------------------------------------------------------- |
-| query | Yes      | string | This is the scope, name and optional version of the plugin |
-
-Plugin queries are the same as NPM or Yarn queries. Use this format `@scope/name@version`.
-
-> This method is attached to the instance object you must access this from the `hoobs.instance([name])` command.
-
-## **instance.plugins.upgrade([query])**
-Upgrades a plugin on the current instance.
+## **bridge.plugins.install([query])**
+Installs a plugin on the current bridge.
 
 Parameters
 | Name  | Required | Type   | Description                                                |
@@ -888,10 +876,22 @@ Parameters
 
 Plugin queries are the same as NPM or Yarn queries. Use this format `@scope/name@version`.
 
-> This method is attached to the instance object you must access this from the `hoobs.instance([name])` command.
+> This method is attached to the bridge object you must access this from the `hoobs.bridge([name])` command.
 
-## **instance.plugins.uninstall([query])**
-Uninstalls a plugin on the current instance.
+## **bridge.plugins.upgrade([query])**
+Upgrades a plugin on the current bridge.
+
+Parameters
+| Name  | Required | Type   | Description                                                |
+| ----- | -------- | ------ | ---------------------------------------------------------- |
+| query | Yes      | string | This is the scope, name and optional version of the plugin |
+
+Plugin queries are the same as NPM or Yarn queries. Use this format `@scope/name@version`.
+
+> This method is attached to the bridge object you must access this from the `hoobs.bridge([name])` command.
+
+## **bridge.plugins.uninstall([query])**
+Uninstalls a plugin on the current bridge.
 
 Parameters
 | Name  | Required | Type   | Description                              |
@@ -900,25 +900,25 @@ Parameters
 
 Plugin queries are the same as NPM or Yarn queries. Use this format `@scope/name`.
 
-> This method is attached to the instance object you must access this from the `hoobs.instance([name])` command.
+> This method is attached to the bridge object you must access this from the `hoobs.bridge([name])` command.
 
-## **instance.update([name], [autostart], \<pin\>, \<username\>)**
-This allows you to edit the instance information.
+## **bridge.update([name], [autostart], \<pin\>, \<username\>)**
+This allows you to edit the bridge information.
 
 Parameters
 | Name      | Required | Type    | Description                                                  |
 | --------- | -------- | ------- | ------------------------------------------------------------ |
-| name      | Yes      | string  | The desired display name for this instance                   |
+| name      | Yes      | string  | The desired display name for this bridge                     |
 | autostart | Yes      | number  | Set the number to delay the start of the bridge (in seconds) |
 | pin       | No       | string  | Change the bridge's pin                                      |
 | username  | No       | string  | Change the bridge username                                   |
 
 The name is updated but the id will remain unchanged. We do this so you don't have to change any system services.
 
-> This method is attached to the instance object you must access this from the `hoobs.instance([name])` command.
+> This method is attached to the bridge object you must access this from the `hoobs.bridge([name])` command.
 
-## **instance.ports([start], [end])**
-This allows you to set the port pool on an instance. Usefull for camera plugins.
+## **bridge.ports([start], [end])**
+This allows you to set the port pool on an bridge. Usefull for camera plugins.
 
 Parameters
 | Name  | Required | Type   | Description                                      |
@@ -928,15 +928,15 @@ Parameters
 
 The end port must be equal to or larger then the start port.
 
-> This method is attached to the instance object you must access this from the `hoobs.instance([name])` command.
+> This method is attached to the bridge object you must access this from the `hoobs.bridge([name])` command.
 
-## **instance.accessories()**
-Fetch a list of accessories for this instance.
+## **bridge.accessories()**
+Fetch a list of accessories for this bridge.
 
 ```js
 [{
     aid: string,
-    instance: string,
+    bridge: string,
     type: string,
     linked: any,
     characteristics: [{
@@ -956,30 +956,30 @@ Fetch a list of accessories for this instance.
 }]
 ```
 
-> This method is attached to the instance object you must access this from the `hoobs.instance([name])` command.
+> This method is attached to the bridge object you must access this from the `hoobs.bridge([name])` command.
 
-## **instance.start()**
-Starts the bridge on this instance.
+## **bridge.start()**
+Starts the bridge on this bridge.
 
-> This method is attached to the instance object you must access this from the `hoobs.instance([name])` command.
+> This method is attached to the bridge object you must access this from the `hoobs.bridge([name])` command.
 
-## **instance.stop()**
-Stops the bridge on this instance.
+## **bridge.stop()**
+Stops the bridge on this bridge.
 
-> This method is attached to the instance object you must access this from the `hoobs.instance([name])` command.
+> This method is attached to the bridge object you must access this from the `hoobs.bridge([name])` command.
 
-## **instance.restart()**
-Restarts the bridge on this instance.
+## **bridge.restart()**
+Restarts the bridge on this bridge.
 
-> This method is attached to the instance object you must access this from the `hoobs.instance([name])` command.
+> This method is attached to the bridge object you must access this from the `hoobs.bridge([name])` command.
 
-## **instance.purge()**
-Purges the accessory and persisted cache on this instance.
+## **bridge.purge()**
+Purges the accessory and persisted cache on this bridge.
 
-> This method is attached to the instance object you must access this from the `hoobs.instance([name])` command.
+> This method is attached to the bridge object you must access this from the `hoobs.bridge([name])` command.
 
-## **instance.cache()**
-Fetches the accessory and persisted connections cache on this instance.
+## **bridge.cache()**
+Fetches the accessory and persisted connections cache on this bridge.
 
 ```js
 {
@@ -998,23 +998,23 @@ Fetches the accessory and persisted connections cache on this instance.
 }
 ```
 
-> This method is attached to the instance object you must access this from the `hoobs.instance([name])` command.
+> This method is attached to the bridge object you must access this from the `hoobs.bridge([name])` command.
 
-## **instance.export()**
-This will generate an instance file and will return a URL to that file. If the export fails an error object is returned.
+## **bridge.export()**
+This will generate an bridge file and will return a URL to that file. If the export fails an error object is returned.
 
-## **instance.remove()**
-This will remove this instance including all plugins and configurations.
+## **bridge.remove()**
+This will remove this bridge including all plugins and configurations.
 
-> This method is attached to the instance object you must access this from the `hoobs.instance([name])` command.
+> This method is attached to the bridge object you must access this from the `hoobs.bridge([name])` command.
 
 ## **accessories()**
-Returns a list of accessories from all instances.
+Returns a list of accessories from all bridges.
 
 ```js
 [{
     aid: string,
-    instance: string,
+    bridge: string,
     type: string,
     linked: any,
     characteristics: [{
@@ -1034,13 +1034,13 @@ Returns a list of accessories from all instances.
 }]
 ```
 
-## **accessory([instance], [id])**
+## **accessory([bridge], [id])**
 This fetches a single accessory object.
 
 ```js
 {
     aid: string,
-    instance: string,
+    bridge: string,
     type: string,
     linked: any,
     characteristics: [{
@@ -1069,7 +1069,7 @@ Parameters
 | service | Yes      | string | The service id on the current accessory         |
 | data    | Yes      | JSON   | This is contextual data for the accessory state |
 
-> This method is attached to the accessory object you must access this from the `hoobs.accessory([instance], [id])` command.
+> This method is attached to the accessory object you must access this from the `hoobs.accessory([bridge], [id])` command.
 
 ## **theme.get([name])**
 This fetches the theme colors for the defined name.
@@ -1186,13 +1186,13 @@ Parameters
 | ----- | -------- | ---- | --------------------------------------------------------- |
 | image | Yes      | Blob | This can be any image stream including an HTTPFile object |
 
-## **plugin([instance], [identifier], \<action\>, \<data\>)**
+## **plugin([bridge], [identifier], \<action\>, \<data\>)**
 This allows plugins to interact with their backend code.
 
 Parameters
 | Name       | Required | Type   | Description                                                   |
 | ---------- | -------- | ------ | ------------------------------------------------------------- |
-| instance   | Yes      | string | The instance id you wish to call.                             |
+| bridge     | Yes      | string | The bridge id you wish to call.                               |
 | identifier | Yes      | string | This is the plugins repository identifier                     |
 | action     | No       | string | This is an optional action as defined in the plugin           |
 | data       | No       | JSON   | This is JSON data that is posted to the plugin code as needed |
@@ -1200,7 +1200,7 @@ Parameters
 When opening the UI plugin, your HTML file will have these variables defined for you.
 
 * $hoobs: This SDK.
-* $instance: The instance this dialog if intended.
+* $bridge: The bridge this dialog if intended.
 * $identifier - The plugin identifier, should match your plugin.
 
 ## **location([query])**
