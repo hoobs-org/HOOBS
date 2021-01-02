@@ -5,7 +5,7 @@ The HOOBS command line interface is the software that manages bridges. Below is 
 This starts the hub service. This is needed to manage the bridges. It is also the default command when no other command is defined.
 
 ```
-sudo hoobsd start
+sudo hoobsd hub
 ```
 
 Available options
