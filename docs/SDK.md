@@ -1,4 +1,4 @@
-## SDK
+# SDK
 This SDK is designed to be used with JavaScript and includes a Vue plugin.
 
 ```js

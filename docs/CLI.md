@@ -1,4 +1,4 @@
-## CLI
+# CLI
 The HOOBS command line interface is the software that manages bridges. Below is a list of commands and actions available in the HOOBS CLI.
 
 ## Hub
