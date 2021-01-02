@@ -1,6 +1,3 @@
-# Todo
-A list of items identified as neededing to be compleated.
-
 ## Rename API to Hub & Server to Bridge
 
 1. rename hoobsd/src/api -> hoobsd/src/hub
