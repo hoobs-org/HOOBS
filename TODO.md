@@ -1,4 +1,4 @@
-## Plugind Site
+## Plugins Site
 
 1. Add ability to define plugin type as plugin or extention
 2. Define extentions listed inline with bridge plugins
