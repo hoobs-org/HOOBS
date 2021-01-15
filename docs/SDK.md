@@ -935,24 +935,27 @@ Fetch a list of accessories for this bridge.
 
 ```js
 [{
-    aid: string,
+    accessory_identifier: string,
     bridge: string,
     type: string,
-    linked: any,
     characteristics: [{
-        iid: string,
         type: string,
         service_type: string,
         value: any,
         format: any,
-        perms: [any],
         unit: any,
         max_value: any,
         min_value: any,
         min_step: any,
         read: boolean,
         write: boolean
-    }]
+    }],
+    manufacturer: string,
+    model: string,
+    name: string,
+    serial_number: string,
+    firmware_revision: string,
+    hardware_revision: string
 }]
 ```
 
@@ -1013,24 +1016,27 @@ Returns a list of accessories from all bridges.
 
 ```js
 [{
-    aid: string,
+    accessory_identifier: string,
     bridge: string,
     type: string,
-    linked: any,
     characteristics: [{
-        iid: string,
         type: string,
         service_type: string,
         value: any,
         format: any,
-        perms: [any],
         unit: any,
         max_value: any,
         min_value: any,
         min_step: any,
         read: boolean,
         write: boolean
-    }]
+    }],
+    manufacturer: string,
+    model: string,
+    name: string,
+    serial_number: string,
+    firmware_revision: string,
+    hardware_revision: string
 }]
 ```
 
@@ -1039,35 +1045,55 @@ This fetches a single accessory object.
 
 ```js
 {
-    aid: string,
+    accessory_identifier: string,
     bridge: string,
     type: string,
-    linked: any,
     characteristics: [{
-        iid: string,
         type: string,
         service_type: string,
         value: any,
         format: any,
-        perms: [any],
         unit: any,
         max_value: any,
         min_value: any,
         min_step: any,
         read: boolean,
         write: boolean
-    }]
+    }],
+    manufacturer: string,
+    model: string,
+    name: string,
+    serial_number: string,
+    firmware_revision: string,
+    hardware_revision: string
 }
 ```
 
-## **accessory.control([service], [data])**
+Parameters
+| Name   | Required | Type   | Description                           |
+| ------ | -------- | ------ | ------------------------------------- |
+| bridge | Yes      | string | The the bridge the accessory is lives |
+| id     | Yes      | string | This is the accessory identifier      |
+
+## **accessory.characteristics()**
+Fetches a list of characteristic types. This is helpful for the following control function.
+
+```js
+[
+    "door_state",
+    "target_door_state",
+    "obstruction_detected"
+]
+```
+
+## **accessory.control([characteristic], [data])**
 Control an accessory. The JSON data for an accessory is contextual for the accessory you are wanting to control.
 
 Parameters
-| Name    | Required | Type   | Description                                     |
-| ------- | -------- | ------ | ----------------------------------------------- |
-| service | Yes      | string | The service id on the current accessory         |
-| data    | Yes      | JSON   | This is contextual data for the accessory state |
+| Name    | Required | Type   | Description                                      |
+| ------- | -------- | ------ | ------------------------------------------------ |
+| service | Yes      | string | The characteristic type on the current accessory |
+| data    | Yes      | JSON   | This is contextual data for the accessory state  |
 
 > This method is attached to the accessory object you must access this from the `hoobs.accessory([bridge], [id])` command.
 
