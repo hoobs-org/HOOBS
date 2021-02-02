@@ -1017,36 +1017,41 @@ This will remove this bridge including all plugins and configurations.
 > This method is attached to the bridge object you must access this from the `hoobs.bridge([name])` command.
 
 ## **accessories()**
-Returns a list of accessories from all bridges.
+Returns a list of rooms, accessories from all bridges.
 
 ```js
 [{
-    accessory_identifier: string,
-    bridge_identifier: string | undefined,
-    bridge: string,
-    room: string | null | undefined,
-    sequence: number | undefined,
-    hidden: boolean | undefined,
-    type: string,
-    characteristics: [{
+    id: string,
+    name: string | undefined,
+    sequence: number,
+    accessories: [{
+        accessory_identifier: string,
+        bridge_identifier: string | undefined,
+        bridge: string,
+        room: string | null | undefined,
+        sequence: number | undefined,
+        hidden: boolean | undefined,
         type: string,
-        service_type: string,
-        value: any,
-        format: any,
-        unit: any,
-        max_value: any,
-        min_value: any,
-        min_step: any,
-        read: boolean,
-        write: boolean
-    }],
-    manufacturer: string,
-    model: string,
-    name: string,
-    serial_number: string,
-    firmware_revision: string,
-    hardware_revision: string,
-    icon: string | undefined
+        characteristics: [{
+            type: string,
+            service_type: string,
+            value: any,
+            format: any,
+            unit: any,
+            max_value: any,
+            min_value: any,
+            min_step: any,
+            read: boolean,
+            write: boolean
+        }],
+        manufacturer: string,
+        model: string,
+        name: string,
+        serial_number: string,
+        firmware_revision: string,
+        hardware_revision: string,
+        icon: string | undefined
+    }]
 }]
 ```
 
@@ -1101,16 +1106,110 @@ Fetches a list of characteristic types. This is helpful for the following contro
 ]
 ```
 
-## **accessory.control([characteristic], [data])**
-Control an accessory. The JSON data for an accessory is contextual for the accessory you are wanting to control.
+## **accessory.set([characteristic], [data])**
+Update or control an accessory. The JSON data for an accessory is contextual for the accessory you are wanting to control.
 
 Parameters
-| Name    | Required | Type   | Description                                      |
-| ------- | -------- | ------ | ------------------------------------------------ |
-| service | Yes      | string | The characteristic type on the current accessory |
-| data    | Yes      | JSON   | This is contextual data for the accessory state  |
+| Name           | Required | Type   | Description                                      |
+| -------------- | -------- | ------ | ------------------------------------------------ |
+| characteristic | Yes      | string | The characteristic type on the current accessory |
+| data           | Yes      | any    | This is contextual data for the accessory state  |
+
+These characteristics are available for all non bridge types and are used to organize accessories.
+* name
+* room
+* sequence
+* icon
 
 > This method is attached to the accessory object you must access this from the `hoobs.accessory([bridge], [id])` command.
+
+## **rooms.count()**
+Returns the count of rooms.
+
+## **rooms.list()**
+Returns a list of defined rooms.
+
+```js
+[{
+    id: string,
+    name: string,
+    sequence: number,
+    types: [string],
+    characteristics: [string]
+}]
+```
+
+## **rooms.add([name], \<sequence\>)**
+Adds an room to the device..
+
+Parameters
+| Name     | Required | Type   | Description                               |
+| -------- | -------- | ------ | ----------------------------------------- |
+| name     | Yes      | string | The display name for the room             |
+| sequence | No       | number | The room order, will default to the first |
+
+The name is automatically sanitized and used as an id for the room.
+
+## **room([id])**
+This fetches a single room with accessories, types and characteristics.
+
+```js
+{
+    id: string,
+    name: string | undefined,
+    sequence: number,
+    accessories: [{
+        accessory_identifier: string,
+        bridge_identifier: string | undefined,
+        bridge: string,
+        room: string | null | undefined,
+        sequence: number | undefined,
+        hidden: boolean | undefined,
+        type: string,
+        characteristics: [{
+            type: string,
+            service_type: string,
+            value: any,
+            format: any,
+            unit: any,
+            max_value: any,
+            min_value: any,
+            min_step: any,
+            read: boolean,
+            write: boolean
+        }],
+        manufacturer: string,
+        model: string,
+        name: string,
+        serial_number: string,
+        firmware_revision: string,
+        hardware_revision: string,
+        icon: string | undefined
+    }],
+    types: [string],
+    characteristics: [string]
+}
+```
+
+Parameters
+| Name | Required | Type   | Description         |
+| ---- | -------- | ------ | ------------------- |
+| id   | Yes      | string | This is the room id |
+
+## **room.set([characteristic], [data])**
+Update or control a room.
+
+Parameters
+| Name           | Required | Type   | Description                                      |
+| -------------- | -------- | ------ | ------------------------------------------------ |
+| characteristic | Yes      | string | The characteristic type on the current room      |
+| data           | Yes      | any    | This is contextual data for the room state       |
+
+These characteristics are available for all non default rooms and are used to organize rooms.
+* name
+* sequence
+
+> This method is attached to the room object you must access this from the `hoobs.room([id])` command.
 
 ## **theme.get([name])**
 This fetches the theme colors for the defined name.
