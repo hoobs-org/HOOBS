@@ -936,7 +936,11 @@ Fetch a list of accessories for this bridge.
 ```js
 [{
     accessory_identifier: string,
+    bridge_identifier: string,
     bridge: string,
+    room: string | null,
+    sequence: number,
+    hidden: boolean,
     type: string,
     characteristics: [{
         type: string,
@@ -955,7 +959,8 @@ Fetch a list of accessories for this bridge.
     name: string,
     serial_number: string,
     firmware_revision: string,
-    hardware_revision: string
+    hardware_revision: string,
+    icon: string | undefined
 }]
 ```
 
