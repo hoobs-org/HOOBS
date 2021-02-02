@@ -1129,6 +1129,8 @@ Returns the count of rooms.
 ## **rooms.list()**
 Returns a list of defined rooms.
 
+> The room name is not included for the default room. This aids in localization.
+
 ```js
 [{
     id: string,
