@@ -936,11 +936,11 @@ Fetch a list of accessories for this bridge.
 ```js
 [{
     accessory_identifier: string,
-    bridge_identifier: string,
+    bridge_identifier: string | undefined,
     bridge: string,
-    room: string | null,
-    sequence: number,
-    hidden: boolean,
+    room: string | null | undefined,
+    sequence: number | undefined,
+    hidden: boolean | undefined,
     type: string,
     characteristics: [{
         type: string,
@@ -1022,7 +1022,11 @@ Returns a list of accessories from all bridges.
 ```js
 [{
     accessory_identifier: string,
+    bridge_identifier: string | undefined,
     bridge: string,
+    room: string | null | undefined,
+    sequence: number | undefined,
+    hidden: boolean | undefined,
     type: string,
     characteristics: [{
         type: string,
@@ -1041,7 +1045,8 @@ Returns a list of accessories from all bridges.
     name: string,
     serial_number: string,
     firmware_revision: string,
-    hardware_revision: string
+    hardware_revision: string,
+    icon: string | undefined
 }]
 ```
 
@@ -1051,7 +1056,11 @@ This fetches a single accessory object.
 ```js
 {
     accessory_identifier: string,
+    bridge_identifier: string | undefined,
     bridge: string,
+    room: string | null | undefined,
+    sequence: number | undefined,
+    hidden: boolean | undefined,
     type: string,
     characteristics: [{
         type: string,
@@ -1070,7 +1079,8 @@ This fetches a single accessory object.
     name: string,
     serial_number: string,
     firmware_revision: string,
-    hardware_revision: string
+    hardware_revision: string,
+    icon: string | undefined
 }
 ```
 
