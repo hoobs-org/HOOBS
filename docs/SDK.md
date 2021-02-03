@@ -1118,6 +1118,7 @@ Parameters
 These characteristics are available for all non bridge types and are used to organize accessories.
 * name
 * room
+* hidden
 * sequence
 * icon
 
