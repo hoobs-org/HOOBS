@@ -1214,6 +1214,11 @@ These characteristics are available for all non default rooms and are used to or
 
 > This method is attached to the room object you must access this from the `hoobs.room([id])` command.
 
+## **room.remove()**
+This will remove the current room.
+
+> This method is attached to the room object you must access this from the `hoobs.room([id])` command.
+
 ## **theme.get([name])**
 This fetches the theme colors for the defined name.
 
