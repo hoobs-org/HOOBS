@@ -1212,6 +1212,11 @@ These characteristics are available for all non default rooms and are used to or
 * name
 * sequence
 
+Rooms also have an aditional "off" characteristic that is added when the room has an "on" characteristic defined. 
+This allows you to call `room.set("off", true)` to turn off all light bulbs and switches in a room. This differs from 
+`room.set("on", false)`, This example will only turn off light bulbs. The "off" characteristic is only available at 
+the room level and is not supported for individual accessories.
+
 > This method is attached to the room object you must access this from the `hoobs.room([id])` command.
 
 ## **room.remove()**
