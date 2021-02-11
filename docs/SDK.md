@@ -1095,17 +1095,6 @@ Parameters
 | bridge | Yes      | string | The the bridge the accessory is lives |
 | id     | Yes      | string | This is the accessory identifier      |
 
-## **accessory.characteristics()**
-Fetches a list of characteristic types. This is helpful for the following control function.
-
-```js
-[
-    "door_state",
-    "target_door_state",
-    "obstruction_detected"
-]
-```
-
 ## **accessory.set([characteristic], [data])**
 Update or control an accessory. The JSON data for an accessory is contextual for the accessory you are wanting to control.
 
