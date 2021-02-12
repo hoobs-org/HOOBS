@@ -68,6 +68,20 @@ Parameters
 ## **auth.logout()**
 This takes the session token from the store and logs out the current user.
 
+## **auth.link([vendor], [username], [password], \<verification\>)**
+This will attempt to to fetch authentication tokens from defined third party vendors.
+
+Parameters
+| Name         | Required | Type   | Description                                     |
+| ------------ | -------- | ------ | ----------------------------------------------- |
+| vendor       | Yes      | string | The vendor you wish to link                     |
+| username     | Yes      | string | The username for this vendor                    |
+| password     | Yes      | string | The password for this vendor                    |
+| verification | No       | string | Verification code for two factor authentication |
+
+Currently these are the available vendors.
+* Ring
+
 ## **io()**
 This returnes an bridge of the web socket used to communicate with the backend.
 
