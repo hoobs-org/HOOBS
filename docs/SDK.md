@@ -1312,6 +1312,13 @@ This fetches the theme colors for the defined name.
         highlight: string,
         border: string
     },
+    accessory: {
+        text: string,
+        background: string,
+        highlight: string,
+        input: string,
+        border: string
+    },
     backdrop: string,
     elevation: {
         default: string,
