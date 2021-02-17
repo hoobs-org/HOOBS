@@ -1030,14 +1030,20 @@ This will remove this bridge including all plugins and configurations.
 
 > This method is attached to the bridge object you must access this from the `hoobs.bridge([name])` command.
 
-## **accessories()**
+## **accessories(\<hidden\>)**
 Returns a list of rooms, accessories from all bridges.
+
+Parameters
+| Name   | Required | Type    | Description                         |
+| ------ | -------- | ------- | ----------------------------------- |
+| hidden | No       | boolean | REturn a list of hidden accessories |
 
 ```js
 [{
     id: string,
     name: string | undefined,
     sequence: number,
+    devices: number,
     accessories: [{
         accessory_identifier: string,
         bridge_identifier: string | undefined,
@@ -1140,6 +1146,7 @@ Returns a list of defined rooms.
     id: string,
     name: string,
     sequence: number,
+    devices: number,
     types: [string],
     characteristics: [string]
 }]
@@ -1164,6 +1171,7 @@ This fetches a single room with accessories, types and characteristics.
     id: string,
     name: string | undefined,
     sequence: number,
+    devices: number,
     accessories: [{
         accessory_identifier: string,
         bridge_identifier: string | undefined,
