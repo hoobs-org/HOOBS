@@ -1,4 +1,4 @@
-# SDK
+# <a name="home"></a>SDK
 This SDK is designed to be used with JavaScript and includes a Vue plugin.
 
 ```js
@@ -25,13 +25,127 @@ Below, defines the properties and methods available in this SDK.
 
 > Note: If you are using this within an Vue component, you can access the SDK from `this.$hoobs`. If you are not using Vue, you can access this from `hoobs.sdk`.
 
-## **version()**
+## <a name="version"></a>**Table of Contents**
+- [Version](#version)
+- [Latest](#latest)
+- Auth
+    - [Status](#auth.status)
+    - [Validate](#auth.validate)
+    - [Disable](#auth.disable)
+    - [Login](#auth.login)
+    - [Logout](#auth.logout)
+    - [Link](#auth.link)
+- [IO](#io)
+    - [On](#io.on)
+    - [Off](#io.off)
+    - [Emit](#io.emit)
+- Dates
+    - [Display](#dates.display)
+    - [Age](#dates.age)
+    - [Ordinal](#dates.ordinal)
+    - [Month](#dates.month)
+- Users
+    - [List](#users.list)
+    - [Add](#users.add)
+- [User](#user)
+    - [Update](#user.update)
+    - [Remove](#user.remove)
+- Config
+    - [Get](#config.get)
+    - [Update](#config.update)
+- [Log](#log)
+- [Status](#status)
+- Backup
+    - [Execute](#backup.execute)
+    - [Catalog](#backup.catalog)
+- Restore
+    - [File](#restore.file)
+    - [Upload](#restore.upload)
+- [System](#system)
+    - [CPU](#system.cpu)
+    - [Memory](#system.memory)
+    - [Network](#system.network)
+    - [Filesystem](#system.filesystem)
+    - [Activity](#system.activity)
+    - [Temp](#system.temp)
+    - [Upgrade](#system.upgrade)
+    - [Reboot](#system.reboot)
+    - [Reset](#system.reset)
+- Hostname
+    - [Get](#hostname.get)
+    - [Update](#hostname.update)
+- Extentions
+    - [List](#extentions.list)
+    - [Add](#extentions.add)
+    - [Remove](#extentions.remove)
+- [Plugins](#plugins)
+- Repository
+    - [Featured](#repository.featured)
+    - [Popular](#repository.popular)
+    - [Search](#repository.search)
+    - [Details](#repository.details)
+    - [Reviews](#repository.reviews)
+    - [Title](#repository.title)
+- Bridges
+    - [Count](#bridges.count)
+    - [List](#bridges.list)
+    - [Add](#bridges.add)
+    - [Import](#bridges.import)
+    - [Bridge](#bridge)
+    - [Status](#bridge.status)
+    - Config
+        - [Get](#bridge.config.get)
+        - [Update](#bridge.config.update)
+    - Plugins
+        - [List](#bridge.plugins.list)
+        - [Install](#bridge.plugins.install)
+        - [Upgrade](#bridge.plugins.upgrade)
+        - [Uninstall](#bridge.plugins.uninstall)
+    - [Update](#bridge.update)
+    - [Ports](#bridge.ports)
+    - [Accessories](#bridge.accessories)
+    - [Start](#bridge.start)
+    - [Stop](#bridge.stop)
+    - [Restart](#bridge.restart)
+    - [Purge](#bridge.purge)
+    - [Cache](#bridge.cache)
+    - [Export](#bridge.export)
+    - [Remove](#bridge.remove)
+- [Accessories](#accessories)
+- [Accessory](#accessory)
+    - [Set](#accessory.set)
+- Rooms
+    - [Count](#rooms.count)
+    - [List](#rooms.list)
+    - [Add](#rooms.add)
+- [Room](#room)
+    - [Set](#room.set)
+    - [Remove](#room.remove)
+- Theme
+    - [Get](#theme.get)
+    - [Set](#theme.set)
+    - [Backdrop](#theme.backdrop)
+- [Plugin](#plugin)
+- [Location](#location)
+- Weather
+    - [Current](#weather.current)
+    - [Forecast](#weather.forecast)
+- Remote
+    - [Status](#remote.status)
+    - [Connect](#remote.connect)
+    - [Disconnect](#remote.disconnect)
+
+## <a name="version"></a>**version()**
 This returns the current HOOBSD version installed.
 
-## **latest()**
+[Top](#home)
+
+## <a name="latest"></a>**latest()**
 This returns the latest releasesd HOOBSD version.
 
-## **auth.status()**
+[Top](#home)
+
+## <a name="auth.status"></a>**auth.status()**
 This fetches the status of the authentication system. It will return one of these values.
 
 | Status        | Description                                                                |
@@ -42,19 +156,25 @@ This fetches the status of the authentication system. It will return one of thes
 
 > The disabled status can only be achieved when the auth system is uninitilized.
 
-## **auth.validate()**
+[Top](#home)
+
+## <a name="auth.validate"></a>**auth.validate()**
 This validates the token stored in the Vuex store. If the auth system is disabled, this will always return true.
 
 > Tokens are stored on the hub and have a TTL based in teh `inactive_logoff` setting.
 
-## **auth.disable()**
+[Top](#home)
+
+## <a name="auth.disable"></a>**auth.disable()**
 This will disable the auth system.
 
 The auth system can only be disabled if there are no users. If you would like to disable the auth system after users have been created, you must first remove the `access` file from the storage path.
 
 This will return the auth system status.
 
-## **auth.login([username], [password])**
+[Top](#home)
+
+## <a name="auth.login"></a>**auth.login([username], [password])**
 This will attempt to login to the hub. If the login is successful the token will be added to the Vuex store and stored locally.
 
 If the login fails this function will return `false`.
@@ -65,10 +185,14 @@ Parameters
 | username | Yes      | string | The username defined on the user record |
 | password | Yes      | string | The password defined on the user record |
 
-## **auth.logout()**
+[Top](#home)
+
+## <a name="auth.logout"></a>**auth.logout()**
 This takes the session token from the store and logs out the current user.
 
-## **auth.link([vendor], [username], [password], \<verification\>)**
+[Top](#home)
+
+## <a name="auth.link"></a>**auth.link([vendor], [username], [password], \<verification\>)**
 This will attempt to to fetch authentication tokens from defined third party vendors.
 
 Parameters
@@ -80,9 +204,11 @@ Parameters
 | verification | No       | string | Verification code for two factor authentication |
 
 Currently these are the available vendors.
-* Ring
+- Ring
 
-## **io()**
+[Top](#home)
+
+## <a name="io"></a>**io()**
 This returnes an bridge of the web socket used to communicate with the backend.
 
 Events
@@ -112,7 +238,9 @@ Vue.use(io);
 
 Once this is added, `this.io` will be available in your Vue components.
 
-## **io.on([event], [callback])**
+[Top](#home)
+
+## <a name="io.on"></a>**io.on([event], [callback])**
 This adds a listner on the socket for specific events.
 
 Parameters
@@ -123,15 +251,21 @@ Parameters
 
 > All events return a JSON payload or undefined
 
-## **io.off([event])**
+[Top](#home)
+
+## <a name="io.off"></a>**io.off([event])**
 Disables all listners for a given event.
 
-## **io.emit([event], [...arguments])**
+[Top](#home)
+
+## <a name="io.emit"></a>**io.emit([event], [...arguments])**
 Allows you to emit events from the UI to the backend.
 
 > Arguments are specific to each event
 
-## **dates.display([date])**
+[Top](#home)
+
+## <a name="dates.display"></a>**dates.display([date])**
 Formats a string date or a timestamp into a friendly display.
 
 Parameters
@@ -139,7 +273,9 @@ Parameters
 | ---- | -------- | -------- | -------------------------- |
 | date | Yes      | string   | A date string or timestamp |
 
-## **dates.age([date])**
+[Top](#home)
+
+## <a name="dates.age"></a>**dates.age([date])**
 Formats a string date or a timestamp into an age string line "5 days ago"
 
 Parameters
@@ -147,7 +283,9 @@ Parameters
 | ---- | -------- | -------- | -------------------------- |
 | date | Yes      | string   | A date string or timestamp |
 
-## **dates.ordinal([value])**
+[Top](#home)
+
+## <a name="dates.ordinal"></a>**dates.ordinal([value])**
 Converts a number into an ordinal like "7th"
 
 Parameters
@@ -155,7 +293,9 @@ Parameters
 | ----- | -------- | -------- | ---------------- |
 | value | Yes      | number   | Any number value |
 
-## **dates.month([value])**
+[Top](#home)
+
+## <a name="dates.month"></a>**dates.month([value])**
 Converts a month from Date.getMonth() to a test string.
 
 Parameters
@@ -163,7 +303,9 @@ Parameters
 | ----- | -------- | -------- | ---------------- |
 | value | Yes      | number   | Any number value |
 
-## **users.list()**
+[Top](#home)
+
+## <a name="users.list"></a>**users.list()**
 This will fetch a list of user records.
 
 > Password hashes and salts are ommited for security purposes.
@@ -187,7 +329,9 @@ This will return an array of user records.
 }]
 ```
 
-## **users.add([username], [password], \<name\>, \<permissions\>)**
+[Top](#home)
+
+## <a name="users.add"></a>**users.add([username], [password], \<name\>, \<permissions\>)**
 This will add a new user to the system.
 
 Parameters
@@ -198,7 +342,9 @@ Parameters
 | name        | No       | string | The new user's full name, if not set username is used |
 | permissions | No       | string | The new user's permissions settings                   |
 
-## **user([id])**
+[Top](#home)
+
+## <a name="user"></a>**user([id])**
 Fetches a user object by id.
 
 ```js
@@ -225,7 +371,9 @@ Parameters
 
 > The user id can be obtained from the `hoobs.users.list()` command.
 
-## **user.update([username], [password], \<name\>, \<permissions\>)**
+[Top](#home)
+
+## <a name="user.update"></a>**user.update([username], [password], \<name\>, \<permissions\>)**
 This updates the current user record.
 
 Parameters
@@ -238,12 +386,16 @@ Parameters
 
 > This method is attached to the user object obtained from the `hoobs.user([id])` command.
 
-## **user.remove()**
+[Top](#home)
+
+## <a name="user.remove"></a>**user.remove()**
 This removes the current user record.
 
 > This method is attached to the user object obtained from the `hoobs.user([id])` command.
 
-## **config.get()**
+[Top](#home)
+
+## <a name="config.get"></a>**config.get()**
 This fetches the current hub configuration.
 
 ```js
@@ -259,7 +411,9 @@ This fetches the current hub configuration.
 
 > Config files are encrypted on the hard drive. The API and CLI are the only ways to edit these files.
 
-## **config.update([data])**
+[Top](#home)
+
+## <a name="config.update"></a>**config.update([data])**
 This saves the config.
 
 Parameters
@@ -269,7 +423,9 @@ Parameters
 
 > Config files are encrypted on the hard drive. The API and CLI are the only ways to edit these files.
 
-## **log(\<tail\>)**
+[Top](#home)
+
+## <a name="log"></a>**log(\<tail\>)**
 This fetches the historical log. This returns an array of message objects.
 
 ```js
@@ -289,7 +445,9 @@ Parameters
 | ---- | -------- | ------ | ---------------------------------------- |
 | tail | No       | number | Defines the number of messages to return |
 
-## **status()**
+[Top](#home)
+
+## <a name="status"></a>**status()**
 Fetches the current device status.
 
 ```js
@@ -364,10 +522,14 @@ Fetches the current device status.
 
 > The bridge key is the bridge id
 
-## **backup.execute()**
+[Top](#home)
+
+## <a name="backup.execute"></a>**backup.execute()**
 This will generate a backup file and will return a URL to that file. If the backup fails an error object is returned.
 
-## **backup.catalog()**
+[Top](#home)
+
+## <a name="backup.catalog"></a>**backup.catalog()**
 Returns an list of backups available.
 
 ```js
@@ -377,7 +539,9 @@ Returns an list of backups available.
 }]
 ```
 
-## **restore.file([filename])**
+[Top](#home)
+
+## <a name="restore.file"></a>**restore.file([filename])**
 This will accept a file name from the backup catalog and will restore it.
 
 > This will reboot the device
@@ -387,7 +551,9 @@ Parameters
 | -------- | -------- | ------ | ------------------------------------------------------ |
 | filename | Yes      | string | The file name without the path from the backup catalog |
 
-## **restore.upload([file])**
+[Top](#home)
+
+## <a name="restore.upload"></a>**restore.upload([file])**
 This will accept an uploaded file and restore it to the system.
 
 > This will reboot the device
@@ -397,7 +563,9 @@ Parameters
 | ---- | -------- | ---- | --------------------------------------------------------------- |
 | file | Yes      | Blob | This can be any backup file stream including an HTTPFile object |
 
-## **system()**
+[Top](#home)
+
+## <a name="system"></a>**system()**
 Returns a system information object.
 
 ```js
@@ -431,7 +599,9 @@ Returns a system information object.
 }
 ```
 
-## **system.cpu()**
+[Top](#home)
+
+## <a name="system.cpu"></a>**system.cpu()**
 Returns the current CPU load.
 
 ```js
@@ -506,7 +676,9 @@ Returns the current CPU load.
 
 > This method is attached to the system object you must access this from the `hoobs.system()` command.
 
-## **system.memory()**
+[Top](#home)
+
+## <a name="system.memory"></a>**system.memory()**
 Fetches the current memory load
 
 ```js
@@ -528,7 +700,9 @@ Fetches the current memory load
 
 > This method is attached to the system object you must access this from the `hoobs.system()` command.
 
-## **system.network()**
+[Top](#home)
+
+## <a name="system.network"></a>**system.network()**
 Returns the current network interfaces.
 
 ```js
@@ -543,7 +717,9 @@ Returns the current network interfaces.
 
 > This method is attached to the system object you must access this from the `hoobs.system()` command.
 
-## **system.filesystem()**
+[Top](#home)
+
+## <a name="system.filesystem"></a>**system.filesystem()**
 Fetch an array of the available file systems and the usage information.
 
 ```js
@@ -559,7 +735,9 @@ Fetch an array of the available file systems and the usage information.
 
 > This method is attached to the system object you must access this from the `hoobs.system()` command.
 
-## **system.activity()**
+[Top](#home)
+
+## <a name="system.activity"></a>**system.activity()**
 Fetch system load data.
 
 ```js
@@ -596,7 +774,9 @@ Fetch system load data.
 
 > This method is attached to the system object you must access this from the `hoobs.system()` command.
 
-## **system.temp()**
+[Top](#home)
+
+## <a name="system.temp"></a>**system.temp()**
 Fetch the current CPU temperature.
 
 ```js
@@ -609,34 +789,46 @@ Fetch the current CPU temperature.
 
 > This method is attached to the system object you must access this from the `hoobs.system()` command.
 
-## **system.upgrade()**
+[Top](#home)
+
+## <a name="system.upgrade"></a>**system.upgrade()**
 This will update HOOBSD to the latest version.
 
 > This method is attached to the system object you must access this from the `hoobs.system()` command.
 
-## **system.reboot()**
+[Top](#home)
+
+## <a name="system.reboot"></a>**system.reboot()**
 This will reboot the device.
 
 > This method is attached to the system object you must access this from the `hoobs.system()` command.
 
-## **system.reset()**
+[Top](#home)
+
+## <a name="system.reset"></a>**system.reset()**
 This will factory reset the device. It will remove all bridges, plugins and configurations.
 
 > This method is attached to the system object you must access this from the `hoobs.system()` command.
 
-## **hostname.get()**
+[Top](#home)
+
+## <a name="hostname.get"></a>**hostname.get()**
 This allows you to view the broadcasted hostname.
 
 > Note this is only available on HOOBS devices like the HOOBS Box and the HOOBS SD Card.
 
-## **hostname.update([name])**
+[Top](#home)
+
+## <a name="hostname.update"></a>**hostname.update([name])**
 This allows you to set the broadcasted hostname.
 
 > Note this doesn't change the system's hostname, it only changes the mDNS broadcasted hostname.
 
 > Note this is only available on HOOBS devices like the HOOBS Box and the HOOBS SD Card.
 
-## **extentions.list()**
+[Top](#home)
+
+## <a name="extentions.list"></a>**extentions.list()**
 This will fetch a list of available extentions and if the extention is enabled.
 
 ```js
@@ -647,7 +839,9 @@ This will fetch a list of available extentions and if the extention is enabled.
 }]
 ```
 
-## **extentions.add([name])**
+[Top](#home)
+
+## <a name="extentions.add"></a>**extentions.add([name])**
 This will enable an extention on the system.
 
 Parameters
@@ -655,7 +849,9 @@ Parameters
 | ---- | -------- | ------ | ----------------------------------- |
 | name | Yes      | string | The name of the extention to enable |
 
-## **extentions.remove([name])**
+[Top](#home)
+
+## <a name="extentions.remove"></a>**extentions.remove([name])**
 This will disable an extention on the system.
 
 Parameters
@@ -663,7 +859,9 @@ Parameters
 | ---- | -------- | ------ | ------------------------------------ |
 | name | Yes      | string | The name of the extention to disable |
 
-## **plugins()**
+[Top](#home)
+
+## <a name="plugins"></a>**plugins()**
 This will list all plugins installed across all bridges.
 
 ```js
@@ -682,13 +880,19 @@ This will list all plugins installed across all bridges.
 }]
 ```
 
-## **repository.featured()**
+[Top](#home)
+
+## <a name="repository.featured"></a>**repository.featured()**
 Fetches a list of featured plugins from HOOBS Cloud.
 
-## **repository.popular()**
+[Top](#home)
+
+## <a name="repository.popular"></a>**repository.popular()**
 Fetches a list of popular plugins from HOOBS Cloud.
 
-## **repository.search([query], [skip], [limit])**
+[Top](#home)
+
+## <a name="repository.search"></a>**repository.search([query], [skip], [limit])**
 Search for plugins on HOOBS Cloud in order of hit rank.
 
 Parameters
@@ -698,7 +902,9 @@ Parameters
 | skip  | Yes      | number | Skip the first number of plugins     |
 | limit | Yes      | number | Limit the number of plugins returned |
 
-## **repository.details([identifier])**
+[Top](#home)
+
+## <a name="repository.details"></a>**repository.details([identifier])**
 Fetches a plugin details including readme and config schemas.
 
 Parameters
@@ -708,7 +914,9 @@ Parameters
 
 > Note plugin identifiers include the scope, like @scope/plugin-name.
 
-## **repository.reviews([identifier], [skip], [limit])**
+[Top](#home)
+
+## <a name="repository.reviews"></a>**repository.reviews([identifier], [skip], [limit])**
 Fetch a list of reviews for a given plugin ordered by newest review.
 
 Parameters
@@ -718,7 +926,9 @@ Parameters
 | skip       | Yes      | number | Skip the first number of plugins                |
 | limit      | Yes      | number | Limit the number of plugins returned            |
 
-## **repository.title([value])**
+[Top](#home)
+
+## <a name="repository.title"></a>**repository.title([value])**
 Converts a plugin name or identifier into a friendly display name.
 
 Parameters
@@ -726,10 +936,14 @@ Parameters
 | ----- | -------- | ------ | ----------------------------- |
 | value | Yes      | string | The plugin name or identifier |
 
-## **bridges.count()**
+[Top](#home)
+
+## <a name="bridges.count"></a>**bridges.count()**
 Returns the count of bridges.
 
-## **bridges.list()**
+[Top](#home)
+
+## <a name="bridges.list"></a>**bridges.list()**
 Returns a list of bridges on the device.
 
 ```js
@@ -751,7 +965,9 @@ Returns a list of bridges on the device.
 }]
 ```
 
-## **bridges.add([name], [port], \<pin\>, \<username\>)**
+[Top](#home)
+
+## <a name="bridges.add"></a>**bridges.add([name], [port], \<pin\>, \<username\>)**
 Adds an bridge to the device. This will automatically create a system service and start it.
 
 Parameters
@@ -766,7 +982,9 @@ The name is automatically sanitized and used as an id for the bridge.
 
 > If your operating system doesn't have systemd or launchd the service creation is skipped.
 
-## **bridges.import([file], [name], [port], \<pin\>, \<username\>)**
+[Top](#home)
+
+## <a name="bridges.import"></a>**bridges.import([file], [name], [port], \<pin\>, \<username\>)**
 This will add an bridge from an export of another bridge. This will automatically create a system service and start it.
 
 Parameters
@@ -782,7 +1000,9 @@ The name is automatically sanitized and used as an id for the bridge.
 
 > If your operating system doesn't have systemd or launchd the service creation is skipped.
 
-## **bridge([name])**
+[Top](#home)
+
+## <a name="bridge"></a>**bridge([name])**
 Fetches an bridge object. Will return `undefined` is the bridge doesn't exist.
 
 ```js
@@ -809,7 +1029,9 @@ Parameters
 | ---- | -------- | ------ | ------------------------------------ |
 | name | Yes      | string | The name or id of the desired bridge |
 
-## **bridge.status()**
+[Top](#home)
+
+## <a name="bridge.status"></a>**bridge.status()**
 Fetch the current status of the bridge.
 
 ```js
@@ -833,7 +1055,9 @@ Fetch the current status of the bridge.
 
 > This method is attached to the bridge object you must access this from the `hoobs.bridge([name])` command.
 
-## **bridge.config.get()**
+[Top](#home)
+
+## <a name="bridge.config.get"></a>**bridge.config.get()**
 Returns this bridge's configuration data.
 
 ```js
@@ -848,7 +1072,9 @@ Config files are encrypted on the hard drive. The API and CLI are the only ways 
 
 > This method is attached to the bridge object you must access this from the `hoobs.bridge([name])` command.
 
-## **bridge.config.update([data])**
+[Top](#home)
+
+## <a name="bridge.config.update"></a>**bridge.config.update([data])**
 This saves the config.
 
 Parameters
@@ -860,7 +1086,9 @@ Config files are encrypted on the hard drive. The API and CLI are the only ways 
 
 > This method is attached to the bridge object you must access this from the `hoobs.bridge([name])` command.
 
-## **bridge.plugins.list()**
+[Top](#home)
+
+## <a name="bridge.plugins.list"></a>**bridge.plugins.list()**
 Fetch a list of installed plugins on this bridge.
 
 ```js
@@ -880,7 +1108,9 @@ Fetch a list of installed plugins on this bridge.
 
 > This method is attached to the bridge object you must access this from the `hoobs.bridge([name])` command.
 
-## **bridge.plugins.install([query])**
+[Top](#home)
+
+## <a name="bridge.plugins.install"></a>**bridge.plugins.install([query])**
 Installs a plugin on the current bridge.
 
 Parameters
@@ -892,7 +1122,9 @@ Plugin queries are the same as NPM or Yarn queries. Use this format `@scope/name
 
 > This method is attached to the bridge object you must access this from the `hoobs.bridge([name])` command.
 
-## **bridge.plugins.upgrade([query])**
+[Top](#home)
+
+## <a name="bridge.plugins.upgrade"></a>**bridge.plugins.upgrade([query])**
 Upgrades a plugin on the current bridge.
 
 Parameters
@@ -904,7 +1136,9 @@ Plugin queries are the same as NPM or Yarn queries. Use this format `@scope/name
 
 > This method is attached to the bridge object you must access this from the `hoobs.bridge([name])` command.
 
-## **bridge.plugins.uninstall([query])**
+[Top](#home)
+
+## <a name="bridge.plugins.uninstall"></a>**bridge.plugins.uninstall([query])**
 Uninstalls a plugin on the current bridge.
 
 Parameters
@@ -916,7 +1150,9 @@ Plugin queries are the same as NPM or Yarn queries. Use this format `@scope/name
 
 > This method is attached to the bridge object you must access this from the `hoobs.bridge([name])` command.
 
-## **bridge.update([name], [autostart], \<pin\>, \<username\>)**
+[Top](#home)
+
+## <a name="bridge.update"></a>**bridge.update([name], [autostart], \<pin\>, \<username\>)**
 This allows you to edit the bridge information.
 
 Parameters
@@ -931,7 +1167,9 @@ The name is updated but the id will remain unchanged. We do this so you don't ha
 
 > This method is attached to the bridge object you must access this from the `hoobs.bridge([name])` command.
 
-## **bridge.ports([start], [end])**
+[Top](#home)
+
+## <a name="bridge.ports"></a>**bridge.ports([start], [end])**
 This allows you to set the port pool on an bridge. Usefull for camera plugins.
 
 Parameters
@@ -944,7 +1182,9 @@ The end port must be equal to or larger then the start port.
 
 > This method is attached to the bridge object you must access this from the `hoobs.bridge([name])` command.
 
-## **bridge.accessories()**
+[Top](#home)
+
+## <a name="bridge.accessories"></a>**bridge.accessories()**
 Fetch a list of accessories for this bridge.
 
 ```js
@@ -980,27 +1220,37 @@ Fetch a list of accessories for this bridge.
 
 > This method is attached to the bridge object you must access this from the `hoobs.bridge([name])` command.
 
-## **bridge.start()**
+[Top](#home)
+
+## <a name="bridge.start"></a>**bridge.start()**
 Starts the bridge on this bridge.
 
 > This method is attached to the bridge object you must access this from the `hoobs.bridge([name])` command.
 
-## **bridge.stop()**
+[Top](#home)
+
+## <a name="bridge.stop"></a>**bridge.stop()**
 Stops the bridge on this bridge.
 
 > This method is attached to the bridge object you must access this from the `hoobs.bridge([name])` command.
 
-## **bridge.restart()**
+[Top](#home)
+
+## <a name="bridge.restart"></a>**bridge.restart()**
 Restarts the bridge on this bridge.
 
 > This method is attached to the bridge object you must access this from the `hoobs.bridge([name])` command.
 
-## **bridge.purge()**
+[Top](#home)
+
+## <a name="bridge.purge"></a>**bridge.purge()**
 Purges the accessory and persisted cache on this bridge.
 
 > This method is attached to the bridge object you must access this from the `hoobs.bridge([name])` command.
 
-## **bridge.cache()**
+[Top](#home)
+
+## <a name="bridge.cache"></a>**bridge.cache()**
 Fetches the accessory and persisted connections cache on this bridge.
 
 ```js
@@ -1022,15 +1272,21 @@ Fetches the accessory and persisted connections cache on this bridge.
 
 > This method is attached to the bridge object you must access this from the `hoobs.bridge([name])` command.
 
-## **bridge.export()**
+[Top](#home)
+
+## <a name="bridge.export"></a>**bridge.export()**
 This will generate an bridge file and will return a URL to that file. If the export fails an error object is returned.
 
-## **bridge.remove()**
+[Top](#home)
+
+## <a name="bridge.remove"></a>**bridge.remove()**
 This will remove this bridge including all plugins and configurations.
 
 > This method is attached to the bridge object you must access this from the `hoobs.bridge([name])` command.
 
-## **accessories(\<hidden\>)**
+[Top](#home)
+
+## <a name="accessories"></a>**accessories(\<hidden\>)**
 Returns a list of rooms, accessories from all bridges.
 
 Parameters
@@ -1075,7 +1331,9 @@ Parameters
 }]
 ```
 
-## **accessory([bridge], [id])**
+[Top](#home)
+
+## <a name="accessory"></a>**accessory([bridge], [id])**
 This fetches a single accessory object.
 
 ```js
@@ -1115,7 +1373,9 @@ Parameters
 | bridge | Yes      | string | The the bridge the accessory is lives |
 | id     | Yes      | string | This is the accessory identifier      |
 
-## **accessory.set([characteristic], [data])**
+[Top](#home)
+
+## <a name="accessory.set"></a>**accessory.set([characteristic], [data])**
 Update or control an accessory. The JSON data for an accessory is contextual for the accessory you are wanting to control.
 
 Parameters
@@ -1125,18 +1385,22 @@ Parameters
 | data           | Yes      | any    | This is contextual data for the accessory state  |
 
 These characteristics are available for all non bridge types and are used to organize accessories.
-* name
-* room
-* hidden
-* sequence
-* icon
+- name
+- room
+- hidden
+- sequence
+- icon
 
 > This method is attached to the accessory object you must access this from the `hoobs.accessory([bridge], [id])` command.
 
-## **rooms.count()**
+[Top](#home)
+
+## <a name="rooms.count"></a>**rooms.count()**
 Returns the count of rooms.
 
-## **rooms.list()**
+[Top](#home)
+
+## <a name="rooms.list"></a>**rooms.list()**
 Returns a list of defined rooms.
 
 > The room name is not included for the default room. This aids in localization.
@@ -1152,7 +1416,9 @@ Returns a list of defined rooms.
 }]
 ```
 
-## **rooms.add([name], \<sequence\>)**
+[Top](#home)
+
+## <a name="rooms.add"></a>**rooms.add([name], \<sequence\>)**
 Adds an room to the device..
 
 Parameters
@@ -1163,7 +1429,9 @@ Parameters
 
 The name is automatically sanitized and used as an id for the room.
 
-## **room([id])**
+[Top](#home)
+
+## <a name="room"></a>**room([id])**
 This fetches a single room with accessories, types and characteristics.
 
 ```js
@@ -1210,7 +1478,9 @@ Parameters
 | ---- | -------- | ------ | ------------------- |
 | id   | Yes      | string | This is the room id |
 
-## **room.set([characteristic], [data])**
+[Top](#home)
+
+## <a name="room.set"></a>**room.set([characteristic], [data])**
 Update or control a room.
 
 Parameters
@@ -1220,8 +1490,8 @@ Parameters
 | data           | Yes      | any    | This is contextual data for the room state       |
 
 These characteristics are available for all non default rooms and are used to organize rooms.
-* name
-* sequence
+- name
+- sequence
 
 Rooms also have an aditional "off" characteristic that is added when the room has an "on" characteristic defined. 
 This allows you to call `room.set("off", true)` to turn off all light bulbs and switches in a room. This differs from 
@@ -1230,12 +1500,16 @@ the room level and is not supported for individual accessories.
 
 > This method is attached to the room object you must access this from the `hoobs.room([id])` command.
 
-## **room.remove()**
+[Top](#home)
+
+## <a name="room.remove"></a>**room.remove()**
 This will remove the current room.
 
 > This method is attached to the room object you must access this from the `hoobs.room([id])` command.
 
-## **theme.get([name])**
+[Top](#home)
+
+## <a name="theme.get"></a>**theme.get([name])**
 This fetches the theme colors for the defined name.
 
 ```js
@@ -1340,7 +1614,9 @@ Parameters
 | ---- | -------- | ------ | --------------------- |
 | name | Yes      | string | The name of the theme |
 
-## **theme.set([name], [theme])**
+[Top](#home)
+
+## <a name="theme.set"></a>**theme.set([name], [theme])**
 This will save a theme to the backend.
 
 Parameters
@@ -1349,7 +1625,9 @@ Parameters
 | name  | Yes      | string | The name of the theme |
 | theme | Yes      | Theme  | The theme JSON object |
 
-## **theme.backdrop([image])**
+[Top](#home)
+
+## <a name="theme.backdrop"></a>**theme.backdrop([image])**
 This will upload an image to the backend for use as a backdrop.
 
 Parameters
@@ -1357,7 +1635,9 @@ Parameters
 | ----- | -------- | ---- | --------------------------------------------------------- |
 | image | Yes      | Blob | This can be any image stream including an HTTPFile object |
 
-## **plugin([bridge], [identifier], \<action\>, \<data\>)**
+[Top](#home)
+
+## <a name="plugin"></a>**plugin([bridge], [identifier], \<action\>, \<data\>)**
 This allows plugins to interact with their backend code.
 
 Parameters
@@ -1370,11 +1650,13 @@ Parameters
 
 When opening the UI plugin, your HTML file will have these variables defined for you.
 
-* $hoobs: This SDK.
-* $bridge: The bridge this dialog if intended.
-* $identifier - The plugin identifier, should match your plugin.
+- $hoobs: This SDK.
+- $bridge: The bridge this dialog if intended.
+- $identifier - The plugin identifier, should match your plugin.
 
-## **location([query])**
+[Top](#home)
+
+## <a name="location"></a>**location([query])**
 This will search for a location by open text search. This is used to set the location for weather forecasts.
 
 ```js
@@ -1389,7 +1671,9 @@ Parameters
 | ----- | -------- | ------ | --------------------------------- |
 | query | Yes      | string | This the desired open text search |
 
-## **weather.current()**
+[Top](#home)
+
+## <a name="weather.current"></a>**weather.current()**
 Fetches the current weather from the configured location on the hub.
 
 ```js
@@ -1412,7 +1696,9 @@ Fetches the current weather from the configured location on the hub.
 }
 ```
 
-## **weather.forecast()**
+[Top](#home)
+
+## <a name="weather.forecast"></a>**weather.forecast()**
 Fetches the weather forecast from the configured location on the hub.
 
 ```js
@@ -1436,7 +1722,9 @@ Fetches the weather forecast from the configured location on the hub.
 }]
 ```
 
-## **remote.status()**
+[Top](#home)
+
+## <a name="remote.status"></a>**remote.status()**
 Returns the status of a remote session.
 
 ```js
@@ -1447,7 +1735,9 @@ Returns the status of a remote session.
 
 > Only one remote session is allowed per hub.
 
-## **remote.connect()**
+[Top](#home)
+
+## <a name="remote.connect"></a>**remote.connect()**
 Connects to the HOOBS support server. This will allow HOOBS support to diagnose and run commands on your device.
 
 This will return a registration code or an error object if it can't connect.
@@ -1458,7 +1748,11 @@ This will return a registration code or an error object if it can't connect.
 }
 ```
 
-## **remote.disconnect()**
+[Top](#home)
+
+## <a name="remote.disconnect"></a>**remote.disconnect()**
 This will disconnect a current active session.
 
 > When HOOBS support disconnects this will automatically be called.
+
+[Top](#home)
