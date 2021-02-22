@@ -1,7 +1,39 @@
-# CLI
+# <a name="home"></a>CLI
 The HOOBS command line interface is the software that manages bridges. Below is a list of commands and actions available in the HOOBS CLI.
 
-## Hub
+## **Table of Contents**
+- Daemon
+    - [Hub](#daemon.hub)
+    - [Bridge](#daemon.bridge)
+    - [Service](#daemon.service)
+- [Install](#install)
+- [Bridge](#bridge)
+    - [Add](#bridge.add)
+    - [Cache](#bridge.cache)
+    - [Purge](#bridge.purge)
+    - [Remove](#bridge.remove)
+    - [Export](#bridge.export)
+    - [List](#bridge.list)
+- [Plugin](#plugin)
+    - [Add](#plugin.add)
+    - [Remove](#plugin.remove)
+    - [Update](#plugin.update)
+    - [List](#plugin.list)
+    - [Create](#plugin.create)
+- [Config](#config)
+- [Log](#log)
+- [Extention](#extention)
+    - [Add](#extention.add)
+    - [Remove](#extention.remove)
+    - [List](#extention.list)
+- [System](#system)
+    - [Versions](#system.versions)
+    - [Upgrade](#system.upgrade)
+    - [Backup](#system.backup)
+    - [Restore](#system.restore)
+    - [Rreset](#system.reset)
+
+## <a name="daemon.hub"></a>Hub (Daemon)
 This starts the hub service. This is needed to manage the bridges. It is also the default command when no other command is defined.
 
 ```
@@ -17,7 +49,9 @@ Available options
 | -o, --orphans         | Keep cached accessories for orphaned plugins        |
 | -c, --container       | This changes the paths needed for Docker containers |
 
-## Bridge
+[Top](#home)
+
+## <a name="daemon.bridge"></a>Bridge (Daemon)
 This starts bridges.
 
 ```
@@ -36,7 +70,9 @@ Available options
 
 > If an bridge name is not included the default is **default**
 
-## Service
+[Top](#home)
+
+## <a name="daemon.service"></a>Service (Daemon)
 This controls the service installed on the system. To create the service use the HOOBS CLI.
 
 ```
@@ -55,7 +91,9 @@ Available options
 | --------------------- | --------------------------------------------------- |
 | -d, --debug           | Turn on debug level logging                         |
 
-## Install
+[Top](#home)
+
+## <a name="install"></a>Install
 This initilizes the system. It creates the special hub bridge. The hub bridge is a control hub for all other bridges.
 
 ```
@@ -69,12 +107,16 @@ Available options
 | -s, --skip        | This will skip the systemd or launchd service create       |
 | -c, --container   | This changes the paths needed for Docker containers        |
 
-## Bridge
+[Top](#home)
+
+## <a name="bridge"></a>Bridge
 This controls bridges on the system. It can be used to list, create and remove bridges.
 
 > This also creates and starts systemd and launchd services. If your system doesn't have either of these systems, the CLI will not attempt this.
 
-#### Add
+[Top](#home)
+
+#### <a name="bridge.add"></a>Add
 *alias **create***  
 
 This will create an bridge.
@@ -94,7 +136,9 @@ Available options
 
 > If the bridge name or port is not set the CLI will ask for this information.
 
-#### Cache
+[Top](#home)
+
+#### <a name="bridge.cache"></a>Cache
 This will display cached accessories for a bridge.
 
 ```
@@ -108,7 +152,9 @@ Available options
 
 > If the bridge name or port is not set the CLI will ask for this information.
 
-#### Purge
+[Top](#home)
+
+#### <a name="bridge.purge"></a>Purge
 This will purge all persisted and cache files for a bridge.
 
 ```
@@ -124,7 +170,9 @@ Available options
 > If the bridge name or port is not set the CLI will ask for this information.  
 > This will require you to re-pair with Apple Home.
 
-#### Remove
+[Top](#home)
+
+#### <a name="bridge.remove"></a>Remove
 *alias **rm***  
 
 This will remove an bridge.
@@ -144,7 +192,9 @@ Available options
 
 > If the bridge name is not set the CLI will ask for this information.
 
-#### Export
+[Top](#home)
+
+#### <a name="bridge.export"></a>Export
 This will export an bridge to your current working directory.
 
 ```
@@ -162,7 +212,9 @@ Available options
 
 > If the bridge name is not set the CLI will ask for this information.
 
-#### List
+[Top](#home)
+
+#### <a name="bridge.list"></a>List
 *alias **ls***  
 
 This will show a list of bridges on the system including the hub. It will also show you if the bridge is running.
@@ -171,14 +223,18 @@ This will show a list of bridges on the system including the hub. It will also s
 sudo hbs bridge list
 ```
 
-## Plugin
+[Top](#home)
+
+## <a name="plugin"></a>Plugin
 This allows you to install, remove and list plugins from any bridge.
 
 This will manage the plugin locations, logging and configs. This important because HOOBS encrypts your config files.
 
 > Even though you can install plugins using npm or yarn, this handles everything that those tools don't This plugin command is a more secure way of installing plugins.
 
-#### Add
+[Top](#home)
+
+#### <a name="plugin.add"></a>Add
 *alias **install***  
 
 This will install a plugin into an bridge.
@@ -197,7 +253,9 @@ Available options
 
 > If the bridge name is not set the CLI will ask for this information.
 
-#### Remove
+[Top](#home)
+
+#### <a name="plugin.remove"></a>Remove
 *alias **uninstall***  
 *alias **rm***  
 
@@ -215,7 +273,9 @@ Available options
 
 > If the bridge name is not set the CLI will ask for this information.
 
-#### Update
+[Top](#home)
+
+#### <a name="plugin.update"></a>Update
 *alias **upgrade***  
 
 This will upgrade a single plugin or all plugins from an bridge.
@@ -240,7 +300,9 @@ Available options
 
 > If the bridge name is not set the CLI will ask for this information.
 
-#### List
+[Top](#home)
+
+#### <a name="plugin.list"></a>List
 *alias **ls***  
 
 This will list plugins for all or a single bridge.
@@ -257,7 +319,9 @@ Available options
 
 > If an bridge is not defined, the CLI will include the bridge in the list.
 
-#### Create
+[Top](#home)
+
+#### <a name="plugin.create"></a>Create
 This command is used by developers to quickly create a new plugin project. It will create a new folder for your project and add example files depending on the options you choose.
 
 ```
@@ -274,7 +338,9 @@ This supports many options.
 * GUI plugin
 * Config Schemas
 
-## Config
+[Top](#home)
+
+## <a name="config"></a>Config
 This allows you to manually configure HOOBS. This is the only way other then the GUI to configure HOOBS. HOOBS encrypts config files to project sensitive information.
 
 ```
@@ -293,7 +359,9 @@ Available options
 
 > If the bridge name is not set the CLI will ask for this information.
 
-## Log
+[Top](#home)
+
+## <a name="log"></a>Log
 This will display the log from all bridges. You can also use this command to show the log from a single bridge.
 
 ```
@@ -310,12 +378,16 @@ Available options
 | -d, --debug         | Show debug messages                                  |
 | -c, --container     | This changes the paths needed for Docker containers  |
 
-## Extention
+[Top](#home)
+
+## <a name="extention"></a>Extention
 This manages HOOBS extentions (features). It can be used to enable system level dependencies, like FFMPEG, and the official GUI.
 
 > Extentions are not the same as plugins. A plugin runs on a bridge, where an extention runs on the system, or modifies the hub.
 
-#### Add
+[Top](#home)
+
+#### <a name="extention.add"></a>Add
 *alias **install***  
 
 This enables an extention.
@@ -329,7 +401,9 @@ Available options
 | --------------------- | ---------------------------------------------------- |
 | -c, --container       | This changes the paths needed for Docker containers  |
 
-#### Remove
+[Top](#home)
+
+#### <a name="extention.remove"></a>Remove
 *alias **uninstall***  
 *alias **rm***  
 
@@ -344,7 +418,9 @@ Available options
 | --------------------- | ---------------------------------------------------- |
 | -c, --container       | This changes the paths needed for Docker containers  |
 
-#### List
+[Top](#home)
+
+#### <a name="extention.list"></a>List
 *alias **ls***  
 
 This will list all available extetntions and if they are enabled.
@@ -358,10 +434,14 @@ Available options
 | --------------------- | ---------------------------------------------------- |
 | -c, --container       | This changes the paths needed for Docker containers  |
 
-## System
+[Top](#home)
+
+## <a name="system"></a>System
 This command manages the system. You can upgrade HOOBS, backuup and restore the system. You can also clean the caches or completly reset the system.
 
-#### Versions
+[Top](#home)
+
+#### <a name="system.versions"></a>Versions
 *alias **version***  
 
 This shows system information and version information. This is usefull for checking for Node, HOOBSD and the CLI for updates.
@@ -375,7 +455,9 @@ Available options
 | ----- | ---------------------------------------------------------------- |
 | -beta | This compares installed versions against available beta versions |
 
-#### Upgrade
+[Top](#home)
+
+#### <a name="system.upgrade"></a>Upgrade
 *alias **update***  
 
 This will upgrade HOOBS to the latest version. This includes HOOBSD, the CLI and Node.
@@ -390,7 +472,9 @@ Available options
 | -t, -test | Dry run an upgrade and test network connectivity |
 | -beta     | Install available beta versions                  |
 
-#### Backup
+[Top](#home)
+
+#### <a name="system.backup"></a>Backup
 This will backup your current setup to the current working directory.
 
 ```
@@ -400,14 +484,18 @@ sudo hbs system backup
 
 > Note this will need to be ran with elevated permissions. You will need to chmod the file if you want to work with it.
 
-#### Restore
+[Top](#home)
+
+#### <a name="system.restore"></a>Restore
 This will restore the system with the file you select
 
 ```
 sudo hbs system restore ~/backups/my-backup.zip
 ```
 
-#### Rreset
+[Top](#home)
+
+#### <a name="system.reset"></a>Rreset
 This will remove all configurations, plugins and bridges from the system. Yse this with caution.
 
 ```
@@ -415,3 +503,5 @@ sudo hbs system reset
 ```
 
 > This will keep you backup folder, so it is wise to create a backup before running this command.
+
+[Top](#home)

@@ -25,7 +25,7 @@ Below, defines the properties and methods available in this SDK.
 
 > Note: If you are using this within an Vue component, you can access the SDK from `this.$hoobs`. If you are not using Vue, you can access this from `hoobs.sdk`.
 
-## <a name="version"></a>**Table of Contents**
+## **Table of Contents**
 - [Version](#version)
 - [Latest](#latest)
 - Auth
