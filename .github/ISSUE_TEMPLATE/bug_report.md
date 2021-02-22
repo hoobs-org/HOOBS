@@ -48,7 +48,7 @@ POST CONFIG HERE
 ```
 
 **Post your log**
-You can get the log from the intercafe. This is in the Log section.
+You can get the log from the interface. This is in the Log section.
 
 ```
 POST LOG HERE
