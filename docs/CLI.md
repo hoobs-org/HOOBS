@@ -86,13 +86,43 @@ sudo hbs bridge create
 Available options
 | Flag                  | Description                                          |
 | --------------------- | ---------------------------------------------------- |
-| -b, --bridge <name> | Defines a name for the bridge                          |
+| -b, --bridge <name>   | Defines a name for the bridge                        |
 | -p, --port <port>     | Sets the port for the bridge                         |
 | -n, --pin <pin>       | Sets the pin for bridge paring                       |
 | -s, --skip            | This will skip the systemd or launchd service create |
 | -c, --container       | This changes the paths needed for Docker containers  |
 
 > If the bridge name or port is not set the CLI will ask for this information.
+
+#### Cache
+This will display cached accessories for a bridge.
+
+```
+sudo hbs bridge cache
+```
+
+Available options
+| Flag                  | Description                                          |
+| --------------------  | ---------------------------------------------------- |
+| -b, --bridge <name>   | Selects a bridge                                     |
+
+> If the bridge name or port is not set the CLI will ask for this information.
+
+#### Purge
+This will purge all persisted and cache files for a bridge.
+
+```
+sudo hbs bridge purge
+```
+
+Available options
+| Flag                  | Description                                          |
+| --------------------  | ---------------------------------------------------- |
+| -b, --bridge <name>   | Selects a bridge                                     |
+| -u, --uuid <UUID>     | Remove a specific accessory from the cache           |
+
+> If the bridge name or port is not set the CLI will ask for this information.  
+> This will require you to re-pair with Apple Home.
 
 #### Remove
 *alias **rm***  
@@ -376,15 +406,6 @@ This will restore the system with the file you select
 ```
 sudo hbs system restore ~/backups/my-backup.zip
 ```
-
-#### Purge
-This will purge all persisted and cache files from all bridges.
-
-```
-sudo hbs system purge
-```
-
-> This will require you to re-pair with Apple Home.
 
 #### Rreset
 This will remove all configurations, plugins and bridges from the system. Yse this with caution.

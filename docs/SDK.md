@@ -1243,11 +1243,6 @@ Restarts the bridge on this bridge.
 
 [Top](#home)
 
-## <a name="bridge.purge"></a>**bridge.purge()**
-Purges the accessory and persisted cache on this bridge.
-
-> This method is attached to the bridge object you must access this from the `hoobs.bridge([name])` command.
-
 [Top](#home)
 
 ## <a name="bridge.cache"></a>**bridge.cache()**
@@ -1272,6 +1267,16 @@ Fetches the accessory and persisted connections cache on this bridge.
 
 > This method is attached to the bridge object you must access this from the `hoobs.bridge([name])` command.
 
+## <a name="bridge.purge"></a>**bridge.purge(\<uuid\>)**
+Purges the accessory and persisted cache on this bridge.
+
+Parameters
+| Name   | Required | Type   | Description                                |
+| ------ | -------- | ------ | ------------------------------------------ |
+| uuid   | No       | string | Remove a specific accessory from the cache |
+
+> This method is attached to the bridge object you must access this from the `hoobs.bridge([name])` command.
+
 [Top](#home)
 
 ## <a name="bridge.export"></a>**bridge.export()**
@@ -1292,7 +1297,7 @@ Returns a list of rooms, accessories from all bridges.
 Parameters
 | Name   | Required | Type    | Description                         |
 | ------ | -------- | ------- | ----------------------------------- |
-| hidden | No       | boolean | REturn a list of hidden accessories |
+| hidden | No       | boolean | Return a list of hidden accessories |
 
 ```js
 [{
