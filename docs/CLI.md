@@ -28,6 +28,7 @@ The HOOBS command line interface is the software that manages bridges. Below is 
     - [List](#extention.list)
 - [System](#system)
     - [Versions](#system.versions)
+    - [Hostname](#system.hostname)
     - [Upgrade](#system.upgrade)
     - [Backup](#system.backup)
     - [Restore](#system.restore)
@@ -454,6 +455,23 @@ Available options
 | Flag  | Description                                                      |
 | ----- | ---------------------------------------------------------------- |
 | -beta | This compares installed versions against available beta versions |
+
+[Top](#home)
+
+#### <a name="system.versions"></a>Hostname
+This shows or sets the hostname.
+
+```
+sudo hbs system hostname
+```
+
+To set the hostname, `<name>` is the hostname you wish to use.
+
+```
+sudo hbs system hostname '<name>'
+```
+
+> Note: Hostnames should not include spaces or special characters other then dashes.
 
 [Top](#home)
 
