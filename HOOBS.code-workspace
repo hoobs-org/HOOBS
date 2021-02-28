@@ -1,32 +1,36 @@
 {
     "folders": [
         {
-            "name": "sdk",
-            "path": "./sdk"
-        },
-        {
             "name": "cli",
             "path": "./cli"
         },
         {
-            "name": "hoobsd",
-            "path": "./hoobsd"
+            "name": "sdk",
+            "path": "./sdk"
         },
         {
             "name": "gui",
             "path": "./gui"
         },
         {
+            "name": "hoobsd",
+            "path": "./hoobsd"
+        },
+        {
             "name": "connect",
             "path": "./connect"
         },
         {
-            "name": "docs",
-            "path": "./docs"
+            "name": "image",
+            "path": "./image"
         },
         {
             "name": "builds",
             "path": "./builds"
+        },
+        {
+            "name": "docs",
+            "path": "./docs"
         }
     ],
     "settings": {
