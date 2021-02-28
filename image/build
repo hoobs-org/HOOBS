@@ -42,7 +42,7 @@ Program.version(pjson.version, "-v, --version", "output the current version")
 Program.command("image", { isDefault: true })
     .description("build hoobs image")
     .action(() => {
-        let setup = true;
+        let proceed = true;
         let docker = null;
 
         try {
@@ -51,24 +51,49 @@ Program.command("image", { isDefault: true })
             docker = null;
         }
 
-        if (!existsSync(join(root, "./cli", "package.json"))) setup = false;
-        if (!existsSync(join(root, "./hoobsd", "package.json"))) setup = false;
-        if (!existsSync(join(root, "./gui", "package.json"))) setup = false;
+        if (!docker || docker === "") {
+            console.log("docker is not installed");
+            proceed = false;
+        }
 
-        if (setup && docker && docker !== "") {
-            prompt([
-                {
-                    type: "string",
-                    name: "version",
-                    default: pjson.version,
-                    message: "Enter the desired version",
-                    validate: (value) => {
-                        if (!Semver.valid(value)) return "invalid version";
-    
-                        return true;
-                    },
+        if (!existsSync(join(root, "./cli", "package.json")) || !existsSync(join(root, "./hoobsd", "package.json")) || !existsSync(join(root, "./gui", "package.json"))) {
+            console.log("workspace not initilized");
+            proceed = false;
+        }
+
+        if (!existsSync(join(root, "./hoobsd", ".env.production"))) {
+            console.log("missing hoobsd production enviornment file");
+            proceed = false;
+        }
+
+        if (!existsSync(join(root, "./gui", ".env.production"))) {
+            console.log("missing hoobs gui production enviornment file");
+            proceed = false;
+        }
+
+        if (proceed) {
+            prompt([{
+                type: "string",
+                name: "version",
+                default: pjson.version,
+                message: "Enter the desired version",
+                validate: (value) => {
+                    if (!Semver.valid(value)) return "invalid version";
+
+                    return true;
                 },
-            ]).then((result) => {
+            }, {
+                type: "list",
+                name: "sku",
+                message: "Select a model to build",
+                choices: [{
+                    name: "HOOBS Box",
+                    value: "box",
+                }, {
+                    name: "HOOBS SD Card",
+                    value: "card",
+                }],
+            }]).then((result) => {
                 pjson.version = result.version;
     
                 writeFileSync(join(root, "package.json"), JSON.stringify(pjson, null, 4));
@@ -76,16 +101,51 @@ Program.command("image", { isDefault: true })
 
                 if (existsSync(join(root, "hoobs"))) rmSync(join(root, "image/hoobs.conf"));
 
-                console.log("building hoobs cli");
-                execSync((JSON.parse(readFileSync(join(root, "./cli", "package.json")).toString())).scripts.build, { cwd: join(root, "./cli"), stdio: "inherit" });
-                console.log("building hoobsd");
-                execSync((JSON.parse(readFileSync(join(root, "./hoobsd", "package.json")).toString())).scripts.build, { cwd: join(root, "./hoobsd"), stdio: "inherit" });
-                console.log("building hoobs gui");
-                execSync((JSON.parse(readFileSync(join(root, "./gui", "package.json")).toString())).scripts.build, { cwd: join(root, "./gui"), stdio: "inherit" });
-                console.log("building hoobs connect");
-                execSync((JSON.parse(readFileSync(join(root, "./connect", "package.json")).toString())).scripts.build, { cwd: join(root, "./connect"), stdio: "inherit" });
+                const working = {
+                    cli: JSON.parse(readFileSync(join(root, "./cli", "package.json")).toString()),
+                    hoobsd: JSON.parse(readFileSync(join(root, "./hoobsd", "package.json")).toString()),
+                    gui: JSON.parse(readFileSync(join(root, "./gui", "package.json")).toString()),
+                    connect: JSON.parse(readFileSync(join(root, "./connect", "package.json")).toString()),
+                }
 
-                // COPY BUILT FILES
+                console.log("building hoobs cli");
+                execSync(working.cli.scripts.build, { cwd: join(root, "./cli"), stdio: "inherit" });
+                console.log("building hoobsd");
+                execSync(working.hoobsd.scripts.build, { cwd: join(root, "./hoobsd"), stdio: "inherit" });
+                console.log("building hoobs gui");
+                execSync(working.gui.scripts.build, { cwd: join(root, "./gui"), stdio: "inherit" });
+                console.log("building hoobs connect");
+                execSync(working.connect.scripts.build, { cwd: join(root, "./connect"), stdio: "inherit" });
+                console.log("building image");
+
+                let vendor = "";
+
+                switch (result.sku) {
+                    case "box":
+                        vendor += "ID=box\n";
+                        vendor += "MODEL=HSLF-1\n";
+                        vendor += "SKU=7-45114-12419-7\n";
+                        break;
+
+                    case "card":
+                        vendor += "ID=card\n";
+                        vendor += "MODEL=HSLF-2\n";
+                        vendor += "SKU=7-45114-12418-0\n";
+                        break;
+
+                    default:
+                        vendor += "ID=unknown\n";
+                        vendor += "MODEL=\n";
+                        vendor += "SKU=\n";
+                        break;
+                }
+
+                writeFileSync(join(root, "./image/stage4/01-vendor-release/files", "hoobs"), vendor);
+
+                execSync(`cp ${join(root, "./builds", `hoobs-cli-v${working.cli.version}.tar.gz`)} ${join(root, "./image/stage4/02-hoobs/files", "hoobs-cli.tar.gz")}`, { cwd: root, stdio: "inherit" });
+                execSync(`cp ${join(root, "./builds", `hoobsd-v${working.hoobsd.version}.tar.gz`)} ${join(root, "./image/stage4/02-hoobs/files", "hoobsd.tar.gz")}`, { cwd: root, stdio: "inherit" });
+                execSync(`cp ${join(root, "./builds", `hoobs-gui-v${working.gui.version}.tar.gz`)} ${join(root, "./image/stage4/02-hoobs/files", "hoobs-gui.tar.gz")}`, { cwd: root, stdio: "inherit" });
+                execSync(`cp ${join(root, "./builds", `hoobs-connect-v${working.connect.version}.tar.gz`)} ${join(root, "./image/stage3/02-wifi-connect/files", "hoobs-connect.tar.gz")}`, { cwd: root, stdio: "inherit" });
 
                 let variables = "";
 
@@ -102,15 +162,10 @@ Program.command("image", { isDefault: true })
                 variables += "ENABLE_SSH=1\n";
                 variables += "STAGE_LIST=\"stage0 stage1 stage3 stage4 stage6 stage8\"\n";
 
-                console.log("building image");
                 writeFileSync(join(root, "image/hoobs.conf"), variables);
     
                 // BUILD (./container -c hoobs)
             });
-        } else if (setup) {
-            console.log("docker is not installed");
-        } else {
-            console.log("workspace not initilized");
         }
     });
 

@@ -1,0 +1,34 @@
+#!/bin/bash
+
+MODEL=$(tr -d '\0' </proc/device-tree/model)
+printf "$MODEL\n"
+
+IP=$(hostname -I)
+
+printf "\n\n*** HOOBS - Homebridge Out Of The Box ***\n"
+
+printf "\n"
+printf "   _    _  ____   ____  ____   _____   \n"
+printf "  | |  | |/ __ \ / __ \|  _ \ / ____|  \n"
+printf "  | |__| | |  | | |  | | |_) | (___    \n"
+printf "  |  __  | |  | | |  | |  _ < \___ \   \n"
+printf "  | |  | | |__| | |__| | |_) |____) |  \n"
+printf "  |_|  |_|\____/ \____/|____/|_____/   \n"
+printf "                                       \n"
+printf "\n"
+
+printf "To configure HOOBS browse to the one of the following addresses from another device on your network:" | fold -s
+printf "\n\n"
+printf "* http://$(hostname).local\n"
+
+for ip in $IP; do
+  if [[ $ip =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+    printf "* http://$ip\n"
+  else
+    printf "* http://[$ip]\n"
+  fi
+done
+
+printf "\n\n"
+printf "HOOBS and the HOOBS logo are registered trademarks of HOOBS Inc.\n"
+printf "Copyright (C) 2020 HOOBS Inc. All rights reserved.\n"

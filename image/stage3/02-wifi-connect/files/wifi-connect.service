@@ -1,0 +1,11 @@
+[Unit]
+Description=WiFi Captive Portal
+After=NetworkManager.service
+Before=hoobs.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/wifi-connect-startup
+
+[Install]
+WantedBy=multi-user.target
