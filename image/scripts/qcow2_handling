@@ -9,7 +9,7 @@ export NBD_DEV
 export MAP_BOOT_DEV
 export MAP_ROOT_DEV
 
-# set in build.sh
+# set in stage
 # should be fairly enough for the beginning
 # overwrite here by uncommenting following lines
 # BASE_QCOW2_SIZE=12G

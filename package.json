@@ -1,5 +1,5 @@
 {
-    "name": "@hoobs/hoobs",
+    "name": "hoobs",
     "version": "4.0.1",
     "description": "Build your Smart Home with HOOBS. Connect over 2,000 Accessories to your favorite Ecosystem.",
     "license": "GPL-3.0",
@@ -16,6 +16,12 @@
     "scripts": {
         "push": "bin/push",
         "pull": "bin/pull",
-        "setup": "bin/setup"
+        "setup": "bin/setup",
+        "build": "image/build"
+    },
+    "devDependencies": {
+        "commander": "^7.1.0",
+        "inquirer": "^8.0.0",
+        "semver": "^7.3.4"
     }
 }

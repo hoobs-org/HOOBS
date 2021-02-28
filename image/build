@@ -1,0 +1,159 @@
+#!/usr/bin/env node
+
+/**************************************************************************************************
+ * hoobs-sdk                                                                                      *
+ * Copyright (C) 2020 HOOBS                                                                       *
+ *                                                                                                *
+ * This program is free software: you can redistribute it and/or modify                           *
+ * it under the terms of the GNU General Public License as published by                           *
+ * the Free Software Foundation, either version 3 of the License, or                              *
+ * (at your option) any later version.                                                            *
+ *                                                                                                *
+ * This program is distributed in the hope that it will be useful,                                *
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of                                 *
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the                                  *
+ * GNU General Public License for more details.                                                   *
+ *                                                                                                *
+ * You should have received a copy of the GNU General Public License                              *
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.                          *
+ **************************************************************************************************/
+
+const Semver = require("semver");
+const Program = require("commander");
+const Inquirer = require("inquirer");
+const { join } = require("path");
+const { execSync } = require("child_process");
+
+const {
+    existsSync,
+    readFileSync,
+    writeFileSync,
+    rmSync,
+} = require("fs");
+
+const root = join(__dirname, "../");
+const pjson = JSON.parse(readFileSync(join(root, "package.json")).toString());
+
+const prompt = Inquirer.createPromptModule();
+
+Program.version(pjson.version, "-v, --version", "output the current version")
+    .allowUnknownOption();
+
+Program.command("image", { isDefault: true })
+    .description("build hoobs image")
+    .action(() => {
+        let setup = true;
+        let docker = null;
+
+        try {
+            docker = execSync("command -v apt").toString().replace(/\n/g, "").trim();
+        } catch (_error) {
+            docker = null;
+        }
+
+        if (!existsSync(join(root, "./cli", "package.json"))) setup = false;
+        if (!existsSync(join(root, "./hoobsd", "package.json"))) setup = false;
+        if (!existsSync(join(root, "./gui", "package.json"))) setup = false;
+
+        if (setup && docker && docker !== "") {
+            prompt([
+                {
+                    type: "string",
+                    name: "version",
+                    default: pjson.version,
+                    message: "Enter the desired version",
+                    validate: (value) => {
+                        if (!Semver.valid(value)) return "invalid version";
+    
+                        return true;
+                    },
+                },
+            ]).then((result) => {
+                pjson.version = result.version;
+    
+                writeFileSync(join(root, "package.json"), JSON.stringify(pjson, null, 4));
+                // execSync("docker rm -v hoobs-build", { cwd: join(root, "image"), stdio: "ignore" });
+
+                if (existsSync(join(root, "hoobs"))) rmSync(join(root, "image/hoobs.conf"));
+
+                console.log("building hoobs cli");
+                execSync((JSON.parse(readFileSync(join(root, "./cli", "package.json")).toString())).scripts.build, { cwd: join(root, "./cli"), stdio: "inherit" });
+                console.log("building hoobsd");
+                execSync((JSON.parse(readFileSync(join(root, "./hoobsd", "package.json")).toString())).scripts.build, { cwd: join(root, "./hoobsd"), stdio: "inherit" });
+                console.log("building hoobs gui");
+                execSync((JSON.parse(readFileSync(join(root, "./gui", "package.json")).toString())).scripts.build, { cwd: join(root, "./gui"), stdio: "inherit" });
+                console.log("building hoobs connect");
+                execSync((JSON.parse(readFileSync(join(root, "./connect", "package.json")).toString())).scripts.build, { cwd: join(root, "./connect"), stdio: "inherit" });
+
+                // COPY BUILT FILES
+
+                let variables = "";
+
+                variables += "IMG_NAME=\"HOOBS\"\n";
+                variables += `IMG_FILENAME="hoobs-${pjson.version}"\n`;
+                variables += `ZIP_FILENAME="hoobs-${pjson.version}"\n`;
+                variables += "LOCALE_DEFAULT=\"en_US.UTF-8\"\n";
+                variables += "KEYBOARD_KEYMAP=\"us\"\n";
+                variables += "KEYBOARD_LAYOUT=\"English (US)\"\n";
+                variables += "TIMEZONE_DEFAULT=\"America/Denver\"\n";
+                variables += "TARGET_HOSTNAME=hoobs\n";
+                variables += "FIRST_USER_NAME=hoobs\n";
+                variables += "FIRST_USER_PASS=hoobsadmin\n";
+                variables += "ENABLE_SSH=1\n";
+                variables += "STAGE_LIST=\"stage0 stage1 stage3 stage4 stage6 stage8\"\n";
+
+                console.log("building image");
+                writeFileSync(join(root, "image/hoobs.conf"), variables);
+    
+                // BUILD (./container -c hoobs)
+            });
+        } else if (setup) {
+            console.log("docker is not installed");
+        } else {
+            console.log("workspace not initilized");
+        }
+    });
+
+Program.command("volume [action]")
+    .description("build hoobs image")
+    .action((action) => {
+        let docker = null;
+
+        try {
+            docker = execSync("command -v docker").toString().replace(/\n/g, "").trim();
+        } catch (_error) {
+            docker = null;
+        }
+
+        switch (action) {
+            case "create":
+                if (docker && docker !== "") {
+                    console.log("creating build volumes");
+                    execSync("docker rm -v hoobs-build", { cwd: join(root, "image"), stdio: "inherit" });
+                    execSync("docker volume create hoobs", { cwd: join(root, "image"), stdio: "inherit" });
+                    execSync("docker volume create hoobs-work", { cwd: join(root, "image"), stdio: "inherit" });
+                } else {
+                    console.log("docker is not installed");
+                }
+
+                break;
+
+            case "remove":
+                if (docker && docker !== "") {
+                    console.log("removing build volumes");
+                    execSync("docker rm -v hoobs-build", { cwd: join(root, "image"), stdio: "inherit" });
+                    execSync("docker volume rm hoobs", { cwd: join(root, "image"), stdio: "inherit" });
+                    execSync("docker volume rm hoobs-work", { cwd: join(root, "image"), stdio: "inherit" });
+                } else {
+                    console.log("docker is not installed");
+                }
+
+                break;
+
+            default:
+                console.log(Program.helpInformation());
+                break;
+        }
+    });
+
+Program.parse(process.argv);

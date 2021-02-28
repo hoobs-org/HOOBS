@@ -7,6 +7,7 @@
 [[ -d connect ]] || git clone https://github.com/hoobs-org/connect.git
 
 mkdir builds
+yarn install
 
 cd ./hoobsd
 yarn install
