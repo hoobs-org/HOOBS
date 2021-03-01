@@ -163,8 +163,8 @@ Program.command("image", { isDefault: true })
                 variables += "STAGE_LIST=\"stage0 stage1 stage3 stage4 stage6 stage8\"\n";
 
                 writeFileSync(join(root, "image/hoobs.conf"), variables);
-    
-                // BUILD (./container -c hoobs)
+
+                execSync("./container -c hoobs", { cwd: join(root, "image"), stdio: "inherit" });
             });
         }
     });
