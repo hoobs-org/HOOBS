@@ -81,7 +81,6 @@
         "html.format.wrapLineLength": 220,
         "prettier.printWidth": 220,
         "vetur.format.defaultFormatter.html": "prettyhtml",
-        "vetur.format.defaultFormatter.ts": "vscode-typescript",
-        "tabulous.activeTabColor": "#54a3ff"
+        "vetur.format.defaultFormatter.ts": "vscode-typescript"
     }
 }
