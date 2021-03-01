@@ -96,11 +96,11 @@ Program.command("image", { isDefault: true })
                 name: "sku",
                 message: "Select a model to build",
                 choices: [{
-                    name: "HOOBS Box",
-                    value: "box",
-                }, {
                     name: "HOOBS SD Card",
                     value: "card",
+                }, {
+                    name: "HOOBS Box",
+                    value: "box",
                 }],
             }]).then((result) => {
                 pjson.version = result.version;
