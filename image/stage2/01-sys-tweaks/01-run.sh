@@ -1,5 +1,23 @@
 #!/bin/bash -e
 
+##################################################################################################
+# rpi-gen                                                                                        #
+# Copyright (C) 2015 Raspberry Pi (Trading) Ltd.                                                 #
+#                                                                                                #
+# This program is free software: you can redistribute it and/or modify                           #
+# it under the terms of the GNU General Public License as published by                           #
+# the Free Software Foundation, either version 3 of the License, or                              #
+# (at your option) any later version.                                                            #
+#                                                                                                #
+# This program is distributed in the hope that it will be useful,                                #
+# but WITHOUT ANY WARRANTY; without even the implied warranty of                                 #
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the                                  #
+# GNU General Public License for more details.                                                   #
+#                                                                                                #
+# You should have received a copy of the GNU General Public License                              #
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.                          #
+##################################################################################################
+
 install -m 755 files/resize2fs_once	"${ROOTFS_DIR}/etc/init.d/"
 
 install -d				"${ROOTFS_DIR}/etc/systemd/system/rc-local.service.d"
@@ -10,18 +28,6 @@ install -m 644 files/50raspi		"${ROOTFS_DIR}/etc/apt/apt.conf.d/"
 install -m 644 files/console-setup   	"${ROOTFS_DIR}/etc/default/"
 
 install -m 755 files/rc.local		"${ROOTFS_DIR}/etc/"
-
-if [ -n "${PUBKEY_SSH_FIRST_USER}" ]; then
-	install -v -m 0700 -o 1000 -g 1000 -d "${ROOTFS_DIR}"/home/"${FIRST_USER_NAME}"/.ssh
-	echo "${PUBKEY_SSH_FIRST_USER}" >"${ROOTFS_DIR}"/home/"${FIRST_USER_NAME}"/.ssh/authorized_keys
-	chown 1000:1000 "${ROOTFS_DIR}"/home/"${FIRST_USER_NAME}"/.ssh/authorized_keys
-	chmod 0600 "${ROOTFS_DIR}"/home/"${FIRST_USER_NAME}"/.ssh/authorized_keys
-fi
-
-if [ "${PUBKEY_ONLY_SSH}" = "1" ]; then
-	sed -i -Ee 's/^#?[[:blank:]]*PubkeyAuthentication[[:blank:]]*no[[:blank:]]*$/PubkeyAuthentication yes/
-s/^#?[[:blank:]]*PasswordAuthentication[[:blank:]]*yes[[:blank:]]*$/PasswordAuthentication no/' "${ROOTFS_DIR}"/etc/ssh/sshd_config
-fi
 
 on_chroot << EOF
 systemctl disable hwclock.sh

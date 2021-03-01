@@ -7,7 +7,8 @@
 
 # uncomment this if your display has a black border of unused pixels visible
 # and your display can output without overscan
-#disable_overscan=1
+disable_overscan=1
+disable_splash=1
 
 # uncomment the following to adjust overscan. Use positive numbers if console
 # goes off screen, and negative if there is too much border
@@ -56,10 +57,14 @@
 # Enable audio (loads snd_bcm2835)
 dtparam=audio=on
 
+# Remove under vold overlay on screen
+avoid_warnings=1
+
 [pi4]
 # Enable DRM VC4 V3D driver on top of the dispmanx display stack
 dtoverlay=vc4-fkms-v3d
 max_framebuffers=2
+enable_gic=1
 
 [all]
 #dtoverlay=vc4-fkms-v3d

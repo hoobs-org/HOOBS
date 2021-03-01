@@ -106,7 +106,7 @@ Program.command("image", { isDefault: true })
                 pjson.version = result.version;
     
                 writeFileSync(join(root, "package.json"), JSON.stringify(pjson, null, 4));
-                execTrySync("docker rm -v pi-gen", { cwd: join(root, "image"), stdio: "ignore" });
+                execTrySync("docker rm -v hoobs-build", { cwd: join(root, "image"), stdio: "ignore" });
 
                 if (existsSync(join(root, "hoobs"))) rmSync(join(root, "image/hoobs.conf"));
 
@@ -117,17 +117,25 @@ Program.command("image", { isDefault: true })
                     connect: JSON.parse(readFileSync(join(root, "./connect", "package.json")).toString()),
                 }
 
-                console.log("building hoobs cli");
-                execSync(working.cli.scripts.build, { cwd: join(root, "./cli"), stdio: "inherit" });
+                if (!existsSync(join(root, "./builds", `hoobs-cli-v${working.cli.version}.tar.gz`))) {
+                    console.log("building hoobs cli");
+                    execSync(working.cli.scripts.build, { cwd: join(root, "./cli"), stdio: "inherit" });
+                }
 
-                console.log("building hoobsd");
-                execSync(working.hoobsd.scripts.build, { cwd: join(root, "./hoobsd"), stdio: "inherit" });
+                if (!existsSync(join(root, "./builds", `hoobsd-v${working.hoobsd.version}.tar.gz`))) {
+                    console.log("building hoobsd");
+                    execSync(working.hoobsd.scripts.build, { cwd: join(root, "./hoobsd"), stdio: "inherit" });
+                }
 
-                console.log("building hoobs gui");
-                execSync(working.gui.scripts.build, { cwd: join(root, "./gui"), stdio: "inherit" });
+                if (!existsSync(join(root, "./builds", `hoobs-gui-v${working.gui.version}.tar.gz`))) {
+                    console.log("building hoobs gui");
+                    execSync(working.gui.scripts.build, { cwd: join(root, "./gui"), stdio: "inherit" });
+                }
 
-                console.log("building hoobs connect");
-                execSync(working.connect.scripts.build, { cwd: join(root, "./connect"), stdio: "inherit" });
+                if (!existsSync(join(root, "./builds", `hoobs-connect-v${working.connect.version}.tar.gz`))) {
+                    console.log("building hoobs connect");
+                    execSync(working.connect.scripts.build, { cwd: join(root, "./connect"), stdio: "inherit" });
+                }
 
                 console.log("building image");
 
@@ -177,12 +185,52 @@ Program.command("image", { isDefault: true })
                 variables += "FIRST_USER_NAME=hoobs\n";
                 variables += "FIRST_USER_PASS=hoobsadmin\n";
                 variables += "ENABLE_SSH=1\n";
-                variables += "STAGE_LIST=\"stage0 stage1 stage3 stage4 stage6 stage8\"\n";
+                variables += "STAGE_LIST=\"stage0 stage1 stage2 stage3 stage4\"\n";
 
                 writeFileSync(join(root, "image/hoobs.conf"), variables);
 
-                execSync(`${join(root, "image/container")} -c ${join(root, "image/hoobs.conf")}`, { cwd: join(root, "image"), stdio: "inherit" });
+                execTrySync(`${join(root, "image/container")} -c ${join(root, "image/hoobs.conf")}`, { cwd: join(root, "image"), stdio: "inherit" });
             });
+        }
+    });
+
+Program.command("volume [action]")
+    .description("build hoobs image")
+    .action((action) => {
+        let docker = null;
+
+        try {
+            docker = execSync("command -v docker").toString().replace(/\n/g, "").trim();
+        } catch (_error) {
+            docker = null;
+        }
+
+        switch (action) {
+            case "create":
+                if (docker && docker !== "") {
+                    console.log("creating build volumes");
+                    execSync("docker rm -v hoobs-build", { cwd: join(root, "image"), stdio: "inherit" });
+                    execSync("docker volume create hoobs", { cwd: join(root, "image"), stdio: "inherit" });
+                } else {
+                    console.log("docker is not installed");
+                }
+
+                break;
+
+            case "remove":
+                if (docker && docker !== "") {
+                    console.log("removing build volumes");
+                    execSync("docker rm -v hoobs-build", { cwd: join(root, "image"), stdio: "inherit" });
+                    execSync("docker volume rm hoobs", { cwd: join(root, "image"), stdio: "inherit" });
+                } else {
+                    console.log("docker is not installed");
+                }
+
+                break;
+
+            default:
+                console.log(Program.helpInformation());
+                break;
         }
     });
 

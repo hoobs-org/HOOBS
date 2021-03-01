@@ -1,5 +1,23 @@
 #!/bin/bash -e
 
+##################################################################################################
+# rpi-gen                                                                                        #
+# Copyright (C) 2015 Raspberry Pi (Trading) Ltd.                                                 #
+#                                                                                                #
+# This program is free software: you can redistribute it and/or modify                           #
+# it under the terms of the GNU General Public License as published by                           #
+# the Free Software Foundation, either version 3 of the License, or                              #
+# (at your option) any later version.                                                            #
+#                                                                                                #
+# This program is distributed in the hope that it will be useful,                                #
+# but WITHOUT ANY WARRANTY; without even the implied warranty of                                 #
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the                                  #
+# GNU General Public License for more details.                                                   #
+#                                                                                                #
+# You should have received a copy of the GNU General Public License                              #
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.                          #
+##################################################################################################
+
 IMG_FILE="${STAGE_WORK_DIR}/${IMG_FILENAME}${IMG_SUFFIX}.img"
 INFO_FILE="${STAGE_WORK_DIR}/${IMG_FILENAME}${IMG_SUFFIX}.info"
 
@@ -16,6 +34,7 @@ if [ -d "${ROOTFS_DIR}/home/${FIRST_USER_NAME}/.config" ]; then
 	chmod 700 "${ROOTFS_DIR}/home/${FIRST_USER_NAME}/.config"
 fi
 
+rm -f "${ROOTFS_DIR}/etc/apt/apt.conf.d/51cache"
 rm -f "${ROOTFS_DIR}/usr/bin/qemu-arm-static"
 
 if [ "${USE_QEMU}" != "1" ]; then
@@ -76,24 +95,17 @@ cp "$ROOTFS_DIR/etc/rpi-issue" "$INFO_FILE"
 	dpkg -l --root "$ROOTFS_DIR"
 } >> "$INFO_FILE"
 
+ROOT_DEV="$(mount | grep "${ROOTFS_DIR} " | cut -f1 -d' ')"
+
+unmount "${ROOTFS_DIR}"
+zerofree "${ROOT_DEV}"
+
+unmount_image "${IMG_FILE}"
+
 mkdir -p "${DEPLOY_DIR}"
 
 rm -f "${DEPLOY_DIR}/${ZIP_FILENAME}${IMG_SUFFIX}.zip"
 rm -f "${DEPLOY_DIR}/${IMG_FILENAME}${IMG_SUFFIX}.img"
-
-mv "$INFO_FILE" "$DEPLOY_DIR/"
-
-if [ "${USE_QCOW2}" = "0" ] && [ "${NO_PRERUN_QCOW2}" = "0" ]; then
-	ROOT_DEV="$(mount | grep "${ROOTFS_DIR} " | cut -f1 -d' ')"
-
-	unmount "${ROOTFS_DIR}"
-	zerofree "${ROOT_DEV}"
-
-	unmount_image "${IMG_FILE}"
-else
-	unload_qimage
-	make_bootable_image "${STAGE_WORK_DIR}/${IMG_FILENAME}${IMG_SUFFIX}.qcow2" "$IMG_FILE"
-fi
 
 if [ "${DEPLOY_ZIP}" == "1" ]; then
 	pushd "${STAGE_WORK_DIR}" > /dev/null
@@ -101,5 +113,7 @@ if [ "${DEPLOY_ZIP}" == "1" ]; then
 		"$(basename "${IMG_FILE}")"
 	popd > /dev/null
 else
-	mv "$IMG_FILE" "$DEPLOY_DIR/"
+	cp "$IMG_FILE" "$DEPLOY_DIR"
 fi
+
+cp "$INFO_FILE" "$DEPLOY_DIR"
