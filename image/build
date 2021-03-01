@@ -29,6 +29,7 @@ const {
     readFileSync,
     writeFileSync,
     rmSync,
+    mkdirSync,
 } = require("fs");
 
 const root = join(__dirname, "../");
@@ -151,6 +152,10 @@ Program.command("image", { isDefault: true })
                         vendor += "SKU=\n";
                         break;
                 }
+
+                if (!existsSync(join(root, "./image/stage4/01-vendor-release/files"))) mkdirSync(join(root, "./image/stage4/01-vendor-release/files"));
+                if (!existsSync(join(root, "./image/stage3/02-wifi-connect/files"))) mkdirSync(join(root, "./image/stage3/02-wifi-connect/files"));
+                if (!existsSync(join(root, "./image/stage4/02-hoobs/files"))) mkdirSync(join(root, "./image/stage4/02-hoobs/files"));
 
                 writeFileSync(join(root, "./image/stage4/01-vendor-release/files", "hoobs"), vendor);
 
