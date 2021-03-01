@@ -19,6 +19,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.                          #
 ##################################################################################################
 
-if [ ! -d "${ROOTFS_DIR}" ]; then
-	bootstrap ${RELEASE} "${ROOTFS_DIR}" http://mirrors.ocf.berkeley.edu/raspbian/raspbian/
+if [ ! -d "${ROOTFS_DIR}" ] || [ "${USE_QCOW2}" = "1" ]; then
+	bootstrap ${RELEASE} "${ROOTFS_DIR}" http://raspbian.raspberrypi.org/raspbian/
 fi

@@ -104,7 +104,7 @@ Program.command("image", { isDefault: true })
                 pjson.version = result.version;
     
                 writeFileSync(join(root, "package.json"), JSON.stringify(pjson, null, 4));
-                execTrySync("docker rm -v hoobs-image", { cwd: join(root, "image"), stdio: "ignore" });
+                execTrySync("sudo docker rm -v hoobs-image", { cwd: join(root, "image"), stdio: "ignore" });
 
                 if (existsSync(join(root, "hoobs"))) rmSync(join(root, "image/hoobs.conf"));
 
@@ -225,9 +225,9 @@ Program.command("volume [action]")
                 if (proceed) {
                     console.log("creating build volumes");
 
-                    execTrySync("docker rm -v hoobs-image", { cwd: join(root, "image"), stdio: "ignore" });
-                    execTrySync("docker volume create hoobs", { cwd: join(root, "image"), stdio: "inherit" });
-                    execTrySync("docker volume create hoobs-image-work", { cwd: join(root, "image"), stdio: "inherit" });
+                    execTrySync("sudo docker rm -v hoobs-image", { cwd: join(root, "image"), stdio: "ignore" });
+                    execTrySync("sudo docker volume create hoobs", { cwd: join(root, "image"), stdio: "inherit" });
+                    execTrySync("sudo docker volume create hoobs-image-work", { cwd: join(root, "image"), stdio: "inherit" });
                 }
 
                 break;
@@ -241,9 +241,9 @@ Program.command("volume [action]")
                 if (proceed) {
                     console.log("removing build volumes");
 
-                    execTrySync("docker rm -v hoobs-image", { cwd: join(root, "image"), stdio: "ignore" });
-                    execTrySync("docker volume rm hoobs", { cwd: join(root, "image"), stdio: "inherit" });
-                    execTrySync("docker volume rm hoobs-image-work", { cwd: join(root, "image"), stdio: "inherit" });
+                    execTrySync("sudo docker rm -v hoobs-image", { cwd: join(root, "image"), stdio: "ignore" });
+                    execTrySync("sudo docker volume rm hoobs", { cwd: join(root, "image"), stdio: "inherit" });
+                    execTrySync("sudo docker volume rm hoobs-image-work", { cwd: join(root, "image"), stdio: "inherit" });
                 }
 
                 break;

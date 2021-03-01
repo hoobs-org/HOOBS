@@ -23,26 +23,24 @@ IMG_FILE="${STAGE_WORK_DIR}/${IMG_FILENAME}${IMG_SUFFIX}.img"
 INFO_FILE="${STAGE_WORK_DIR}/${IMG_FILENAME}${IMG_SUFFIX}.info"
 
 on_chroot << EOF
-    if [ -x /etc/init.d/fake-hwclock ]; then
-	    /etc/init.d/fake-hwclock stop
-    fi
-
-    if hash hardlink 2>/dev/null; then
-	    hardlink -t /usr/share/doc
-    fi
+if [ -x /etc/init.d/fake-hwclock ]; then
+    /etc/init.d/fake-hwclock stop
+fi
+if hash hardlink 2>/dev/null; then
+    hardlink -t /usr/share/doc
+fi
 EOF
 
 if [ -d "${ROOTFS_DIR}/home/${FIRST_USER_NAME}/.config" ]; then
-	chmod 700 "${ROOTFS_DIR}/home/${FIRST_USER_NAME}/.config"
+    chmod 700 "${ROOTFS_DIR}/home/${FIRST_USER_NAME}/.config"
 fi
 
-rm -f "${ROOTFS_DIR}/etc/apt/apt.conf.d/51cache"
 rm -f "${ROOTFS_DIR}/usr/bin/qemu-arm-static"
 
 if [ "${USE_QEMU}" != "1" ]; then
-	if [ -e "${ROOTFS_DIR}/etc/ld.so.preload.disabled" ]; then
-		mv "${ROOTFS_DIR}/etc/ld.so.preload.disabled" "${ROOTFS_DIR}/etc/ld.so.preload"
-	fi
+    if [ -e "${ROOTFS_DIR}/etc/ld.so.preload.disabled" ]; then
+        mv "${ROOTFS_DIR}/etc/ld.so.preload.disabled" "${ROOTFS_DIR}/etc/ld.so.preload"
+    fi
 fi
 
 rm -f "${ROOTFS_DIR}/etc/network/interfaces.dpkg-old"
@@ -79,42 +77,47 @@ install -m 644 "${ROOTFS_DIR}/etc/rpi-issue" "${ROOTFS_DIR}/boot/issue.txt"
 cp "$ROOTFS_DIR/etc/rpi-issue" "$INFO_FILE"
 
 {
-	if [ -f "$ROOTFS_DIR/usr/share/doc/raspberrypi-kernel/changelog.Debian.gz" ]; then
-		firmware=$(zgrep "firmware as of" \
-			"$ROOTFS_DIR/usr/share/doc/raspberrypi-kernel/changelog.Debian.gz" | \
-			head -n1 | sed  -n 's|.* \([^ ]*\)$|\1|p')
-		printf "\nFirmware: https://github.com/raspberrypi/firmware/tree/%s\n" "$firmware"
+    if [ -f "$ROOTFS_DIR/usr/share/doc/raspberrypi-kernel/changelog.Debian.gz" ]; then
+        firmware=$(zgrep "firmware as of" \
+            "$ROOTFS_DIR/usr/share/doc/raspberrypi-kernel/changelog.Debian.gz" | \
+            head -n1 | sed  -n 's|.* \([^ ]*\)$|\1|p')
+        printf "\nFirmware: https://github.com/raspberrypi/firmware/tree/%s\n" "$firmware"
 
-		kernel="$(curl -s -L "https://github.com/raspberrypi/firmware/raw/$firmware/extra/git_hash")"
-		printf "Kernel: https://github.com/raspberrypi/linux/tree/%s\n" "$kernel"
+        kernel="$(curl -s -L "https://github.com/raspberrypi/firmware/raw/$firmware/extra/git_hash")"
+        printf "Kernel: https://github.com/raspberrypi/linux/tree/%s\n" "$kernel"
 
-		uname="$(curl -s -L "https://github.com/raspberrypi/firmware/raw/$firmware/extra/uname_string7")"
-		printf "Uname string: %s\n" "$uname"
-	fi
+        uname="$(curl -s -L "https://github.com/raspberrypi/firmware/raw/$firmware/extra/uname_string7")"
+        printf "Uname string: %s\n" "$uname"
+    fi
 
-	printf "\nPackages:\n"
-	dpkg -l --root "$ROOTFS_DIR"
+    printf "\nPackages:\n"
+    dpkg -l --root "$ROOTFS_DIR"
 } >> "$INFO_FILE"
-
-ROOT_DEV="$(mount | grep "${ROOTFS_DIR} " | cut -f1 -d' ')"
-
-unmount "${ROOTFS_DIR}"
-zerofree "${ROOT_DEV}"
-
-unmount_image "${IMG_FILE}"
 
 mkdir -p "${DEPLOY_DIR}"
 
 rm -f "${DEPLOY_DIR}/${ZIP_FILENAME}${IMG_SUFFIX}.zip"
 rm -f "${DEPLOY_DIR}/${IMG_FILENAME}${IMG_SUFFIX}.img"
 
-if [ "${DEPLOY_ZIP}" == "1" ]; then
-	pushd "${STAGE_WORK_DIR}" > /dev/null
-	zip "${DEPLOY_DIR}/${ZIP_FILENAME}${IMG_SUFFIX}.zip" \
-		"$(basename "${IMG_FILE}")"
-	popd > /dev/null
+mv "$INFO_FILE" "$DEPLOY_DIR/"
+
+if [ "${USE_QCOW2}" = "0" ] && [ "${NO_PRERUN_QCOW2}" = "0" ]; then
+    ROOT_DEV="$(mount | grep "${ROOTFS_DIR} " | cut -f1 -d' ')"
+
+    unmount "${ROOTFS_DIR}"
+    zerofree "${ROOT_DEV}"
+
+    unmount_image "${IMG_FILE}"
 else
-	cp "$IMG_FILE" "$DEPLOY_DIR"
+    unload_qimage
+    make_bootable_image "${STAGE_WORK_DIR}/${IMG_FILENAME}${IMG_SUFFIX}.qcow2" "$IMG_FILE"
 fi
 
-cp "$INFO_FILE" "$DEPLOY_DIR"
+if [ "${DEPLOY_ZIP}" == "1" ]; then
+    pushd "${STAGE_WORK_DIR}" > /dev/null
+    zip "${DEPLOY_DIR}/${ZIP_FILENAME}${IMG_SUFFIX}.zip" \
+        "$(basename "${IMG_FILE}")"
+    popd > /dev/null
+else
+    mv "$IMG_FILE" "$DEPLOY_DIR/"
+fi
