@@ -1,6 +1,0 @@
-build-essential
-avahi-daemon
-avahi-discover
-libnss-mdns
-curl
-jq

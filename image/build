@@ -28,6 +28,7 @@ const {
     existsSync,
     readFileSync,
     writeFileSync,
+    unlinkSync,
     rmSync,
     mkdirSync,
 } = require("fs");
@@ -161,16 +162,16 @@ Program.command("image", { isDefault: true })
                         break;
                 }
 
-                if (!existsSync(join(root, "./image/stage4/01-vendor-release/files"))) mkdirSync(join(root, "./image/stage4/01-vendor-release/files"));
-                if (!existsSync(join(root, "./image/stage3/02-wifi-connect/files"))) mkdirSync(join(root, "./image/stage3/02-wifi-connect/files"));
-                if (!existsSync(join(root, "./image/stage4/02-hoobs/files"))) mkdirSync(join(root, "./image/stage4/02-hoobs/files"));
+                if (!existsSync(join(root, "./image/stage4/00-vendor-release/files"))) mkdirSync(join(root, "./image/stage4/00-vendor-release/files"));
+                if (!existsSync(join(root, "./image/stage3/01-wifi-connect/files"))) mkdirSync(join(root, "./image/stage3/01-wifi-connect/files"));
+                if (!existsSync(join(root, "./image/stage4/01-hoobs/files"))) mkdirSync(join(root, "./image/stage4/01-hoobs/files"));
 
-                writeFileSync(join(root, "./image/stage4/01-vendor-release/files", "hoobs"), vendor);
+                writeFileSync(join(root, "./image/stage4/00-vendor-release/files", "hoobs"), vendor);
 
-                execSync(`cp ${join(root, "./builds", `hoobs-cli-v${working.cli.version}.tar.gz`)} ${join(root, "./image/stage4/02-hoobs/files", "hoobs-cli.tar.gz")}`, { cwd: root, stdio: "inherit" });
-                execSync(`cp ${join(root, "./builds", `hoobsd-v${working.hoobsd.version}.tar.gz`)} ${join(root, "./image/stage4/02-hoobs/files", "hoobsd.tar.gz")}`, { cwd: root, stdio: "inherit" });
-                execSync(`cp ${join(root, "./builds", `hoobs-gui-v${working.gui.version}.tar.gz`)} ${join(root, "./image/stage4/02-hoobs/files", "hoobs-gui.tar.gz")}`, { cwd: root, stdio: "inherit" });
-                execSync(`cp ${join(root, "./builds", `hoobs-connect-v${working.connect.version}.tar.gz`)} ${join(root, "./image/stage3/02-wifi-connect/files", "hoobs-connect.tar.gz")}`, { cwd: root, stdio: "inherit" });
+                execSync(`cp ${join(root, "./builds", `hoobs-cli-v${working.cli.version}.tar.gz`)} ${join(root, "./image/stage4/01-hoobs/files", "hoobs-cli.tar.gz")}`, { cwd: root, stdio: "inherit" });
+                execSync(`cp ${join(root, "./builds", `hoobsd-v${working.hoobsd.version}.tar.gz`)} ${join(root, "./image/stage4/01-hoobs/files", "hoobsd.tar.gz")}`, { cwd: root, stdio: "inherit" });
+                execSync(`cp ${join(root, "./builds", `hoobs-gui-v${working.gui.version}.tar.gz`)} ${join(root, "./image/stage4/01-hoobs/files", "hoobs-gui.tar.gz")}`, { cwd: root, stdio: "inherit" });
+                execSync(`cp ${join(root, "./builds", `hoobs-connect-v${working.connect.version}.tar.gz`)} ${join(root, "./image/stage3/01-wifi-connect/files", "hoobs-connect.tar.gz")}`, { cwd: root, stdio: "inherit" });
 
                 let variables = "";
 
@@ -190,6 +191,22 @@ Program.command("image", { isDefault: true })
                 writeFileSync(join(root, "image/hoobs.conf"), variables);
 
                 execTrySync(`${join(root, "image/container")} -c ${join(root, "image/hoobs.conf")}`, { cwd: join(root, "image"), stdio: "inherit" });
+
+                switch (result.sku) {
+                    case "box":
+                        if (existsSync(join(root, "./builds", `hoobs-box-v${pjson.version}.zip`))) unlinkSync(join(root, "./builds", `hoobs-box-v${pjson.version}.zip`))
+
+                        execSync(`mv ${join(root, "image/deploy", `hoobs-${pjson.version}.zip`)} ${join(root, "./builds", `hoobs-box-v${pjson.version}.zip`)}`, { cwd: root, stdio: "inherit" });
+                        break;
+
+                    case "card":
+                        if (existsSync(join(root, "./builds", `hoobs-v${pjson.version}.zip`))) unlinkSync(join(root, "./builds", `hoobs-v${pjson.version}.zip`))
+
+                        execSync(`mv ${join(root, "image/deploy", `hoobs-${pjson.version}.zip`)} ${join(root, "./builds", `hoobs-v${pjson.version}.zip`)}`, { cwd: root, stdio: "inherit" });
+                        break;
+                }
+
+                if (existsSync(join(root, "image/deploy"))) execSync(`${join(root, "node_modules", ".bin", "rimraf")} ${join(root, "image/deploy")}`, { cwd: root, stdio: "inherit" });
             });
         }
     });

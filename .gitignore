@@ -125,8 +125,8 @@ SKIP_IMAGES
 *-pc
 apt-cacher-ng/
 hoobs.conf
-/image/stage4/01-vendor-release/files/hoobs
-/image/stage4/02-hoobs/files/hoobs-cli.tar.gz
-/image/stage4/02-hoobs/files/hoobsd.tar.gz
-/image/stage4/02-hoobs/files/hoobs-gui.tar.gz
-/image/stage3/02-wifi-connect/files/hoobs-connect.tar.gz
+/image/stage4/00-vendor-release/files/hoobs
+/image/stage4/01-hoobs/files/hoobs-cli.tar.gz
+/image/stage4/01-hoobs/files/hoobsd.tar.gz
+/image/stage4/01-hoobs/files/hoobs-gui.tar.gz
+/image/stage3/01-wifi-connect/files/hoobs-connect.tar.gz

@@ -149,6 +149,7 @@ run_stage(){
             fi
         done
     fi
+
     unmount "${WORK_DIR}/${STAGE}"
     PREV_STAGE="${STAGE}"
     PREV_STAGE_DIR="${STAGE_DIR}"

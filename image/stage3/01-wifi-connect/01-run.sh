@@ -11,7 +11,7 @@ on_chroot << EOF
     set -x 
 
     chmod u+x /raspbian-install.sh
-    sudo /raspbian-install.sh -y
+    /raspbian-install.sh -y
     rm -rf /raspbian-install.sh
 
     chmod +x /usr/local/sbin/wifi-connect-startup

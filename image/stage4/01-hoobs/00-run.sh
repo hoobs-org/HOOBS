@@ -8,9 +8,17 @@ on_chroot << EOF
     uname -a
     set -e
     set -x
+
     tar -xzf /hoobs-cli.tar.gz -C /usr --strip-components=1 --no-same-owner
     tar -xzf /hoobsd.tar.gz -C /usr --strip-components=1 --no-same-owner
     tar -xzf /hoobs-gui.tar.gz -C /usr --strip-components=1 --no-same-owner
+
+    cd /usr/lib/hbs
+    yarn install
+
+    cd /usr/lib/hoobsd
+    yarn install
+
     rm -rf /hoobs-cli.tar.gz
     rm -rf /hoobsd.tar.gz
     rm -rf /hoobs-gui.tar.gz

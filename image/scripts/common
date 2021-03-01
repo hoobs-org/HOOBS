@@ -93,3 +93,9 @@ on_chroot() {
 	setarch linux32 capsh --drop=cap_setfcap "--chroot=${ROOTFS_DIR}/" -- -e "$@"
 }
 export -f on_chroot
+
+update_issue() {
+	echo -e "HOOBS reference ${IMG_DATE}\nGenerated using the HOOBS Build Utility, https://github.com/hoobs-org/HOOBS ${GIT_HASH}, ${1}" > "${ROOTFS_DIR}/etc/rpi-issue"
+}
+
+export -f update_issue

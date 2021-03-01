@@ -4,5 +4,7 @@ on_chroot << EOF
     uname -a
     set -e
     set -x
-    npm install -g yarn
+
+    sudo hbs system reset
+    sudo hbs install -p 80
 EOF
