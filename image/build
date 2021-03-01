@@ -106,7 +106,7 @@ Program.command("image", { isDefault: true })
                 pjson.version = result.version;
     
                 writeFileSync(join(root, "package.json"), JSON.stringify(pjson, null, 4));
-                execTrySync("docker rm -v hoobs-build", { cwd: join(root, "image"), stdio: "ignore" });
+                execTrySync("docker rm -v pi-gen", { cwd: join(root, "image"), stdio: "ignore" });
 
                 if (existsSync(join(root, "hoobs"))) rmSync(join(root, "image/hoobs.conf"));
 
