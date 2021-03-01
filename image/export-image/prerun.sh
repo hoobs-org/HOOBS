@@ -30,12 +30,7 @@ mkdir -p "${ROOTFS_DIR}"
 BOOT_SIZE="$((256 * 1024 * 1024))"
 ROOT_SIZE=$(du --apparent-size -s "${EXPORT_ROOTFS_DIR}" --exclude var/cache/apt/archives --exclude boot --block-size=1 | cut -f 1)
 
-# All partition sizes and starts will be aligned to this size
 ALIGN="$((4 * 1024 * 1024))"
-# Add this much space to the calculated file size. This allows for
-# some overhead (since actual space usage is usually rounded up to the
-# filesystem block size) and gives some free space on the resulting
-# image.
 ROOT_MARGIN="$(echo "($ROOT_SIZE * 0.2 + 200 * 1024 * 1024) / 1" | bc)"
 
 BOOT_PART_START=$((ALIGN))

@@ -1,6 +1,7 @@
 #!/bin/bash -e
 
 ##################################################################################################
+# hoobs-image                                                                                    #
 # rpi-gen                                                                                        #
 # Copyright (C) 2015 Raspberry Pi (Trading) Ltd.                                                 #
 #                                                                                                #
@@ -19,7 +20,7 @@
 ##################################################################################################
 
 on_chroot << EOF
-apt-get update
-apt-get -y dist-upgrade
-apt-get clean
+    apt-get update
+    apt-get -y dist-upgrade
+    apt-get clean
 EOF

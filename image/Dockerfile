@@ -11,6 +11,6 @@ RUN apt-get -y update && \
         binfmt-support ca-certificates gcc-aarch64-linux-gnu \
     && rm -rf /var/lib/apt/lists/*
 
-COPY . /hoobs-build/
+COPY . /hoobs-image/
 
-VOLUME [ "/hoobs-build/work", "/hoobs-build/deploy"]
+VOLUME [ "/hoobs-image/work", "/hoobs-image/deploy"]

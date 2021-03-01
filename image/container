@@ -1,7 +1,7 @@
 #!/bin/bash -eu
 
 ##################################################################################################
-# hoobs-build                                                                                    #
+# hoobs-image                                                                                    #
 # Copyright (C) 2020 HOOBS                                                                       #
 # Copyright (C) 2015 Raspberry Pi (Trading) Ltd.                                                 #
 #                                                                                                #
@@ -61,7 +61,7 @@ else
 	source ${CONFIG_FILE}
 fi
 
-CONTAINER_NAME=${CONTAINER_NAME:-hoobs-build}
+CONTAINER_NAME=${CONTAINER_NAME:-hoobs-image}
 CONTINUE=${CONTINUE:-0}
 PRESERVE_CONTAINER=${PRESERVE_CONTAINER:-0}
 
@@ -98,34 +98,34 @@ case "$(uname -m)" in
         ;;
 esac
 
-${DOCKER} build --build-arg BASE_IMAGE=${BASE_IMAGE} -t hoobs-build -f "${DIR}/Dockerfile" "${DIR}"
+${DOCKER} build --build-arg BASE_IMAGE=${BASE_IMAGE} -t hoobs-image -f "${DIR}/Dockerfile" "${DIR}"
 
 if [ "${CONTAINER_EXISTS}" != "" ]; then
 	trap 'echo "got CTRL+C... please wait 5s" && ${DOCKER} stop -t 5 ${CONTAINER_NAME}_cont' SIGINT SIGTERM
 	time ${DOCKER} run --rm --privileged \
 		--volume "${CONFIG_FILE}":/config:ro \
-        --volume hoobs-work:/hoobs-build/work:rw \
+        --volume hoobs-image-work:/hoobs-image/work:rw \
 		-e "GIT_HASH=${GIT_HASH}" \
 		--volumes-from="${CONTAINER_NAME}" --name "${CONTAINER_NAME}_cont" \
-		hoobs-build \
+		hoobs-image \
 		bash -e -o pipefail -c "dpkg-reconfigure qemu-user-static &&
-	cd /hoobs-build; ./image -c hoobs.conf &&
+	cd /hoobs-image; ./image -c hoobs.conf &&
 	rsync -av work/*/build.log deploy/" &
 	wait "$!"
 else
 	trap 'echo "got CTRL+C... please wait 5s" && ${DOCKER} stop -t 5 ${CONTAINER_NAME}' SIGINT SIGTERM
 	time ${DOCKER} run --name "${CONTAINER_NAME}" --privileged \
 		--volume "${CONFIG_FILE}":/config:ro \
-        --volume hoobs-work:/hoobs-build/work:rw \
+        --volume hoobs-image-work:/hoobs-image/work:rw \
 		-e "GIT_HASH=${GIT_HASH}" \
-		hoobs-build \
+		hoobs-image \
 		bash -e -o pipefail -c "dpkg-reconfigure qemu-user-static &&
-	cd /hoobs-build; ./image -c hoobs.conf &&
+	cd /hoobs-image; ./image -c hoobs.conf &&
 	rsync -av work/*/build.log deploy/" &
 	wait "$!"
 fi
 
-${DOCKER} cp "${CONTAINER_NAME}":/hoobs-build/deploy .
+${DOCKER} cp "${CONTAINER_NAME}":/hoobs-image/deploy .
 
 if [ "${PRESERVE_CONTAINER}" != "1" ]; then
 	${DOCKER} rm -v "${CONTAINER_NAME}"

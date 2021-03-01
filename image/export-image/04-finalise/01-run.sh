@@ -1,6 +1,7 @@
 #!/bin/bash -e
 
 ##################################################################################################
+# hoobs-image                                                                                    #
 # rpi-gen                                                                                        #
 # Copyright (C) 2015 Raspberry Pi (Trading) Ltd.                                                 #
 #                                                                                                #
@@ -22,12 +23,13 @@ IMG_FILE="${STAGE_WORK_DIR}/${IMG_FILENAME}${IMG_SUFFIX}.img"
 INFO_FILE="${STAGE_WORK_DIR}/${IMG_FILENAME}${IMG_SUFFIX}.info"
 
 on_chroot << EOF
-if [ -x /etc/init.d/fake-hwclock ]; then
-	/etc/init.d/fake-hwclock stop
-fi
-if hash hardlink 2>/dev/null; then
-	hardlink -t /usr/share/doc
-fi
+    if [ -x /etc/init.d/fake-hwclock ]; then
+	    /etc/init.d/fake-hwclock stop
+    fi
+
+    if hash hardlink 2>/dev/null; then
+	    hardlink -t /usr/share/doc
+    fi
 EOF
 
 if [ -d "${ROOTFS_DIR}/home/${FIRST_USER_NAME}/.config" ]; then
