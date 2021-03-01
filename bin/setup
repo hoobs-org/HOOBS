@@ -23,4 +23,7 @@ cd ../sdk
 yarn install
 yarn build
 
+cd ../connect
+yarn install
+
 cd ../
