@@ -3,7 +3,7 @@
 ##################################################################################################
 # hoobs-build                                                                                    #
 # Copyright (C) 2019 HOOBS                                                                       #
-# Copyright (C) 2020 Balena                                                                      #
+# Copyright (C) 2015 Raspberry Pi (Trading) Ltd.                                                 #
 #                                                                                                #
 # This program is free software: you can redistribute it and/or modify                           #
 # it under the terms of the GNU General Public License as published by                           #
@@ -19,9 +19,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.                          #
 ##################################################################################################
 
+install -m 644 "files/hoobs-cli.tar.gz" "${ROOTFS_DIR}/hoobs-cli.tar.gz"
+install -m 644 "files/hoobsd.tar.gz" "${ROOTFS_DIR}/hoobsd.tar.gz"
+install -m 644 "files/hoobs-gui.tar.gz" "${ROOTFS_DIR}/hoobs-gui.tar.gz"
+
 on_chroot << EOF
     uname -a
     set -e
     set -x
-    npm install -g yarn
+    sudo hbs install -p 80
 EOF

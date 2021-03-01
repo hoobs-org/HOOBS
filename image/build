@@ -186,7 +186,6 @@ Program.command("volume [action]")
                     console.log("creating build volumes");
                     execSync("docker rm -v hoobs-build", { cwd: join(root, "image"), stdio: "inherit" });
                     execSync("docker volume create hoobs", { cwd: join(root, "image"), stdio: "inherit" });
-                    execSync("docker volume create hoobs-work", { cwd: join(root, "image"), stdio: "inherit" });
                 } else {
                     console.log("docker is not installed");
                 }
@@ -198,7 +197,6 @@ Program.command("volume [action]")
                     console.log("removing build volumes");
                     execSync("docker rm -v hoobs-build", { cwd: join(root, "image"), stdio: "inherit" });
                     execSync("docker volume rm hoobs", { cwd: join(root, "image"), stdio: "inherit" });
-                    execSync("docker volume rm hoobs-work", { cwd: join(root, "image"), stdio: "inherit" });
                 } else {
                     console.log("docker is not installed");
                 }
