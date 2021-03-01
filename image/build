@@ -181,7 +181,7 @@ Program.command("image", { isDefault: true })
 
                 writeFileSync(join(root, "image/hoobs.conf"), variables);
 
-                execSync(`${join(root, "image/container")} -c hoobs`, { cwd: join(root, "image"), stdio: "inherit" });
+                execSync(`${join(root, "image/container")} -c ${join(root, "image/hoobs")}`, { cwd: join(root, "image"), stdio: "inherit" });
             });
         }
     });
