@@ -46,7 +46,7 @@ Program.command("image", { isDefault: true })
         let docker = null;
 
         try {
-            docker = execSync("command -v apt").toString().replace(/\n/g, "").trim();
+            docker = execSync("command -v docker").toString().replace(/\n/g, "").trim();
         } catch (_error) {
             docker = null;
         }
@@ -97,7 +97,7 @@ Program.command("image", { isDefault: true })
                 pjson.version = result.version;
     
                 writeFileSync(join(root, "package.json"), JSON.stringify(pjson, null, 4));
-                // execSync("docker rm -v hoobs-build", { cwd: join(root, "image"), stdio: "ignore" });
+                execSync("docker rm -v hoobs-build", { cwd: join(root, "image"), stdio: "ignore" });
 
                 if (existsSync(join(root, "hoobs"))) rmSync(join(root, "image/hoobs.conf"));
 
