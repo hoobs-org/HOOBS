@@ -142,7 +142,15 @@ Defaults        secure_path="/home/hoobs/HOOBS/cli/bin:/home/hoobs/HOOBS/hoobsd/
 
 Find the **secure_path** directive and replace it with the above. This will make sure the project paths are avaliable when you use the `sudo` command.
 
-Next you will need to create teh HOOBS vendow file.
+The toolchain also bounces in and out of root a lot using sudo. Adding `NOPASSWD:` to the sudoers file makes things a bit easier.
+
+```
+%sudo   ALL=(ALL:ALL) NOPASSWD: ALL
+```
+
+> Note: We don't do this for production images.
+
+Next you will need to create the HOOBS vendow file.
 
 ```
 sudo nano /etc/hoobs
