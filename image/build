@@ -196,13 +196,13 @@ Program.command("image", { isDefault: true })
                     case "box":
                         if (existsSync(join(root, "./builds", `hoobs-box-v${pjson.version}.zip`))) unlinkSync(join(root, "./builds", `hoobs-box-v${pjson.version}.zip`))
 
-                        execTrySync(`mv ${join(root, "image/deploy", `hoobs-${pjson.version}.zip`)} ${join(root, "./builds", `hoobs-box-v${pjson.version}.zip`)}`, { cwd: root, stdio: "inherit" });
+                        execTrySync(`sudo mv ${join(root, "image/deploy", `hoobs-${pjson.version}.zip`)} ${join(root, "./builds", `hoobs-box-v${pjson.version}.zip`)}`, { cwd: root, stdio: "inherit" });
                         break;
 
                     case "card":
                         if (existsSync(join(root, "./builds", `hoobs-v${pjson.version}.zip`))) unlinkSync(join(root, "./builds", `hoobs-v${pjson.version}.zip`))
 
-                        execTrySync(`mv ${join(root, "image/deploy", `hoobs-${pjson.version}.zip`)} ${join(root, "./builds", `hoobs-v${pjson.version}.zip`)}`, { cwd: root, stdio: "inherit" });
+                        execTrySync(`sudo mv ${join(root, "image/deploy", `hoobs-${pjson.version}.zip`)} ${join(root, "./builds", `hoobs-v${pjson.version}.zip`)}`, { cwd: root, stdio: "inherit" });
                         break;
                 }
 
