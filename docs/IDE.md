@@ -53,7 +53,7 @@ To get sudo to work you need to logout by running `exit` twice.
 Once you have Debian setup with sudo, you will need to install the needed packages to run and build HOOBS.
 
 ```
-sudo apt-get install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common tar git python3 make gcc g++ jq
+sudo apt-get install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common tar git python3 make gcc g++ jq avahi-daemon avahi-discover libnss-mdns
 ```
 
 Next you will need to setup the Node and Yarn repositories.
