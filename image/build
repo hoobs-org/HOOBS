@@ -54,8 +54,7 @@ Program.version(pjson.version, "-v, --version", "output the current version")
 
 Program.command("image", { isDefault: true })
     .description("build hoobs image")
-    .option("--rebuild", "rebuild services")
-    .action((command) => {
+    .action(() => {
         let proceed = true;
 
         const docker = execTrySync("command -v docker").toString().replace(/\n/g, "").trim();
@@ -106,25 +105,17 @@ Program.command("image", { isDefault: true })
                     connect: JSON.parse(readFileSync(join(root, "./connect", "package.json")).toString()),
                 }
 
-                if (command.rebuild || !existsSync(join(root, "./builds", `hoobs-cli-v${working.cli.version}.tar.gz`))) {
-                    console.log("building hoobs cli");
-                    execTrySync(working.cli.scripts.build, { cwd: join(root, "./cli"), stdio: "inherit" });
-                }
+                console.log("building hoobs cli");
+                execTrySync(working.cli.scripts.build, { cwd: join(root, "./cli"), stdio: "inherit" });
 
-                if (command.rebuild || !existsSync(join(root, "./builds", `hoobsd-v${working.hoobsd.version}.tar.gz`))) {
-                    console.log("building hoobsd");
-                    execTrySync(working.hoobsd.scripts.build, { cwd: join(root, "./hoobsd"), stdio: "inherit" });
-                }
+                console.log("building hoobsd");
+                execTrySync(working.hoobsd.scripts.build, { cwd: join(root, "./hoobsd"), stdio: "inherit" });
 
-                if (command.rebuild || !existsSync(join(root, "./builds", `hoobs-gui-v${working.gui.version}.tar.gz`))) {
-                    console.log("building hoobs gui");
-                    execTrySync(working.gui.scripts.build, { cwd: join(root, "./gui"), stdio: "inherit" });
-                }
+                console.log("building hoobs gui");
+                execTrySync(working.gui.scripts.build, { cwd: join(root, "./gui"), stdio: "inherit" });
 
-                if (command.rebuild || !existsSync(join(root, "./builds", `hoobs-connect-v${working.connect.version}.tar.gz`))) {
-                    console.log("building hoobs connect");
-                    execTrySync(working.connect.scripts.build, { cwd: join(root, "./connect"), stdio: "inherit" });
-                }
+                console.log("building hoobs connect");
+                execTrySync(working.connect.scripts.build, { cwd: join(root, "./connect"), stdio: "inherit" });
 
                 console.log("building image");
 
