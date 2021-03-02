@@ -159,7 +159,7 @@ Program.command("image", { isDefault: true })
                 if (existsSync(join(root, "./builds", `hoobs-v${pjson.version}.zip`))) unlinkSync(join(root, "./builds", `hoobs-v${pjson.version}.zip`))
                 if (existsSync(join(root, "./builds", `hoobs-box-v${pjson.version}.zip`))) unlinkSync(join(root, "./builds", `hoobs-box-v${pjson.version}.zip`))
 
-                execTrySync(`sudo mv ${join(root, "image/deploy", `hoobs-${pjson.version}-card.zip`)} ${join(root, "./builds", `hoobs-v${pjson.version}.zip`)}`, { cwd: root, stdio: "inherit" });
+                execTrySync(`sudo mv ${join(root, "image/deploy", `hoobs-${pjson.version}.zip`)} ${join(root, "./builds", `hoobs-v${pjson.version}.zip`)}`, { cwd: root, stdio: "inherit" });
                 execTrySync(`sudo mv ${join(root, "image/deploy", `hoobs-${pjson.version}-box.zip`)} ${join(root, "./builds", `hoobs-box-v${pjson.version}.zip`)}`, { cwd: root, stdio: "inherit" });
 
                 // if (existsSync(join(root, "image/deploy"))) execTrySync(`sudo rm -fR ${join(root, "image/deploy")}`, { cwd: root, stdio: "inherit" });
