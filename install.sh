@@ -338,7 +338,7 @@ while [ "$1" != "" ]; do
                           NODE_TARGET=$1
 
                           if [[ "$NODE_TARGET" == "lts" || "$NODE_TARGET" == "stable" ]]; then
-                              NODE_TARGET="14.15.5"
+                              NODE_TARGET="14.16.0"
                           elif [[ "$NODE_TARGET" == "latest" ]]; then
                               NODE_TARGET="15.2.1"
                           fi
@@ -391,7 +391,7 @@ elif [[ "$OS" == "Darwin" ]]; then
 
     exit
 elif [[ "$NODE_TARGET" == "" ]]; then
-    NODE_TARGET="14.15.5"
+    NODE_TARGET="14.16.0"
     NPM_TARGET="6.14.5"
 fi
 
