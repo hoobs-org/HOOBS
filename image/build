@@ -154,16 +154,23 @@ Program.command("image", { isDefault: true })
                 writeFileSync(join(root, "image/hoobs.conf"), variables);
 
                 execTrySync(`${join(root, "image/container")} -c ${join(root, "image/hoobs.conf")}`, { cwd: join(root, "image"), stdio: "inherit" });
+
                 execTrySync(`sudo chown ${user.uid}:${user.gid} ${join(root, "image/deploy", `hoobs-${pjson.version}.zip`)}`, { cwd: join(root, "image"), stdio: "inherit" });
                 execTrySync(`sudo chown ${user.uid}:${user.gid} ${join(root, "image/deploy", `hoobs-${pjson.version}-box.zip`)}`, { cwd: join(root, "image"), stdio: "inherit" });
+                execTrySync(`sudo chown ${user.uid}:${user.gid} ${join(root, "image/deploy", `hoobs-${pjson.version}.info`)}`, { cwd: join(root, "image"), stdio: "inherit" });
+                execTrySync(`sudo chown ${user.uid}:${user.gid} ${join(root, "image/deploy", `hoobs-${pjson.version}-box.info`)}`, { cwd: join(root, "image"), stdio: "inherit" });
 
                 if (existsSync(join(root, "./builds", `hoobs-v${pjson.version}.zip`))) unlinkSync(join(root, "./builds", `hoobs-v${pjson.version}.zip`))
                 if (existsSync(join(root, "./builds", `hoobs-box-v${pjson.version}.zip`))) unlinkSync(join(root, "./builds", `hoobs-box-v${pjson.version}.zip`))
+                if (existsSync(join(root, "./builds", `hoobs-v${pjson.version}.info`))) unlinkSync(join(root, "./builds", `hoobs-v${pjson.version}.info`))
+                if (existsSync(join(root, "./builds", `hoobs-box-v${pjson.version}.info`))) unlinkSync(join(root, "./builds", `hoobs-box-v${pjson.version}.info`))
 
                 execTrySync(`sudo mv ${join(root, "image/deploy", `hoobs-${pjson.version}.zip`)} ${join(root, "./builds", `hoobs-v${pjson.version}.zip`)}`, { cwd: root, stdio: "inherit" });
                 execTrySync(`sudo mv ${join(root, "image/deploy", `hoobs-${pjson.version}-box.zip`)} ${join(root, "./builds", `hoobs-box-v${pjson.version}.zip`)}`, { cwd: root, stdio: "inherit" });
+                execTrySync(`sudo mv ${join(root, "image/deploy", `hoobs-${pjson.version}.info`)} ${join(root, "./builds", `hoobs-v${pjson.version}.info`)}`, { cwd: root, stdio: "inherit" });
+                execTrySync(`sudo mv ${join(root, "image/deploy", `hoobs-${pjson.version}-box.info`)} ${join(root, "./builds", `hoobs-box-v${pjson.version}.info`)}`, { cwd: root, stdio: "inherit" });
 
-                // if (existsSync(join(root, "image/deploy"))) execTrySync(`sudo rm -fR ${join(root, "image/deploy")}`, { cwd: root, stdio: "inherit" });
+                if (existsSync(join(root, "image/deploy"))) execTrySync(`sudo rm -fR ${join(root, "image/deploy")}`, { cwd: root, stdio: "inherit" });
             });
         }
     });
