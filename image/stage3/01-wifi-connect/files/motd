@@ -5,7 +5,7 @@ printf "$MODEL\n"
 
 IP=$(hostname -I)
 
-printf "\n\n*** HOOBS - Homebridge Out Of The Box ***\n"
+printf "\n\n*** HOOBS - User Friendly Home Automation for Everyone ***\n"
 
 printf "\n"
 printf "   _    _  ____   ____  ____   _____   \n"
