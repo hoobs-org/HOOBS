@@ -18,6 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.                          *
  **************************************************************************************************/
 
+const OS = require("os");
 const Semver = require("semver");
 const Program = require("commander");
 const Inquirer = require("inquirer");
@@ -38,6 +39,7 @@ const root = join(__dirname, "../");
 const pjson = JSON.parse(readFileSync(join(root, "package.json")).toString());
 
 const prompt = Inquirer.createPromptModule();
+const user = OS.userInfo();
 
 function execTrySync(command, options) {
     try {
@@ -77,6 +79,8 @@ Program.command("image", { isDefault: true })
             console.log("missing hoobs gui production enviornment file");
             proceed = false;
         }
+        console.log(user);
+        proceed = false;
 
         if (proceed) {
             prompt([{
@@ -188,6 +192,7 @@ Program.command("image", { isDefault: true })
                 writeFileSync(join(root, "image/hoobs.conf"), variables);
 
                 execTrySync(`${join(root, "image/container")} -c ${join(root, "image/hoobs.conf")}`, { cwd: join(root, "image"), stdio: "inherit" });
+                execTrySync(`sudo chown ${user.uid}:${user.gid} ${join(root, "image/deploy", `hoobs-${pjson.version}.zip`)}`, { cwd: join(root, "image"), stdio: "inherit" });
 
                 switch (result.sku) {
                     case "box":
@@ -203,7 +208,7 @@ Program.command("image", { isDefault: true })
                         break;
                 }
 
-                if (existsSync(join(root, "image/deploy"))) execTrySync(`${join(root, "node_modules", ".bin", "rimraf")} ${join(root, "image/deploy")}`, { cwd: root, stdio: "inherit" });
+                if (existsSync(join(root, "image/deploy"))) execTrySync(`sudo rm -fR ${join(root, "image/deploy")}`, { cwd: root, stdio: "inherit" });
             });
         }
     });
