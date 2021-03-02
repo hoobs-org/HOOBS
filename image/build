@@ -79,8 +79,6 @@ Program.command("image", { isDefault: true })
             console.log("missing hoobs gui production enviornment file");
             proceed = false;
         }
-        console.log(user);
-        proceed = false;
 
         if (proceed) {
             prompt([{
