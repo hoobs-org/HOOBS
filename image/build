@@ -155,6 +155,7 @@ Program.command("image", { isDefault: true })
 
                 execTrySync(`${join(root, "image/container")} -c ${join(root, "image/hoobs.conf")}`, { cwd: join(root, "image"), stdio: "inherit" });
                 execTrySync(`sudo chown ${user.uid}:${user.gid} ${join(root, "image/deploy", `hoobs-${pjson.version}.zip`)}`, { cwd: join(root, "image"), stdio: "inherit" });
+                execTrySync(`sudo chown ${user.uid}:${user.gid} ${join(root, "image/deploy", `hoobs-${pjson.version}-box.zip`)}`, { cwd: join(root, "image"), stdio: "inherit" });
 
                 if (existsSync(join(root, "./builds", `hoobs-v${pjson.version}.zip`))) unlinkSync(join(root, "./builds", `hoobs-v${pjson.version}.zip`))
                 if (existsSync(join(root, "./builds", `hoobs-box-v${pjson.version}.zip`))) unlinkSync(join(root, "./builds", `hoobs-box-v${pjson.version}.zip`))
