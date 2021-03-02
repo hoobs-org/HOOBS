@@ -125,7 +125,6 @@ image/SKIP_IMAGES
 *-pc
 image/apt-cacher-ng/
 image/hoobs.conf
-image/stage4/00-vendor-release/files/hoobs
 image/stage4/01-hoobs/files/hoobs-cli.tar.gz
 image/stage4/01-hoobs/files/hoobsd.tar.gz
 image/stage4/01-hoobs/files/hoobs-gui.tar.gz

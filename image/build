@@ -91,17 +91,6 @@ Program.command("image", { isDefault: true })
 
                     return true;
                 },
-            }, {
-                type: "list",
-                name: "sku",
-                message: "Select a model to build",
-                choices: [{
-                    name: "HOOBS SD Card",
-                    value: "card",
-                }, {
-                    name: "HOOBS Box",
-                    value: "box",
-                }],
             }]).then((result) => {
                 pjson.version = result.version;
     
@@ -139,33 +128,8 @@ Program.command("image", { isDefault: true })
 
                 console.log("building image");
 
-                let vendor = "";
-
-                switch (result.sku) {
-                    case "box":
-                        vendor += "ID=box\n";
-                        vendor += "MODEL=HSLF-1\n";
-                        vendor += "SKU=7-45114-12419-7\n";
-                        break;
-
-                    case "card":
-                        vendor += "ID=card\n";
-                        vendor += "MODEL=HSLF-2\n";
-                        vendor += "SKU=7-45114-12418-0\n";
-                        break;
-
-                    default:
-                        vendor += "ID=unknown\n";
-                        vendor += "MODEL=\n";
-                        vendor += "SKU=\n";
-                        break;
-                }
-
-                if (!existsSync(join(root, "./image/stage4/00-vendor-release/files"))) mkdirSync(join(root, "./image/stage4/00-vendor-release/files"));
                 if (!existsSync(join(root, "./image/stage3/01-wifi-connect/files"))) mkdirSync(join(root, "./image/stage3/01-wifi-connect/files"));
                 if (!existsSync(join(root, "./image/stage4/01-hoobs/files"))) mkdirSync(join(root, "./image/stage4/01-hoobs/files"));
-
-                writeFileSync(join(root, "./image/stage4/00-vendor-release/files", "hoobs"), vendor);
 
                 execTrySync(`cp ${join(root, "./builds", `hoobs-cli-v${working.cli.version}.tar.gz`)} ${join(root, "./image/stage4/01-hoobs/files", "hoobs-cli.tar.gz")}`, { cwd: root, stdio: "inherit" });
                 execTrySync(`cp ${join(root, "./builds", `hoobsd-v${working.hoobsd.version}.tar.gz`)} ${join(root, "./image/stage4/01-hoobs/files", "hoobsd.tar.gz")}`, { cwd: root, stdio: "inherit" });
@@ -185,28 +149,20 @@ Program.command("image", { isDefault: true })
                 variables += "FIRST_USER_NAME=hoobs\n";
                 variables += "FIRST_USER_PASS=hoobsadmin\n";
                 variables += "ENABLE_SSH=1\n";
-                variables += "STAGE_LIST=\"stage0 stage1 stage2 stage3 stage4\"\n";
+                variables += "STAGE_LIST=\"stage0 stage1 stage2 stage3 stage4 stage5\"\n";
 
                 writeFileSync(join(root, "image/hoobs.conf"), variables);
 
                 execTrySync(`${join(root, "image/container")} -c ${join(root, "image/hoobs.conf")}`, { cwd: join(root, "image"), stdio: "inherit" });
                 execTrySync(`sudo chown ${user.uid}:${user.gid} ${join(root, "image/deploy", `hoobs-${pjson.version}.zip`)}`, { cwd: join(root, "image"), stdio: "inherit" });
 
-                switch (result.sku) {
-                    case "box":
-                        if (existsSync(join(root, "./builds", `hoobs-box-v${pjson.version}.zip`))) unlinkSync(join(root, "./builds", `hoobs-box-v${pjson.version}.zip`))
+                if (existsSync(join(root, "./builds", `hoobs-v${pjson.version}.zip`))) unlinkSync(join(root, "./builds", `hoobs-v${pjson.version}.zip`))
+                if (existsSync(join(root, "./builds", `hoobs-box-v${pjson.version}.zip`))) unlinkSync(join(root, "./builds", `hoobs-box-v${pjson.version}.zip`))
 
-                        execTrySync(`sudo mv ${join(root, "image/deploy", `hoobs-${pjson.version}.zip`)} ${join(root, "./builds", `hoobs-box-v${pjson.version}.zip`)}`, { cwd: root, stdio: "inherit" });
-                        break;
+                execTrySync(`sudo mv ${join(root, "image/deploy", `hoobs-${pjson.version}-card.zip`)} ${join(root, "./builds", `hoobs-v${pjson.version}.zip`)}`, { cwd: root, stdio: "inherit" });
+                execTrySync(`sudo mv ${join(root, "image/deploy", `hoobs-${pjson.version}-box.zip`)} ${join(root, "./builds", `hoobs-box-v${pjson.version}.zip`)}`, { cwd: root, stdio: "inherit" });
 
-                    case "card":
-                        if (existsSync(join(root, "./builds", `hoobs-v${pjson.version}.zip`))) unlinkSync(join(root, "./builds", `hoobs-v${pjson.version}.zip`))
-
-                        execTrySync(`sudo mv ${join(root, "image/deploy", `hoobs-${pjson.version}.zip`)} ${join(root, "./builds", `hoobs-v${pjson.version}.zip`)}`, { cwd: root, stdio: "inherit" });
-                        break;
-                }
-
-                if (existsSync(join(root, "image/deploy"))) execTrySync(`sudo rm -fR ${join(root, "image/deploy")}`, { cwd: root, stdio: "inherit" });
+                // if (existsSync(join(root, "image/deploy"))) execTrySync(`sudo rm -fR ${join(root, "image/deploy")}`, { cwd: root, stdio: "inherit" });
             });
         }
     });

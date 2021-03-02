@@ -19,8 +19,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.                          #
 ##################################################################################################
 
-install -m 644 files/hoobs "${ROOTFS_DIR}/etc/"
-
 on_chroot << EOF
     uname -a
     set -e
