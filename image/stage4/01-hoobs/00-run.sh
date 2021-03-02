@@ -19,6 +19,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.                          #
 ##################################################################################################
 
+install -m 644 files/hoobsd.service "${ROOTFS_DIR}/etc/systemd/system/"
+install -m 644 files/bridges.conf "${ROOTFS_DIR}/var/lib/hoobs/"
 install -m 644 "files/hoobs-cli.tar.gz" "${ROOTFS_DIR}/hoobs-cli.tar.gz"
 install -m 644 "files/hoobsd.tar.gz" "${ROOTFS_DIR}/hoobsd.tar.gz"
 install -m 644 "files/hoobs-gui.tar.gz" "${ROOTFS_DIR}/hoobs-gui.tar.gz"
@@ -41,4 +43,7 @@ on_chroot << EOF
     rm -rf /hoobs-cli.tar.gz
     rm -rf /hoobsd.tar.gz
     rm -rf /hoobs-gui.tar.gz
+
+    systemctl daemon-reload
+    systemctl enable hoobsd
 EOF

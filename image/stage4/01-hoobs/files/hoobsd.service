@@ -1,0 +1,14 @@
+[Unit]
+Description=HOOBS API
+After=network-online.target
+
+[Service]
+Type=simple
+User=root
+ExecStart=/usr/bin/hoobsd hub
+Restart=on-failure
+RestartSec=3
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target
