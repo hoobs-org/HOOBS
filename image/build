@@ -227,7 +227,6 @@ Program.command("volume [action]")
 
                     execTrySync("sudo docker rm -v hoobs-image", { cwd: join(root, "image"), stdio: "ignore" });
                     execTrySync("sudo docker volume create hoobs", { cwd: join(root, "image"), stdio: "inherit" });
-                    execTrySync("sudo docker volume create hoobs-image-work", { cwd: join(root, "image"), stdio: "inherit" });
                 }
 
                 break;
@@ -243,7 +242,6 @@ Program.command("volume [action]")
 
                     execTrySync("sudo docker rm -v hoobs-image", { cwd: join(root, "image"), stdio: "ignore" });
                     execTrySync("sudo docker volume rm hoobs", { cwd: join(root, "image"), stdio: "inherit" });
-                    execTrySync("sudo docker volume rm hoobs-image-work", { cwd: join(root, "image"), stdio: "inherit" });
                 }
 
                 break;

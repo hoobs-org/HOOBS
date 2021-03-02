@@ -108,7 +108,6 @@ if [ "${CONTAINER_EXISTS}" != "" ]; then
         -v /dev:/dev \
         -v /lib/modules:/lib/modules \
         --volume "${CONFIG_FILE}":/config:ro \
-		--volume hoobs-image-work:/hoobs-image/work:rw \
         -e "GIT_HASH=${GIT_HASH}" \
         --volumes-from="${CONTAINER_NAME}" --name "${CONTAINER_NAME}_cont" \
         hoobs-image \
@@ -123,7 +122,6 @@ else
         -v /dev:/dev \
         -v /lib/modules:/lib/modules \
         --volume "${CONFIG_FILE}":/config:ro \
-		--volume hoobs-image-work:/hoobs-image/work:rw \
         -e "GIT_HASH=${GIT_HASH}" \
         hoobs-image \
         bash -e -o pipefail -c "dpkg-reconfigure qemu-user-static &&

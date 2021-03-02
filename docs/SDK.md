@@ -1,31 +1,8 @@
 # <a name="home"></a>SDK
 This SDK is designed to be used with JavaScript and includes a Vue plugin.
 
-```js
-import hoobs from "@hoobs/sdk";
-
-const version = await hoobs.sdk.version();
-```
-
-To include the SDK in a Vue application, simply pass it into a Vue.use() call. You will also need to define a token store. This example uses Vuex.
-
-```js
-import hoobs from "@hoobs/sdk";
-import store from "./store";
-
-hoobs.sdk.config.token.get(() => store.state.session);
-hoobs.sdk.config.token.set((token) => { store.commit("SESSION:SET", token); });
-
-Vue.use(hoobs);
-```
-
-The Vue plugin creates the $hoobs variable.
-
-Below, defines the properties and methods available in this SDK.
-
-> Note: If you are using this within an Vue component, you can access the SDK from `this.$hoobs`. If you are not using Vue, you can access this from `hoobs.sdk`.
-
 ## **Table of Contents**
+- [Introduction](#intro)
 - [Version](#version)
 - [Latest](#latest)
 - Auth
@@ -134,6 +111,45 @@ Below, defines the properties and methods available in this SDK.
     - [Status](#remote.status)
     - [Connect](#remote.connect)
     - [Disconnect](#remote.disconnect)
+
+## <a name="intro"></a>**Introduction**
+Installation. This SDK is designed to be used as a module. From your project install using your project's package manager.
+
+Yarn
+```
+yarn add @hoobs/sdk
+```
+
+NPM
+```
+npm install @hoobs/sdk
+```
+
+Use. This SDK fully supports ES5+.
+
+```js
+import hoobs from "@hoobs/sdk";
+
+const version = await hoobs.sdk.version();
+```
+
+To include the SDK in a Vue application, simply pass it into a Vue.use() call. You will also need to define a token store. This example uses Vuex.
+
+```js
+import hoobs from "@hoobs/sdk";
+import store from "./store";
+
+hoobs.sdk.config.token.get(() => store.state.session);
+hoobs.sdk.config.token.set((token) => { store.commit("SESSION:SET", token); });
+
+Vue.use(hoobs);
+```
+
+The Vue plugin creates the $hoobs variable.
+
+Below, defines the properties and methods available in this SDK.
+
+> Note: If you are using this within an Vue component, you can access the SDK from `this.$hoobs`. If you are not using Vue, you can access this from `hoobs.sdk`.
 
 ## <a name="version"></a>**version()**
 This returns the current HOOBSD version installed.
