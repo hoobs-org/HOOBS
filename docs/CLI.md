@@ -127,15 +127,13 @@ sudo hbs bridge create
 ```
 
 Available options
-| Flag                  | Description                                          |
-| --------------------- | ---------------------------------------------------- |
-| -b, --bridge <name>   | Defines a name for the bridge                        |
-| -p, --port <port>     | Sets the port for the bridge                         |
-| -n, --pin <pin>       | Sets the pin for bridge paring                       |
-| -s, --skip            | This will skip the systemd or launchd service create |
-| -c, --container       | This changes the paths needed for Docker containers  |
+| Flag                    | Description                                          |
+| ----------------------- | ---------------------------------------------------- |
+| -b, --bridge <name>     | Defines a name for the bridge                        |
+| -p, --port <port>       | Sets the port for the bridge                         |
+| -a, --advertiser <name> | Sets the bridge advertiser                           |
 
-> If the bridge name or port is not set the CLI will ask for this information.
+> If the bridge name, port or advertiser is not set the CLI will ask for this information.
 
 [Top](#home)
 

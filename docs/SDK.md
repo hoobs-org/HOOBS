@@ -421,6 +421,11 @@ This fetches the current hub configuration.
         inactive_logoff: number,
         disable_auth: boolean
     },
+    theme: string,
+    dashboard: {
+        items: object[],
+        backdrop: string
+    }
     description: string,
 }
 ```
@@ -980,22 +985,28 @@ Returns a list of bridges on the device.
     autostart: number,
     host: string,
     plugins: string,
-    service: string
+    service: string,
+    advertiser: string
 }]
 ```
 
 [Top](#home)
 
-## <a name="bridges.add"></a>**bridges.add([name], [port], \<pin\>, \<username\>)**
+## <a name="bridges.add"></a>**bridges.add([name], [port], \<pin\>, \<username\>, \<advertiser\>)**
 Adds an bridge to the device. This will automatically create a system service and start it.
 
 Parameters
-| Name     | Required | Type   | Description                                               |
-| -------- | -------- | ------ | --------------------------------------------------------- |
-| name     | Yes      | string | The display name for the bridge                           |
-| port     | Yes      | number | The port for the bridge, between 1 and 65535              |
-| pin      | No       | string | The pin used to pair with HomeKit, defaults to 031-45-154 |
-| username | No       | string | The bridge username, will auto generate is not set        |
+| Name       | Required | Type   | Description                                               |
+| ---------- | -------- | ------ | --------------------------------------------------------- |
+| name       | Yes      | string | The display name for the bridge                           |
+| port       | Yes      | number | The port for the bridge, between 1 and 65535              |
+| pin        | No       | string | The pin used to pair with HomeKit, defaults to 031-45-154 |
+| username   | No       | string | The bridge username, will auto generate is not set        |
+| advertiser | No       | string | This allows you to define the bridge advertiser           |
+
+These are the supported advertisers.
+* bonjour
+* ciao
 
 The name is automatically sanitized and used as an id for the bridge.
 
@@ -1003,17 +1014,18 @@ The name is automatically sanitized and used as an id for the bridge.
 
 [Top](#home)
 
-## <a name="bridges.import"></a>**bridges.import([file], [name], [port], \<pin\>, \<username\>)**
+## <a name="bridges.import"></a>**bridges.import([file], [name], [port], \<pin\>, \<username\>, \<advertiser\>)**
 This will add an bridge from an export of another bridge. This will automatically create a system service and start it.
 
 Parameters
-| Name     | Required | Type   | Description                                                     |
-| -------- | -------- | ------ | --------------------------------------------------------------- |
-| file     | Yes      | Blob   | This can be any backup file stream including an HTTPFile object |
-| name     | Yes      | string | The display name for the bridge                                 |
-| port     | Yes      | number | The port for the bridge, between 1 and 65535                    |
-| pin      | No       | string | The pin used to pair with HomeKit, defaults to 031-45-154       |
-| username | No       | string | The bridge username, will auto generate is not set              |
+| Name       | Required | Type   | Description                                                     |
+| ---------- | -------- | ------ | --------------------------------------------------------------- |
+| file       | Yes      | Blob   | This can be any backup file stream including an HTTPFile object |
+| name       | Yes      | string | The display name for the bridge                                 |
+| port       | Yes      | number | The port for the bridge, between 1 and 65535                    |
+| pin        | No       | string | The pin used to pair with HomeKit, defaults to 031-45-154       |
+| username   | No       | string | The bridge username, will auto generate is not set              |
+| advertiser | No       | string | This allows you to define the bridge advertiser                 |
 
 The name is automatically sanitized and used as an id for the bridge.
 
@@ -1039,7 +1051,8 @@ Fetches an bridge object. Will return `undefined` is the bridge doesn't exist.
     autostart: number,
     host: string,
     plugins: string,
-    service: string
+    service: string,
+    advertiser: string
 }
 ```
 
@@ -1171,16 +1184,17 @@ Plugin queries are the same as NPM or Yarn queries. Use this format `@scope/name
 
 [Top](#home)
 
-## <a name="bridge.update"></a>**bridge.update([name], [autostart], \<pin\>, \<username\>)**
+## <a name="bridge.update"></a>**bridge.update([name], [autostart], \<pin\>, \<username\>, \<advertiser\>)**
 This allows you to edit the bridge information.
 
 Parameters
-| Name      | Required | Type    | Description                                                  |
-| --------- | -------- | ------- | ------------------------------------------------------------ |
-| name      | Yes      | string  | The desired display name for this bridge                     |
-| autostart | Yes      | number  | Set the number to delay the start of the bridge (in seconds) |
-| pin       | No       | string  | Change the bridge's pin                                      |
-| username  | No       | string  | Change the bridge username                                   |
+| Name       | Required | Type    | Description                                                  |
+| ---------- | -------- | ------- | ------------------------------------------------------------ |
+| name       | Yes      | string  | The desired display name for this bridge                     |
+| autostart  | Yes      | number  | Set the number to delay the start of the bridge (in seconds) |
+| pin        | No       | string  | Change the bridge's pin                                      |
+| username   | No       | string  | Change the bridge username                                   |
+| advertiser | No       | string | This allows you to define the bridge advertiser               |
 
 The name is updated but the id will remain unchanged. We do this so you don't have to change any system services.
 
@@ -1211,6 +1225,7 @@ Fetch a list of accessories for this bridge.
     accessory_identifier: string,
     bridge_identifier: string | undefined,
     bridge: string,
+    plugin: string,
     room: string | null | undefined,
     sequence: number | undefined,
     hidden: boolean | undefined,
@@ -1328,6 +1343,7 @@ Parameters
         accessory_identifier: string,
         bridge_identifier: string | undefined,
         bridge: string,
+        plugin: string,
         room: string | null | undefined,
         sequence: number | undefined,
         hidden: boolean | undefined,
@@ -1365,6 +1381,7 @@ This fetches a single accessory object.
     accessory_identifier: string,
     bridge_identifier: string | undefined,
     bridge: string,
+    plugin: string,
     room: string | null | undefined,
     sequence: number | undefined,
     hidden: boolean | undefined,
@@ -1468,6 +1485,7 @@ This fetches a single room with accessories, types and characteristics.
         accessory_identifier: string,
         bridge_identifier: string | undefined,
         bridge: string,
+        plugin: string,
         room: string | null | undefined,
         sequence: number | undefined,
         hidden: boolean | undefined,
