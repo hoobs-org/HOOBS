@@ -150,7 +150,7 @@ The toolchain also bounces in and out of root a lot using sudo. Adding `NOPASSWD
 
 > Note: We don't do this for production images.
 
-Next you will need to create the HOOBS vendow file.
+Next you will need to create the HOOBS vendor file.
 
 ```
 sudo nano /etc/hoobs
