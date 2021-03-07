@@ -23,31 +23,12 @@ mkdir -p "${ROOTFS_DIR}/var/lib/hoobs/"
 
 install -m 644 files/hoobsd.service "${ROOTFS_DIR}/etc/systemd/system/"
 install -m 644 files/bridges.conf "${ROOTFS_DIR}/var/lib/hoobs/"
-
-install -m 644 "files/hoobs-cli.tar.gz" "${ROOTFS_DIR}/hoobs-cli.tar.gz"
-install -m 644 "files/hoobsd.tar.gz" "${ROOTFS_DIR}/hoobsd.tar.gz"
-install -m 644 "files/hoobs-gui.tar.gz" "${ROOTFS_DIR}/hoobs-gui.tar.gz"
-
 install -m 644 "files/.bashrc" "${ROOTFS_DIR}/root/"
 
 on_chroot << EOF
     uname -a
     set -e
     set -x
-
-    tar -xzf /hoobs-cli.tar.gz -C /usr --strip-components=1 --no-same-owner
-    tar -xzf /hoobsd.tar.gz -C /usr --strip-components=1 --no-same-owner
-    tar -xzf /hoobs-gui.tar.gz -C /usr --strip-components=1 --no-same-owner
-
-    cd /usr/lib/hbs
-    yarn install
-
-    cd /usr/lib/hoobsd
-    yarn install
-
-    rm -rf /hoobs-cli.tar.gz
-    rm -rf /hoobsd.tar.gz
-    rm -rf /hoobs-gui.tar.gz
 
     systemctl daemon-reload
     systemctl enable hoobsd

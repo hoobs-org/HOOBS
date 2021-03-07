@@ -20,9 +20,9 @@
 ##################################################################################################
 
 on_chroot << EOF
-	wget https://deb.nodesource.com/setup_lts.x
-    chmod 755 ./setup_lts.x
-    ./setup_lts.x
-    rm -f ./setup_lts.x
-    apt-get update
+    uname -a
+    set -e
+    set -x
+
+    systemctl enable avahi-daemon.service
 EOF

@@ -7,3 +7,4 @@ make
 gcc
 g++
 nodejs
+yarn
