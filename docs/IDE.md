@@ -321,7 +321,7 @@ The output will be in the `~/HOOBS/builds` folder.
 ## <a name="publishing"></a>**Publishing**
 We publish our releases to our repository server. There are built-in commands in the tool chain to make this easy.
 
-You can build and publish everyghing with this one command.
+You can build and publish everything with this one command.
 
 ```
 cd ~/HOOBS
