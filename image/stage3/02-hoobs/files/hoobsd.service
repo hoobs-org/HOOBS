@@ -1,5 +1,5 @@
 [Unit]
-Description=HOOBS API
+Description=HOOBSD
 After=network-online.target
 
 [Service]
@@ -7,7 +7,7 @@ Type=simple
 User=root
 ExecStartPre=/bin/sleep 30
 ExecStart=/usr/bin/hoobsd hub
-Restart=on-failure
+Restart=always
 RestartSec=3
 KillMode=process
 
