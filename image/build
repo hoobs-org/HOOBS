@@ -164,13 +164,6 @@ Program.command("publish [action]")
                 proceed = false;
             }
 
-            const reprepro = execTrySync("command -v reprepro").toString().replace(/\n/g, "").trim();
-
-            if (!reprepro || reprepro === "") {
-                console.log("reprepro is not installed");
-                proceed = false;
-            }
-
             if (!existsSync(join(root, "./cli", "package.json")) || !existsSync(join(root, "./hoobsd", "package.json")) || !existsSync(join(root, "./gui", "package.json"))) {
                 console.log("workspace not initilized");
                 proceed = false;
