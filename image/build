@@ -211,15 +211,17 @@ Program.command("publish [action]")
 
                         console.log("updating repository");
 
-                        execTrySync("cd /var/www/html/debian && reprepro remove buster hoobs-cli", { cwd: root, stdio: "inherit" });
-                        execTrySync("cd /var/www/html/debian && reprepro remove buster hoobsd", { cwd: root, stdio: "inherit" });
-                        execTrySync("cd /var/www/html/debian && reprepro remove buster hoobs-gui", { cwd: root, stdio: "inherit" });
-                        execTrySync("cd /var/www/html/debian && reprepro remove buster hoobs", { cwd: root, stdio: "inherit" });
+                        execTrySync(`sshpass -p '${result.password}' ssh root@138.197.75.194 'cd /var/www/html/debian && reprepro remove buster hoobs-cli'`, { cwd: root, stdio: "inherit" });
+                        execTrySync(`sshpass -p '${result.password}' ssh root@138.197.75.194 'cd /var/www/html/debian && reprepro remove buster hoobsd'`, { cwd: root, stdio: "inherit" });
+                        execTrySync(`sshpass -p '${result.password}' ssh root@138.197.75.194 'cd /var/www/html/debian && reprepro remove buster hoobs-gui'`, { cwd: root, stdio: "inherit" });
+                        execTrySync(`sshpass -p '${result.password}' ssh root@138.197.75.194 'cd /var/www/html/debian && reprepro remove buster hoobs'`, { cwd: root, stdio: "inherit" });
 
                         execTrySync(`sshpass -p '${result.password}' ssh root@138.197.75.194 'cd /var/www/html/debian && reprepro includedeb buster /var/www/html/debian/hoobs-cli-v${working.cli.version}.deb'`, { cwd: root, stdio: "inherit" });
                         execTrySync(`sshpass -p '${result.password}' ssh root@138.197.75.194 'cd /var/www/html/debian && reprepro includedeb buster /var/www/html/debian/hoobsd-v${working.hoobsd.version}.deb'`, { cwd: root, stdio: "inherit" });
                         execTrySync(`sshpass -p '${result.password}' ssh root@138.197.75.194 'cd /var/www/html/debian && reprepro includedeb buster /var/www/html/debian/hoobs-gui-v${working.gui.version}.deb'`, { cwd: root, stdio: "inherit" });
                         execTrySync(`sshpass -p '${result.password}' ssh root@138.197.75.194 'cd /var/www/html/debian && reprepro includedeb buster /var/www/html/debian/hoobs-v${pjson.version}.deb'`, { cwd: root, stdio: "inherit" });
+
+                        execTrySync(`sshpass -p '${result.password}' ssh root@138.197.75.194 'cd /var/www/html/debian && reprepro list buster'`, { cwd: root, stdio: "inherit" });
 
                         console.log("uploading source files");
 
