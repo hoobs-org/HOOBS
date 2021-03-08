@@ -238,7 +238,7 @@ cp ./security/gui/.env.production ./gui/
 [Top](#home)
 
 ## <a name="signing"></a>**Key Signing**
-HOOBS signs it's packages. The repository server is setup to require signing. You will need to import the certificate from the security repository.
+At HOOBS we sign our packages. This ensures that our packages are untampered after releasing. The repository server is setup to require signing. You will need to import the certificate from the security repository.
 
 Importing the keys.
 
