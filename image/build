@@ -164,6 +164,13 @@ Program.command("publish [action]")
                 proceed = false;
             }
 
+            const reprepro = execTrySync("command -v reprepro").toString().replace(/\n/g, "").trim();
+
+            if (!reprepro || reprepro === "") {
+                console.log("reprepro is not installed");
+                proceed = false;
+            }
+
             if (!existsSync(join(root, "./cli", "package.json")) || !existsSync(join(root, "./hoobsd", "package.json")) || !existsSync(join(root, "./gui", "package.json"))) {
                 console.log("workspace not initilized");
                 proceed = false;
@@ -204,38 +211,42 @@ Program.command("publish [action]")
                     if (action === "package") {
                         console.log("uploading deb packages");
 
-                        execTrySync(`sshpass -p '${result.password}' scp ${join(root, "./builds", `hoobs-cli-v${working.cli.version}.deb`)} root@138.197.75.194:/var/www/html/debian/`, { cwd: join(root, "image"), stdio: "inherit" });
-                        execTrySync(`sshpass -p '${result.password}' scp ${join(root, "./builds", `hoobsd-v${working.hoobsd.version}.deb`)} root@138.197.75.194:/var/www/html/debian/`, { cwd: join(root, "image"), stdio: "inherit" });
-                        execTrySync(`sshpass -p '${result.password}' scp ${join(root, "./builds", `hoobs-gui-v${working.gui.version}.deb`)} root@138.197.75.194:/var/www/html/debian/`, { cwd: join(root, "image"), stdio: "inherit" });
-                        execTrySync(`sshpass -p '${result.password}' scp ${join(root, "./builds", `hoobs-v${pjson.version}.deb`)} root@138.197.75.194:/var/www/html/debian/`, { cwd: join(root, "image"), stdio: "inherit" });
+                        execTrySync(`sshpass -p '${result.password}' scp ${join(root, "./builds", `hoobs-cli-v${working.cli.version}.deb`)} root@138.197.75.194:/var/www/html/debian/`, { cwd: root, stdio: "inherit" });
+                        execTrySync(`sshpass -p '${result.password}' scp ${join(root, "./builds", `hoobsd-v${working.hoobsd.version}.deb`)} root@138.197.75.194:/var/www/html/debian/`, { cwd: root, stdio: "inherit" });
+                        execTrySync(`sshpass -p '${result.password}' scp ${join(root, "./builds", `hoobs-gui-v${working.gui.version}.deb`)} root@138.197.75.194:/var/www/html/debian/`, { cwd: root, stdio: "inherit" });
+                        execTrySync(`sshpass -p '${result.password}' scp ${join(root, "./builds", `hoobs-v${pjson.version}.deb`)} root@138.197.75.194:/var/www/html/debian/`, { cwd: root, stdio: "inherit" });
 
                         console.log("updating repository");
 
-                        execTrySync(`sshpass -p '${result.password}' ssh root@138.197.75.194 'reprepro includedeb buster /var/www/html/debian/hoobs-cli-v${working.cli.version}.deb'`, { cwd: join(root, "image"), stdio: "inherit" });
-                        execTrySync(`sshpass -p '${result.password}' ssh root@138.197.75.194 'reprepro includedeb buster /var/www/html/debian/hoobsd-v${working.hoobsd.version}.deb'`, { cwd: join(root, "image"), stdio: "inherit" });
-                        execTrySync(`sshpass -p '${result.password}' ssh root@138.197.75.194 'reprepro includedeb buster /var/www/html/debian/hoobs-gui-v${working.gui.version}.deb'`, { cwd: join(root, "image"), stdio: "inherit" });
-                        execTrySync(`sshpass -p '${result.password}' ssh root@138.197.75.194 'reprepro includedeb buster /var/www/html/debian/hoobs-v${pjson.version}.deb'`, { cwd: join(root, "image"), stdio: "inherit" });
+                        execTrySync(`sshpass -p '${result.password}' ssh root@138.197.75.194 'reprepro includedeb buster -b /var/www/html/debian /var/www/html/debian/hoobs-cli-v${working.cli.version}.deb'`, { cwd: root, stdio: "inherit" });
+                        execTrySync(`sshpass -p '${result.password}' ssh root@138.197.75.194 'reprepro includedeb buster -b /var/www/html/debian /var/www/html/debian/hoobsd-v${working.hoobsd.version}.deb'`, { cwd: root, stdio: "inherit" });
+                        execTrySync(`sshpass -p '${result.password}' ssh root@138.197.75.194 'reprepro includedeb buster -b /var/www/html/debian /var/www/html/debian/hoobs-gui-v${working.gui.version}.deb'`, { cwd: root, stdio: "inherit" });
+                        execTrySync(`sshpass -p '${result.password}' ssh root@138.197.75.194 'reprepro includedeb buster -b /var/www/html/debian /var/www/html/debian/hoobs-v${pjson.version}.deb'`, { cwd: root, stdio: "inherit" });
 
                         console.log("uploading source files");
 
-                        execTrySync(`sshpass -p '${result.password}' scp ${join(root, "./builds", `hoobs-cli-v${working.cli.version}.tar.gz`)} root@138.197.75.194:/var/www/html/source/`, { cwd: join(root, "image"), stdio: "inherit" });
-                        execTrySync(`sshpass -p '${result.password}' scp ${join(root, "./builds", `hoobsd-v${working.hoobsd.version}.tar.gz`)} root@138.197.75.194:/var/www/html/source/`, { cwd: join(root, "image"), stdio: "inherit" });
-                        execTrySync(`sshpass -p '${result.password}' scp ${join(root, "./builds", `hoobs-gui-v${working.gui.version}.tar.gz`)} root@138.197.75.194:/var/www/html/source/`, { cwd: join(root, "image"), stdio: "inherit" });
+                        execTrySync(`sshpass -p '${result.password}' scp ${join(root, "./builds", `hoobs-cli-v${working.cli.version}.tar.gz`)} root@138.197.75.194:/var/www/html/source/`, { cwd: root, stdio: "inherit" });
+                        execTrySync(`sshpass -p '${result.password}' scp ${join(root, "./builds", `hoobsd-v${working.hoobsd.version}.tar.gz`)} root@138.197.75.194:/var/www/html/source/`, { cwd: root, stdio: "inherit" });
+                        execTrySync(`sshpass -p '${result.password}' scp ${join(root, "./builds", `hoobs-gui-v${working.gui.version}.tar.gz`)} root@138.197.75.194:/var/www/html/source/`, { cwd: root, stdio: "inherit" });
+
+                        execTrySync(`sshpass -p '${result.password}' scp ${join(root, "./builds", `hoobs-setup-v${working.cli.version}.sh`)} root@138.197.75.194:/var/www/html/`, { cwd: root, stdio: "inherit" });
+                        execTrySync(`sshpass -p '${result.password}' ssh root@138.197.75.194 'rm -f /var/www/html/setup'`, { cwd: root, stdio: "inherit" });
+                        execTrySync(`sshpass -p '${result.password}' ssh root@138.197.75.194 'cp /var/www/html/hoobs-setup-v${working.cli.version}.sh /var/www/html/setup'`, { cwd: root, stdio: "inherit" });
                     }
 
                     if (action === "image") {
                         console.log("uploading images");
 
-                        execTrySync(`sshpass -p '${result.password}' scp ${join(root, "./builds", `hoobs-v${pjson.version}.zip`)} root@138.197.75.194:/var/www/html/image/`, { cwd: join(root, "image"), stdio: "inherit" });
-                        execTrySync(`sshpass -p '${result.password}' scp ${join(root, "./builds", `hoobs-box-v${pjson.version}.zip`)} root@138.197.75.194:/var/www/html/image/`, { cwd: join(root, "image"), stdio: "inherit" });
+                        execTrySync(`sshpass -p '${result.password}' scp ${join(root, "./builds", `hoobs-v${pjson.version}.zip`)} root@138.197.75.194:/var/www/html/image/`, { cwd: root, stdio: "inherit" });
+                        execTrySync(`sshpass -p '${result.password}' scp ${join(root, "./builds", `hoobs-box-v${pjson.version}.zip`)} root@138.197.75.194:/var/www/html/image/`, { cwd: root, stdio: "inherit" });
 
                         console.log("linking latest");
 
-                        execTrySync(`sshpass -p '${result.password}' ssh root@138.197.75.194 'rm -f /var/www/html/image/hoobs-latest.zip'`, { cwd: join(root, "image"), stdio: "inherit" });
-                        execTrySync(`sshpass -p '${result.password}' ssh root@138.197.75.194 'rm -f /var/www/html/image/hoobs-box-latest.zip'`, { cwd: join(root, "image"), stdio: "inherit" });
+                        execTrySync(`sshpass -p '${result.password}' ssh root@138.197.75.194 'rm -f /var/www/html/image/hoobs-latest.zip'`, { cwd: root, stdio: "inherit" });
+                        execTrySync(`sshpass -p '${result.password}' ssh root@138.197.75.194 'rm -f /var/www/html/image/hoobs-box-latest.zip'`, { cwd: root, stdio: "inherit" });
 
-                        execTrySync(`sshpass -p '${result.password}' ssh root@138.197.75.194 'cp /var/www/html/image/hoobs-v${pjson.version}.zip /var/www/html/image/hoobs-latest.zip'`, { cwd: join(root, "image"), stdio: "inherit" });
-                        execTrySync(`sshpass -p '${result.password}' ssh root@138.197.75.194 'cp /var/www/html/image/hoobs-box-v${pjson.version}.zip /var/www/html/image/hoobs-box-latest.zip'`, { cwd: join(root, "image"), stdio: "inherit" });
+                        execTrySync(`sshpass -p '${result.password}' ssh root@138.197.75.194 'cp /var/www/html/image/hoobs-v${pjson.version}.zip /var/www/html/image/hoobs-latest.zip'`, { cwd: root, stdio: "inherit" });
+                        execTrySync(`sshpass -p '${result.password}' ssh root@138.197.75.194 'cp /var/www/html/image/hoobs-box-v${pjson.version}.zip /var/www/html/image/hoobs-box-latest.zip'`, { cwd: root, stdio: "inherit" });
                     }
 
                     console.log("done");
