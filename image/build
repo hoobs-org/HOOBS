@@ -151,6 +151,10 @@ function buildPackages(version) {
 }
 
 function buildImage(node) {
+    const working = {
+        connect: JSON.parse(readFileSync(join(root, "./connect", "package.json")).toString()),
+    }
+
     execTrySync("sudo docker rm -v hoobs-image", { cwd: join(root, "image"), stdio: "ignore" });
 
     if (existsSync(join(root, "hoobs"))) rmSync(join(root, "image/hoobs.conf"));
@@ -204,6 +208,12 @@ function buildImage(node) {
 }
 
 function publishPackage(password) {
+    const working = {
+        cli: JSON.parse(readFileSync(join(root, "./cli", "package.json")).toString()),
+        hoobsd: JSON.parse(readFileSync(join(root, "./hoobsd", "package.json")).toString()),
+        gui: JSON.parse(readFileSync(join(root, "./gui", "package.json")).toString()),
+    }
+
     console.log("uploading deb packages");
 
     execTrySync(`sshpass -p '${password}' scp ${join(root, "./builds", `hoobs-cli-v${working.cli.version}.deb`)} root@138.197.75.194:/var/www/html/debian/`, { cwd: root, stdio: "inherit" });
@@ -254,7 +264,7 @@ function publishImage(password) {
 Program.version(pjson.version, "-v, --version", "output the current version")
     .allowUnknownOption();
 
-Program.command("release", { isDefault: true })
+Program.command("release")
     .description("build hoobs image")
     .action(() => {
         if (checkEnviornment()) {
