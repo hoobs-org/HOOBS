@@ -7,9 +7,11 @@ until ip route | grep "default"; do
     printf 'Waiting for network...\n'
 
     if [ ${attempt_counter} -eq ${max_attempts} ];then
-       printf 'Starting WiFi Connect\n'
-       /usr/local/sbin/wifi-connect --portal-ssid="SSID" --activity-timeout=600
-       printf 'WiFi Connection Established...\n'
+        random_uuid=$((1 + $RANDOM % 10000))
+
+        printf 'Starting WiFi Connect\n'
+        /usr/local/sbin/wifi-connect --portal-ssid="SSID ($random_uuid)" --activity-timeout=600
+        printf 'WiFi Connection Established...\n'
 
        exit 0
     fi

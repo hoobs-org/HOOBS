@@ -26,6 +26,7 @@ install -m 644 files/wifi-connect-startup "${ROOTFS_DIR}/usr/local/sbin/"
 install -m 644 files/raspbian-install.sh "${ROOTFS_DIR}/"
 install -m 644 files/hoobs-connect.tar.gz "${ROOTFS_DIR}/"
 
+sed -i "s/SSID/${WIFI_SSID}/g" "${ROOTFS_DIR}/etc/issue"
 sed -i "s/SSID/${WIFI_SSID}/g" "${ROOTFS_DIR}/usr/local/sbin/wifi-connect-startup"
 
 on_chroot << EOF

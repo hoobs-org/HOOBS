@@ -1,4 +1,4 @@
-HOOBS - Homebridge Out Of The Box - \n (\r)
+HOOBS - User Friendly Home Automation for Everyone - \n (\r)
 
   _    _  ____   ____  ____   _____
  | |  | |/ __ \\ / __ \\|  _ \\ / ____|
@@ -10,7 +10,7 @@ HOOBS - Homebridge Out Of The Box - \n (\r)
 
 **** Need To Setup WiFi? ****
 
-Use your mobile device to connect to the "HOOBS" WiFi access point, then
+Use your mobile device to connect to the "SSID" WiFi access point, then
 follow the prompts to connect this device to your network.
 
 If you are currently connected via Ethernet, you will need to disconnect
@@ -24,6 +24,5 @@ Browse to the one of the following addresses from another device on your network
 * http://\n.local
 * http://\4
 
-All Homebridge configuration can be completed via the web interface.
-
-
+HOOBS and the HOOBS logo are registered trademarks of HOOBS Inc.
+Copyright (C) 2020 HOOBS Inc. All rights reserved.

@@ -48,10 +48,6 @@ disable_splash=1
 #dtparam=i2s=on
 #dtparam=spi=on
 
-# Uncomment this to enable infrared communication.
-#dtoverlay=gpio-ir,gpio_pin=17
-#dtoverlay=gpio-ir-tx,gpio_pin=18
-
 # Additional overlays and parameters are documented /boot/overlays/README
 
 # Enable audio (loads snd_bcm2835)

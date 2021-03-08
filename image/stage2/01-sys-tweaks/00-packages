@@ -18,7 +18,6 @@ python
 bash-completion
 gdb
 pkg-config
-python-rpi.gpio
 v4l-utils
 avahi-daemon
 avahi-utils
