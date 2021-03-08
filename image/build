@@ -316,7 +316,7 @@ Program.command("image")
                 variables += `IMG_FILENAME="hoobs-${pjson.version}"\n`;
                 variables += `ZIP_FILENAME="hoobs-${pjson.version}"\n`;
                 variables += `NODE_RELEASE="${result.node}"\n`;
-                variables += "WIFI_SSID=HOOBS"
+                variables += "WIFI_SSID=HOOBS\n";
                 variables += "LOCALE_DEFAULT=\"en_US.UTF-8\"\n";
                 variables += "KEYBOARD_KEYMAP=\"us\"\n";
                 variables += "KEYBOARD_LAYOUT=\"English (US)\"\n";
