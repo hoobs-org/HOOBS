@@ -2,8 +2,10 @@
 
 attempt_counter=0
 max_attempts=20
+
 until ip route | grep "default"; do
     printf 'Waiting for network...\n'
+
     if [ ${attempt_counter} -eq ${max_attempts} ];then
        printf 'Starting WiFi Connect\n'
        /usr/local/sbin/wifi-connect --portal-ssid="SSID" --activity-timeout=600
