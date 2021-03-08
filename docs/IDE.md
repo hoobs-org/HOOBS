@@ -151,7 +151,7 @@ Find the two **PATH** directives as above and replace the value. This will add t
 Now you will need to do the same with the `/etc/sudoers` file, here's the command for that `sudo nano /etc/sudoers`.
 
 ```
-Defaults        secure_path="/home/hoobs/HOOBS/cli/bin:/home/hoobs/HOOBS/hoobsd/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+Defaults secure_path="/home/hoobs/HOOBS/cli/bin:/home/hoobs/HOOBS/hoobsd/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 ```
 
 Find the **secure_path** directive and replace it with the above. This will make sure the project paths are avaliable when you use the `sudo` command.
