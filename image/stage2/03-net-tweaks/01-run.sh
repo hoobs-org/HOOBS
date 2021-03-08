@@ -25,6 +25,8 @@ install -v -m 644 files/wait.conf "${ROOTFS_DIR}/etc/systemd/system/dhcpcd.servi
 install -v -d "${ROOTFS_DIR}/etc/wpa_supplicant"
 install -v -m 600 files/wpa_supplicant.conf   "${ROOTFS_DIR}/etc/wpa_supplicant/"
 
+install -v -m 644 files/avahi-daemon.conf "${ROOTFS_DIR}/etc/avahi/"
+
 if [ -v WPA_COUNTRY ]; then
 	echo "country=${WPA_COUNTRY}" >> "${ROOTFS_DIR}/etc/wpa_supplicant/wpa_supplicant.conf"
 fi

@@ -21,6 +21,7 @@ pkg-config
 python-rpi.gpio
 v4l-utils
 avahi-daemon
+avahi-utils
 lua5.1
 luajit
 hardlink
