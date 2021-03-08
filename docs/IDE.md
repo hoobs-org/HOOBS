@@ -8,8 +8,10 @@ This will walk you through setting up your IDE, needed to develop and build HOOB
 - [Docker](#docker)
 - [Enviornment Variables](#enviornment)
 - [Download the Code](#repo)
+- [Key Signing](#signing)
 - [Development Server](#serve)
 - [Building](#building)
+- [Publishing](#publishing)
 - [GitHub Intergration](#git)
 
 ## <a name="intro"></a>**Introduction**
@@ -36,7 +38,7 @@ su
 
 Install sudo
 ```
-apt-get update && apt-get install -y sudo
+apt update && apt install -y sudo
 ```
 
 Then you need to add your user to the `sudo` group. In this example, I am using the `hoobs` user.
@@ -53,7 +55,19 @@ To get sudo to work you need to logout by running `exit` twice.
 Once you have Debian setup with sudo, you will need to install the needed packages to run and build HOOBS.
 
 ```
-sudo apt-get install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common tar git python3 make gcc g++ jq avahi-daemon avahi-discover libnss-mdns
+sudo apt install -y gnupg-agent dpkg-sig sshpass apt-transport-https ca-certificates curl
+```
+
+Some build utilities are required.
+
+```
+sudo apt install -y software-properties-common tar git python3 make gcc g++ jq
+```
+
+Now you will need to install Avahi.
+
+```
+sudo apt install -y avahi-daemon avahi-discover libnss-mdns
 ```
 
 Next you will need to setup the Node and Yarn repositories.
@@ -71,7 +85,7 @@ echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/source
 
 Now you can install Node and Yarn.
 ```
-sudo apt-get update && sudo apt-get install -y nodejs yarn
+sudo apt update && sudo apt install -y nodejs yarn
 ```
 
 [Top](#home)
@@ -82,7 +96,7 @@ The Docker engine is required to build the HOOBS SD Card image.
 First, remove any installed Docker or Containerd packages.
 
 ```
-sudo apt-get remove docker docker-engine docker.io containerd runc
+sudo apt remove docker docker-engine docker.io containerd runc
 ```
 
 > You might get an error, this is OK.
@@ -90,7 +104,7 @@ sudo apt-get remove docker docker-engine docker.io containerd runc
 Now download and install Docker's GPG key.
 
 ```
-sudo apt-get remove docker docker-engine docker.io containerd runc
+sudo apt remove docker docker-engine docker.io containerd runc
 curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
 ```
 
@@ -108,7 +122,7 @@ sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debi
 Finally install Dopcker and Containerd.
 
 ```
-sudo apt-get update && sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+sudo apt update && sudo apt install -y docker-ce docker-ce-cli containerd.io
 ```
 
 Now because the build process and development server watches many files, you will need to increase Linux's max file watcher setting.
@@ -198,7 +212,52 @@ Now you will need to create the .env files for the **hoobsd** and **gui** projec
 * .env.development
 * .env.production
 
-> Note these files are private and you will need to get them from a secure location.
+You can get these files from the security repository.
+
+```
+cd ~/HOOBS
+git clone https://github.com/hoobs-org/security.git
+```
+
+> Note these files are protected. You will need to login to clone. You also need to be a member of the HOOBS orginization.
+
+Now copy the hoobsd env files.
+```
+cd ~/HOOBS
+cp ./security/hoobsd/.env.development ./hoobsd/
+cp ./security/hoobsd/.env.production ./hoobsd/
+```
+
+Next copy the hoobsd env files.
+```
+cd ~/HOOBS
+cp ./security/gui/.env.development ./gui/
+cp ./security/gui/.env.production ./gui/
+```
+
+[Top](#home)
+
+## <a name="signing"></a>**Key Signing**
+HOOBS signs it's packages. The repository server is setup to require signing. You will need to import the certificate from the security repository.
+
+Importing the keys.
+
+```
+cd ~/HOOBS
+gpg --import ./security/repo/publickey.gpg
+gpg --allow-secret-key-import --import ./security/repo/privatekey.gpg
+```
+
+Now check your keys to see if the hoobs key is there.
+
+```
+gpg --list-keys | grep hoobs
+```
+
+The output should look something like this.
+```
+uid [ultimate] hoobs <info@hoobs.org>
+```
 
 [Top](#home)
 
@@ -241,12 +300,53 @@ Follow the instructions in the console to access the interface.
 ## <a name="building"></a>**Building**
 To build the image, all you need to do is run this command.
 
+To build the packages.
 ```
 cd ~/HOOBS
-yarn build
+yarn build package
 ```
 
+To build the images.
+```
+cd ~/HOOBS
+yarn build image
+```
+
+> Note. The image build process uses the repository. You will need to publish the packages before buildiing the image.
+
 The output will be in the `~/HOOBS/builds` folder.
+
+[Top](#home)
+
+## <a name="publishing"></a>**Publishing**
+We publish our releases to our repository server. There are built-in commands in the tool chain to make this easy.
+
+You can build and publish everyghing with this one command.
+
+```
+cd ~/HOOBS
+yarn release
+```
+
+This command will ask you for the new version, and which Node major release to use. The Node release is not the full version, this is handled by the NodeSource repository. To get Node **14.16.0** simply enter the value **14**.
+
+> Note. This will ask for the password for the repository.
+
+The tool chain also allows you to publish the parts individually. This is handy for troubleshooting the build process.
+
+To publish the packages.
+
+```
+cd ~/HOOBS
+yarn upload package
+```
+
+To publish the images.
+
+```
+cd ~/HOOBS
+yarn upload image
+```
 
 [Top](#home)
 
