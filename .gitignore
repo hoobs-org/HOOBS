@@ -113,6 +113,7 @@ dist
 /sdk
 /connect
 /builds
+/security
 
 # Build output
 image/deploy/*
