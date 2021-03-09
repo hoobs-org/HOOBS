@@ -304,11 +304,15 @@ function publishImage(password) {
 
         console.log("linking latest");
 
-        if (!exists.card) execRemote(password, `rm -f /var/www/html/image/hoobs-latest.zip`);
-        if (!exists.box) execRemote(password, `rm -f /var/www/html/image/hoobs-box-latest.zip`);
+        if (!exists.card) {
+            execRemote(password, `rm -f /var/www/html/image/hoobs-latest.zip`);
+            execRemote(password, `cp /var/www/html/image/hoobs-v${pjson.version}.zip /var/www/html/image/hoobs-latest.zip`);
+        }
 
-        if (!exists.card) execRemote(password, `cp /var/www/html/image/hoobs-v${pjson.version}.zip /var/www/html/image/hoobs-latest.zip`);
-        if (!exists.box) execRemote(password, `cp /var/www/html/image/hoobs-box-v${pjson.version}.zip /var/www/html/image/hoobs-box-latest.zip`);
+        if (!exists.box) {
+            execRemote(password, `rm -f /var/www/html/image/hoobs-box-latest.zip`);
+            execRemote(password, `cp /var/www/html/image/hoobs-box-v${pjson.version}.zip /var/www/html/image/hoobs-box-latest.zip`);
+        }
     }
 }
 
