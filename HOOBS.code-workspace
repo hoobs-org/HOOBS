@@ -1,20 +1,20 @@
 {
     "folders": [
         {
-            "name": "cli",
-            "path": "./cli"
-        },
-        {
             "name": "sdk",
             "path": "./sdk"
         },
         {
-            "name": "gui",
-            "path": "./gui"
+            "name": "cli",
+            "path": "./cli"
         },
         {
             "name": "hoobsd",
             "path": "./hoobsd"
+        },
+        {
+            "name": "gui",
+            "path": "./gui"
         },
         {
             "name": "connect",
