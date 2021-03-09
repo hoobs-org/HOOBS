@@ -1,5 +1,0 @@
-#!/bin/sh
-
-apt remove hoobs-gui
-apt remove hoobsd
-apt remove hoobs-cli

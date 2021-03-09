@@ -132,13 +132,7 @@ function buildPackages(version) {
     control += "Description: Build your Smart Home with HOOBS. Connect over 2,000 Accessories to your favorite Ecosystem.\n";
 
     writeFileSync(join(root, "dist/DEBIAN/control"), control);
-
-    execTrySync(`cp ${join(root, "image/scripts", "prerm")} ${join(root, "dist/DEBIAN", "prerm")}`, { cwd: root, stdio: "inherit" });
-    execTrySync(`cp ${join(root, "image/scripts", "postrm")} ${join(root, "dist/DEBIAN", "postrm")}`, { cwd: root, stdio: "inherit" });
     execTrySync(`cp ${join(root, "image/scripts", "postinst")} ${join(root, "dist/DEBIAN", "postinst")}`, { cwd: root, stdio: "inherit" });
-
-    execTrySync(`chmod 755 ${join(root, "dist/DEBIAN", "prerm")}`, { cwd: root, stdio: "inherit" });
-    execTrySync(`chmod 755 ${join(root, "dist/DEBIAN", "postrm")}`, { cwd: root, stdio: "inherit" });
     execTrySync(`chmod 755 ${join(root, "dist/DEBIAN", "postinst")}`, { cwd: root, stdio: "inherit" });
     execTrySync("dpkg-deb --build dist", { cwd: root, stdio: "inherit" });
 
