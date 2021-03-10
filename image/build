@@ -256,7 +256,7 @@ function publishPackage(password) {
 
     if (!exists.sdk) {
         console.log("publishing hoobs sdk");
-        execLocal("yarn publish", { cwd: join(root, "./sdk"), stdio: "inherit" });
+        execLocal(`yarn publish --new-version ${working.sdk.version}`, { cwd: join(root, "./sdk"), stdio: "inherit" });
     }
 
     if (!exists.cli || !exists.hoobsd || !exists.gui || !exists.bundle) {
