@@ -19,7 +19,7 @@ printf "\n"
 
 printf "To configure HOOBS browse to the one of the following addresses from another device on your network:" | fold -s
 printf "\n\n"
-printf "* http://$(hostname).local\n"
+printf "* http://$(hostname)\n"
 
 for ip in $IP; do
   if [[ $ip =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
