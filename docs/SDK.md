@@ -107,10 +107,6 @@ This SDK is designed to be used with JavaScript and includes a Vue plugin.
 - Weather
     - [Current](#weather.current)
     - [Forecast](#weather.forecast)
-- Remote
-    - [Status](#remote.status)
-    - [Connect](#remote.connect)
-    - [Disconnect](#remote.disconnect)
 
 ## <a name="intro"></a>**Introduction**
 Installation. This SDK is designed to be used as a module. From your project install using your project's package manager.
@@ -1763,38 +1759,5 @@ Fetches the weather forecast from the configured location on the hub.
     }
 }]
 ```
-
-[Top](#home)
-
-## <a name="remote.status"></a>**remote.status()**
-Returns the status of a remote session.
-
-```js
-{
-    active: boolean
-}
-```
-
-> Only one remote session is allowed per hub.
-
-[Top](#home)
-
-## <a name="remote.connect"></a>**remote.connect()**
-Connects to the HOOBS support server. This will allow HOOBS support to diagnose and run commands on your device.
-
-This will return a registration code or an error object if it can't connect.
-
-```js
-{
-    registration: string
-}
-```
-
-[Top](#home)
-
-## <a name="remote.disconnect"></a>**remote.disconnect()**
-This will disconnect a current active session.
-
-> When HOOBS support disconnects this will automatically be called.
 
 [Top](#home)
