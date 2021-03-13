@@ -10,20 +10,25 @@ mkdir builds
 yarn install
 
 cd ./hoobsd
+git checkout development
 yarn install
 
 cd ../cli
+git checkout development
 yarn install
 yarn build
 
 cd ../gui
+git checkout development
 yarn install
 
 cd ../sdk
+git checkout development
 yarn install
 yarn build
 
 cd ../connect
+git checkout development
 yarn install
 
 cd ../
