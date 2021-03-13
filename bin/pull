@@ -4,24 +4,29 @@ git pull
 
 cd ./hoobsd
 git pull
+git checkout development
 yarn install
 
 cd ../cli
 git pull
+git checkout development
 yarn install
 yarn build
 
 cd ../gui
 git pull
+git checkout development
 yarn install
 
 cd ../sdk
 git pull
+git checkout development
 yarn install
 yarn build
 
 cd ../connect
 git pull
+git checkout development
 yarn install
 
 cd ../
