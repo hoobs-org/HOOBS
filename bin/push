@@ -3,18 +3,23 @@
 git push
 
 cd ./hoobsd
+git checkout 4.0.21
 git push
 
 cd ../cli
+git checkout 4.0.11
 git push
 
 cd ../gui
+git checkout 4.0.21
 git push
 
 cd ../sdk
+git checkout 4.2.18
 git push
 
 cd ../connect
+git checkout 4.0.1
 git push
 
 cd ../
