@@ -1,0 +1,12 @@
+# /etc/sudoers
+# See the sudoers man page for the details on how to write a sudoers file.
+
+# Override built-in defaults
+Defaults    env_reset
+Defaults    mail_badpass
+Defaults    secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+Defaults    env_keep += "SSL_CERT_FILE"
+
+# root and users in the sudo group can run anything as any user
+root        ALL=(ALL:ALL) ALL
+%sudo       ALL=(ALL:ALL) NOPASSWD: ALL
