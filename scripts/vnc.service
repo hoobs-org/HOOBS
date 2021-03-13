@@ -1,0 +1,13 @@
+[Unit]
+Description=Start vnc
+
+[Service]
+User=1000
+ExecStart=/usr/bin/vncserver
+
+StartLimitIntervalSec=0
+RestartSec=30
+AmbientCapabilities=CAP_NET_BIND_SERVICE CAP_KILL CAP_SYS_BOOT CAP_SYS_TIME
+
+[Install]
+WantedBy=multi-user.target
