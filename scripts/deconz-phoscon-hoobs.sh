@@ -135,7 +135,7 @@ echo "deCONZ updated"
 echo "----------------------------------------------------------------"
 echo "Creating deCONZ service"
 rm -rf /lib/systemd/system/deconz.service
-wget -P /lib/systemd/system https://raw.githubusercontent.com/hoobs-org/hoobs-deconz-phoscon/master/deconz.service
+wget -P /lib/systemd/system https://raw.githubusercontent.com/hoobs-org/HOOBS/main/scripts/deconz.service
 systemctl enable deconz
 systemctl daemon-reload
 echo "----------------------------------------------------------------"
