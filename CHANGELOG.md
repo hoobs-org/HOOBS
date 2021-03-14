@@ -8,7 +8,7 @@ Changes for the HOOBS 4 line.
 * Introducing HelM, access the terminal even when the HOOBSD service is not starting.
 * Added development bridge type
 
-## 4.0.4
+## 4.0.4 (Beta)
 * Bug fixes
 * Moved to APT package manager
 
