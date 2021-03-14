@@ -2,6 +2,8 @@
 
 Pronounced as "huːbz"
 
+![](https://raw.githubusercontent.com/hoobs-org/HOOBS/development/screenshot.png)
+
 ## What is HOOBS?
 HOOBS out of the box system, or HOOBS for short, is a plug and play hub that makes smart accessories compatible with your favorite ecosystem. Whether you prefer Apple Homekit™, Google Home™, or Amazon Alexa™, you’re unlikely to find compatible accessories and services that all work together nicely under one roof. We believe your choice of an ecosystem should not dictate which accessories you can purchase and use.
 
