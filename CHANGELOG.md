@@ -30,6 +30,10 @@ Changes for the HOOBS 4 line.
 # HOOBS 3
 Changes for the HOOBS 3 line.
 
+## 3.3.4
+* Bug fixes
+* Upgraded Homebridge to 1.3.3
+
 ## 3.3.3
 * Bug fixes
 * Upgraded Homebridge to 1.3.1
