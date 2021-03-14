@@ -2,6 +2,8 @@
 
 Pronounced as "huːbz"
 
+Build your Smart Home with HOOBS. Connect over 2,000 Accessories to your favorite Ecosystem.
+
 ![](https://raw.githubusercontent.com/hoobs-org/HOOBS/development/screenshot.png)
 
 ## What is HOOBS?
