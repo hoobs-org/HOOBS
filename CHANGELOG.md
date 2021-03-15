@@ -30,6 +30,9 @@ Changes for the HOOBS 4 line.
 # HOOBS 3
 Changes for the HOOBS 3 line.
 
+## 3.3.5
+* Fixed an issue that was causing accessory cache corruption. If you upgraded to 3.3.4, you will need to clear the accessory cache.
+
 ## 3.3.4
 * Bug fixes
 * Upgraded Homebridge to 1.3.3
