@@ -1,0 +1,14 @@
+[Unit]
+Description=HOOBS
+After=network-online.target
+
+[Service]
+Type=simple
+User=hoobs
+ExecStart=/usr/local/bin/hoobs
+Restart=on-failure
+RestartSec=3
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target

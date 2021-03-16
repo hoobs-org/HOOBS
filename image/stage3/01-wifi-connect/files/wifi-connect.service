@@ -1,7 +1,7 @@
 [Unit]
 Description=WiFi Captive Portal
 After=NetworkManager.service
-Before=hoobsd.service
+Before=hoobs.service
 
 [Service]
 Type=oneshot
