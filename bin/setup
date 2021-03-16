@@ -1,34 +1,17 @@
 #!/bin/bash
 
-[[ -d hoobsd ]] || git clone https://github.com/hoobs-org/hoobsd.git
-[[ -d cli ]] || git clone https://github.com/hoobs-org/cli.git
-[[ -d gui ]] || git clone https://github.com/hoobs-org/gui.git
-[[ -d sdk ]] || git clone https://github.com/hoobs-org/sdk.git
+[[ -d core ]] || git clone https://github.com/hoobs-org/core.git
 [[ -d connect ]] || git clone https://github.com/hoobs-org/connect.git
 
 mkdir builds
 yarn install
 
-cd ./hoobsd
-git checkout development
-yarn install
-
-cd ../cli
-git checkout development
-yarn install
-yarn build
-
-cd ../gui
-git checkout development
-yarn install
-
-cd ../sdk
-git checkout development
-yarn install
-yarn build
+cd ./core
+git checkout 3.3.5
+npm install
 
 cd ../connect
-git checkout development
+git checkout 3.3.5
 yarn install
 
 cd ../

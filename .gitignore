@@ -114,6 +114,7 @@ dist
 /connect
 /builds
 /security
+/core
 
 # Build output
 image/deploy/*

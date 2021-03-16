@@ -2,24 +2,12 @@
 
 git push
 
-cd ./hoobsd
-git checkout development
-git push
-
-cd ../cli
-git checkout development
-git push
-
-cd ../gui
-git checkout development
-git push
-
-cd ../sdk
-git checkout development
+cd ./core
+git checkout 3.3.5
 git push
 
 cd ../connect
-git checkout development
+git checkout 3.3.5
 git push
 
 cd ../
