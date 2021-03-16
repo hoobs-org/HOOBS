@@ -8,7 +8,7 @@ yarn install
 
 cd ./core
 git checkout 3.3.5
-npm install
+npm install --ignore-scripts
 
 cd ../connect
 git checkout 3.3.5
