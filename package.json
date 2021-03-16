@@ -17,9 +17,7 @@
         "push": "bin/push",
         "pull": "bin/pull",
         "setup": "bin/setup",
-        "build": "image/build",
-        "upload": "image/build publish",
-        "release": "image/build release"
+        "build": "image/build"
     },
     "devDependencies": {
         "commander": "^7.1.0",
