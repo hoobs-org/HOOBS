@@ -109,6 +109,7 @@ dist
 # Tracked Projects
 /cli
 /gui
+/desktop
 /hoobsd
 /sdk
 /connect

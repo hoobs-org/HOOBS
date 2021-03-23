@@ -14,6 +14,10 @@ cd ../gui
 git checkout development
 git push
 
+cd ../desktop
+git checkout development
+git push
+
 cd ../sdk
 git checkout development
 git push

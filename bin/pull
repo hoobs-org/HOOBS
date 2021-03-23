@@ -18,6 +18,11 @@ git pull
 git checkout development
 yarn install
 
+cd ../desktop
+git pull
+git checkout development
+yarn install
+
 cd ../sdk
 git pull
 git checkout development
