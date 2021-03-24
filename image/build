@@ -296,17 +296,17 @@ function publishPackage(password) {
 
         console.log("uploading installers");
 
-        if (!exists.desktop.win) uploadRemote(password, join(root, "builds", `hoobs-desktop-v${working.desktop.version}.exe`), "/var/www/html/source/");
-        if (!exists.desktop.mac) uploadRemote(password, join(root, "builds", `hoobs-desktop-v${working.desktop.version}.dmg`), "/var/www/html/source/");
+        if (!exists.desktop.win && existsSync(join(root, "builds", `hoobs-desktop-v${working.desktop.version}.exe`))) uploadRemote(password, join(root, "builds", `hoobs-desktop-v${working.desktop.version}.exe`), "/var/www/html/source/");
+        if (!exists.desktop.mac && existsSync(join(root, "builds", `hoobs-desktop-v${working.desktop.version}.dmg`))) uploadRemote(password, join(root, "builds", `hoobs-desktop-v${working.desktop.version}.dmg`), "/var/www/html/source/");
 
         console.log("linking latest");
 
-        if (!exists.desktop.win) {
+        if (!exists.desktop.win && existsSync(join(root, "builds", `hoobs-desktop-v${working.desktop.version}.exe`))) {
             execRemote(password, `rm -f /var/www/html/source/hoobs-desktop-latest.exe`);
             execRemote(password, `cp /var/www/html/source/hoobs-desktop-v${working.desktop.version}.exe /var/www/html/source/hoobs-desktop-latest.exe`);
         }
 
-        if (!exists.desktop.mac) {
+        if (!exists.desktop.mac && existsSync(join(root, "builds", `hoobs-desktop-v${working.desktop.version}.dmg`))) {
             execRemote(password, `rm -f /var/www/html/source/hoobs-desktop-latest.dmg`);
             execRemote(password, `cp /var/www/html/source/hoobs-desktop-v${working.desktop.version}.dmg /var/www/html/source/hoobs-desktop-latest.dmg`);
         }
