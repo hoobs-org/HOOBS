@@ -11,7 +11,6 @@ This SDK is designed to be used with JavaScript and includes a Vue plugin.
     - [Disable](#auth.disable)
     - [Login](#auth.login)
     - [Logout](#auth.logout)
-    - [Link](#auth.link)
 - [IO](#io)
     - [On](#io.on)
     - [Off](#io.off)
@@ -201,22 +200,6 @@ Parameters
 
 ## <a name="auth.logout"></a>**auth.logout()**
 This takes the session token from the store and logs out the current user.
-
-[Top](#home)
-
-## <a name="auth.link"></a>**auth.link([vendor], [username], [password], \<verification\>)**
-This will attempt to to fetch authentication tokens from defined third party vendors.
-
-Parameters
-| Name         | Required | Type   | Description                                     |
-| ------------ | -------- | ------ | ----------------------------------------------- |
-| vendor       | Yes      | string | The vendor you wish to link                     |
-| username     | Yes      | string | The username for this vendor                    |
-| password     | Yes      | string | The password for this vendor                    |
-| verification | No       | string | Verification code for two factor authentication |
-
-Currently these are the available vendors.
-- Ring
 
 [Top](#home)
 
