@@ -569,3 +569,5 @@ PUT /api/system/reset
 ```
 
 > This will remove all plugins and configs. It will not delete stored backups.
+
+[Top](#home)
