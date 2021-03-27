@@ -1,4 +1,4 @@
-# <a name="home"></a>SDK
+# <a name="home"></a>Development Kit
 This SDK is designed to be used with JavaScript and includes a Vue plugin.
 
 ## **Table of Contents**

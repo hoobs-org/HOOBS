@@ -229,17 +229,17 @@ function buildImage(node) {
 
         if (existsLocal(join(root, "builds", `hoobs-v${pjson.version}.zip`))) unlinkSync(join(root, "builds", `hoobs-v${pjson.version}.zip`))
         if (existsLocal(join(root, "builds", `hoobs-box-v${pjson.version}.zip`))) unlinkSync(join(root, "builds", `hoobs-box-v${pjson.version}.zip`))
-        if (existsLocal(join(root, "builds", `hoobs-headless-v${pjson.version}.zip`))) unlinkSync(join(root, "builds", `hoobs-headless-v${pjson.version}.zip`))
+        if (existsLocal(join(root, "builds", `hoobsd-v${pjson.version}.zip`))) unlinkSync(join(root, "builds", `hoobsd-v${pjson.version}.zip`))
         if (existsLocal(join(root, "builds", `hoobs-v${pjson.version}.info`))) unlinkSync(join(root, "builds", `hoobs-v${pjson.version}.info`))
         if (existsLocal(join(root, "builds", `hoobs-box-v${pjson.version}.info`))) unlinkSync(join(root, "builds", `hoobs-box-v${pjson.version}.info`))
-        if (existsLocal(join(root, "builds", `hoobs-headless-v${pjson.version}.info`))) unlinkSync(join(root, "builds", `hoobs-headless-v${pjson.version}.info`))
+        if (existsLocal(join(root, "builds", `hoobsd-v${pjson.version}.info`))) unlinkSync(join(root, "builds", `hoobsd-v${pjson.version}.info`))
 
         execLocal(`sudo mv ${join(root, "image/deploy", `hoobs-${pjson.version}.zip`)} ${join(root, "builds", `hoobs-v${pjson.version}.zip`)}`);
         execLocal(`sudo mv ${join(root, "image/deploy", `hoobs-${pjson.version}-box.zip`)} ${join(root, "builds", `hoobs-box-v${pjson.version}.zip`)}`);
-        execLocal(`sudo mv ${join(root, "image/deploy", `hoobs-${pjson.version}-headless.zip`)} ${join(root, "builds", `hoobs-headless-v${pjson.version}.zip`)}`);
+        execLocal(`sudo mv ${join(root, "image/deploy", `hoobs-${pjson.version}-headless.zip`)} ${join(root, "builds", `hoobss-v${pjson.version}.zip`)}`);
         execLocal(`sudo mv ${join(root, "image/deploy", `hoobs-${pjson.version}.info`)} ${join(root, "builds", `hoobs-v${pjson.version}.info`)}`);
         execLocal(`sudo mv ${join(root, "image/deploy", `hoobs-${pjson.version}-box.info`)} ${join(root, "builds", `hoobs-box-v${pjson.version}.info`)}`);
-        execLocal(`sudo mv ${join(root, "image/deploy", `hoobs-${pjson.version}-headless.info`)} ${join(root, "builds", `hoobs-headless-v${pjson.version}.info`)}`);
+        execLocal(`sudo mv ${join(root, "image/deploy", `hoobs-${pjson.version}-headless.info`)} ${join(root, "builds", `hoobss-v${pjson.version}.info`)}`);
 
         if (existsLocal(join(root, "image/deploy"))) execLocal(`sudo rm -fR ${join(root, "image/deploy")}`);
     }
@@ -321,7 +321,7 @@ function publishPackage(password) {
 
 function publishImage(password) {
     const exists = {
-        headless: existsRemote(password, `/var/www/html/image/hoobs-headless-v${pjson.version}.zip`),
+        hoobsd: existsRemote(password, `/var/www/html/image/hoobsd-v${pjson.version}.zip`),
         card: existsRemote(password, `/var/www/html/image/hoobs-v${pjson.version}.zip`),
         box: existsRemote(password, `/var/www/html/image/hoobs-box-v${pjson.version}.zip`),
     }
@@ -329,15 +329,15 @@ function publishImage(password) {
     if (!exists.card || !exists.box) {
         console.log("uploading images");
 
-        if (!exists.headless) uploadRemote(password, join(root, "builds", `hoobs-headless-v${pjson.version}.zip`), "/var/www/html/image/");
+        if (!exists.hoobsd) uploadRemote(password, join(root, "builds", `hoobsd-v${pjson.version}.zip`), "/var/www/html/image/");
         if (!exists.card) uploadRemote(password, join(root, "builds", `hoobs-v${pjson.version}.zip`), "/var/www/html/image/");
         if (!exists.box) uploadRemote(password, join(root, "builds", `hoobs-box-v${pjson.version}.zip`), "/var/www/html/image/");
 
         console.log("linking latest");
 
-        if (!exists.headless) {
-            execRemote(password, `rm -f /var/www/html/image/hoobs-headless-latest.zip`);
-            execRemote(password, `cp /var/www/html/image/hoobs-headless-v${pjson.version}.zip /var/www/html/image/hoobs-headless-latest.zip`);
+        if (!exists.hoobsd) {
+            execRemote(password, `rm -f /var/www/html/image/hoobsd-latest.zip`);
+            execRemote(password, `cp /var/www/html/image/hoobsd-v${pjson.version}.zip /var/www/html/image/hoobsd-latest.zip`);
         }
 
         if (!exists.card) {
