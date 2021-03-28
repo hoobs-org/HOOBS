@@ -57,7 +57,7 @@ The HOOBS API exposes methods that allows you to monitor, configure and control 
     - [Start](#bridge.start)
     - [Stop](#bridge.stop)
     - [Restart](#bridge.restart)
-- [Plugins](#plugins)
+- [Plugins](#all.plugins)
     - [Install](#plugins.install)
     - [Uninstall](#plugins.uninstall)
     - [Update](#plugins.update)
@@ -1233,7 +1233,7 @@ POST /api/bridge/:bridge/restart
 
 [Top](#home)
 
-## <a name="plugins"></a>Plugins
+## <a name="all.plugins"></a>Plugins
 List all installed plugins.
 
 Request
