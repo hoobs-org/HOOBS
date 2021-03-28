@@ -16,7 +16,7 @@ The HOOBS API exposes methods that allows you to monitor, configure and control 
     - [Update](#user.update)
     - [Delete](#user.delete)
 - [Version](#version)
-- [Service](#status)
+- [Service](#service)
 - [Hostname](#host)
     - [Update](#host.update)
 - [System](#system)
@@ -341,7 +341,7 @@ Response
 
 [Top](#home)
 
-## <a name="status"></a>Service
+## <a name="service"></a>Service
 Fetches the current status of the hub and bridges
 
 Request
