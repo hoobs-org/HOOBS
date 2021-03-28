@@ -72,7 +72,6 @@ The HOOBS API exposes methods that allows you to monitor, configure and control 
 - [Room](#room)
     - [Update](#room.update)
     - [Remove](#room.remove)
-- [Cache](#cache)
 - [Themes](#themes)
 - [Location](#location)
 - [Weather](#weather)
@@ -1147,7 +1146,7 @@ Response
 
 [Top](#home)
 
-#### <a name="bridge.config"></a>Cache
+#### <a name="bridge.cache"></a>Cache
 Fetches a bridge configuration.
 
 Request
@@ -1174,7 +1173,7 @@ Response
 ```
 [Top](#home)
 
-#### <a name="bridge.reconfig"></a>Purge
+#### <a name="bridge.purge"></a>Purge
 Update a bridge configuration.
 
 Request
