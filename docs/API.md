@@ -677,8 +677,8 @@ GET /api/system/backup
 Response
 ```json
 {
-    success: true,
-    filename: "hoobs.backup",
+    "success": true,
+    "filename": "hoobs.backup",
 }
 ```
 
