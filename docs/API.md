@@ -38,6 +38,8 @@ The HOOBS API exposes methods that allows you to monitor, configure and control 
     - [Cache](#hub.cache)
     - [Purge](#hub.purge)
 - [Extentions](#extentions)
+    - [Enable](#extentions.enable)
+    - [Disable](#extentions.disable)
 - [Bridges](#bridges)
     - [Create](#bridges.create)
     - [Count](#bridges.count)
