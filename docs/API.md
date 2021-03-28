@@ -63,7 +63,7 @@ The HOOBS API exposes methods that allows you to monitor, configure and control 
     - [Static](#plugin.ui)
     - [Action](#plugin.action)
 - [Accessories](#accessories)
-    - [Control](#accessories.control)
+    - [Update](#accessories.update)
     - [Hidden](#accessories.hidden)
 - [Rooms](#rooms)
     - [Create](#rooms.create)
@@ -1357,34 +1357,228 @@ The response and body is determined by the registered route from the plugin's `r
 [Top](#home)
 
 ## <a name="accessories"></a>Accessories
+Fetches a list of rooms and accessories.
+
+Request
+```http
+GET /api/accessories
+```
+
+Response
+```json
+[{
+    "id": "livingroom",
+    "name": "Living Room",
+    "sequence": 1,
+    "devices": 5,
+    "accessories": [{
+        "accessory_identifier": "123456",
+        "bridge_identifier": "123456",
+        "bridge": "testbridge",
+        "plugin": "plugin-name",
+        "room": "livingroom",
+        "sequence": 1,
+        "hidden": false,
+        "type": "light",
+        "characteristics": [{
+            "type": "on",
+            "service_type": "on",
+            "value": true,
+            "format": "boolean",
+            "unit": 1,
+            "max_value": 1,
+            "min_value": 0,
+            "min_step": 1,
+            "read": true,
+            "write": true
+        }],
+        "manufacturer": "Lutron",
+        "model": "Caseta",
+        "name": "Main Light",
+        "serial_number": "123456",
+        "firmware_revision": "123456",
+        "hardware_revision": "123456",
+        "icon": "floor-lamp"
+    }]
+}]
+```
 
 [Top](#home)
 
-#### <a name="accessories.control"></a>Control
+#### <a name="accessories.update"></a>Update
+Updates an accessory including device control.
+
+Request
+```http
+PUT /api/accessory/:bridge/:id/:service
+Body: application/json
+```
+
+Body
+```json
+{
+    "value": true
+}
+```
+
+You can also change the name, room, sequence, or hidden field using this method.
 
 [Top](#home)
 
 #### <a name="accessories.hidden"></a>Hidden
+Shows a list of hidden accessories.
+
+Request
+```http
+GET /api/accessories/hidden
+```
+
+Response
+```json
+[{
+    "id": "livingroom",
+    "name": "Living Room",
+    "accessories": [{
+        "accessory_identifier": "123456",
+        "bridge_identifier": "123456",
+        "bridge": "testbridge",
+        "plugin": "plugin-name",
+        "room": "livingroom",
+        "sequence": 1,
+        "hidden": true,
+        "type": "light",
+        "manufacturer": "Lutron",
+        "model": "Caseta",
+        "name": "Main Light",
+        "serial_number": "123456",
+        "firmware_revision": "123456",
+        "hardware_revision": "123456",
+        "icon": "floor-lamp"
+    }]
+}]
+```
 
 [Top](#home)
 
 ## <a name="rooms"></a>Rooms
+Fetches a list of rooms.
+
+Request
+```http
+GET /api/rooms
+```
+
+Response
+```json
+[{
+    "id": "livingroom",
+    "name": "Living Room",
+    "sequence": 1,
+    "devices": 5,
+    "types": ["light"],
+    "characteristics": ["on"]
+}]
+```
 
 [Top](#home)
 
 #### <a name="rooms.create"></a>Create
+Creates a room.
+
+Request
+```http
+PUT /api/room
+Body: application/json
+```
+
+Body
+```json
+{
+    "name": "Living Room",
+    "sequence": 1
+}
+```
 
 [Top](#home)
 
 ## <a name="room"></a>Room
+Fetch a single room.
+
+Request
+```http
+GET /api/room/:id
+```
+
+Response
+```json
+{
+    "id": "livingroom",
+    "name": "Living Room",
+    "sequence": 1,
+    "devices": 5,
+    "accessories": [{
+        "accessory_identifier": "123456",
+        "bridge_identifier": "123456",
+        "bridge": "testbridge",
+        "plugin": "plugin-name",
+        "room": "livingroom",
+        "sequence": 1,
+        "hidden": false,
+        "type": "light",
+        "characteristics": [{
+            "type": "on",
+            "service_type": "on",
+            "value": true,
+            "format": "boolean",
+            "unit": 1,
+            "max_value": 1,
+            "min_value": 0,
+            "min_step": 1,
+            "read": true,
+            "write": true
+        }],
+        "manufacturer": "Lutron",
+        "model": "Caseta",
+        "name": "Main Light",
+        "serial_number": "123456",
+        "firmware_revision": "123456",
+        "hardware_revision": "123456",
+        "icon": "floor-lamp"
+    }],
+    "types": ["light"],
+    "characteristics": ["on"]
+}
+```
 
 [Top](#home)
 
 #### <a name="room.update"></a>Update
+Updates a room, including device control like all off.
+
+Request
+```http
+PUT /api/room/:id/:service
+Body: application/json
+```
+
+Body
+```json
+{
+    "value": true
+}
+```
+
+You can also change the name, or sequence using this method.
 
 [Top](#home)
 
 #### <a name="room.remove"></a>Remove
+Removes a room.
+
+Request
+```http
+DELETE /api/room/:id
+```
 
 [Top](#home)
 
