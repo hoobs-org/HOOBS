@@ -833,7 +833,7 @@ Response
 [{
     "bridge": "testbridge",
     "parings": [{
-        "id" "",
+        "id": "",
         "version": "xx.xx",
         "username": "AB:CD:EF:GH:IJ",
         "display": "",
