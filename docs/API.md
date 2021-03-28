@@ -1673,7 +1673,7 @@ Response
         "highlight": "#feb400",
         "border": "#4b4b4b",
     },
-    accessory: {
+    "accessory": {
         "text": "#ffffff3d",
         "background": "#302f2f",
         "highlight": "#fff",
