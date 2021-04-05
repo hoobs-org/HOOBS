@@ -46,6 +46,7 @@ This SDK is designed to be used with JavaScript and includes a Vue plugin.
     - [Temp](#system.temp)
     - [Upgrade](#system.upgrade)
     - [Reboot](#system.reboot)
+    - [Shutdown](#system.shutdown)
     - [Reset](#system.reset)
 - Hostname
     - [Get](#hostname.get)
@@ -803,6 +804,13 @@ This will update HOOBSD to the latest version.
 
 ## <a name="system.reboot"></a>**system.reboot()**
 This will reboot the device.
+
+> This method is attached to the system object you must access this from the `hoobs.system()` command.
+
+[Top](#home)
+
+## <a name="system.shutdown"></a>**system.shutdown()**
+This will shutdown the device.
 
 > This method is attached to the system object you must access this from the `hoobs.system()` command.
 

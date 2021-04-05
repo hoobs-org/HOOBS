@@ -31,6 +31,7 @@ The HOOBS API exposes methods that allows you to monitor, configure and control 
     - [Restore](#system.restore)
     - [Upgrade](#system.upgrade)
     - [Reboot](#system.reboot)
+    - [Shutdown](#system.shutdown)
     - [Factory Reset](#system.reset)
 - [Log](#log)
 - [Hub](#hub)
@@ -739,6 +740,16 @@ Reboot the device.
 Request
 ```http
 PUT /api/system/reboot
+```
+
+[Top](#home)
+
+#### <a name="system.shutdown"></a>Shutdown
+Shutdown the device.
+
+Request
+```http
+PUT /api/system/shutdown
 ```
 
 [Top](#home)
