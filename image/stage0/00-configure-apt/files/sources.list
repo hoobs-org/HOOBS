@@ -1,1 +1,1 @@
-deb http://mirrors.ocf.berkeley.edu/raspbian/raspbian/ RELEASE main contrib non-free rpi
+deb http://raspbian.raspberrypi.org/raspbian/ RELEASE main contrib non-free rpi
