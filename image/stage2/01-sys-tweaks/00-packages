@@ -42,6 +42,7 @@ pi-bluetooth
 apt-listchanges
 usb-modeswitch
 libpam-chksshpwd
+libpam-systemd
 rpi-update
 libmtp-runtime
 rsync
