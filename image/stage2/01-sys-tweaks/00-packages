@@ -18,7 +18,10 @@ python
 bash-completion
 gdb
 pkg-config
+python-rpi.gpio
 v4l-utils
+python-gpiozero
+python3-gpiozero
 avahi-daemon
 avahi-utils
 lua5.1
