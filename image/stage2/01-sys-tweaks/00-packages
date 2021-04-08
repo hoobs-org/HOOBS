@@ -47,7 +47,6 @@ libmtp-runtime
 rsync
 htop
 man-db
-polkit-1
 ssh-import-id
 rng-tools
 ethtool
