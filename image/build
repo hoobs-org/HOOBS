@@ -236,10 +236,10 @@ function buildImage(node) {
 
         execLocal(`sudo mv ${join(root, "image/deploy", `hoobs-${pjson.version}.zip`)} ${join(root, "builds", `hoobs-v${pjson.version}.zip`)}`);
         execLocal(`sudo mv ${join(root, "image/deploy", `hoobs-${pjson.version}-box.zip`)} ${join(root, "builds", `hoobs-box-v${pjson.version}.zip`)}`);
-        execLocal(`sudo mv ${join(root, "image/deploy", `hoobs-${pjson.version}-headless.zip`)} ${join(root, "builds", `hoobss-v${pjson.version}.zip`)}`);
+        execLocal(`sudo mv ${join(root, "image/deploy", `hoobs-${pjson.version}-headless.zip`)} ${join(root, "builds", `hoobsd-v${pjson.version}.zip`)}`);
         execLocal(`sudo mv ${join(root, "image/deploy", `hoobs-${pjson.version}.info`)} ${join(root, "builds", `hoobs-v${pjson.version}.info`)}`);
         execLocal(`sudo mv ${join(root, "image/deploy", `hoobs-${pjson.version}-box.info`)} ${join(root, "builds", `hoobs-box-v${pjson.version}.info`)}`);
-        execLocal(`sudo mv ${join(root, "image/deploy", `hoobs-${pjson.version}-headless.info`)} ${join(root, "builds", `hoobss-v${pjson.version}.info`)}`);
+        execLocal(`sudo mv ${join(root, "image/deploy", `hoobs-${pjson.version}-headless.info`)} ${join(root, "builds", `hoobsd-v${pjson.version}.info`)}`);
 
         if (existsLocal(join(root, "image/deploy"))) execLocal(`sudo rm -fR ${join(root, "image/deploy")}`);
     }
