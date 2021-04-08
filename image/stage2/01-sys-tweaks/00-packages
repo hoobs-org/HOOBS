@@ -42,13 +42,12 @@ pi-bluetooth
 apt-listchanges
 usb-modeswitch
 libpam-chksshpwd
-libpam-systemd
 rpi-update
 libmtp-runtime
 rsync
 htop
 man-db
-policykit-1
+polkit-1
 ssh-import-id
 rng-tools
 ethtool
