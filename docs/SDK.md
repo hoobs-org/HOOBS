@@ -1423,6 +1423,25 @@ These characteristics are available for all non bridge types and are used to org
 
 [Top](#home)
 
+## <a name="accessory.snapshot"></a>**accessory.snapshot([characteristic], [data])**
+This fetches a snapshot from a camera accessory. This is not available for non camera types.
+
+```
+iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAABhWlDQ1BJQ0MgcHJvZmlsZQAAKJF9kT1Iw0AcxV/TSkWqgn
+YQdchQnSyIijhKFYtgobQVWnUwufRDaNKQpLg4Cq4FBz8Wqw4uzro6uAqC4AeIm5uToouU+L+k0CLGg+N+vLv3uHsHCPUy
+U83AOKBqlpGKx8RsbkUMviKAPgQxhB6JmXoivZCB5/i6h4+vd1Ge5X3uz9Gt5E0G+ETiWaYbFvE68fSmpXPeJw6zkqQQnx
+OPGXRB4keuyy6/cS46LPDMsJFJzRGHicViG8ttzEqGSjxFHFFUjfKFrMsK5y3OarnKmvfkLwzlteU012kOI45FJJCECBlV
+bKAMC1FaNVJMpGg/5uEfdPxJcsnk2gAjxzwqUCE5fvA/+N2tWZiccJNCMaDjxbY/RoDgLtCo2fb3sW03TgD/M3CltfyVOj
+DzSXqtpUWOgN5t4OK6pcl7wOUOMPCkS4bkSH6aQqEAvJ/RN+WA/luga9XtrbmP0wcgQ10t3QAHh8BokbLXPN7d2d7bv2ea
+/f0AO8NykaOwp3oAAAAGYktHRAAAAK0A+eyCP/QAAAAJcEhZcwAALiMAAC4jAXilP3YAAAAHdElNRQflBBIHHAkfKeo5AA
+AAGXRFWHRDb21tZW50AENyZWF0ZWQgd2l0aCBHSU1QV4EOFwAAAAxJREFUCNdjYKATAAAAaQABwB3y+AAAAABJRU5ErkJg
+gg==
+```
+
+This returnes a base64 encoded image, if the camara is unavailable, the image will be transparent.
+
+> This method is attached to the accessory object you must access this from the `hoobs.accessory([bridge], [id])` command.
+
 ## <a name="rooms.count"></a>**rooms.count()**
 Returns the count of rooms.
 
