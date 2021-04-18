@@ -1461,10 +1461,9 @@ bKAMC1FaNVJMpGg/5uEfdPxJcsnk2gAjxzwqUCE5fvA/+N2tWZiccJNCMaDjxbY/RoDgLtCo2fb3sW03
 DzSXqtpUWOgN5t4OK6pcl7wOUOMPCkS4bkSH6aQqEAvJ/RN+WA/luga9XtrbmP0wcgQ10t3QAHh8BokbLXPN7d2d7bv2ea
 /f0AO8NykaOwp3oAAAAGYktHRAAAAK0A+eyCP/QAAAAJcEhZcwAALiMAAC4jAXilP3YAAAAHdElNRQflBBIHHAkfKeo5AA
 AAGXRFWHRDb21tZW50AENyZWF0ZWQgd2l0aCBHSU1QV4EOFwAAAAxJREFUCNdjYKATAAAAaQABwB3y+AAAAABJRU5ErkJg
-gg==
 ```
 
-This returnes a base64 encoded image, if the camara is unavailable, the image will be transparent.
+This returnes a base64 encoded image, if the camara is unavailable, the image will be undefined.
 
 > This method is attached to the accessory object you must access this from the `hoobs.accessory([bridge], [id])` command.
 
