@@ -66,6 +66,10 @@ The HOOBS API exposes methods that allows you to monitor, configure and control 
     - [Static](#plugin.ui)
     - [Action](#plugin.action)
 - [Accessories](#accessories)
+    - [Get](#accessories.get)
+    - [Stream](#accessories.stream)
+    - [Snapshot](#accessories.snapshot)
+    - [Characteristics](#accessories.characteristics)
     - [Update](#accessories.update)
     - [Hidden](#accessories.hidden)
 - [Rooms](#rooms)
@@ -1416,6 +1420,106 @@ Response
 ```
 
 [Top](#home)
+
+#### <a name="accessories.get"></a>Get
+Fetch a single accessory.
+
+Request
+```http
+GET /api/accessory/:bridge/:id
+```
+
+Response
+```json
+{
+    "id": "livingroom",
+    "name": "Living Room",
+    "sequence": 1,
+    "devices": 5,
+    "accessories": [{
+        "accessory_identifier": "123456",
+        "bridge_identifier": "123456",
+        "bridge": "testbridge",
+        "plugin": "plugin-name",
+        "room": "livingroom",
+        "sequence": 1,
+        "hidden": false,
+        "type": "light",
+        "characteristics": [{
+            "type": "on",
+            "service_type": "on",
+            "value": true,
+            "format": "boolean",
+            "unit": 1,
+            "max_value": 1,
+            "min_value": 0,
+            "min_step": 1,
+            "read": true,
+            "write": true
+        }],
+        "manufacturer": "Lutron",
+        "model": "Caseta",
+        "name": "Main Light",
+        "serial_number": "123456",
+        "firmware_revision": "123456",
+        "hardware_revision": "123456",
+        "icon": "floor-lamp"
+    }]
+}
+```
+
+#### <a name="accessories.stream"></a>Stream
+Fetches a video stream for a given camera accessory. This is not available for non camera types.
+
+This requires that the FFMpeg extention is installed, and only supports camera accessories configured with an RTSP stream, for example the **Camera FFMpeg** plugin.
+
+Request
+```http
+GET /api/accessory/:bridge/:id/stream
+```
+
+Response
+A binary mp4 stream that can be consumed by most video players.
+
+#### <a name="accessories.snapshot"></a>Snapshot
+This fetches a snapshot from a camera accessory. This is not available for non camera types.
+
+Request
+```http
+GET /api/accessory/:bridge/:id/snapshot
+```
+
+Response
+```
+iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAABhWlDQ1BJQ0MgcHJvZmlsZQAAKJF9kT1Iw0AcxV/TSkWqgn
+YQdchQnSyIijhKFYtgobQVWnUwufRDaNKQpLg4Cq4FBz8Wqw4uzro6uAqC4AeIm5uToouU+L+k0CLGg+N+vLv3uHsHCPUy
+U83AOKBqlpGKx8RsbkUMviKAPgQxhB6JmXoivZCB5/i6h4+vd1Ge5X3uz9Gt5E0G+ETiWaYbFvE68fSmpXPeJw6zkqQQnx
+OPGXRB4keuyy6/cS46LPDMsJFJzRGHicViG8ttzEqGSjxFHFFUjfKFrMsK5y3OarnKmvfkLwzlteU012kOI45FJJCECBlV
+bKAMC1FaNVJMpGg/5uEfdPxJcsnk2gAjxzwqUCE5fvA/+N2tWZiccJNCMaDjxbY/RoDgLtCo2fb3sW03TgD/M3CltfyVOj
+DzSXqtpUWOgN5t4OK6pcl7wOUOMPCkS4bkSH6aQqEAvJ/RN+WA/luga9XtrbmP0wcgQ10t3QAHh8BokbLXPN7d2d7bv2ea
+/f0AO8NykaOwp3oAAAAGYktHRAAAAK0A+eyCP/QAAAAJcEhZcwAALiMAAC4jAXilP3YAAAAHdElNRQflBBIHHAkfKeo5AA
+AAGXRFWHRDb21tZW50AENyZWF0ZWQgd2l0aCBHSU1QV4EOFwAAAAxJREFUCNdjYKATAAAAaQABwB3y+AAAAABJRU5ErkJg
+```
+
+This returnes a base64 encoded image, if the camara is unavailable, the image will be undefined.
+
+#### <a name="accessories.characteristics"></a>Characteristics
+Fetch an array of characteristics for a given accessory.
+
+Request
+```http
+GET /api/accessory/:bridge/:id/characteristics
+```
+
+Response
+```json
+[
+    "on",
+    "brightness",
+    "hue",
+    "saturation"
+]
+```
 
 #### <a name="accessories.update"></a>Update
 Updates an accessory including device control.
