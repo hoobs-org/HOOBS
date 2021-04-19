@@ -91,9 +91,7 @@ This SDK is designed to be used with JavaScript and includes a Vue plugin.
 - [Accessories](#accessories)
 - [Accessory](#accessory)
     - [Set](#accessory.set)
-    - Stream
-        - [Start](#accessory.stream.start)
-        - [Stop](#accessory.stream.stop)
+    - [Stream](#accessory.stream)
     - [Snapshot](#accessory.snapshot)
 - Rooms
     - [Count](#rooms.count)
@@ -1427,23 +1425,10 @@ These characteristics are available for all non bridge types and are used to org
 
 [Top](#home)
 
-## <a name="accessory.stream.start"></a>**accessory.stream.start()**
-Starts a video stream for a given camera accessory. This is not available for non camera types.
+## <a name="accessory.stream"></a>**accessory.stream()**
+Fetches a video stream for a given camera accessory. This is not available for non camera types.
 
 This requires that the FFMpeg extention is installed, and only supports camera accessories configured with an RTSP stream, for example the **Camera FFMpeg** plugin.
-
-```
-http://hoobs.local/streams/camerabridge_123456.m3u8
-```
-
-This returns a URL that can be used an HLS player, for example **hls.js**.
-
-> This method is attached to the accessory object you must access this from the `hoobs.accessory([bridge], [id])` command.
-
-[Top](#home)
-
-## <a name="accessory.stream.start"></a>**accessory.stream.stop()**
-Stops a video stream for a given camera accessory. This is not available for non camera types.
 
 > This method is attached to the accessory object you must access this from the `hoobs.accessory([bridge], [id])` command.
 
