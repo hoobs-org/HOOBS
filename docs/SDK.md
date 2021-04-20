@@ -264,7 +264,7 @@ Allows you to emit events from the UI to the backend.
 [Top](#home)
 
 ## <a name="dates.display"></a>**dates.display([date])**
-Formats a string date or a timestamp into a friendly display.
+Formats a string, date, or a timestamp into a friendly display.
 
 Parameters
 | Name | Required | Type     | Description                |
@@ -274,7 +274,7 @@ Parameters
 [Top](#home)
 
 ## <a name="dates.age"></a>**dates.age([date])**
-Formats a string date or a timestamp into an age string line "5 days ago"
+Formats a string, date, or a timestamp into an age string like "5 days ago"
 
 Parameters
 | Name | Required | Type     | Description                |
@@ -294,7 +294,7 @@ Parameters
 [Top](#home)
 
 ## <a name="dates.month"></a>**dates.month([value])**
-Converts a month from Date.getMonth() to a test string.
+Converts a month from Date.getMonth() to a text string.
 
 Parameters
 | Name  | Required | Type     | Description      |
