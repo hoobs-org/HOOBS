@@ -207,7 +207,7 @@ This takes the session token from the store and logs out the current user.
 [Top](#home)
 
 ## <a name="io"></a>**io()**
-This returnes an bridge of the web socket used to communicate with the backend.
+This returnes a web socket used to communicate with the backend.
 
 Events
 | Name             | Description                                                               |
