@@ -123,7 +123,7 @@ NPM
 npm install @hoobs/sdk
 ```
 
-Use. This SDK fully supports ES5+.
+This SDK fully supports ES5+.
 
 ```js
 import hoobs from "@hoobs/sdk";
