@@ -165,6 +165,15 @@ async function updateLocalization(credentials) {
     if (Object.keys(missing).length > 0) console.log("missing language strings need to up uploaded, https://localise.biz/session/auth/login");
 
     writeFileSync(join(root, "./lang", "missing.json"), JSON.stringify(missing, null, 4));
+
+    if (existsSync(join(root, "./gui/src/lang", "countries.json"))) unlinkSync(join(root, "./gui/src/lang", "countries.json"));
+    if (existsSync(join(root, "./desktop/src/lang", "emojis.json"))) unlinkSync(join(root, "./desktop/src/lang", "emojis.json"));
+
+    execLocal(`cp ${join(root, "./lang", "countries.json")} ${join(root, "./gui/src/lang", "countries.json")}`);
+    execLocal(`cp ${join(root, "./lang", "countries.json")} ${join(root, "./desktop/src/lang", "countries.json")}`);
+
+    execLocal(`cp ${join(root, "./lang", "emojis.json")} ${join(root, "./gui/src/lang", "emojis.json")}`);
+    execLocal(`cp ${join(root, "./lang", "emojis.json")} ${join(root, "./desktop/src/lang", "emojis.json")}`);
 }
 
 function buildPackages(version) {
