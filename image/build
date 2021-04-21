@@ -346,6 +346,7 @@ function publishPackage(credentials) {
         if (!exists.cli) execRemote(credentials.repo, `cd /var/www/html/debian && reprepro includedeb buster /var/www/html/debian/hoobs-cli-v${working.cli.version}.deb`);
         if (!exists.hoobsd) execRemote(credentials.repo, `cd /var/www/html/debian && reprepro includedeb buster /var/www/html/debian/hoobsd-v${working.hoobsd.version}.deb`);
         if (!exists.gui) execRemote(credentials.repo, `cd /var/www/html/debian && reprepro includedeb buster /var/www/html/debian/hoobs-gui-v${working.gui.version}.deb`);
+
         if (!exists.bundle) execRemote(credentials.repo, `cd /var/www/html/debian && reprepro includedeb buster /var/www/html/debian/hoobs-v${pjson.version}.deb`);
 
         execRemote(credentials.repo, `cd /var/www/html/debian && reprepro list buster`);
@@ -378,6 +379,77 @@ function publishPackage(credentials) {
             execRemote(credentials.repo, `rm -f /var/www/html/debian/setup`);
             execRemote(credentials.repo, `cp /var/www/html/debian/hoobs-setup-v${working.cli.version}.sh /var/www/html/debian/setup`);
         }
+
+        const utc = (new Date()).toISOString();
+        const versions = { query: { latest: true, beta: false } };
+
+        if (existsLocal(join(root, "builds", "versions.json"))) unlinkSync(join(root, "builds", "versions.json"));
+
+        let write = false;
+
+        if (!exists.desktop.win || !exists.desktop.mac) {
+            write = true;
+
+            versions.desktop = {
+                application: "desktop",
+                version: working.desktop.version,
+                published: { $date: utc },
+                latest: true,
+                download_win: `https://repo.hoobs.org/source/hoobs-desktop-v${working.desktop.version}.exe`,
+                download_mac: `https://repo.hoobs.org/source/hoobs-desktop-v${working.desktop.version}.dmg`,
+                beta: false,
+            };
+        }
+
+        if (!exists.gui) {
+            write = true;
+
+            versions.gui = {
+                application: "gui",
+                version: working.gui.version,
+                published: { $date: utc },
+                latest: true,
+                download: `https://repo.hoobs.org/source/hoobs-gui-v${working.gui.version}.tar.gz`,
+                beta: false,
+            };
+        }
+
+        if (!exists.hoobsd) {
+            write = true;
+
+            versions.hoobsd = {
+                application: "hoobsd",
+                version: working.hoobsd.version,
+                published: { $date: utc },
+                latest: true,
+                download: `https://repo.hoobs.org/source/hoobsd-v${working.hoobsd.version}.tar.gz`,
+                beta: false,
+            };
+        }
+
+        if (!exists.cli) {
+            write = true;
+
+            versions.hbs = {
+                application: "hbs",
+                version: working.cli.version,
+                published: { $date: utc },
+                latest: true,
+                download: `https://repo.hoobs.org/source/hoobs-cli-v${working.cli.version}.tar.gz`,
+                beta: false,
+            };
+
+            versions.setup = {
+                application: "setup",
+                version: working.cli.version,
+                published: { $date: utc },
+                latest: true,
+                download: `https://repo.hoobs.org/debian/hoobs-setup-v${working.cli.version}.sh`,
+                beta: false,
+            };
+        }
+
+        if (write) writeFileSync(join(root, "builds", "versions.json"), JSON.stringify(versions, null, 4));
     }
 }
 
