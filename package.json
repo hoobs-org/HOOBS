@@ -19,11 +19,13 @@
         "setup": "bin/setup",
         "build": "image/build",
         "upload": "image/build publish",
-        "release": "image/build release"
+        "release": "image/build release",
+        "localize": "image/build localize"
     },
     "devDependencies": {
         "commander": "^7.1.0",
         "inquirer": "^8.0.0",
+        "loco-api-js": "^1.2.0",
         "rimraf": "^3.0.2",
         "semver": "^7.3.4"
     }

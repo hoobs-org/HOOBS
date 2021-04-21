@@ -33,6 +33,10 @@
             "path": "./builds"
         },
         {
+            "name": "lang",
+            "path": "./lang"
+        },
+        {
             "name": "docs",
             "path": "./docs"
         }

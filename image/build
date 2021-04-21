@@ -22,6 +22,7 @@ const OS = require("os");
 const Semver = require("semver");
 const Program = require("commander");
 const Inquirer = require("inquirer");
+const Loco = require("loco-api-js");
 const { join } = require("path");
 const { execSync } = require("child_process");
 
@@ -70,19 +71,19 @@ function checkEnviornment() {
     const docker = execLocal("command -v docker", { stdio: "pipe" }).toString().replace(/\n/g, "").trim();
 
     if (!signing || signing === "") {
-        console.log("dpkg-sig is not installed");
+        console.log("dpkg-sig is not installed, https://git.io/JOKhF");
 
         return false;
     }
 
     if (!sshpass || sshpass === "") {
-        console.log("sshpass is not installed");
+        console.log("sshpass is not installed, https://git.io/JOKhF");
 
         return false;
     }
 
     if (!docker || docker === "") {
-        console.log("docker is not installed");
+        console.log("docker is not installed, https://git.io/JOKhF");
 
         return false;
     }
@@ -94,24 +95,76 @@ function checkEnviornment() {
      || !existsLocal(join(root, "./desktop", "package.json"))
      || !existsLocal(join(root, "./gui", "package.json"))
     ) {
-        console.log("workspace not initilized");
+        console.log("workspace not initilized, https://git.io/JOKhF");
 
         return false;
     }
 
     if (!existsLocal(join(root, "./hoobsd", ".env.production"))) {
-        console.log("missing hoobsd production enviornment file");
+        console.log("missing hoobsd production enviornment file, https://git.io/JOKhF");
 
         return false;
     }
 
     if (!existsLocal(join(root, "./gui", ".env.production"))) {
-        console.log("missing hoobs gui production enviornment file");
+        console.log("missing hoobs gui production enviornment file, https://git.io/JOKhF");
+
+        return false;
+    }
+
+    if (!existsLocal(join(root, "./security", "credentials.json"))) {
+        console.log("missing security repository, https://git.io/JOKhF");
 
         return false;
     }
 
     return true;
+}
+
+async function updateLocalization(credentials) {
+    const loco = new Loco(credentials.loco);
+    const locales = await loco.getLocales();
+    const source = JSON.parse(readFileSync(join(root, "./lang", "strings.json")));
+    const keys = Object.keys(source);
+
+    keys.sort();
+
+    const missing = {};
+
+    if (existsSync(join(root, "./lang", "missing.json"))) unlinkSync(join(root, "./lang", "missing.json"));
+
+    for (let i = 0; i < locales.length; i += 1) {
+        const local = locales[i].code.split("-")[0];
+        const output = {};
+
+        output[local] = {};
+
+        if (existsSync(join(root, "./gui/src/lang/locals", `${local}.json`))) unlinkSync(join(root, "./gui/src/lang/locals", `${local}.json`));
+        if (existsSync(join(root, "./desktop/src/lang/locals", `${local}.json`))) unlinkSync(join(root, "./desktop/src/lang/locals", `${local}.json`));
+
+        if (local === "en") {
+            for (let j = 0; j < keys.length; j += 1) {
+                output[local][keys[j]] = (source[keys[j]] || "").trim();
+            }
+        } else {
+            const resource = (await loco.exportLocale(locales[i].code));
+
+            for (let j = 0; j < keys.length; j += 1) {
+                if (resource[keys[j]] === undefined) missing[keys[j]] = (source[keys[j]] || "").trim();
+
+                output[local][keys[j]] = (resource[keys[j]] || source[keys[j]] || "").trim();
+            }
+        }
+
+        console.log(`updated localization "${local}"`);
+
+        writeFileSync(join(root, "./gui/src/lang/locals", `${local}.json`), JSON.stringify(output, null, 4));
+        writeFileSync(join(root, "./desktop/src/lang/locals", `${local}.json`), JSON.stringify(output, null, 4));
+    }
+
+    if (Object.keys(missing).length > 0) console.log("missing language strings need to up uploaded, https://localise.biz/session/auth/login");
+
+    writeFileSync(join(root, "./lang", "missing.json"), JSON.stringify(missing, null, 4));
 }
 
 function buildPackages(version) {
@@ -245,7 +298,7 @@ function buildImage(node) {
     }
 }
 
-function publishPackage(password) {
+function publishPackage(credentials) {
     const working = {
         sdk: JSON.parse(readFileSync(join(root, "./sdk", "package.json")).toString()),
         cli: JSON.parse(readFileSync(join(root, "./cli", "package.json")).toString()),
@@ -256,13 +309,13 @@ function publishPackage(password) {
 
     const exists = {
         sdk: execLocal(`yarn info @hoobs/sdk version | grep ${working.sdk.version}`, { cwd: root }) === working.sdk.version,
-        cli: existsRemote(password, `/var/www/html/debian/hoobs-cli-v${working.cli.version}.deb`),
-        hoobsd: existsRemote(password, `/var/www/html/debian/hoobsd-v${working.hoobsd.version}.deb`),
-        gui: existsRemote(password, `/var/www/html/debian/hoobs-gui-v${working.gui.version}.deb`),
-        bundle: existsRemote(password, `/var/www/html/debian/hoobs-v${pjson.version}.deb`),
+        cli: existsRemote(credentials.repo, `/var/www/html/debian/hoobs-cli-v${working.cli.version}.deb`),
+        hoobsd: existsRemote(credentials.repo, `/var/www/html/debian/hoobsd-v${working.hoobsd.version}.deb`),
+        gui: existsRemote(credentials.repo, `/var/www/html/debian/hoobs-gui-v${working.gui.version}.deb`),
+        bundle: existsRemote(credentials.repo, `/var/www/html/debian/hoobs-v${pjson.version}.deb`),
         desktop: {
-            win: existsRemote(password, `/var/www/html/source/hoobs-desktop-v${working.desktop.version}.exe`),
-            mac: existsRemote(password, `/var/www/html/source/hoobs-desktop-v${working.desktop.version}.dmg`),
+            win: existsRemote(credentials.repo, `/var/www/html/source/hoobs-desktop-v${working.desktop.version}.exe`),
+            mac: existsRemote(credentials.repo, `/var/www/html/source/hoobs-desktop-v${working.desktop.version}.dmg`),
         },
     }
 
@@ -274,80 +327,80 @@ function publishPackage(password) {
     if (!exists.cli || !exists.hoobsd || !exists.gui || !exists.bundle) {
         console.log("uploading deb packages");
 
-        if (!exists.cli) uploadRemote(password, join(root, "builds", `hoobs-cli-v${working.cli.version}.deb`), "/var/www/html/debian/");
-        if (!exists.hoobsd) uploadRemote(password, join(root, "builds", `hoobsd-v${working.hoobsd.version}.deb`), "/var/www/html/debian/");
-        if (!exists.gui) uploadRemote(password, join(root, "builds", `hoobs-gui-v${working.gui.version}.deb`), "/var/www/html/debian/");
-        if (!exists.bundle) uploadRemote(password, join(root, "builds", `hoobs-v${pjson.version}.deb`), "/var/www/html/debian/");
+        if (!exists.cli) uploadRemote(credentials.repo, join(root, "builds", `hoobs-cli-v${working.cli.version}.deb`), "/var/www/html/debian/");
+        if (!exists.hoobsd) uploadRemote(credentials.repo, join(root, "builds", `hoobsd-v${working.hoobsd.version}.deb`), "/var/www/html/debian/");
+        if (!exists.gui) uploadRemote(credentials.repo, join(root, "builds", `hoobs-gui-v${working.gui.version}.deb`), "/var/www/html/debian/");
+        if (!exists.bundle) uploadRemote(credentials.repo, join(root, "builds", `hoobs-v${pjson.version}.deb`), "/var/www/html/debian/");
 
         console.log("updating repository");
 
-        if (!exists.cli) execRemote(password, `cd /var/www/html/debian && reprepro includedeb buster /var/www/html/debian/hoobs-cli-v${working.cli.version}.deb`);
-        if (!exists.hoobsd) execRemote(password, `cd /var/www/html/debian && reprepro includedeb buster /var/www/html/debian/hoobsd-v${working.hoobsd.version}.deb`);
-        if (!exists.gui) execRemote(password, `cd /var/www/html/debian && reprepro includedeb buster /var/www/html/debian/hoobs-gui-v${working.gui.version}.deb`);
-        if (!exists.bundle) execRemote(password, `cd /var/www/html/debian && reprepro includedeb buster /var/www/html/debian/hoobs-v${pjson.version}.deb`);
+        if (!exists.cli) execRemote(credentials.repo, `cd /var/www/html/debian && reprepro includedeb buster /var/www/html/debian/hoobs-cli-v${working.cli.version}.deb`);
+        if (!exists.hoobsd) execRemote(credentials.repo, `cd /var/www/html/debian && reprepro includedeb buster /var/www/html/debian/hoobsd-v${working.hoobsd.version}.deb`);
+        if (!exists.gui) execRemote(credentials.repo, `cd /var/www/html/debian && reprepro includedeb buster /var/www/html/debian/hoobs-gui-v${working.gui.version}.deb`);
+        if (!exists.bundle) execRemote(credentials.repo, `cd /var/www/html/debian && reprepro includedeb buster /var/www/html/debian/hoobs-v${pjson.version}.deb`);
 
-        execRemote(password, `cd /var/www/html/debian && reprepro list buster`);
+        execRemote(credentials.repo, `cd /var/www/html/debian && reprepro list buster`);
 
         console.log("uploading source files");
 
-        if (!exists.cli) uploadRemote(password, join(root, "builds", `hoobs-cli-v${working.cli.version}.tar.gz`), "/var/www/html/source/");
-        if (!exists.hoobsd) uploadRemote(password, join(root, "builds", `hoobsd-v${working.hoobsd.version}.tar.gz`), "/var/www/html/source/");
-        if (!exists.gui) uploadRemote(password, join(root, "builds", `hoobs-gui-v${working.gui.version}.tar.gz`), "/var/www/html/source/");
+        if (!exists.cli) uploadRemote(credentials.repo, join(root, "builds", `hoobs-cli-v${working.cli.version}.tar.gz`), "/var/www/html/source/");
+        if (!exists.hoobsd) uploadRemote(credentials.repo, join(root, "builds", `hoobsd-v${working.hoobsd.version}.tar.gz`), "/var/www/html/source/");
+        if (!exists.gui) uploadRemote(credentials.repo, join(root, "builds", `hoobs-gui-v${working.gui.version}.tar.gz`), "/var/www/html/source/");
 
         console.log("uploading installers");
 
-        if (!exists.desktop.win && existsSync(join(root, "builds", `hoobs-desktop-v${working.desktop.version}.exe`))) uploadRemote(password, join(root, "builds", `hoobs-desktop-v${working.desktop.version}.exe`), "/var/www/html/source/");
-        if (!exists.desktop.mac && existsSync(join(root, "builds", `hoobs-desktop-v${working.desktop.version}.dmg`))) uploadRemote(password, join(root, "builds", `hoobs-desktop-v${working.desktop.version}.dmg`), "/var/www/html/source/");
+        if (!exists.desktop.win && existsSync(join(root, "builds", `hoobs-desktop-v${working.desktop.version}.exe`))) uploadRemote(credentials.repo, join(root, "builds", `hoobs-desktop-v${working.desktop.version}.exe`), "/var/www/html/source/");
+        if (!exists.desktop.mac && existsSync(join(root, "builds", `hoobs-desktop-v${working.desktop.version}.dmg`))) uploadRemote(credentials.repo, join(root, "builds", `hoobs-desktop-v${working.desktop.version}.dmg`), "/var/www/html/source/");
 
         console.log("linking latest");
 
         if (!exists.desktop.win && existsSync(join(root, "builds", `hoobs-desktop-v${working.desktop.version}.exe`))) {
-            execRemote(password, `rm -f /var/www/html/source/hoobs-desktop-latest.exe`);
-            execRemote(password, `cp /var/www/html/source/hoobs-desktop-v${working.desktop.version}.exe /var/www/html/source/hoobs-desktop-latest.exe`);
+            execRemote(credentials.repo, `rm -f /var/www/html/source/hoobs-desktop-latest.exe`);
+            execRemote(credentials.repo, `cp /var/www/html/source/hoobs-desktop-v${working.desktop.version}.exe /var/www/html/source/hoobs-desktop-latest.exe`);
         }
 
         if (!exists.desktop.mac && existsSync(join(root, "builds", `hoobs-desktop-v${working.desktop.version}.dmg`))) {
-            execRemote(password, `rm -f /var/www/html/source/hoobs-desktop-latest.dmg`);
-            execRemote(password, `cp /var/www/html/source/hoobs-desktop-v${working.desktop.version}.dmg /var/www/html/source/hoobs-desktop-latest.dmg`);
+            execRemote(credentials.repo, `rm -f /var/www/html/source/hoobs-desktop-latest.dmg`);
+            execRemote(credentials.repo, `cp /var/www/html/source/hoobs-desktop-v${working.desktop.version}.dmg /var/www/html/source/hoobs-desktop-latest.dmg`);
         }
 
         if (!exists.cli) {
-            uploadRemote(password, join(root, "builds", `hoobs-setup-v${working.cli.version}.sh`), "/var/www/html/debian/");
-            execRemote(password, `rm -f /var/www/html/debian/setup`);
-            execRemote(password, `cp /var/www/html/debian/hoobs-setup-v${working.cli.version}.sh /var/www/html/debian/setup`);
+            uploadRemote(credentials.repo, join(root, "builds", `hoobs-setup-v${working.cli.version}.sh`), "/var/www/html/debian/");
+            execRemote(credentials.repo, `rm -f /var/www/html/debian/setup`);
+            execRemote(credentials.repo, `cp /var/www/html/debian/hoobs-setup-v${working.cli.version}.sh /var/www/html/debian/setup`);
         }
     }
 }
 
-function publishImage(password) {
+function publishImage(credentials) {
     const exists = {
-        hoobsd: existsRemote(password, `/var/www/html/image/hoobsd-v${pjson.version}.zip`),
-        card: existsRemote(password, `/var/www/html/image/hoobs-v${pjson.version}.zip`),
-        box: existsRemote(password, `/var/www/html/image/hoobs-box-v${pjson.version}.zip`),
+        hoobsd: existsRemote(credentials.repo, `/var/www/html/image/hoobsd-v${pjson.version}.zip`),
+        card: existsRemote(credentials.repo, `/var/www/html/image/hoobs-v${pjson.version}.zip`),
+        box: existsRemote(credentials.repo, `/var/www/html/image/hoobs-box-v${pjson.version}.zip`),
     }
 
     if (!exists.card || !exists.box) {
         console.log("uploading images");
 
-        if (!exists.hoobsd) uploadRemote(password, join(root, "builds", `hoobsd-v${pjson.version}.zip`), "/var/www/html/image/");
-        if (!exists.card) uploadRemote(password, join(root, "builds", `hoobs-v${pjson.version}.zip`), "/var/www/html/image/");
-        if (!exists.box) uploadRemote(password, join(root, "builds", `hoobs-box-v${pjson.version}.zip`), "/var/www/html/image/");
+        if (!exists.hoobsd) uploadRemote(credentials.repo, join(root, "builds", `hoobsd-v${pjson.version}.zip`), "/var/www/html/image/");
+        if (!exists.card) uploadRemote(credentials.repo, join(root, "builds", `hoobs-v${pjson.version}.zip`), "/var/www/html/image/");
+        if (!exists.box) uploadRemote(credentials.repo, join(root, "builds", `hoobs-box-v${pjson.version}.zip`), "/var/www/html/image/");
 
         console.log("linking latest");
 
         if (!exists.hoobsd) {
-            execRemote(password, `rm -f /var/www/html/image/hoobsd-latest.zip`);
-            execRemote(password, `cp /var/www/html/image/hoobsd-v${pjson.version}.zip /var/www/html/image/hoobsd-latest.zip`);
+            execRemote(credentials.repo, `rm -f /var/www/html/image/hoobsd-latest.zip`);
+            execRemote(credentials.repo, `cp /var/www/html/image/hoobsd-v${pjson.version}.zip /var/www/html/image/hoobsd-latest.zip`);
         }
 
         if (!exists.card) {
-            execRemote(password, `rm -f /var/www/html/image/hoobs-latest.zip`);
-            execRemote(password, `cp /var/www/html/image/hoobs-v${pjson.version}.zip /var/www/html/image/hoobs-latest.zip`);
+            execRemote(credentials.repo, `rm -f /var/www/html/image/hoobs-latest.zip`);
+            execRemote(credentials.repo, `cp /var/www/html/image/hoobs-v${pjson.version}.zip /var/www/html/image/hoobs-latest.zip`);
         }
 
         if (!exists.box) {
-            execRemote(password, `rm -f /var/www/html/image/hoobs-box-latest.zip`);
-            execRemote(password, `cp /var/www/html/image/hoobs-box-v${pjson.version}.zip /var/www/html/image/hoobs-box-latest.zip`);
+            execRemote(credentials.repo, `rm -f /var/www/html/image/hoobs-box-latest.zip`);
+            execRemote(credentials.repo, `cp /var/www/html/image/hoobs-box-v${pjson.version}.zip /var/www/html/image/hoobs-box-latest.zip`);
         }
     }
 }
@@ -359,6 +412,8 @@ Program.command("release")
     .description("build hoobs image")
     .action(() => {
         if (checkEnviornment()) {
+            const credentials = require("../security/credentials.json");
+
             prompt([{
                 type: "string",
                 name: "version",
@@ -379,15 +434,25 @@ Program.command("release")
 
                     return true;
                 },
-            }, {
-                type: "password",
-                name: "password",
-                message: "Enter the repository server password",
             }]).then((result) => {
-                buildPackages(result.version);
-                publishPackage(result.password);
-                buildImage(result.node);
-                publishImage(result.password);
+                updateLocalization(credentials).finally(() => {
+                    buildPackages(result.version);
+                    publishPackage(credentials);
+                    buildImage(result.node);
+                    publishImage(credentials);
+                });
+            });
+        }
+    });
+
+Program.command("localize")
+    .description("update localization")
+    .action(() => {
+        if (checkEnviornment()) {
+            const credentials = require("../security/credentials.json");
+
+            updateLocalization(credentials).finally(() => {
+                process.exit();
             });
         }
     });
@@ -396,6 +461,8 @@ Program.command("package")
     .description("build hoobs image")
     .action(() => {
         if (checkEnviornment()) {
+            const credentials = require("../security/credentials.json");
+
             prompt([{
                 type: "string",
                 name: "version",
@@ -407,7 +474,9 @@ Program.command("package")
                     return true;
                 },
             }]).then((result) => {
-                buildPackages(result.version);
+                updateLocalization(credentials).finally(() => {
+                    buildPackages(result.version);
+                });
             });
         }
     });
@@ -438,13 +507,9 @@ Program.command("publish [action]")
                 }
 
                 if (proceed) {
-                    prompt([{
-                        type: "password",
-                        name: "password",
-                        message: "Enter the repository server password",
-                    }]).then((result) => {
-                        publishPackage(result.password);
-                    });
+                    const credentials = require("../security/credentials.json");
+
+                    publishPackage(credentials);
                 }
 
                 break;
@@ -459,13 +524,9 @@ Program.command("publish [action]")
                 }
 
                 if (proceed) {
-                    prompt([{
-                        type: "password",
-                        name: "password",
-                        message: "Enter the repository server password",
-                    }]).then((result) => {
-                        publishImage(result.password);
-                    });
+                    const credentials = require("../security/credentials.json");
+
+                    publishImage(credentials);
                 }
 
                 break;
