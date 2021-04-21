@@ -18,9 +18,9 @@
         "pull": "bin/pull",
         "setup": "bin/setup",
         "build": "image/build",
+        "locals": "image/build locals",
         "upload": "image/build publish",
-        "release": "image/build release",
-        "localize": "image/build localize"
+        "release": "image/build release"
     },
     "devDependencies": {
         "commander": "^7.1.0",

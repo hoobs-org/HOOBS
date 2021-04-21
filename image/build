@@ -526,7 +526,7 @@ Program.command("release")
         }
     });
 
-Program.command("localize")
+Program.command("locals")
     .description("update localization")
     .action(() => {
         if (checkEnviornment()) {
