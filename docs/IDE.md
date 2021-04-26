@@ -309,13 +309,13 @@ Starting the desktop app will also start the developer tools, which gives you ac
 [Top](#home)
 
 ## <a name="building"></a>**Building**
-Since the desktop app requires a different operating system, you need to start with building the desktop app.
-
 Building the desktop app is a bit more involved. Since we build the desktop app for both Windows and macOS, this needs to be build on the target operating system. The macOS build process requires XCode, thus you can only build this on macOS. macOS can also build the Windows version.
 
-On macOS run this command to build.
+If you have a macOS build enviornment setup, the main build process can remotely build it from your main IDE. You will need to enter the IP address, username, password, and define the path to the HOOBS project folder.
+
+To build locally on macOS run this command to build. (optional)
 ```
-cd ~/HOOBS/desktop
+cd ~/HOOBS
 yarn build
 ```
 
@@ -323,16 +323,7 @@ You will be asked to select your targets. Currently these are the available targ
 * Windows
 * macOS
 
-Once the build completes, you need to transfer the output to the builds folder on your main development computer. In my setup this is a computer called `hoobs-development`.
-
-Transfer using something like SCP.
-```
-scp ~/HOOBS/builds/hoobs-desktop* hoobs@hoobs-development:~/HOOBS/builds/
-```
-
-Now you can continue building the services.
-
-To build the packages.
+To build all packages from your main IDE.
 ```
 cd ~/HOOBS
 yarn build package
@@ -340,12 +331,14 @@ yarn build package
 
 The output will be in the `~/HOOBS/builds` folder.
 
+> Note. The main build process will always build all targets for HOOBS Desktop.
+
 [Top](#home)
 
 ## <a name="publishing"></a>**Publishing**
 We publish our releases to our repository server. There are built-in commands in the tool chain to make this easy.
 
-> The desktop app is published along with the other services, if it is in your builds folder. However, this will need to be built on a seperate computer. You will need to transfer the current version's build output to the builds folder for this to work.
+> The desktop app is published along with the other services, if it is in your builds folder.
 
 You can build and publish everything with this one command.
 
