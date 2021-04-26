@@ -53,16 +53,20 @@ function existsLocal(path) {
     return existsSync(path);
 }
 
-function existsRemote(password, path) {
-    return execRemote(password, `ls ${path}`, { cwd: root, stdio: "pipe" }) === path;
+function existsRemote(credentials, path) {
+    return execRemote(credentials, `ls ${path}`, { cwd: root, stdio: "pipe" }) === path;
 }
 
-function execRemote(password, command, options) {
-    return execLocal(`sshpass -p '${password}' ssh root@138.197.75.194 '${command}'`, options);
+function execRemote(credentials, command, options) {
+    return execLocal(`sshpass -p '${credentials.pass}' ssh ${credentials.user}@${credentials.host} '${command}'`, options);
 }
 
-function uploadRemote(password, source, destination) {
-    execLocal(`sshpass -p '${password}' scp ${source} root@138.197.75.194:${destination}`);
+function uploadRemote(credentials, source, destination) {
+    execLocal(`sshpass -p '${credentials.pass}' scp ${source} ${credentials.user}@${credentials.host}:${destination}`);
+}
+
+function downloadRemote(credentials, source, destination) {
+    execLocal(`sshpass -p '${credentials.pass}' scp ${credentials.user}@${credentials.host}:${source} ${destination}`);
 }
 
 function checkEnviornment() {
@@ -70,19 +74,19 @@ function checkEnviornment() {
     const sshpass = execLocal("command -v sshpass", { stdio: "pipe" }).toString().replace(/\n/g, "").trim();
     const docker = execLocal("command -v docker", { stdio: "pipe" }).toString().replace(/\n/g, "").trim();
 
-    if (!signing || signing === "") {
+    if (process.platform === "linux" && (!signing || signing === "")) {
         console.log("dpkg-sig is not installed, https://git.io/JOKhF");
 
         return false;
     }
 
-    if (!sshpass || sshpass === "") {
+    if (process.platform === "linux" && (!sshpass || sshpass === "")) {
         console.log("sshpass is not installed, https://git.io/JOKhF");
 
         return false;
     }
 
-    if (!docker || docker === "") {
+    if (process.platform === "linux" && (!docker || docker === "")) {
         console.log("docker is not installed, https://git.io/JOKhF");
 
         return false;
@@ -176,7 +180,7 @@ async function updateLocalization(credentials) {
     execLocal(`cp ${join(root, "./lang", "emojis.json")} ${join(root, "./desktop/src/lang", "emojis.json")}`);
 }
 
-function buildPackages(version) {
+async function buildPackages(credentials, version) {
     pjson.version = version;
 
     writeFileSync(join(root, "package.json"), JSON.stringify(pjson, null, 4));
@@ -186,6 +190,15 @@ function buildPackages(version) {
         cli: JSON.parse(readFileSync(join(root, "./cli", "package.json")).toString()),
         hoobsd: JSON.parse(readFileSync(join(root, "./hoobsd", "package.json")).toString()),
         gui: JSON.parse(readFileSync(join(root, "./gui", "package.json")).toString()),
+        desktop: JSON.parse(readFileSync(join(root, "./desktop", "package.json")).toString()),
+    }
+
+    let darwin;
+
+    try {
+        darwin = JSON.parse(readFileSync("~/hoobs.darwin.build").toString());
+    } catch (_error) {
+        darwin = undefined;
     }
 
     if (!existsLocal(join(root, "builds", `hoobs-sdk-v${working.sdk.version}.tgz`))) {
@@ -205,7 +218,22 @@ function buildPackages(version) {
 
     if (!existsLocal(join(root, "builds", `hoobs-gui-v${working.gui.version}.tar.gz`))) {
         console.log("building hoobs gui");
+
+        await updateLocalization(credentials);
+
         execLocal("bin/build --lint --pack", { cwd: join(root, "./gui"), stdio: "inherit" });
+    }
+
+    if (!existsLocal(join(root, "builds", `hoobs-desktop-v${working.desktop.version}.exe`)) || !existsLocal(join(root, "builds", `hoobs-desktop-v${working.desktop.version}.dmg`))) {
+        console.log("building hoobs desktop");
+
+        if (!existsRemote(darwin, join(darwin.path, "builds", `hoobs-desktop-v${working.desktop.version}.exe`)) || !existsRemote(darwin, join(darwin.path, "builds", `hoobs-desktop-v${working.desktop.version}.dmg`))) {
+            execRemote(darwin, `cd ${darwin.path} && exec yarn pull`);
+            execRemote(darwin, `cd ${join(darwin.path, "desktop")} && exec yarn build --target win mac`);
+        }
+
+        downloadRemote(darwin, join(darwin.path, "builds", `hoobs-desktop-v${working.desktop.version}.exe`), join(root, "builds", `hoobs-desktop-v${working.desktop.version}.exe`))
+        downloadRemote(darwin, join(darwin.path, "builds", `hoobs-desktop-v${working.desktop.version}.dmg`), join(root, "builds", `hoobs-desktop-v${working.desktop.version}.dmg`))
     }
 
     if (!existsLocal(join(root, "builds", `hoobs-v${pjson.version}.deb`))) {
@@ -242,6 +270,20 @@ function buildPackages(version) {
     }
 }
 
+async function buildDesktop(credentials) {
+    const working = {
+        desktop: JSON.parse(readFileSync(join(root, "./desktop", "package.json")).toString()),
+    }
+
+    if (!existsLocal(join(root, "builds", `hoobs-desktop-v${working.desktop.version}.exe`)) || !existsLocal(join(root, "builds", `hoobs-desktop-v${working.desktop.version}.dmg`))) {
+        console.log("building hoobs desktop");
+
+        await updateLocalization(credentials);
+
+        execLocal("bin/build --lint", { cwd: join(root, "./desktop"), stdio: "inherit" });
+    }
+}
+
 function buildImage(node) {
     const working = {
         connect: JSON.parse(readFileSync(join(root, "./connect", "package.json")).toString()),
@@ -249,6 +291,7 @@ function buildImage(node) {
 
     if (!existsLocal(join(root, "builds", `hoobs-connect-v${working.connect.version}.tar.gz`))) {
         console.log("building hoobs connect");
+
         execLocal("bin/build", { cwd: join(root, "./connect"), stdio: "inherit" });
     }
 
@@ -492,7 +535,7 @@ Program.version(pjson.version, "-v, --version", "output the current version")
 Program.command("release")
     .description("build hoobs image")
     .action(() => {
-        if (checkEnviornment()) {
+        if (process.platform === "linux" && checkEnviornment()) {
             const credentials = require("../security/credentials.json");
 
             prompt([{
@@ -516,12 +559,10 @@ Program.command("release")
                     return true;
                 },
             }]).then((result) => {
-                updateLocalization(credentials).finally(() => {
-                    buildPackages(result.version);
-                    publishPackage(credentials);
-                    buildImage(result.node);
-                    publishImage(credentials);
-                });
+                buildPackages(result.version);
+                publishPackage(credentials);
+                buildImage(result.node);
+                publishImage(credentials);
             });
         }
     });
@@ -538,12 +579,12 @@ Program.command("locals")
         }
     });
 
-Program.command("package")
+Program.command("package", { isDefault: true })
     .description("build hoobs image")
     .action(() => {
-        if (checkEnviornment()) {
-            const credentials = require("../security/credentials.json");
+        const credentials = require("../security/credentials.json");
 
+        if (process.platform === "linux" && checkEnviornment()) {
             prompt([{
                 type: "string",
                 name: "version",
@@ -555,17 +596,17 @@ Program.command("package")
                     return true;
                 },
             }]).then((result) => {
-                updateLocalization(credentials).finally(() => {
-                    buildPackages(result.version);
-                });
+                buildPackages(credentials, result.version);
             });
+        } else if (process.platform === "darwin" && checkEnviornment()) {
+            buildDesktop(credentials);
         }
     });
 
 Program.command("publish [action]")
     .description("publish builds to repository")
     .action((action) => {
-        let proceed = checkEnviornment();
+        let proceed = process.platform === "linux" && checkEnviornment();
 
         const working = {
             cli: JSON.parse(readFileSync(join(root, "./cli", "package.json")).toString()),
@@ -577,11 +618,11 @@ Program.command("publish [action]")
             case "package":
                 if (proceed && action === "package" && (
                     !existsLocal(join(root, "builds", `hoobs-cli-v${working.cli.version}.tar.gz`))
-                 || !existsLocal(join(root, "builds", `hoobs-cli-v${working.cli.version}.deb`))
-                 || !existsLocal(join(root, "builds", `hoobsd-v${working.hoobsd.version}.tar.gz`))
-                 || !existsLocal(join(root, "builds", `hoobsd-v${working.hoobsd.version}.deb`))
-                 || !existsLocal(join(root, "builds", `hoobs-gui-v${working.gui.version}.tar.gz`))
-                 || !existsLocal(join(root, "builds", `hoobs-gui-v${working.gui.version}.deb`))
+                || !existsLocal(join(root, "builds", `hoobs-cli-v${working.cli.version}.deb`))
+                || !existsLocal(join(root, "builds", `hoobsd-v${working.hoobsd.version}.tar.gz`))
+                || !existsLocal(join(root, "builds", `hoobsd-v${working.hoobsd.version}.deb`))
+                || !existsLocal(join(root, "builds", `hoobs-gui-v${working.gui.version}.tar.gz`))
+                || !existsLocal(join(root, "builds", `hoobs-gui-v${working.gui.version}.deb`))
                 )) {
                     console.log("please build package before publishing");
                     proceed = false;
@@ -598,7 +639,7 @@ Program.command("publish [action]")
             case "image":
                 if (proceed && (
                     !existsLocal(join(root, "builds", `hoobs-v${pjson.version}.zip`))
-                 || !existsLocal(join(root, "builds", `hoobs-box-v${pjson.version}.zip`))
+                || !existsLocal(join(root, "builds", `hoobs-box-v${pjson.version}.zip`))
                 )) {
                     console.log("please build image before publishing");
                     proceed = false;
@@ -621,7 +662,7 @@ Program.command("publish [action]")
 Program.command("image")
     .description("build hoobs image")
     .action(() => {
-        let proceed = checkEnviornment();
+        let proceed = process.platform === "linux" && checkEnviornment();
 
         const working = {
             cli: JSON.parse(readFileSync(join(root, "./cli", "package.json")).toString()),
@@ -632,11 +673,11 @@ Program.command("image")
 
         if (proceed && (
                 !existsLocal(join(root, "builds", `hoobs-cli-v${working.cli.version}.tar.gz`))
-             || !existsLocal(join(root, "builds", `hoobs-cli-v${working.cli.version}.deb`))
-             || !existsLocal(join(root, "builds", `hoobsd-v${working.hoobsd.version}.tar.gz`))
-             || !existsLocal(join(root, "builds", `hoobsd-v${working.hoobsd.version}.deb`))
-             || !existsLocal(join(root, "builds", `hoobs-gui-v${working.gui.version}.tar.gz`))
-             || !existsLocal(join(root, "builds", `hoobs-gui-v${working.gui.version}.deb`))
+            || !existsLocal(join(root, "builds", `hoobs-cli-v${working.cli.version}.deb`))
+            || !existsLocal(join(root, "builds", `hoobsd-v${working.hoobsd.version}.tar.gz`))
+            || !existsLocal(join(root, "builds", `hoobsd-v${working.hoobsd.version}.deb`))
+            || !existsLocal(join(root, "builds", `hoobs-gui-v${working.gui.version}.tar.gz`))
+            || !existsLocal(join(root, "builds", `hoobs-gui-v${working.gui.version}.deb`))
             )) {
 
             console.log("please build package before building image");
@@ -665,7 +706,7 @@ Program.command("volume [action]")
     .action((action) => {
         switch (action) {
             case "create":
-                if (checkEnviornment()) {
+                if (process.platform === "linux" && checkEnviornment()) {
                     console.log("creating build volumes");
 
                     execLocal("sudo docker rm -v hoobs-image", { cwd: join(root, "image"), stdio: "ignore" });
@@ -675,7 +716,7 @@ Program.command("volume [action]")
                 break;
 
             case "remove":
-                if (checkEnviornment()) {
+                if (process.platform === "linux" && checkEnviornment()) {
                     console.log("removing build volumes");
 
                     execLocal("sudo docker rm -v hoobs-image", { cwd: join(root, "image"), stdio: "ignore" });
