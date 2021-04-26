@@ -195,10 +195,51 @@ async function buildPackages(credentials, version) {
 
     let darwin;
 
-    try {
-        darwin = JSON.parse(readFileSync("~/hoobs.darwin.build").toString());
-    } catch (_error) {
-        darwin = undefined;
+    if (!existsLocal(join(root, "builds", `hoobs-desktop-v${working.desktop.version}.exe`)) || !existsLocal(join(root, "builds", `hoobs-desktop-v${working.desktop.version}.dmg`))) {
+        let confirm = false;
+
+        try {
+            darwin = JSON.parse(readFileSync("~/hoobs.darwin.build").toString());
+        } catch (_error) {
+            darwin = undefined;
+        }
+
+        if (darwin) {
+            confirm = await prompt([{
+                type: "confirm",
+                name: "confirm",
+                default: true,
+                message: "Use stored build credentials",
+                format: (value) => value.toLowerCase(),
+            }]).confirm;
+        }
+
+        if (!darwin || !confirm) {
+            darwin = await prompt([{
+                type: "string",
+                name: "host",
+                message: "Enter the macOS build host",
+            }, {
+                type: "string",
+                name: "user",
+                message: "Username",
+            }, {
+                type: "password",
+                name: "pass",
+                message: "Password",
+            }, {
+                type: "string",
+                name: "path",
+                default: "~/Projects/HOOBS",
+                message: "Project path",
+            }]);
+        }
+
+        if (darwin) {
+            writeFileSync("~/hoobs.darwin.build", JSON.stringify(darwin, null, 4));
+        } else if (existsSync("~/hoobs.darwin.build")) {
+            unlinkSync("~/hoobs.darwin.build");
+        }
     }
 
     if (!existsLocal(join(root, "builds", `hoobs-sdk-v${working.sdk.version}.tgz`))) {
@@ -224,7 +265,7 @@ async function buildPackages(credentials, version) {
         execLocal("bin/build --lint --pack", { cwd: join(root, "./gui"), stdio: "inherit" });
     }
 
-    if (!existsLocal(join(root, "builds", `hoobs-desktop-v${working.desktop.version}.exe`)) || !existsLocal(join(root, "builds", `hoobs-desktop-v${working.desktop.version}.dmg`))) {
+    if (darwin && (!existsLocal(join(root, "builds", `hoobs-desktop-v${working.desktop.version}.exe`)) || !existsLocal(join(root, "builds", `hoobs-desktop-v${working.desktop.version}.dmg`)))) {
         console.log("building hoobs desktop");
 
         if (!existsRemote(darwin, join(darwin.path, "builds", `hoobs-desktop-v${working.desktop.version}.exe`)) || !existsRemote(darwin, join(darwin.path, "builds", `hoobs-desktop-v${working.desktop.version}.dmg`))) {
