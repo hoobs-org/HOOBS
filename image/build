@@ -198,47 +198,57 @@ async function buildPackages(credentials, version) {
     if (!existsLocal(join(root, "builds", `hoobs-desktop-v${working.desktop.version}.exe`)) || !existsLocal(join(root, "builds", `hoobs-desktop-v${working.desktop.version}.dmg`))) {
         let confirm = false;
 
-        try {
-            darwin = JSON.parse(readFileSync("~/hoobs.darwin.build").toString());
-        } catch (_error) {
-            darwin = undefined;
-        }
+        confirm = await prompt([{
+            type: "confirm",
+            name: "confirm",
+            default: true,
+            message: "Do you want to build HOOBS desktop",
+            format: (value) => value.toLowerCase(),
+        }]).confirm;
 
-        if (darwin) {
-            confirm = await prompt([{
-                type: "confirm",
-                name: "confirm",
-                default: true,
-                message: "Use stored build credentials",
-                format: (value) => value.toLowerCase(),
-            }]).confirm;
-        }
-
-        if (!darwin || !confirm) {
-            darwin = await prompt([{
-                type: "string",
-                name: "host",
-                message: "Enter the macOS build host",
-            }, {
-                type: "string",
-                name: "user",
-                message: "Username",
-            }, {
-                type: "password",
-                name: "pass",
-                message: "Password",
-            }, {
-                type: "string",
-                name: "path",
-                default: "~/Projects/HOOBS",
-                message: "Project path",
-            }]);
-        }
-
-        if (darwin) {
-            writeFileSync("~/hoobs.darwin.build", JSON.stringify(darwin, null, 4));
-        } else if (existsSync("~/hoobs.darwin.build")) {
-            unlinkSync("~/hoobs.darwin.build");
+        if (confirm) {
+            try {
+                darwin = JSON.parse(readFileSync("~/hoobs.darwin.build").toString());
+            } catch (_error) {
+                darwin = undefined;
+            }
+    
+            if (darwin) {
+                confirm = await prompt([{
+                    type: "confirm",
+                    name: "confirm",
+                    default: true,
+                    message: "Use stored build credentials",
+                    format: (value) => value.toLowerCase(),
+                }]).confirm;
+            }
+    
+            if (!darwin || !confirm) {
+                darwin = await prompt([{
+                    type: "string",
+                    name: "host",
+                    message: "Enter the macOS build host",
+                }, {
+                    type: "string",
+                    name: "user",
+                    message: "Username",
+                }, {
+                    type: "password",
+                    name: "pass",
+                    message: "Password",
+                }, {
+                    type: "string",
+                    name: "path",
+                    default: "~/Projects/HOOBS",
+                    message: "Project path",
+                }]);
+            }
+    
+            if (darwin) {
+                writeFileSync("~/hoobs.darwin.build", JSON.stringify(darwin, null, 4));
+            } else if (existsSync("~/hoobs.darwin.build")) {
+                unlinkSync("~/hoobs.darwin.build");
+            }
         }
     }
 
