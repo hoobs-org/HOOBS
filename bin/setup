@@ -36,4 +36,8 @@ cd ../connect
 git checkout development
 yarn install
 
+cd ../migration
+git checkout development
+yarn install
+
 cd ../

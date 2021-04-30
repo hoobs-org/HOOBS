@@ -34,5 +34,10 @@ git pull
 git checkout development
 yarn install
 
+cd ../migration
+git pull
+git checkout development
+yarn install
+
 cd ../
 yarn install

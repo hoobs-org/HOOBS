@@ -21,6 +21,10 @@
             "path": "./desktop"
         },
         {
+            "name": "migration",
+            "path": "./migration"
+        },
+        {
             "name": "connect",
             "path": "./connect"
         },
