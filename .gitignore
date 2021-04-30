@@ -115,6 +115,7 @@ dist
 /connect
 /builds
 /security
+/migration
 /core
 
 # Build output
