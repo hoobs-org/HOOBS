@@ -5,6 +5,7 @@
 [[ -d gui ]] || git clone https://github.com/hoobs-org/gui.git
 [[ -d desktop ]] || git clone https://github.com/hoobs-org/desktop.git
 [[ -d sdk ]] || git clone https://github.com/hoobs-org/sdk.git
+[[ -d migration ]] || git clone https://github.com/hoobs-org/migration.git
 [[ -d connect ]] || git clone https://github.com/hoobs-org/connect.git
 
 mkdir builds
