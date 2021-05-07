@@ -899,7 +899,7 @@ Response
 [Top](#home)
 
 #### <a name="extentions.enable"></a>Enable
-Enable an extention.
+Enable an extension.
 
 Request
 ```http
@@ -916,7 +916,7 @@ Response
 [Top](#home)
 
 #### <a name="extentions.disable"></a>Disable
-Disable and extention.
+Disable and extension.
 
 Request
 ```http
@@ -1471,7 +1471,7 @@ Response
 #### <a name="accessories.stream"></a>Stream
 Fetches a video stream for a given camera accessory. This is not available for non camera types.
 
-This requires that the FFMpeg extention is installed, and only supports camera accessories configured with an RTSP stream, for example the **Camera FFMpeg** plugin.
+This requires that the FFMpeg extension is installed, and only supports camera accessories configured with an RTSP stream, for example the **Camera FFMpeg** plugin.
 
 Request
 ```http

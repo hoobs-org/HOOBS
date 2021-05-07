@@ -15,7 +15,7 @@ This will walk you through setting up your IDE, needed to develop and build HOOB
 - [GitHub Intergration](#git)
 
 ## <a name="intro"></a>**Introduction**
-The HOOBS development enviornment is designed to be ran on Debian Linux. The build routine uses Docker. This can be ran in a VM and using Visual Studio Code with the Remote SSH extention.
+The HOOBS development enviornment is designed to be ran on Debian Linux. The build routine uses Docker. This can be ran in a VM and using Visual Studio Code with the Remote SSH extension.
 
 Prerequisites
 * Debian Linux

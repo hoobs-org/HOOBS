@@ -22,10 +22,10 @@ The HOOBS command line interface is the software that manages bridges. Below is 
     - [Create](#plugin.create)
 - [Config](#config)
 - [Log](#log)
-- [Extention](#extention)
-    - [Add](#extention.add)
-    - [Remove](#extention.remove)
-    - [List](#extention.list)
+- [Extention](#extension)
+    - [Add](#extension.add)
+    - [Remove](#extension.remove)
+    - [List](#extension.list)
 - [System](#system)
     - [Versions](#system.versions)
     - [Hostname](#system.hostname)
@@ -379,20 +379,20 @@ Available options
 
 [Top](#home)
 
-## <a name="extention"></a>Extention
+## <a name="extension"></a>Extention
 This manages HOOBS extentions (features). It can be used to enable system level dependencies, like FFMPEG, and the official GUI.
 
-> Extentions are not the same as plugins. A plugin runs on a bridge, where an extention runs on the system, or modifies the hub.
+> Extentions are not the same as plugins. A plugin runs on a bridge, where an extension runs on the system, or modifies the hub.
 
 [Top](#home)
 
-#### <a name="extention.add"></a>Add
+#### <a name="extenextensiontion.add"></a>Add
 *alias **install***  
 
-This enables an extention.
+This enables an extension.
 
 ```
-sudo hbs extention add ffmpeg
+sudo hbs extension add ffmpeg
 ```
 
 Available options
@@ -402,14 +402,14 @@ Available options
 
 [Top](#home)
 
-#### <a name="extention.remove"></a>Remove
+#### <a name="extension.remove"></a>Remove
 *alias **uninstall***  
 *alias **rm***  
 
-This disables an extention.
+This disables an extension.
 
 ```
-sudo hbs extention remove ffmpeg
+sudo hbs extension remove ffmpeg
 ```
 
 Available options
@@ -419,13 +419,13 @@ Available options
 
 [Top](#home)
 
-#### <a name="extention.list"></a>List
+#### <a name="extension.list"></a>List
 *alias **ls***  
 
 This will list all available extetntions and if they are enabled.
 
 ```
-sudo hbs extention list
+sudo hbs extension list
 ```
 
 Available options

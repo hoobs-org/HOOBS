@@ -842,7 +842,7 @@ This allows you to set the broadcasted hostname.
 [Top](#home)
 
 ## <a name="extentions.list"></a>**extentions.list()**
-This will fetch a list of available extentions and if the extention is enabled.
+This will fetch a list of available extentions and if the extension is enabled.
 
 ```js
 [{
@@ -855,22 +855,22 @@ This will fetch a list of available extentions and if the extention is enabled.
 [Top](#home)
 
 ## <a name="extentions.add"></a>**extentions.add([name])**
-This will enable an extention on the system.
+This will enable an extension on the system.
 
 Parameters
 | Name | Required | Type   | Description                         |
 | ---- | -------- | ------ | ----------------------------------- |
-| name | Yes      | string | The name of the extention to enable |
+| name | Yes      | string | The name of the extension to enable |
 
 [Top](#home)
 
 ## <a name="extentions.remove"></a>**extentions.remove([name])**
-This will disable an extention on the system.
+This will disable an extension on the system.
 
 Parameters
 | Name | Required | Type   | Description                          |
 | ---- | -------- | ------ | ------------------------------------ |
-| name | Yes      | string | The name of the extention to disable |
+| name | Yes      | string | The name of the extension to disable |
 
 [Top](#home)
 
@@ -1428,7 +1428,7 @@ These characteristics are available for all non bridge types and are used to org
 ## <a name="accessory.stream"></a>**accessory.stream()**
 Fetches a video stream for a given camera accessory. This is not available for non camera types.
 
-This requires that the FFMpeg extention is installed, and only supports camera accessories configured with an RTSP stream, for example the **Camera FFMpeg** plugin.
+This requires that the FFMpeg extension is installed, and only supports camera accessories configured with an RTSP stream, for example the **Camera FFMpeg** plugin.
 
 > This method is attached to the accessory object you must access this from the `hoobs.accessory([bridge], [id])` command.
 
