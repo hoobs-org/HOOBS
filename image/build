@@ -451,7 +451,7 @@ function publishPackage(credentials) {
 
     if (!exists.migration) {
         console.log("publishing hoobs migration tool");
-        execLocal(`yarn publish --access public --new-version ${working.sdk.version}`, { cwd: join(root, "./migration"), stdio: "inherit" });
+        execLocal(`yarn publish --access public --new-version ${working.migration.version}`, { cwd: join(root, "./migration"), stdio: "inherit" });
     }
 
     if (!exists.cli || !exists.hoobsd || !exists.gui || !exists.bundle || !exists.desktop.win || !exists.desktop.mac) {
