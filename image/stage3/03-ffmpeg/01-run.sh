@@ -24,5 +24,9 @@ on_chroot << EOF
     set -e
     set -x
 
-    sudo hbs extension add ffmpeg
+    wget https://repo.hoobs.org/source/ffmpeg-latest.tar.gz
+    tar -xzf ./ffmpeg-latest.tar.gz -C /usr/local --strip-components=1 --no-same-owner
+    rm -f ./ffmpeg-latest.tar.gz
+    ldconfig -n /usr/local/lib
+    ldconfig
 EOF
