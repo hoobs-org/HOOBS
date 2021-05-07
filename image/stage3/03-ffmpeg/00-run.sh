@@ -24,5 +24,5 @@ on_chroot << EOF
     set -e
     set -x
 
-    hbs extension add ffmpeg
+    sudo hbs extension add ffmpeg
 EOF
