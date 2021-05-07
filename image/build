@@ -95,9 +95,10 @@ function checkEnviornment() {
     if (
         !existsLocal(join(root, "./sdk", "package.json"))
      || !existsLocal(join(root, "./cli", "package.json"))
+     || !existsLocal(join(root, "./gui", "package.json"))
      || !existsLocal(join(root, "./hoobsd", "package.json"))
      || !existsLocal(join(root, "./desktop", "package.json"))
-     || !existsLocal(join(root, "./gui", "package.json"))
+     || !existsLocal(join(root, "./migration", "package.json"))
     ) {
         console.log("workspace not initilized, https://git.io/JOKhF");
 
@@ -188,9 +189,10 @@ async function buildPackages(credentials, version) {
     const working = {
         sdk: JSON.parse(readFileSync(join(root, "./sdk", "package.json")).toString()),
         cli: JSON.parse(readFileSync(join(root, "./cli", "package.json")).toString()),
-        hoobsd: JSON.parse(readFileSync(join(root, "./hoobsd", "package.json")).toString()),
         gui: JSON.parse(readFileSync(join(root, "./gui", "package.json")).toString()),
+        hoobsd: JSON.parse(readFileSync(join(root, "./hoobsd", "package.json")).toString()),
         desktop: JSON.parse(readFileSync(join(root, "./desktop", "package.json")).toString()),
+        migration: JSON.parse(readFileSync(join(root, "./migration", "package.json")).toString()),
     }
 
     let darwin;
@@ -268,6 +270,11 @@ async function buildPackages(credentials, version) {
     if (!existsLocal(join(root, "builds", `hoobs-cli-v${working.cli.version}.tar.gz`))) {
         console.log("building hoobs cli");
         execLocal("bin/build --lint --pack", { cwd: join(root, "./cli"), stdio: "inherit" });
+    }
+
+    if (!existsLocal(join(root, "builds", `hoobs-migration-v${working.migration.version}.tgz`))) {
+        console.log("building hoobs migration tool");
+        execLocal("bin/build --lint --pack", { cwd: join(root, "./migration"), stdio: "inherit" });
     }
 
     if (!existsLocal(join(root, "builds", `hoobsd-v${working.hoobsd.version}.tar.gz`))) {
@@ -418,17 +425,19 @@ function publishPackage(credentials) {
     const working = {
         sdk: JSON.parse(readFileSync(join(root, "./sdk", "package.json")).toString()),
         cli: JSON.parse(readFileSync(join(root, "./cli", "package.json")).toString()),
+        gui: JSON.parse(readFileSync(join(root, "./gui", "package.json")).toString()),
         hoobsd: JSON.parse(readFileSync(join(root, "./hoobsd", "package.json")).toString()),
         desktop: JSON.parse(readFileSync(join(root, "./desktop", "package.json")).toString()),
-        gui: JSON.parse(readFileSync(join(root, "./gui", "package.json")).toString()),
+        migration: JSON.parse(readFileSync(join(root, "./migration", "package.json")).toString()),
     }
 
     const exists = {
         sdk: execLocal(`yarn info @hoobs/sdk version | grep ${working.sdk.version}`, { cwd: root }) === working.sdk.version,
         cli: existsRemote(credentials.repo, `/var/www/html/debian/hoobs-cli-v${working.cli.version}.deb`),
-        hoobsd: existsRemote(credentials.repo, `/var/www/html/debian/hoobsd-v${working.hoobsd.version}.deb`),
         gui: existsRemote(credentials.repo, `/var/www/html/debian/hoobs-gui-v${working.gui.version}.deb`),
+        hoobsd: existsRemote(credentials.repo, `/var/www/html/debian/hoobsd-v${working.hoobsd.version}.deb`),
         bundle: existsRemote(credentials.repo, `/var/www/html/debian/hoobs-v${pjson.version}.deb`),
+        migration: execLocal(`yarn info @hoobs/migration version | grep ${working.migration.version}`, { cwd: root }) === working.migration.version,
         desktop: {
             win: existsRemote(credentials.repo, `/var/www/html/source/hoobs-desktop-v${working.desktop.version}.exe`),
             mac: existsRemote(credentials.repo, `/var/www/html/source/hoobs-desktop-v${working.desktop.version}.dmg`),
@@ -437,7 +446,12 @@ function publishPackage(credentials) {
 
     if (!exists.sdk) {
         console.log("publishing hoobs sdk");
-        execLocal(`yarn publish --new-version ${working.sdk.version}`, { cwd: join(root, "./sdk"), stdio: "inherit" });
+        execLocal(`yarn publish --access public --new-version ${working.sdk.version}`, { cwd: join(root, "./sdk"), stdio: "inherit" });
+    }
+
+    if (!exists.migration) {
+        console.log("publishing hoobs migration tool");
+        execLocal(`yarn publish --access public --new-version ${working.sdk.version}`, { cwd: join(root, "./migration"), stdio: "inherit" });
     }
 
     if (!exists.cli || !exists.hoobsd || !exists.gui || !exists.bundle || !exists.desktop.win || !exists.desktop.mac) {
