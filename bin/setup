@@ -4,6 +4,7 @@
 [[ -d cli ]] || git clone https://github.com/hoobs-org/cli.git
 [[ -d gui ]] || git clone https://github.com/hoobs-org/gui.git
 [[ -d desktop ]] || git clone https://github.com/hoobs-org/desktop.git
+[[ -d mobile ]] || git clone https://github.com/hoobs-org/mobile.git
 [[ -d sdk ]] || git clone https://github.com/hoobs-org/sdk.git
 [[ -d migration ]] || git clone https://github.com/hoobs-org/migration.git
 [[ -d connect ]] || git clone https://github.com/hoobs-org/connect.git
@@ -21,6 +22,10 @@ yarn install
 yarn build
 
 cd ../gui
+git checkout development
+yarn install
+
+cd ../mobile
 git checkout development
 yarn install
 

@@ -11,6 +11,9 @@ git push
 cd ../gui
 git push
 
+cd ../mobile
+git push
+
 cd ../desktop
 git push
 
