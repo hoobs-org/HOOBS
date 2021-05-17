@@ -17,6 +17,10 @@
             "path": "./gui"
         },
         {
+            "name": "mobile",
+            "path": "./mobile"
+        },
+        {
             "name": "desktop",
             "path": "./desktop"
         },
