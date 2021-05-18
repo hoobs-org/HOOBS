@@ -4,7 +4,7 @@
             "name": "HOOBS",
             "description": "User friendly home automation for everyone.",
             "url": "https://repo.hoobs.org/image/hoobs-latest.zip",
-            "icon": "https://repo.hoobs.org/hoobs-icon.png",
+            "icon": "https://repo.hoobs.org/hoobs-rpi-icon.png",
             "extract_size": 3184484864,
             "extract_sha256": "7eaaa5baaa98983c932dd8da30218999d1892d3f37ee05f21eb19fd5fb80005d",
             "image_download_size": 795478829,

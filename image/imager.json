@@ -1,6 +1,6 @@
 {
     "name": "Homebridge",
     "description": "Turn your Raspberry Pi into a HomeKit smart home bridge.",
-    "icon": "https://repo.hoobs.org/hoobs-icon.png",
+    "icon": "https://repo.hoobs.org/hoobs-rpi-icon.png",
     "subitems_url": "https://repo.hoobs.org/subitems.json"
 }
