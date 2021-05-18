@@ -1,7 +1,7 @@
 [Unit]
 Description=WiFi Captive Portal
 After=NetworkManager.service
-Before=hoobsd.service
+Before=tzupdate.service tzupdate.service hoobsd.service
 
 [Service]
 Type=oneshot

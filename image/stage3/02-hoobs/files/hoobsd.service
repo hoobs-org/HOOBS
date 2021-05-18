@@ -6,9 +6,9 @@ After=network-online.target
 Type=simple
 User=root
 ExecStart=/usr/bin/hoobsd hub
+KillSignal=SIGINT
 Restart=always
 RestartSec=3
-KillMode=process
 
 [Install]
 WantedBy=multi-user.target
