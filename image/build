@@ -19,7 +19,6 @@
  **************************************************************************************************/
 
 const OS = require("os");
-const Semver = require("semver");
 const Program = require("commander");
 const Inquirer = require("inquirer");
 const { join } = require("path");

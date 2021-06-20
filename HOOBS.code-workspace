@@ -69,6 +69,7 @@
         "html.format.wrapLineLength": 220,
         "prettier.printWidth": 220,
         "vetur.format.defaultFormatter.html": "prettyhtml",
-        "vetur.format.defaultFormatter.ts": "vscode-typescript"
+        "vetur.format.defaultFormatter.ts": "vscode-typescript",
+        "liveServer.settings.multiRootWorkspaceName": "connect"
     }
 }
