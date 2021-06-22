@@ -16,7 +16,7 @@ User=root
 WorkingDirectory=/home/hoobs
 Nice=5
 Environment="NODE_OPTIONS=--max_old_space_size=256"
-ExecStart=/usr/bin/node-red-pi
+ExecStart=/usr/bin/node-red-pi $NODE_OPTIONS
 KillSignal=SIGINT
 Restart=on-failure
 SyslogIdentifier=Node-RED
