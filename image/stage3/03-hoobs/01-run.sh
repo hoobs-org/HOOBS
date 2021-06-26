@@ -23,7 +23,7 @@ install -m 644 files/sudoers "${ROOTFS_DIR}/etc/"
 install -m 644 files/hoobs.service "${ROOTFS_DIR}/etc/systemd/system/"
 
 on_chroot << EOF
-    npm install -g --unsafe-perm --ignore-scripts @hoobs/hoobs
+    npm install -g --unsafe-perm @hoobs/hoobs
     sudo setcap CAP_NET_BIND_SERVICE=+eip /usr/bin/node
     systemctl daemon-reload
     systemctl enable hoobs
