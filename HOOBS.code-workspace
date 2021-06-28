@@ -37,10 +37,6 @@
             "path": "./image"
         },
         {
-            "name": "builds",
-            "path": "./builds"
-        },
-        {
             "name": "lang",
             "path": "./lang"
         },
