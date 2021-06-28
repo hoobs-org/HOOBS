@@ -69,6 +69,7 @@ function checkEnviornment() {
     const signing = execLocal("command -v dpkg-sig", { stdio: "pipe" }).toString().replace(/\n/g, "").trim();
     const sshpass = execLocal("command -v sshpass", { stdio: "pipe" }).toString().replace(/\n/g, "").trim();
     const docker = execLocal("command -v docker", { stdio: "pipe" }).toString().replace(/\n/g, "").trim();
+    const reprepro = execLocal("command -v reprepro", { stdio: "pipe" }).toString().replace(/\n/g, "").trim();
 
     if (process.platform === "linux" && (!signing || signing === "")) {
         console.log("dpkg-sig is not installed, https://git.io/JOKhF");
@@ -84,6 +85,12 @@ function checkEnviornment() {
 
     if (process.platform === "linux" && (!docker || docker === "")) {
         console.log("docker is not installed, https://git.io/JOKhF");
+
+        return false;
+    }
+
+    if (process.platform === "linux" && (!reprepro || reprepro === "")) {
+        console.log("reprepro is not installed, https://git.io/JOKhF");
 
         return false;
     }
@@ -264,7 +271,7 @@ async function buildPackages(repo, credentials, version, built) {
         built.push("sdk");
     }
 
-    if (!existsLocal(join(root, "repo/cli", `hoobs-cli-v${working.cli.version}.tar.gz`))) {
+    if (!existsLocal(join(root, "repo/src", `hoobs-cli-v${working.cli.version}.tar.gz`))) {
         console.log("building hoobs cli");
         execLocal(`bin/build --repo ${repo} --lint --pack`, { cwd: join(root, "./cli"), stdio: "inherit" });
         built.push("cli");
