@@ -477,7 +477,7 @@ function publishPackage(repo, built) {
             latest: true,
             download_win: `https://github.com/hoobs-org/desktop/releases/download/v${working.desktop.version}/hoobs-desktop-v${working.desktop.version}.exe`,
             download_mac: `https://github.com/hoobs-org/desktop/releases/download/v${working.desktop.version}/hoobs-desktop-v${working.desktop.version}.dmg`,
-            beta: false,
+            beta: repo === "edge" || repo === "bleeding",
         };
     }
 
@@ -488,7 +488,7 @@ function publishPackage(repo, built) {
             published: { $date: utc },
             latest: true,
             download: `https://github.com/hoobs-org/gui/releases/download/v${working.gui.version}/hoobs-gui-v${working.gui.version}.tar.gz`,
-            beta: false,
+            beta: repo === "edge" || repo === "bleeding",
         };
     }
 
@@ -499,7 +499,7 @@ function publishPackage(repo, built) {
             published: { $date: utc },
             latest: true,
             download: `https://github.com/hoobs-org/hoobsd/releases/download/v${working.hoobsd.version}/hoobsd-v${working.hoobsd.version}.tar.gz`,
-            beta: false,
+            beta: repo === "edge" || repo === "bleeding",
         };
     }
 
@@ -510,7 +510,7 @@ function publishPackage(repo, built) {
             published: { $date: utc },
             latest: true,
             download: `https://github.com/hoobs-org/cli/releases/download/v${working.cli.version}/hoobs-cli-v${working.cli.version}.tar.gz`,
-            beta: false,
+            beta: repo === "edge" || repo === "bleeding",
         };
     }
 
@@ -521,7 +521,7 @@ function publishPackage(repo, built) {
             published: { $date: utc },
             latest: true,
             download: `https://github.com/hoobs-org/repo/releases/download/v${pjson.version}/hoobs-v${pjson.version}.zip`,
-            beta: false,
+            beta: repo === "edge" || repo === "bleeding",
         };
     }
 
@@ -532,7 +532,7 @@ function publishPackage(repo, built) {
             published: { $date: utc },
             latest: true,
             download: `https://github.com/hoobs-org/repo/releases/download/v${pjson.version}/hoobsd-v${pjson.version}.zip`,
-            beta: false,
+            beta: repo === "edge" || repo === "bleeding",
         };
     }
 
@@ -543,7 +543,7 @@ function publishPackage(repo, built) {
             published: { $date: utc },
             latest: true,
             download: `https://github.com/hoobs-org/repo/releases/download/v${pjson.version}/hoobs-box-v${pjson.version}.zip`,
-            beta: false,
+            beta: repo === "edge" || repo === "bleeding",
         };
     }
 
@@ -553,8 +553,8 @@ function publishPackage(repo, built) {
             version: working.cli.version,
             published: { $date: utc },
             latest: true,
-            download: "https://dl.hoobs.org/setup",
-            beta: false,
+            download: repo === "edge" || repo === "bleeding" ? `https://dl.hoobs.org/${repo}` : "https://dl.hoobs.org/setup",
+            beta: repo === "edge" || repo === "bleeding",
         };
     }
 
@@ -574,7 +574,16 @@ Program.command("release")
                 type: "list",
                 name: "repo",
                 message: "Select the repo to publish to",
-                choices: [{ name: "Stable", value: "stable" }, { name: "Edge", value: "edge" }],
+                choices: [{
+                    name: "Stable",
+                    value: "stable"
+                }, {
+                    name: "Edge",
+                    value: "edge"
+                }, {
+                    name: "Bleeding",
+                    value: "bleeding"
+                }],
             }, {
                 type: "string",
                 name: "version",
