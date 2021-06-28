@@ -61,10 +61,6 @@ function execRemote(credentials, command, options) {
     return execLocal(`sshpass -p '${credentials.pass}' ssh ${credentials.user}@${credentials.host} '${command}'`, options);
 }
 
-function uploadRemote(credentials, source, destination) {
-    execLocal(`sshpass -p '${credentials.pass}' scp ${source} ${credentials.user}@${credentials.host}:${destination}`);
-}
-
 function downloadRemote(credentials, source, destination) {
     execLocal(`sshpass -p '${credentials.pass}' scp ${credentials.user}@${credentials.host}:${source} ${destination}`);
 }
@@ -181,7 +177,7 @@ async function updateLocalization(credentials) {
     execLocal(`cp ${join(root, "./lang", "emojis.json")} ${join(root, "./desktop/src/lang", "emojis.json")}`);
 }
 
-async function buildPackages(credentials, version) {
+async function buildPackages(repo, credentials, version, built) {
     pjson.version = version;
 
     writeFileSync(join(root, "package.json"), JSON.stringify(pjson, null, 4));
@@ -197,7 +193,7 @@ async function buildPackages(credentials, version) {
 
     let darwin;
 
-    if (!existsLocal(join(root, "builds", `hoobs-desktop-v${working.desktop.version}.exe`)) || !existsLocal(join(root, "builds", `hoobs-desktop-v${working.desktop.version}.dmg`))) {
+    if (!existsLocal(join(root, "repo/bin", `hoobs-desktop-v${working.desktop.version}.exe`)) || !existsLocal(join(root, "repo/bin", `hoobs-desktop-v${working.desktop.version}.dmg`))) {
         let confirm = false;
 
         confirm = (await prompt([{
@@ -262,38 +258,43 @@ async function buildPackages(credentials, version) {
         }
     }
 
-    if (!existsLocal(join(root, "builds", `hoobs-sdk-v${working.sdk.version}.tgz`))) {
+    if (!existsLocal(join(root, "repo/npm", `hoobs-sdk-v${working.sdk.version}.tgz`))) {
         console.log("building hoobs sdk");
         execLocal("bin/build --lint --pack", { cwd: join(root, "./sdk"), stdio: "inherit" });
+        built.push("sdk");
     }
 
-    if (!existsLocal(join(root, "builds", `hoobs-cli-v${working.cli.version}.tar.gz`))) {
+    if (!existsLocal(join(root, "repo/cli", `hoobs-cli-v${working.cli.version}.tar.gz`))) {
         console.log("building hoobs cli");
-        execLocal("bin/build --lint --pack", { cwd: join(root, "./cli"), stdio: "inherit" });
+        execLocal(`bin/build --repo ${repo} --lint --pack`, { cwd: join(root, "./cli"), stdio: "inherit" });
+        built.push("cli");
     }
 
-    if (!existsLocal(join(root, "builds", `hoobs-migration-v${working.migration.version}.tgz`))) {
+    if (!existsLocal(join(root, "repo/npm", `hoobs-migration-v${working.migration.version}.tgz`))) {
         console.log("building hoobs migration tool");
         execLocal("bin/build --lint --pack", { cwd: join(root, "./migration"), stdio: "inherit" });
+        built.push("migration");
     }
 
-    if (!existsLocal(join(root, "builds", `hoobsd-v${working.hoobsd.version}.tar.gz`))) {
+    if (!existsLocal(join(root, "repo/src", `hoobsd-v${working.hoobsd.version}.tar.gz`))) {
         console.log("building hoobsd");
-        execLocal("bin/build --lint --pack", { cwd: join(root, "./hoobsd"), stdio: "inherit" });
+        execLocal(`bin/build --repo ${repo} --lint --pack`, { cwd: join(root, "./hoobsd"), stdio: "inherit" });
+        built.push("hoobsd");
     }
 
-    if (!existsLocal(join(root, "builds", `hoobs-gui-v${working.gui.version}.tar.gz`))) {
+    if (!existsLocal(join(root, "repo/src", `hoobs-gui-v${working.gui.version}.tar.gz`))) {
         console.log("building hoobs gui");
 
         await updateLocalization(credentials);
 
-        execLocal("bin/build --lint --pack", { cwd: join(root, "./gui"), stdio: "inherit" });
+        execLocal(`bin/build --repo ${repo} --lint --pack`, { cwd: join(root, "./gui"), stdio: "inherit" });
+        built.push("gui");
     }
 
-    if (darwin && (!existsLocal(join(root, "builds", `hoobs-desktop-v${working.desktop.version}.exe`)) || !existsLocal(join(root, "builds", `hoobs-desktop-v${working.desktop.version}.dmg`)))) {
+    if (darwin && (!existsLocal(join(root, "repo/bin", `hoobs-desktop-v${working.desktop.version}.exe`)) || !existsLocal(join(root, "repo/bin", `hoobs-desktop-v${working.desktop.version}.dmg`)))) {
         console.log("building hoobs desktop");
 
-        if (!existsRemote(darwin, join(darwin.path, "builds", `hoobs-desktop-v${working.desktop.version}.exe`)) || !existsRemote(darwin, join(darwin.path, "builds", `hoobs-desktop-v${working.desktop.version}.dmg`))) {
+        if (!existsRemote(darwin, join(darwin.path, "repo/bin", `hoobs-desktop-v${working.desktop.version}.exe`)) || !existsRemote(darwin, join(darwin.path, "repo/bin", `hoobs-desktop-v${working.desktop.version}.dmg`))) {
             execRemote(darwin, `PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin; git config --global user.name "${darwin.gituser}"`);
             execRemote(darwin, `PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin; git config --global user.password "${darwin.gitpass}"`);
             execRemote(darwin, "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin; git config --global pull.rebase false");
@@ -302,11 +303,13 @@ async function buildPackages(credentials, version) {
             execRemote(darwin, `cd ${join(darwin.path, "desktop")} && PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin; yarn build --target win mac`);
         }
 
-        downloadRemote(darwin, join(darwin.path, "builds", `hoobs-desktop-v${working.desktop.version}.exe`), join(root, "builds", `hoobs-desktop-v${working.desktop.version}.exe`));
-        downloadRemote(darwin, join(darwin.path, "builds", `hoobs-desktop-v${working.desktop.version}.dmg`), join(root, "builds", `hoobs-desktop-v${working.desktop.version}.dmg`));
+        downloadRemote(darwin, join(darwin.path, "repo/bin", `hoobs-desktop-v${working.desktop.version}.exe`), join(root, "repo/bin", `hoobs-desktop-v${working.desktop.version}.exe`));
+        downloadRemote(darwin, join(darwin.path, "repo/bin", `hoobs-desktop-v${working.desktop.version}.dmg`), join(root, "repo/bin", `hoobs-desktop-v${working.desktop.version}.dmg`));
+
+        built.push("desktop");
     }
 
-    if (!existsLocal(join(root, "builds", `hoobs-v${pjson.version}.deb`))) {
+    if (!existsLocal(join(root, "repo/deb", repo, `hoobs-v${pjson.version}.deb`))) {
         console.log("building bundle");
 
         if (existsLocal(join(root, "dist"))) execLocal(`rm -fR ${join(root, "dist")}`)
@@ -331,41 +334,27 @@ async function buildPackages(credentials, version) {
         execLocal(`chmod 755 ${join(root, "dist/DEBIAN", "postinst")}`);
         execLocal("dpkg-deb --build dist");
 
-        if (existsLocal(join(root, "builds", `hoobs-v${pjson.version}.deb`))) unlinkSync(join(root, "builds", `hoobs-v${pjson.version}.deb`));
+        if (existsLocal(join(root, "repo/deb", repo, `hoobs-v${pjson.version}.deb`))) unlinkSync(join(root, "repo/deb", repo, `hoobs-v${pjson.version}.deb`));
 
-        execLocal(`mv ${join(root, "dist.deb")} ${join(root, "builds", `hoobs-v${pjson.version}.deb`)}`);
-        execLocal(`dpkg-sig --sign builder ${join(root, "builds", `hoobs-v${pjson.version}.deb`)}`);
+        execLocal(`mv ${join(root, "dist.deb")} ${join(root, "repo/deb", repo, `hoobs-v${pjson.version}.deb`)}`);
+        execLocal(`dpkg-sig --sign builder ${join(root, "repo/deb", repo, `hoobs-v${pjson.version}.deb`)}`);
 
         if (existsLocal(join(root, "dist"))) execLocal(`rm -fR ${join(root, "dist")}`);
     }
 }
 
-async function buildDesktop(credentials) {
-    const working = {
-        desktop: JSON.parse(readFileSync(join(root, "./desktop", "package.json")).toString()),
-    }
-
-    if (!existsLocal(join(root, "builds", `hoobs-desktop-v${working.desktop.version}.exe`)) || !existsLocal(join(root, "builds", `hoobs-desktop-v${working.desktop.version}.dmg`))) {
-        console.log("building hoobs desktop");
-
-        await updateLocalization(credentials);
-
-        execLocal("bin/build --lint", { cwd: join(root, "./desktop"), stdio: "inherit" });
-    }
-}
-
-function buildImage(node) {
+function buildImage(node, built) {
     const working = {
         connect: JSON.parse(readFileSync(join(root, "./connect", "package.json")).toString()),
     }
 
-    if (!existsLocal(join(root, "builds", `hoobs-connect-v${working.connect.version}.tar.gz`))) {
+    if (!existsLocal(join(root, "repo/src", `hoobs-connect-v${working.connect.version}.tar.gz`))) {
         console.log("building hoobs connect");
 
         execLocal("bin/build", { cwd: join(root, "./connect"), stdio: "inherit" });
     }
 
-    if (!existsLocal(join(root, "builds", `hoobs-v${pjson.version}.zip`))) {
+    if (!existsLocal(join(root, "repo/img", `hoobs-v${pjson.version}.zip`))) {
         console.log("building image");
 
         execLocal("sudo docker rm -v hoobs-image", { cwd: join(root, "image"), stdio: "ignore" });
@@ -373,7 +362,7 @@ function buildImage(node) {
         if (existsLocal(join(root, "hoobs"))) rmSync(join(root, "image/hoobs.conf"));
         if (!existsLocal(join(root, "./image/stage3/01-wifi-connect/files"))) mkdirSync(join(root, "./image/stage3/01-wifi-connect/files"));
 
-        execLocal(`cp ${join(root, "builds", `hoobs-connect-v${working.connect.version}.tar.gz`)} ${join(root, "./image/stage3/01-wifi-connect/files", "hoobs-connect.tar.gz")}`);
+        execLocal(`cp ${join(root, "repo/img", `hoobs-connect-v${working.connect.version}.tar.gz`)} ${join(root, "./image/stage3/01-wifi-connect/files", "hoobs-connect.tar.gz")}`);
 
         let variables = "";
 
@@ -403,25 +392,29 @@ function buildImage(node) {
         execLocal(`sudo chown ${user.uid}:${user.gid} ${join(root, "image/deploy", `hoobs-${pjson.version}-box.info`)}`, { cwd: join(root, "image"), stdio: "inherit" });
         execLocal(`sudo chown ${user.uid}:${user.gid} ${join(root, "image/deploy", `hoobs-${pjson.version}-headless.info`)}`, { cwd: join(root, "image"), stdio: "inherit" });
 
-        if (existsLocal(join(root, "builds", `hoobs-v${pjson.version}.zip`))) unlinkSync(join(root, "builds", `hoobs-v${pjson.version}.zip`))
-        if (existsLocal(join(root, "builds", `hoobs-box-v${pjson.version}.zip`))) unlinkSync(join(root, "builds", `hoobs-box-v${pjson.version}.zip`))
-        if (existsLocal(join(root, "builds", `hoobsd-v${pjson.version}.zip`))) unlinkSync(join(root, "builds", `hoobsd-v${pjson.version}.zip`))
-        if (existsLocal(join(root, "builds", `hoobs-v${pjson.version}.info`))) unlinkSync(join(root, "builds", `hoobs-v${pjson.version}.info`))
-        if (existsLocal(join(root, "builds", `hoobs-box-v${pjson.version}.info`))) unlinkSync(join(root, "builds", `hoobs-box-v${pjson.version}.info`))
-        if (existsLocal(join(root, "builds", `hoobsd-v${pjson.version}.info`))) unlinkSync(join(root, "builds", `hoobsd-v${pjson.version}.info`))
+        if (existsLocal(join(root, "repo/img", `hoobs-v${pjson.version}.zip`))) unlinkSync(join(root, "repo/img", `hoobs-v${pjson.version}.zip`))
+        if (existsLocal(join(root, "repo/img", `hoobs-box-v${pjson.version}.zip`))) unlinkSync(join(root, "repo/img", `hoobs-box-v${pjson.version}.zip`))
+        if (existsLocal(join(root, "repo/img", `hoobsd-v${pjson.version}.zip`))) unlinkSync(join(root, "repo/img", `hoobsd-v${pjson.version}.zip`))
+        if (existsLocal(join(root, "repo/img", `hoobs-v${pjson.version}.info`))) unlinkSync(join(root, "repo/img", `hoobs-v${pjson.version}.info`))
+        if (existsLocal(join(root, "repo/img", `hoobs-box-v${pjson.version}.info`))) unlinkSync(join(root, "repo/img", `hoobs-box-v${pjson.version}.info`))
+        if (existsLocal(join(root, "repo/img", `hoobsd-v${pjson.version}.info`))) unlinkSync(join(root, "repo/img", `hoobsd-v${pjson.version}.info`))
 
-        execLocal(`sudo mv ${join(root, "image/deploy", `hoobs-${pjson.version}.zip`)} ${join(root, "builds", `hoobs-v${pjson.version}.zip`)}`);
-        execLocal(`sudo mv ${join(root, "image/deploy", `hoobs-${pjson.version}-box.zip`)} ${join(root, "builds", `hoobs-box-v${pjson.version}.zip`)}`);
-        execLocal(`sudo mv ${join(root, "image/deploy", `hoobs-${pjson.version}-headless.zip`)} ${join(root, "builds", `hoobsd-v${pjson.version}.zip`)}`);
-        execLocal(`sudo mv ${join(root, "image/deploy", `hoobs-${pjson.version}.info`)} ${join(root, "builds", `hoobs-v${pjson.version}.info`)}`);
-        execLocal(`sudo mv ${join(root, "image/deploy", `hoobs-${pjson.version}-box.info`)} ${join(root, "builds", `hoobs-box-v${pjson.version}.info`)}`);
-        execLocal(`sudo mv ${join(root, "image/deploy", `hoobs-${pjson.version}-headless.info`)} ${join(root, "builds", `hoobsd-v${pjson.version}.info`)}`);
+        execLocal(`sudo mv ${join(root, "image/deploy", `hoobs-${pjson.version}.zip`)} ${join(root, "repo/img", `hoobs-v${pjson.version}.zip`)}`);
+        execLocal(`sudo mv ${join(root, "image/deploy", `hoobs-${pjson.version}-box.zip`)} ${join(root, "repo/img", `hoobs-box-v${pjson.version}.zip`)}`);
+        execLocal(`sudo mv ${join(root, "image/deploy", `hoobs-${pjson.version}-headless.zip`)} ${join(root, "repo/img", `hoobsd-v${pjson.version}.zip`)}`);
+        execLocal(`sudo mv ${join(root, "image/deploy", `hoobs-${pjson.version}.info`)} ${join(root, "repo/img", `hoobs-v${pjson.version}.info`)}`);
+        execLocal(`sudo mv ${join(root, "image/deploy", `hoobs-${pjson.version}-box.info`)} ${join(root, "repo/img", `hoobs-box-v${pjson.version}.info`)}`);
+        execLocal(`sudo mv ${join(root, "image/deploy", `hoobs-${pjson.version}-headless.info`)} ${join(root, "repo/img", `hoobsd-v${pjson.version}.info`)}`);
 
         if (existsLocal(join(root, "image/deploy"))) execLocal(`sudo rm -fR ${join(root, "image/deploy")}`);
+
+        built.push("image");
+        built.push("server");
+        built.push("box");
     }
 }
 
-function publishPackage(credentials) {
+function publishPackage(repo, built) {
     const working = {
         sdk: JSON.parse(readFileSync(join(root, "./sdk", "package.json")).toString()),
         cli: JSON.parse(readFileSync(join(root, "./cli", "package.json")).toString()),
@@ -433,15 +426,7 @@ function publishPackage(credentials) {
 
     const exists = {
         sdk: execLocal(`yarn info @hoobs/sdk version | grep ${working.sdk.version}`, { cwd: root }) === working.sdk.version,
-        cli: existsRemote(credentials.repo, `/var/www/html/debian/hoobs-cli-v${working.cli.version}.deb`),
-        gui: existsRemote(credentials.repo, `/var/www/html/debian/hoobs-gui-v${working.gui.version}.deb`),
-        hoobsd: existsRemote(credentials.repo, `/var/www/html/debian/hoobsd-v${working.hoobsd.version}.deb`),
-        bundle: existsRemote(credentials.repo, `/var/www/html/debian/hoobs-v${pjson.version}.deb`),
         migration: execLocal(`yarn info @hoobs/migration version | grep ${working.migration.version}`, { cwd: root }) === working.migration.version,
-        desktop: {
-            win: existsRemote(credentials.repo, `/var/www/html/source/hoobs-desktop-v${working.desktop.version}.exe`),
-            mac: existsRemote(credentials.repo, `/var/www/html/source/hoobs-desktop-v${working.desktop.version}.dmg`),
-        },
     }
 
     if (!exists.sdk) {
@@ -454,162 +439,119 @@ function publishPackage(credentials) {
         execLocal(`yarn publish --access public --new-version ${working.migration.version}`, { cwd: join(root, "./migration"), stdio: "inherit" });
     }
 
-    if (!exists.cli || !exists.hoobsd || !exists.gui || !exists.bundle || !exists.desktop.win || !exists.desktop.mac) {
-        if (!exists.cli || !exists.hoobsd || !exists.gui || !exists.bundle) {
-            console.log("uploading deb packages");
+    console.log("updating repository");
 
-            if (!exists.cli) uploadRemote(credentials.repo, join(root, "builds", `hoobs-cli-v${working.cli.version}.deb`), "/var/www/html/debian/");
-            if (!exists.hoobsd) uploadRemote(credentials.repo, join(root, "builds", `hoobsd-v${working.hoobsd.version}.deb`), "/var/www/html/debian/");
-            if (!exists.gui) uploadRemote(credentials.repo, join(root, "builds", `hoobs-gui-v${working.gui.version}.deb`), "/var/www/html/debian/");
-            if (!exists.bundle) uploadRemote(credentials.repo, join(root, "builds", `hoobs-v${pjson.version}.deb`), "/var/www/html/debian/");
+    execLocal(`reprepro includedeb buster ${join(root, "repo/deb", repo, `hoobs-cli-v${working.cli.version}.deb`)}`, { cwd: join(root, "repo/deb", repo), stdio: "inherit" });
+    execLocal(`reprepro includedeb buster ${join(root, "repo/deb", repo, `hoobsd-v${working.hoobsd.version}.deb`)}`, { cwd: join(root, "repo/deb", repo), stdio: "inherit" });
+    execLocal(`reprepro includedeb buster ${join(root, "repo/deb", repo, `hoobs-gui-v${working.gui.version}.deb`)}`, { cwd: join(root, "repo/deb", repo), stdio: "inherit" });
+    execLocal(`reprepro includedeb buster ${join(root, "repo/deb", repo, `hoobs-v${pjson.version}.deb`)}`, { cwd: join(root, "repo/deb", repo), stdio: "inherit" });
 
-            console.log("updating repository");
+    execLocal("reprepro list buster", { cwd: join(root, "repo/deb", repo), stdio: "inherit" });
 
-            if (!exists.cli) execRemote(credentials.repo, `cd /var/www/html/debian && reprepro includedeb buster /var/www/html/debian/hoobs-cli-v${working.cli.version}.deb`);
-            if (!exists.hoobsd) execRemote(credentials.repo, `cd /var/www/html/debian && reprepro includedeb buster /var/www/html/debian/hoobsd-v${working.hoobsd.version}.deb`);
-            if (!exists.gui) execRemote(credentials.repo, `cd /var/www/html/debian && reprepro includedeb buster /var/www/html/debian/hoobs-gui-v${working.gui.version}.deb`);
-            if (!exists.bundle) execRemote(credentials.repo, `cd /var/www/html/debian && reprepro includedeb buster /var/www/html/debian/hoobs-v${pjson.version}.deb`);
+    console.log("syncing repository");
 
-            execRemote(credentials.repo, `cd /var/www/html/debian && reprepro list buster`);
-
-            console.log("uploading source files");
-
-            if (!exists.cli) uploadRemote(credentials.repo, join(root, "builds", `hoobs-cli-v${working.cli.version}.tar.gz`), "/var/www/html/source/");
-            if (!exists.hoobsd) uploadRemote(credentials.repo, join(root, "builds", `hoobsd-v${working.hoobsd.version}.tar.gz`), "/var/www/html/source/");
-            if (!exists.gui) uploadRemote(credentials.repo, join(root, "builds", `hoobs-gui-v${working.gui.version}.tar.gz`), "/var/www/html/source/");
-        }
-
-        if (!exists.desktop.win || !exists.desktop.mac) {
-            console.log("uploading installers");
-
-            if (!exists.desktop.win && existsSync(join(root, "builds", `hoobs-desktop-v${working.desktop.version}.exe`))) uploadRemote(credentials.repo, join(root, "builds", `hoobs-desktop-v${working.desktop.version}.exe`), "/var/www/html/source/");
-            if (!exists.desktop.mac && existsSync(join(root, "builds", `hoobs-desktop-v${working.desktop.version}.dmg`))) uploadRemote(credentials.repo, join(root, "builds", `hoobs-desktop-v${working.desktop.version}.dmg`), "/var/www/html/source/");
-        }
-
-        if (!exists.cli || !exists.desktop.win || !exists.desktop.mac) {
-            console.log("linking latest");
-
-            if (!exists.desktop.win && existsSync(join(root, "builds", `hoobs-desktop-v${working.desktop.version}.exe`))) {
-                execRemote(credentials.repo, `rm -f /var/www/html/source/hoobs-desktop-latest.exe`);
-                execRemote(credentials.repo, `cp /var/www/html/source/hoobs-desktop-v${working.desktop.version}.exe /var/www/html/source/hoobs-desktop-latest.exe`);
-            }
-
-            if (!exists.desktop.mac && existsSync(join(root, "builds", `hoobs-desktop-v${working.desktop.version}.dmg`))) {
-                execRemote(credentials.repo, `rm -f /var/www/html/source/hoobs-desktop-latest.dmg`);
-                execRemote(credentials.repo, `cp /var/www/html/source/hoobs-desktop-v${working.desktop.version}.dmg /var/www/html/source/hoobs-desktop-latest.dmg`);
-            }
-
-            if (!exists.cli) {
-                uploadRemote(credentials.repo, join(root, "builds", `hoobs-setup-v${working.cli.version}.sh`), "/var/www/html/debian/");
-                execRemote(credentials.repo, `rm -f /var/www/html/debian/setup`);
-                execRemote(credentials.repo, `cp /var/www/html/debian/hoobs-setup-v${working.cli.version}.sh /var/www/html/debian/setup`);
-            }
-        }
-
-        const utc = (new Date()).toISOString();
-        const versions = { query: { latest: true, beta: false } };
-
-        if (existsLocal(join(root, "builds", "versions.json"))) unlinkSync(join(root, "builds", "versions.json"));
-
-        let write = false;
-
-        if (!exists.desktop.win || !exists.desktop.mac) {
-            write = true;
-
-            versions.desktop = {
-                application: "desktop",
-                version: working.desktop.version,
-                published: { $date: utc },
-                latest: true,
-                download_win: `https://repo.hoobs.org/source/hoobs-desktop-v${working.desktop.version}.exe`,
-                download_mac: `https://repo.hoobs.org/source/hoobs-desktop-v${working.desktop.version}.dmg`,
-                beta: false,
-            };
-        }
-
-        if (!exists.gui) {
-            write = true;
-
-            versions.gui = {
-                application: "gui",
-                version: working.gui.version,
-                published: { $date: utc },
-                latest: true,
-                download: `https://repo.hoobs.org/source/hoobs-gui-v${working.gui.version}.tar.gz`,
-                beta: false,
-            };
-        }
-
-        if (!exists.hoobsd) {
-            write = true;
-
-            versions.hoobsd = {
-                application: "hoobsd",
-                version: working.hoobsd.version,
-                published: { $date: utc },
-                latest: true,
-                download: `https://repo.hoobs.org/source/hoobsd-v${working.hoobsd.version}.tar.gz`,
-                beta: false,
-            };
-        }
-
-        if (!exists.cli) {
-            write = true;
-
-            versions.hbs = {
-                application: "hbs",
-                version: working.cli.version,
-                published: { $date: utc },
-                latest: true,
-                download: `https://repo.hoobs.org/source/hoobs-cli-v${working.cli.version}.tar.gz`,
-                beta: false,
-            };
-
-            versions.setup = {
-                application: "setup",
-                version: working.cli.version,
-                published: { $date: utc },
-                latest: true,
-                download: `https://repo.hoobs.org/debian/hoobs-setup-v${working.cli.version}.sh`,
-                beta: false,
-            };
-        }
-
-        if (write) writeFileSync(join(root, "builds", "versions.json"), JSON.stringify(versions, null, 4));
-    }
-}
-
-function publishImage(credentials) {
-    const exists = {
-        hoobsd: existsRemote(credentials.repo, `/var/www/html/image/hoobsd-v${pjson.version}.zip`),
-        card: existsRemote(credentials.repo, `/var/www/html/image/hoobs-v${pjson.version}.zip`),
-        box: existsRemote(credentials.repo, `/var/www/html/image/hoobs-box-v${pjson.version}.zip`),
+    if (built.indexOf("gui") >= 0 || built.indexOf("hoobsd") >= 0 || built.indexOf("cli") >= 0) {
+        execLocal("git pull", { cwd: join(root, "repo"), stdio: "inherit" });
+        execLocal("git add --all", { cwd: join(root, "repo"), stdio: "inherit" });
+        execLocal("git commit -m 'image push'", { cwd: join(root, "repo"), stdio: "inherit" });
+        execLocal("git push", { cwd: join(root, "repo"), stdio: "inherit" });
     }
 
-    if (!exists.card || !exists.box) {
-        console.log("uploading images");
+    const utc = (new Date()).toISOString();
+    const versions = { query: { latest: true, beta: false } };
 
-        if (!exists.hoobsd) uploadRemote(credentials.repo, join(root, "builds", `hoobsd-v${pjson.version}.zip`), "/var/www/html/image/");
-        if (!exists.card) uploadRemote(credentials.repo, join(root, "builds", `hoobs-v${pjson.version}.zip`), "/var/www/html/image/");
-        if (!exists.box) uploadRemote(credentials.repo, join(root, "builds", `hoobs-box-v${pjson.version}.zip`), "/var/www/html/image/");
+    if (existsLocal(join(root, "repo", "versions.json"))) unlinkSync(join(root, "repo", "versions.json"));
 
-        console.log("linking latest");
-
-        if (!exists.hoobsd) {
-            execRemote(credentials.repo, `rm -f /var/www/html/image/hoobsd-latest.zip`);
-            execRemote(credentials.repo, `cp /var/www/html/image/hoobsd-v${pjson.version}.zip /var/www/html/image/hoobsd-latest.zip`);
-        }
-
-        if (!exists.card) {
-            execRemote(credentials.repo, `rm -f /var/www/html/image/hoobs-latest.zip`);
-            execRemote(credentials.repo, `cp /var/www/html/image/hoobs-v${pjson.version}.zip /var/www/html/image/hoobs-latest.zip`);
-        }
-
-        if (!exists.box) {
-            execRemote(credentials.repo, `rm -f /var/www/html/image/hoobs-box-latest.zip`);
-            execRemote(credentials.repo, `cp /var/www/html/image/hoobs-box-v${pjson.version}.zip /var/www/html/image/hoobs-box-latest.zip`);
-        }
+    if (built.indexOf("desktop") >= 0) {
+        versions.desktop = {
+            application: "desktop",
+            version: working.desktop.version,
+            published: { $date: utc },
+            latest: true,
+            download_win: `https://github.com/hoobs-org/desktop/releases/download/v${working.desktop.version}/hoobs-desktop-v${working.desktop.version}.exe`,
+            download_mac: `https://github.com/hoobs-org/desktop/releases/download/v${working.desktop.version}/hoobs-desktop-v${working.desktop.version}.dmg`,
+            beta: false,
+        };
     }
+
+    if (built.indexOf("gui") >= 0) {
+        versions.gui = {
+            application: "gui",
+            version: working.gui.version,
+            published: { $date: utc },
+            latest: true,
+            download: `https://github.com/hoobs-org/gui/releases/download/v${working.gui.version}/hoobs-gui-v${working.gui.version}.tar.gz`,
+            beta: false,
+        };
+    }
+
+    if (built.indexOf("hoobsd") >= 0) {
+        versions.hoobsd = {
+            application: "hoobsd",
+            version: working.hoobsd.version,
+            published: { $date: utc },
+            latest: true,
+            download: `https://github.com/hoobs-org/hoobsd/releases/download/v${working.hoobsd.version}/hoobsd-v${working.hoobsd.version}.tar.gz`,
+            beta: false,
+        };
+    }
+
+    if (built.indexOf("cli") >= 0) {
+        versions.hbs = {
+            application: "hbs",
+            version: working.cli.version,
+            published: { $date: utc },
+            latest: true,
+            download: `https://github.com/hoobs-org/cli/releases/download/v${working.cli.version}/hoobs-cli-v${working.cli.version}.tar.gz`,
+            beta: false,
+        };
+    }
+
+    if (built.indexOf("image") >= 0) {
+        versions.image = {
+            application: "image",
+            version: working.cli.version,
+            published: { $date: utc },
+            latest: true,
+            download: `https://github.com/hoobs-org/repo/releases/download/v${pjson.version}/hoobs-v${pjson.version}.zip`,
+            beta: false,
+        };
+    }
+
+    if (built.indexOf("server") >= 0) {
+        versions.server = {
+            application: "server",
+            version: working.cli.version,
+            published: { $date: utc },
+            latest: true,
+            download: `https://github.com/hoobs-org/repo/releases/download/v${pjson.version}/hoobsd-v${pjson.version}.zip`,
+            beta: false,
+        };
+    }
+
+    if (built.indexOf("box") >= 0) {
+        versions.box = {
+            application: "box",
+            version: working.cli.version,
+            published: { $date: utc },
+            latest: true,
+            download: `https://github.com/hoobs-org/repo/releases/download/v${pjson.version}/hoobs-box-v${pjson.version}.zip`,
+            beta: false,
+        };
+    }
+
+    if (built.indexOf("cli") >= 0) {
+        versions.setup = {
+            application: "setup",
+            version: working.cli.version,
+            published: { $date: utc },
+            latest: true,
+            download: "https://dl.hoobs.org/setup",
+            beta: false,
+        };
+    }
+
+    if (built.length > 0) writeFileSync(join(root, "repo", "versions.json"), JSON.stringify(versions, null, 4));
 }
 
 Program.version(pjson.version, "-v, --version", "output the current version")
@@ -622,6 +564,11 @@ Program.command("release")
             const credentials = require("../security/credentials.json");
 
             prompt([{
+                type: "list",
+                name: "repo",
+                message: "Select the repo to publish to",
+                choices: [{ name: "Stable", value: "stable" }, { name: "Edge", value: "edge" }],
+            }, {
                 type: "string",
                 name: "version",
                 default: pjson.version,
@@ -642,11 +589,12 @@ Program.command("release")
                     return true;
                 },
             }]).then(async (result) => {
-                await buildPackages(credentials, result.version);
+                const built = [];
 
-                publishPackage(credentials);
-                buildImage(result.node);
-                publishImage(credentials);
+                await buildPackages(result.repo, credentials, result.version, built);
+
+                publishPackage(result.repo, built);
+                buildImage(result.node, built);
             });
         }
     });
@@ -660,158 +608,6 @@ Program.command("locals")
             updateLocalization(credentials).finally(() => {
                 process.exit();
             });
-        }
-    });
-
-Program.command("package", { isDefault: true })
-    .description("build hoobs image")
-    .action(() => {
-        const credentials = require("../security/credentials.json");
-
-        if (process.platform === "linux" && checkEnviornment()) {
-            prompt([{
-                type: "string",
-                name: "version",
-                default: pjson.version,
-                message: "Enter the desired version",
-                validate: (value) => {
-                    if (!Semver.valid(value)) return "invalid version";
-
-                    return true;
-                },
-            }]).then(async (result) => {
-                await buildPackages(credentials, result.version);
-            });
-        } else if (process.platform === "darwin" && checkEnviornment()) {
-            buildDesktop(credentials);
-        }
-    });
-
-Program.command("publish [action]")
-    .description("publish builds to repository")
-    .action((action) => {
-        let proceed = process.platform === "linux" && checkEnviornment();
-
-        const working = {
-            cli: JSON.parse(readFileSync(join(root, "./cli", "package.json")).toString()),
-            hoobsd: JSON.parse(readFileSync(join(root, "./hoobsd", "package.json")).toString()),
-            gui: JSON.parse(readFileSync(join(root, "./gui", "package.json")).toString()),
-        }
-
-        switch (action) {
-            case "package":
-                if (proceed && action === "package" && (
-                    !existsLocal(join(root, "builds", `hoobs-cli-v${working.cli.version}.tar.gz`))
-                || !existsLocal(join(root, "builds", `hoobs-cli-v${working.cli.version}.deb`))
-                || !existsLocal(join(root, "builds", `hoobsd-v${working.hoobsd.version}.tar.gz`))
-                || !existsLocal(join(root, "builds", `hoobsd-v${working.hoobsd.version}.deb`))
-                || !existsLocal(join(root, "builds", `hoobs-gui-v${working.gui.version}.tar.gz`))
-                || !existsLocal(join(root, "builds", `hoobs-gui-v${working.gui.version}.deb`))
-                )) {
-                    console.log("please build package before publishing");
-                    proceed = false;
-                }
-
-                if (proceed) {
-                    const credentials = require("../security/credentials.json");
-
-                    publishPackage(credentials);
-                }
-
-                break;
-
-            case "image":
-                if (proceed && (
-                    !existsLocal(join(root, "builds", `hoobs-v${pjson.version}.zip`))
-                || !existsLocal(join(root, "builds", `hoobs-box-v${pjson.version}.zip`))
-                )) {
-                    console.log("please build image before publishing");
-                    proceed = false;
-                }
-
-                if (proceed) {
-                    const credentials = require("../security/credentials.json");
-
-                    publishImage(credentials);
-                }
-
-                break;
-
-            default:
-                console.log(Program.helpInformation());
-                break;
-        }
-    });
-
-Program.command("image")
-    .description("build hoobs image")
-    .action(() => {
-        let proceed = process.platform === "linux" && checkEnviornment();
-
-        const working = {
-            cli: JSON.parse(readFileSync(join(root, "./cli", "package.json")).toString()),
-            hoobsd: JSON.parse(readFileSync(join(root, "./hoobsd", "package.json")).toString()),
-            gui: JSON.parse(readFileSync(join(root, "./gui", "package.json")).toString()),
-            connect: JSON.parse(readFileSync(join(root, "./connect", "package.json")).toString()),
-        }
-
-        if (proceed && (
-                !existsLocal(join(root, "builds", `hoobs-cli-v${working.cli.version}.tar.gz`))
-            || !existsLocal(join(root, "builds", `hoobs-cli-v${working.cli.version}.deb`))
-            || !existsLocal(join(root, "builds", `hoobsd-v${working.hoobsd.version}.tar.gz`))
-            || !existsLocal(join(root, "builds", `hoobsd-v${working.hoobsd.version}.deb`))
-            || !existsLocal(join(root, "builds", `hoobs-gui-v${working.gui.version}.tar.gz`))
-            || !existsLocal(join(root, "builds", `hoobs-gui-v${working.gui.version}.deb`))
-            )) {
-
-            console.log("please build package before building image");
-            proceed = false;
-        }
-
-        if (proceed) {
-            prompt([{
-                type: "string",
-                name: "node",
-                default: "14",
-                message: "Select node major version",
-                validate: (value) => {
-                    if (Number.isNaN(parseInt(value, 10))) return "invalid version";
-
-                    return true;
-                },
-            }]).then((result) => {
-                buildImage(result.node);
-            });
-        }
-    });
-
-Program.command("volume [action]")
-    .description("build hoobs image")
-    .action((action) => {
-        switch (action) {
-            case "create":
-                if (process.platform === "linux" && checkEnviornment()) {
-                    console.log("creating build volumes");
-
-                    execLocal("sudo docker rm -v hoobs-image", { cwd: join(root, "image"), stdio: "ignore" });
-                    execLocal("sudo docker volume create hoobs", { cwd: join(root, "image"), stdio: "inherit" });
-                }
-
-                break;
-
-            case "remove":
-                if (process.platform === "linux" && checkEnviornment()) {
-                    console.log("removing build volumes");
-
-                    execLocal("sudo docker rm -v hoobs-image", { cwd: join(root, "image"), stdio: "ignore" });
-                    execLocal("sudo docker volume rm hoobs", { cwd: join(root, "image"), stdio: "inherit" });
-                }
-
-                break;
-
-            default:
-                console.log(Program.helpInformation());
-                break;
         }
     });
 

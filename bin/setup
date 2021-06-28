@@ -7,6 +7,7 @@
 [[ -d mobile ]] || git clone https://github.com/hoobs-org/mobile.git
 [[ -d sdk ]] || git clone https://github.com/hoobs-org/sdk.git
 [[ -d migration ]] || git clone https://github.com/hoobs-org/migration.git
+[[ -d repo ]] || git clone https://github.com/hoobs-org/repo.git
 [[ -d connect ]] || git clone https://github.com/hoobs-org/connect.git
 
 mkdir builds

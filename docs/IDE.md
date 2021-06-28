@@ -10,7 +10,6 @@ This will walk you through setting up your IDE, needed to develop and build HOOB
 - [Download the Code](#repo)
 - [Key Signing](#signing)
 - [Development Server](#serve)
-- [Building](#building)
 - [Publishing](#publishing)
 - [GitHub Intergration](#git)
 
@@ -244,19 +243,19 @@ Importing the keys.
 
 ```
 cd ~/HOOBS
-gpg --import ./security/repo/publickey.gpg
-gpg --allow-secret-key-import --import ./security/repo/privatekey.gpg
+gpg --import ./security/repo/github-publickey.gpg
+gpg --allow-secret-key-import --import ./security/repo/github-privatekey.gpg
 ```
 
 Now check your keys to see if the hoobs key is there.
 
 ```
-gpg --list-keys | grep hoobs
+gpg --list-keys | grep HOOBS
 ```
 
 The output should look something like this.
 ```
-uid [ultimate] hoobs <info@hoobs.org>
+uid [ultimate] HOOBS <info@hoobs.org>
 ```
 
 [Top](#home)
@@ -308,37 +307,10 @@ Starting the desktop app will also start the developer tools, which gives you ac
 
 [Top](#home)
 
-## <a name="building"></a>**Building**
-Building the desktop app is a bit more involved. Since we build the desktop app for both Windows and macOS, this needs to be build on the target operating system. The macOS build process requires XCode, thus you can only build this on macOS. macOS can also build the Windows version.
-
-If you have a macOS build enviornment setup, the main build process can remotely build it from your main IDE. You will need to enter the IP address, username, password, and define the path to the HOOBS project folder.
-
-To build locally on macOS run this command to build. (optional)
-```
-cd ~/HOOBS
-yarn build
-```
-
-You will be asked to select your targets. Currently these are the available targets.
-* Windows
-* macOS
-
-To build all packages from your main IDE.
-```
-cd ~/HOOBS
-yarn build package
-```
-
-The output will be in the `~/HOOBS/builds` folder.
-
-> Note. The main build process will always build all targets for HOOBS Desktop.
-
-[Top](#home)
-
 ## <a name="publishing"></a>**Publishing**
 We publish our releases to our repository server. There are built-in commands in the tool chain to make this easy.
 
-> The desktop app is published along with the other services, if it is in your builds folder.
+> The desktop app is published along with the other services, if it is in your repo folder.
 
 You can build and publish everything with this one command.
 
@@ -348,24 +320,6 @@ yarn release
 ```
 
 This command will ask you for the new version, and which Node major release to use. The Node release is not the full version, this is handled by the NodeSource repository. To get Node **14.16.0** simply enter the value **14**.
-
-> Note. This will ask for the password for the repository.
-
-The tool chain also allows you to publish the parts individually. This is handy for troubleshooting the build process.
-
-To publish the packages.
-
-```
-cd ~/HOOBS
-yarn upload package
-```
-
-To publish the images.
-
-```
-cd ~/HOOBS
-yarn upload image
-```
 
 [Top](#home)
 
