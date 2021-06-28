@@ -10,7 +10,6 @@
 [[ -d repo ]] || git clone https://github.com/hoobs-org/repo.git
 [[ -d connect ]] || git clone https://github.com/hoobs-org/connect.git
 
-mkdir builds
 yarn install
 
 cd ./hoobsd
