@@ -446,18 +446,18 @@ function publishPackage(repo, built) {
         execLocal(`yarn publish --access public --new-version ${working.migration.version}`, { cwd: join(root, "./migration"), stdio: "inherit" });
     }
 
-    console.log("updating repository");
-
-    execLocal(`reprepro includedeb buster ${join(root, "repo/deb", repo, `hoobs-cli-v${working.cli.version}.deb`)}`, { cwd: join(root, "repo/deb", repo), stdio: "inherit" });
-    execLocal(`reprepro includedeb buster ${join(root, "repo/deb", repo, `hoobsd-v${working.hoobsd.version}.deb`)}`, { cwd: join(root, "repo/deb", repo), stdio: "inherit" });
-    execLocal(`reprepro includedeb buster ${join(root, "repo/deb", repo, `hoobs-gui-v${working.gui.version}.deb`)}`, { cwd: join(root, "repo/deb", repo), stdio: "inherit" });
-    execLocal(`reprepro includedeb buster ${join(root, "repo/deb", repo, `hoobs-v${pjson.version}.deb`)}`, { cwd: join(root, "repo/deb", repo), stdio: "inherit" });
-
-    execLocal("reprepro list buster", { cwd: join(root, "repo/deb", repo), stdio: "inherit" });
-
-    console.log("syncing repository");
-
     if (built.indexOf("gui") >= 0 || built.indexOf("hoobsd") >= 0 || built.indexOf("cli") >= 0) {
+        console.log("updating repository");
+
+        execLocal(`reprepro includedeb buster ${join(root, "repo/deb", repo, `hoobs-cli-v${working.cli.version}.deb`)}`, { cwd: join(root, "repo/deb", repo), stdio: "inherit" });
+        execLocal(`reprepro includedeb buster ${join(root, "repo/deb", repo, `hoobsd-v${working.hoobsd.version}.deb`)}`, { cwd: join(root, "repo/deb", repo), stdio: "inherit" });
+        execLocal(`reprepro includedeb buster ${join(root, "repo/deb", repo, `hoobs-gui-v${working.gui.version}.deb`)}`, { cwd: join(root, "repo/deb", repo), stdio: "inherit" });
+        execLocal(`reprepro includedeb buster ${join(root, "repo/deb", repo, `hoobs-v${pjson.version}.deb`)}`, { cwd: join(root, "repo/deb", repo), stdio: "inherit" });
+
+        execLocal("reprepro list buster", { cwd: join(root, "repo/deb", repo), stdio: "inherit" });
+
+        console.log("syncing repository");
+
         execLocal("git pull", { cwd: join(root, "repo"), stdio: "inherit" });
         execLocal("git add --all", { cwd: join(root, "repo"), stdio: "inherit" });
         execLocal("git commit -m 'image push'", { cwd: join(root, "repo"), stdio: "inherit" });
@@ -558,7 +558,7 @@ function publishPackage(repo, built) {
         };
     }
 
-    if (built.length > 0) writeFileSync(join(root, "repo", "versions.json"), JSON.stringify(versions, null, 4));
+    writeFileSync(join(root, "repo", "versions.json"), JSON.stringify(versions, null, 4));
 }
 
 Program.version(pjson.version, "-v, --version", "output the current version")
