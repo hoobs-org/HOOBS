@@ -118,6 +118,7 @@ dist
 /security
 /migration
 /core
+/repo
 
 # Build output
 image/deploy/*
