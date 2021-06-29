@@ -553,7 +553,7 @@ function publishPackage(repo, built) {
             version: working.cli.version,
             published: { $date: utc },
             latest: true,
-            download: repo === "edge" || repo === "bleeding" ? `https://dl.hoobs.org/${repo}` : "https://dl.hoobs.org/setup",
+            download: `https://dl.hoobs.org/${repo}`,
             beta: repo === "edge" || repo === "bleeding",
         };
     }
