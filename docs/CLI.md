@@ -201,7 +201,7 @@ cd ~/backups
 sudo hbs bridge export
 ```
 
-> Note this will need to be ran with elevated permissions. You will need to chmod the file if you want to work with it.
+> This will need to be ran with elevated permissions. You will need to chmod the file if you want to work with it.
 
 Available options
 | Flag                | Description                                          |
@@ -456,7 +456,43 @@ Available options
 
 [Top](#home)
 
-#### <a name="system.versions"></a>Hostname
+#### <a name="system.stable"></a>Stable
+This will switch to the stable updates branch.
+
+```
+sudo hbs system stable
+```
+
+[Top](#home)
+
+#### <a name="system.stable"></a>Edge
+This will switch to the beta updates branch.
+
+```
+sudo hbs system edge
+```
+
+**Updates from this branch may include bugs**
+
+> It not recommended to use the edge branch for production devices.
+
+[Top](#home)
+
+#### <a name="system.stable"></a>Bleeding
+This will switch to the development updates branch.
+
+```
+sudo hbs system bleeding
+```
+
+**Updates from this branch will include bugs, and will not be compatiabale with all of your plugins**
+
+> It not recommended to use the bleeding branch for production devices.  
+> Updates from this branch are not tracked, you will need to manually run APT commands to update.
+
+[Top](#home)
+
+#### <a name="system.hostname"></a>Hostname
 This shows or sets the hostname.
 
 ```
@@ -469,7 +505,7 @@ To set the hostname, `<name>` is the hostname you wish to use.
 sudo hbs system hostname '<name>'
 ```
 
-> Note: Hostnames should not include spaces or special characters other then dashes.
+> Hostnames should not include spaces or special characters other then dashes.
 
 [Top](#home)
 
@@ -498,7 +534,7 @@ cd ~/backups
 sudo hbs system backup
 ```
 
-> Note this will need to be ran with elevated permissions. You will need to chmod the file if you want to work with it.
+> This will need to be ran with elevated permissions. You will need to chmod the file if you want to work with it.
 
 [Top](#home)
 
