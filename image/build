@@ -369,7 +369,7 @@ function buildImage(node, built) {
         if (existsLocal(join(root, "hoobs"))) rmSync(join(root, "image/hoobs.conf"));
         if (!existsLocal(join(root, "./image/stage3/01-wifi-connect/files"))) mkdirSync(join(root, "./image/stage3/01-wifi-connect/files"));
 
-        execLocal(`cp ${join(root, "repo/img", `hoobs-connect-v${working.connect.version}.tar.gz`)} ${join(root, "./image/stage3/01-wifi-connect/files", "hoobs-connect.tar.gz")}`);
+        execLocal(`cp ${join(root, "repo/src", `hoobs-connect-v${working.connect.version}.tar.gz`)} ${join(root, "./image/stage3/01-wifi-connect/files", "hoobs-connect.tar.gz")}`);
 
         let variables = "";
 
@@ -446,16 +446,16 @@ function publishPackage(repo, built) {
         execLocal(`yarn publish --access public --new-version ${working.migration.version}`, { cwd: join(root, "./migration"), stdio: "inherit" });
     }
 
-    if (built.indexOf("gui") >= 0 || built.indexOf("hoobsd") >= 0 || built.indexOf("cli") >= 0) {
-        console.log("updating repository");
+    console.log("updating repository");
 
-        execLocal(`reprepro includedeb buster ${join(root, "repo/deb", repo, `hoobs-cli-v${working.cli.version}.deb`)}`, { cwd: join(root, "repo/deb", repo), stdio: "inherit" });
-        execLocal(`reprepro includedeb buster ${join(root, "repo/deb", repo, `hoobsd-v${working.hoobsd.version}.deb`)}`, { cwd: join(root, "repo/deb", repo), stdio: "inherit" });
-        execLocal(`reprepro includedeb buster ${join(root, "repo/deb", repo, `hoobs-gui-v${working.gui.version}.deb`)}`, { cwd: join(root, "repo/deb", repo), stdio: "inherit" });
-        execLocal(`reprepro includedeb buster ${join(root, "repo/deb", repo, `hoobs-v${pjson.version}.deb`)}`, { cwd: join(root, "repo/deb", repo), stdio: "inherit" });
+    if (built.indexOf("cli") >= 0) execLocal(`reprepro includedeb buster ${join(root, "repo/deb", repo, `hoobs-cli-v${working.cli.version}.deb`)}`, { cwd: join(root, "repo/deb", repo), stdio: "inherit" });
+    if (built.indexOf("hoobsd") >= 0) execLocal(`reprepro includedeb buster ${join(root, "repo/deb", repo, `hoobsd-v${working.hoobsd.version}.deb`)}`, { cwd: join(root, "repo/deb", repo), stdio: "inherit" });
+    if (built.indexOf("gui") >= 0) execLocal(`reprepro includedeb buster ${join(root, "repo/deb", repo, `hoobs-gui-v${working.gui.version}.deb`)}`, { cwd: join(root, "repo/deb", repo), stdio: "inherit" });
+    if (built.indexOf("image") >= 0) execLocal(`reprepro includedeb buster ${join(root, "repo/deb", repo, `hoobs-v${pjson.version}.deb`)}`, { cwd: join(root, "repo/deb", repo), stdio: "inherit" });
 
-        execLocal("reprepro list buster", { cwd: join(root, "repo/deb", repo), stdio: "inherit" });
+    execLocal("reprepro list buster", { cwd: join(root, "repo/deb", repo), stdio: "inherit" });
 
+    if (built.indexOf("gui") >= 0 || built.indexOf("hoobsd") >= 0 || built.indexOf("cli") >= 0 || built.indexOf("image") >= 0)
         console.log("syncing repository");
 
         execLocal("git pull", { cwd: join(root, "repo"), stdio: "inherit" });
