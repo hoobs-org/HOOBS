@@ -271,7 +271,7 @@ async function buildPackages(repo, credentials, version, built) {
         built.push("sdk");
     }
 
-    if (!existsLocal(join(root, "repo/src", `hoobs-cli-v${working.cli.version}.tar.gz`))) {
+    if (!existsLocal(join(root, "repo/deb", repo, `hoobs-cli-v${working.cli.version}.deb`))) {
         console.log("building hoobs cli");
         execLocal(`bin/build --repo ${repo} --lint --pack`, { cwd: join(root, "./cli"), stdio: "inherit" });
         built.push("cli");
@@ -283,13 +283,13 @@ async function buildPackages(repo, credentials, version, built) {
         built.push("migration");
     }
 
-    if (!existsLocal(join(root, "repo/src", `hoobsd-v${working.hoobsd.version}.tar.gz`))) {
+    if (!existsLocal(join(root, "repo/deb", repo, `hoobsd-v${working.hoobsd.version}.deb`))) {
         console.log("building hoobsd");
         execLocal(`bin/build --repo ${repo} --lint --pack`, { cwd: join(root, "./hoobsd"), stdio: "inherit" });
         built.push("hoobsd");
     }
 
-    if (!existsLocal(join(root, "repo/src", `hoobs-gui-v${working.gui.version}.tar.gz`))) {
+    if (!existsLocal(join(root, "repo/deb", repo, `hoobs-gui-v${working.gui.version}.deb`))) {
         console.log("building hoobs gui");
 
         await updateLocalization(credentials);
