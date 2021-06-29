@@ -103,7 +103,6 @@ sudo apt remove docker docker-engine docker.io containerd runc
 Now download and install Docker's GPG key.
 
 ```
-sudo apt remove docker docker-engine docker.io containerd runc
 curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
 ```
 
@@ -255,7 +254,7 @@ gpg --list-keys | grep HOOBS
 
 The output should look something like this.
 ```
-uid [ultimate] HOOBS <info@hoobs.org>
+uid [unknown] HOOBS <info@hoobs.org>
 ```
 
 [Top](#home)
@@ -273,8 +272,20 @@ yarn build
 Next you will need to initilize the hub.
 
 ```
-sudo hbs install
+yarn debug install
 ```
+
+> For development we use port 50826 for the hub.
+
+Now edit the development enviornment file for the GUI.
+```
+cd ~/HOOBS/gui
+nano .env.development
+```
+
+Change the IP addresses to your IP address.
+
+> You can obtain your IP address with this command `ip address`.
 
 Now you are ready to run HOOBS in development mode, you will need to open two terminals.
 
