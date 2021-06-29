@@ -1,6 +1,6 @@
 {
     "name": "HOOBS",
     "description": "User friendly home automation for everyone.",
-    "icon": "https://repo.hoobs.org/hoobs-rpi-icon.png",
-    "subitems_url": "https://repo.hoobs.org/subitems.json"
+    "icon": "https://dl.hoobs.org/hoobs-rpi-icon.png",
+    "subitems_url": "https://dl.hoobs.org/subitems.json"
 }

@@ -24,7 +24,7 @@ on_chroot << EOF
     set -e
     set -x
 
-    wget https://repo.hoobs.org/source/ffmpeg-latest.tar.gz
+    wget https://github.com/hoobs-org/hoobsd/releases/download/v4.0.69/ffmpeg-v4.3.0.tar.gz
     tar -xzf ./ffmpeg-latest.tar.gz -C /usr/local --strip-components=1 --no-same-owner
     rm -f ./ffmpeg-latest.tar.gz
     ldconfig -n /usr/local/lib
