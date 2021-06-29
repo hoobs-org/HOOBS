@@ -5,7 +5,7 @@ git pull
 cd ./core
 git pull
 git checkout 3.3.5
-npm install --ignore-scripts
+npm install
 
 cd ../connect
 git pull
