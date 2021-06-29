@@ -53,6 +53,31 @@ function existsLocal(path) {
     return existsSync(path);
 }
 
+function existsWaterfall(root, repo, filename) {
+    switch (repo) {
+        case "stable":
+            if (!existsLocal(join(root, "repo/deb/stable", filename))) return false;
+            if (!existsLocal(join(root, "repo/deb/edge", filename))) return false;
+            if (!existsLocal(join(root, "repo/deb/bleeding", filename))) return false;
+
+            break;
+
+        case "edge":
+            if (!existsLocal(join(root, "repo/deb/edge", filename))) return false;
+            if (!existsLocal(join(root, "repo/deb/bleeding", filename))) return false;
+
+            break;
+
+        default:
+            if (!existsLocal(join(root, "repo/deb/edge", filename))) return false;
+            if (!existsLocal(join(root, "repo/deb/bleeding", filename))) return false;
+
+            break;
+    }
+
+    return true;
+}
+
 function existsRemote(credentials, path) {
     return execRemote(credentials, `ls ${path}`, { cwd: root, stdio: "pipe" }) === path;
 }
@@ -271,7 +296,7 @@ async function buildPackages(repo, credentials, version, built) {
         built.push("sdk");
     }
 
-    if (!existsLocal(join(root, "repo/deb", repo, `hoobs-cli-v${working.cli.version}.deb`))) {
+    if (!existsWaterfall(root, repo, `hoobs-cli-v${working.cli.version}.deb`)) {
         console.log("building hoobs cli");
         execLocal(`bin/build --repo ${repo} --lint --pack`, { cwd: join(root, "./cli"), stdio: "inherit" });
         built.push("cli");
@@ -283,13 +308,13 @@ async function buildPackages(repo, credentials, version, built) {
         built.push("migration");
     }
 
-    if (!existsLocal(join(root, "repo/deb", repo, `hoobsd-v${working.hoobsd.version}.deb`))) {
+    if (!existsWaterfall(root, repo, `hoobsd-v${working.hoobsd.version}.deb`)) {
         console.log("building hoobsd");
         execLocal(`bin/build --repo ${repo} --lint --pack`, { cwd: join(root, "./hoobsd"), stdio: "inherit" });
         built.push("hoobsd");
     }
 
-    if (!existsLocal(join(root, "repo/deb", repo, `hoobs-gui-v${working.gui.version}.deb`))) {
+    if (!existsWaterfall(root, repo, `hoobs-gui-v${working.gui.version}.deb`)) {
         console.log("building hoobs gui");
 
         await updateLocalization(credentials);
@@ -316,7 +341,7 @@ async function buildPackages(repo, credentials, version, built) {
         built.push("desktop");
     }
 
-    if (!existsLocal(join(root, "repo/deb", repo, `hoobs-v${pjson.version}.deb`))) {
+    if (!existsWaterfall(root, repo, `hoobs-v${pjson.version}.deb`)) {
         console.log("building bundle");
 
         if (existsLocal(join(root, "dist"))) execLocal(`rm -fR ${join(root, "dist")}`)
@@ -341,10 +366,44 @@ async function buildPackages(repo, credentials, version, built) {
         execLocal(`chmod 755 ${join(root, "dist/DEBIAN", "postinst")}`);
         execLocal("dpkg-deb --build dist");
 
-        if (existsLocal(join(root, "repo/deb", repo, `hoobs-v${pjson.version}.deb`))) unlinkSync(join(root, "repo/deb", repo, `hoobs-v${pjson.version}.deb`));
+        switch (repo) {
+            case "stable":
+                if (existsLocal(join(root, "repo/deb/stable", `hoobs-v${pjson.version}.deb`))) unlinkSync(join(root, "repo/deb/stable", `hoobs-v${pjson.version}.deb`));
+                if (existsLocal(join(root, "repo/deb/edge", `hoobs-v${pjson.version}.deb`))) unlinkSync(join(root, "repo/deb/edge", `hoobs-v${pjson.version}.deb`));
+                if (existsLocal(join(root, "repo/deb/bleeding", `hoobs-v${pjson.version}.deb`))) unlinkSync(join(root, "repo/deb/bleeding", `hoobs-v${pjson.version}.deb`));
 
-        execLocal(`mv ${join(root, "dist.deb")} ${join(root, "repo/deb", repo, `hoobs-v${pjson.version}.deb`)}`);
-        execLocal(`dpkg-sig --sign builder ${join(root, "repo/deb", repo, `hoobs-v${pjson.version}.deb`)}`);
+                execLocal(`cp ${join(root, "dist.deb")} ${join(root, "repo/deb/stable", `hoobs-v${pjson.version}.deb`)}`);
+                execLocal(`cp ${join(root, "dist.deb")} ${join(root, "repo/deb/edge", `hoobs-v${pjson.version}.deb`)}`);
+                execLocal(`cp ${join(root, "dist.deb")} ${join(root, "repo/deb/bleeding", `hoobs-v${pjson.version}.deb`)}`);
+
+                execLocal(`rm -f ${join(root, "dist.deb")}`);
+
+                execLocal(`dpkg-sig --sign builder ${join(root, "repo/deb/stable", `hoobs-v${pjson.version}.deb`)}`);
+                execLocal(`dpkg-sig --sign builder ${join(root, "repo/deb/edge", `hoobs-v${pjson.version}.deb`)}`);
+                execLocal(`dpkg-sig --sign builder ${join(root, "repo/deb/bleeding", `hoobs-v${pjson.version}.deb`)}`);
+                break;
+    
+            case "edge":
+                if (existsLocal(join(root, "repo/deb/edge", `hoobs-v${pjson.version}.deb`))) unlinkSync(join(root, "repo/deb/edge", `hoobs-v${pjson.version}.deb`));
+                if (existsLocal(join(root, "repo/deb/bleeding", `hoobs-v${pjson.version}.deb`))) unlinkSync(join(root, "repo/deb/bleeding", `hoobs-v${pjson.version}.deb`));
+
+                execLocal(`cp ${join(root, "dist.deb")} ${join(root, "repo/deb/edge", `hoobs-v${pjson.version}.deb`)}`);
+                execLocal(`cp ${join(root, "dist.deb")} ${join(root, "repo/deb/bleeding", `hoobs-v${pjson.version}.deb`)}`);
+
+                execLocal(`rm -f ${join(root, "dist.deb")}`);
+
+                execLocal(`dpkg-sig --sign builder ${join(root, "repo/deb/edge", `hoobs-v${pjson.version}.deb`)}`);
+                execLocal(`dpkg-sig --sign builder ${join(root, "repo/deb/bleeding", `hoobs-v${pjson.version}.deb`)}`);
+                break;
+    
+            default:
+                if (existsLocal(join(root, "repo/deb/bleeding", `hoobs-v${pjson.version}.deb`))) unlinkSync(join(root, "repo/deb/bleeding", `hoobs-v${pjson.version}.deb`));
+
+                execLocal(`cp ${join(root, "dist.deb")} ${join(root, "repo/deb/bleeding", `hoobs-v${pjson.version}.deb`)}`);
+                execLocal(`rm -f ${join(root, "dist.deb")}`);
+                execLocal(`dpkg-sig --sign builder ${join(root, "repo/deb/bleeding", `hoobs-v${pjson.version}.deb`)}`);
+                break;
+        }
 
         if (existsLocal(join(root, "dist"))) execLocal(`rm -fR ${join(root, "dist")}`);
     }
@@ -448,12 +507,71 @@ function publishPackage(repo, built) {
 
     console.log("updating repository");
 
-    if (built.indexOf("cli") >= 0) execLocal(`reprepro includedeb buster ${join(root, "repo/deb", repo, `hoobs-cli-v${working.cli.version}.deb`)}`, { cwd: join(root, "repo/deb", repo), stdio: "inherit" });
-    if (built.indexOf("hoobsd") >= 0) execLocal(`reprepro includedeb buster ${join(root, "repo/deb", repo, `hoobsd-v${working.hoobsd.version}.deb`)}`, { cwd: join(root, "repo/deb", repo), stdio: "inherit" });
-    if (built.indexOf("gui") >= 0) execLocal(`reprepro includedeb buster ${join(root, "repo/deb", repo, `hoobs-gui-v${working.gui.version}.deb`)}`, { cwd: join(root, "repo/deb", repo), stdio: "inherit" });
-    if (built.indexOf("image") >= 0) execLocal(`reprepro includedeb buster ${join(root, "repo/deb", repo, `hoobs-v${pjson.version}.deb`)}`, { cwd: join(root, "repo/deb", repo), stdio: "inherit" });
+    switch (repo) {
+        case "stable":
+            if (built.indexOf("cli") >= 0) {
+                execLocal(`reprepro includedeb buster ${join(root, "repo/deb/stable", `hoobs-cli-v${working.cli.version}.deb`)}`, { cwd: join(root, "repo/deb/stable"), stdio: "inherit" });
+                execLocal(`reprepro includedeb buster ${join(root, "repo/deb/edge", `hoobs-cli-v${working.cli.version}.deb`)}`, { cwd: join(root, "repo/deb/edge"), stdio: "inherit" });
+                execLocal(`reprepro includedeb buster ${join(root, "repo/deb/bleeding", `hoobs-cli-v${working.cli.version}.deb`)}`, { cwd: join(root, "repo/deb/bleeding"), stdio: "inherit" });
+            }
 
-    execLocal("reprepro list buster", { cwd: join(root, "repo/deb", repo), stdio: "inherit" });
+            if (built.indexOf("hoobsd") >= 0) {
+                execLocal(`reprepro includedeb buster ${join(root, "repo/deb/stable", `hoobsd-v${working.hoobsd.version}.deb`)}`, { cwd: join(root, "repo/deb/stable"), stdio: "inherit" });
+                execLocal(`reprepro includedeb buster ${join(root, "repo/deb/edge", `hoobsd-v${working.hoobsd.version}.deb`)}`, { cwd: join(root, "repo/deb/edge"), stdio: "inherit" });
+                execLocal(`reprepro includedeb buster ${join(root, "repo/deb/bleeding", `hoobsd-v${working.hoobsd.version}.deb`)}`, { cwd: join(root, "repo/deb/bleeding"), stdio: "inherit" });
+            }
+
+            if (built.indexOf("gui") >= 0) {
+                execLocal(`reprepro includedeb buster ${join(root, "repo/deb/stable", `hoobs-gui-v${working.gui.version}.deb`)}`, { cwd: join(root, "repo/deb/stable"), stdio: "inherit" });
+                execLocal(`reprepro includedeb buster ${join(root, "repo/deb/edge", `hoobs-gui-v${working.gui.version}.deb`)}`, { cwd: join(root, "repo/deb/edge"), stdio: "inherit" });
+                execLocal(`reprepro includedeb buster ${join(root, "repo/deb/bleeding", `hoobs-gui-v${working.gui.version}.deb`)}`, { cwd: join(root, "repo/deb/bleeding"), stdio: "inherit" });
+            }
+
+            if (built.indexOf("image") >= 0) {
+                execLocal(`reprepro includedeb buster ${join(root, "repo/deb/stable", `hoobs-v${pjson.version}.deb`)}`, { cwd: join(root, "repo/deb/stable"), stdio: "inherit" });
+                execLocal(`reprepro includedeb buster ${join(root, "repo/deb/edge", `hoobs-v${pjson.version}.deb`)}`, { cwd: join(root, "repo/deb/edge"), stdio: "inherit" });
+                execLocal(`reprepro includedeb buster ${join(root, "repo/deb/bleeding", `hoobs-v${pjson.version}.deb`)}`, { cwd: join(root, "repo/deb/bleeding"), stdio: "inherit" });
+            }
+
+            execLocal("reprepro list buster", { cwd: join(root, "repo/deb/stable"), stdio: "inherit" });
+            execLocal("reprepro list buster", { cwd: join(root, "repo/deb/edge"), stdio: "inherit" });
+            execLocal("reprepro list buster", { cwd: join(root, "repo/deb/bleeding"), stdio: "inherit" });
+            break;
+
+        case "edge":
+            if (built.indexOf("cli") >= 0) {
+                execLocal(`reprepro includedeb buster ${join(root, "repo/deb/edge", `hoobs-cli-v${working.cli.version}.deb`)}`, { cwd: join(root, "repo/deb/edge"), stdio: "inherit" });
+                execLocal(`reprepro includedeb buster ${join(root, "repo/deb/bleeding", `hoobs-cli-v${working.cli.version}.deb`)}`, { cwd: join(root, "repo/deb/bleeding"), stdio: "inherit" });
+            }
+
+            if (built.indexOf("hoobsd") >= 0) {
+                execLocal(`reprepro includedeb buster ${join(root, "repo/deb/edge", `hoobsd-v${working.hoobsd.version}.deb`)}`, { cwd: join(root, "repo/deb/edge"), stdio: "inherit" });
+                execLocal(`reprepro includedeb buster ${join(root, "repo/deb/bleeding", `hoobsd-v${working.hoobsd.version}.deb`)}`, { cwd: join(root, "repo/deb/bleeding"), stdio: "inherit" });
+            }
+
+            if (built.indexOf("gui") >= 0) {
+                execLocal(`reprepro includedeb buster ${join(root, "repo/deb/edge", `hoobs-gui-v${working.gui.version}.deb`)}`, { cwd: join(root, "repo/deb/edge"), stdio: "inherit" });
+                execLocal(`reprepro includedeb buster ${join(root, "repo/deb/bleeding", `hoobs-gui-v${working.gui.version}.deb`)}`, { cwd: join(root, "repo/deb/bleeding"), stdio: "inherit" });
+            }
+
+            if (built.indexOf("image") >= 0) {
+                execLocal(`reprepro includedeb buster ${join(root, "repo/deb/edge", `hoobs-v${pjson.version}.deb`)}`, { cwd: join(root, "repo/deb/edge"), stdio: "inherit" });
+                execLocal(`reprepro includedeb buster ${join(root, "repo/deb/bleeding", `hoobs-v${pjson.version}.deb`)}`, { cwd: join(root, "repo/deb/bleeding"), stdio: "inherit" });
+            }
+
+            execLocal("reprepro list buster", { cwd: join(root, "repo/deb/edge"), stdio: "inherit" });
+            execLocal("reprepro list buster", { cwd: join(root, "repo/deb/bleeding"), stdio: "inherit" });
+            break;
+
+        default:
+            if (built.indexOf("cli") >= 0) execLocal(`reprepro includedeb buster ${join(root, "repo/deb/bleeding", `hoobs-cli-v${working.cli.version}.deb`)}`, { cwd: join(root, "repo/deb/bleeding"), stdio: "inherit" });
+            if (built.indexOf("hoobsd") >= 0) execLocal(`reprepro includedeb buster ${join(root, "repo/deb/bleeding", `hoobsd-v${working.hoobsd.version}.deb`)}`, { cwd: join(root, "repo/deb/bleeding"), stdio: "inherit" });
+            if (built.indexOf("gui") >= 0) execLocal(`reprepro includedeb buster ${join(root, "repo/deb/bleeding", `hoobs-gui-v${working.gui.version}.deb`)}`, { cwd: join(root, "repo/deb/bleeding"), stdio: "inherit" });
+            if (built.indexOf("image") >= 0) execLocal(`reprepro includedeb buster ${join(root, "repo/deb/bleeding", `hoobs-v${pjson.version}.deb`)}`, { cwd: join(root, "repo/deb/bleeding"), stdio: "inherit" });
+
+            execLocal("reprepro list buster", { cwd: join(root, "repo/deb/bleeding"), stdio: "inherit" });
+            break;
+    }
 
     if (built.indexOf("gui") >= 0 || built.indexOf("hoobsd") >= 0 || built.indexOf("cli") >= 0 || built.indexOf("image") >= 0) {
         console.log("syncing repository");
