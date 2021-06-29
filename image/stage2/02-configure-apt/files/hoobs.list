@@ -1,1 +1,1 @@
-deb https://repo.hoobs.org/debian RELEASE main
+deb https://dl.hoobs.org/deb/stable/ RELEASE main
