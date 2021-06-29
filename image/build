@@ -455,7 +455,7 @@ function publishPackage(repo, built) {
 
     execLocal("reprepro list buster", { cwd: join(root, "repo/deb", repo), stdio: "inherit" });
 
-    if (built.indexOf("gui") >= 0 || built.indexOf("hoobsd") >= 0 || built.indexOf("cli") >= 0 || built.indexOf("image") >= 0)
+    if (built.indexOf("gui") >= 0 || built.indexOf("hoobsd") >= 0 || built.indexOf("cli") >= 0 || built.indexOf("image") >= 0) {
         console.log("syncing repository");
 
         execLocal("git pull", { cwd: join(root, "repo"), stdio: "inherit" });
