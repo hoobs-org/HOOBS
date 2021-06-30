@@ -18,12 +18,13 @@
         "pull": "bin/pull",
         "setup": "bin/setup",
         "locals": "image/build locals",
-        "release": "image/build release"
+        "release": "gh auth login -h github.com && image/build release"
     },
     "devDependencies": {
         "commander": "^7.1.0",
         "inquirer": "^8.0.0",
         "loco-api-js": "^1.2.0",
+        "mongodb": "^3.6.9",
         "rimraf": "^3.0.2",
         "semver": "^7.3.4"
     }

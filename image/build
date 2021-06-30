@@ -25,6 +25,7 @@ const Inquirer = require("inquirer");
 const Loco = require("loco-api-js");
 const { join } = require("path");
 const { execSync } = require("child_process");
+const { MongoClient } = require("mongodb");
 
 const {
     existsSync,
@@ -90,11 +91,20 @@ function downloadRemote(credentials, source, destination) {
     execLocal(`sshpass -p '${credentials.pass}' scp ${credentials.user}@${credentials.host}:${source} ${destination}`);
 }
 
+function createRelease(repo, title, version, files, notes, beta) {
+    if (beta) {
+        execLocal(`gh release create v${version} ${files} -p -t '${title} ${version}' -n '${notes}'`, { cwd: repo, stdio: "inherit" });
+    } else {
+        execLocal(`gh release create v${version} ${files} -t '${title} ${version}' -n '${notes}'`, { cwd: repo, stdio: "inherit" });
+    }
+}
+
 function checkEnviornment() {
     const signing = execLocal("command -v dpkg-sig", { stdio: "pipe" }).toString().replace(/\n/g, "").trim();
     const sshpass = execLocal("command -v sshpass", { stdio: "pipe" }).toString().replace(/\n/g, "").trim();
     const docker = execLocal("command -v docker", { stdio: "pipe" }).toString().replace(/\n/g, "").trim();
     const reprepro = execLocal("command -v reprepro", { stdio: "pipe" }).toString().replace(/\n/g, "").trim();
+    const gh = execLocal("command -v gh", { stdio: "pipe" }).toString().replace(/\n/g, "").trim();
 
     if (process.platform === "linux" && (!signing || signing === "")) {
         console.log("dpkg-sig is not installed, https://git.io/JOKhF");
@@ -116,6 +126,12 @@ function checkEnviornment() {
 
     if (process.platform === "linux" && (!reprepro || reprepro === "")) {
         console.log("reprepro is not installed, https://git.io/JOKhF");
+
+        return false;
+    }
+
+    if (process.platform === "linux" && (!gh || gh === "")) {
+        console.log("gh is not installed, https://git.io/JOKhF");
 
         return false;
     }
@@ -480,7 +496,7 @@ function buildImage(node, built) {
     }
 }
 
-function publishPackage(repo, built) {
+async function publishPackage(repo, credentials, built) {
     const working = {
         sdk: JSON.parse(readFileSync(join(root, "./sdk", "package.json")).toString()),
         cli: JSON.parse(readFileSync(join(root, "./cli", "package.json")).toString()),
@@ -583,100 +599,176 @@ function publishPackage(repo, built) {
     }
 
     const utc = (new Date()).toISOString();
-    const versions = { query: { latest: true, beta: false } };
+    const beta = repo === "edge" || repo === "bleeding";
+    const client = new MongoClient(credentials.db);
 
-    if (existsLocal(join(root, "repo", "versions.json"))) unlinkSync(join(root, "repo", "versions.json"));
+    await client.connect();
+
+    const database = client.db("support");
+    const releases = database.collection("releases");
+
+    if (built.indexOf("sdk") >= 0) {
+        createRelease(
+            join(root, "sdk"),
+            "HOOBS SDK",
+            working.sdk.version,
+            join(root, "repo/npm", `hoobs-sdk-v${working.sdk.version}.tgz`),
+            "HOOBS SDK for building applications that talk with the HOOBS API.\n\n* Big fixes",
+            false,
+        );
+    }
+
+    if (built.indexOf("migration") >= 0) {
+        createRelease(
+            join(root, "migration"),
+            "HOOBS Migration",
+            working.migration.version,
+            join(root, "repo/npm", `hoobs-migration-v${working.migration.version}.tgz`),
+            "HOOBS 4 Migration Utility.\n\n* Big fixes",
+            false,
+        );
+    }
 
     if (built.indexOf("desktop") >= 0) {
-        versions.desktop = {
+        await releases.updateOne({ application: "desktop", latest: true, beta: false }, { $set: { latest: false } }, { upsert: true });
+
+        await releases.insertOne({
             application: "desktop",
             version: working.desktop.version,
             published: { $date: utc },
             latest: true,
             download_win: `https://github.com/hoobs-org/desktop/releases/download/v${working.desktop.version}/hoobs-desktop-v${working.desktop.version}.exe`,
             download_mac: `https://github.com/hoobs-org/desktop/releases/download/v${working.desktop.version}/hoobs-desktop-v${working.desktop.version}.dmg`,
-            beta: repo === "edge" || repo === "bleeding",
-        };
-    }
+            beta,
+        });
 
+        createRelease(
+            join(root, "desktop"),
+            "HOOBS Desktop",
+            working.desktop.version,
+            join(root, "repo/bin", `hoobs-desktop-v${working.desktop.version}.*`),
+            "HOOBS Desktop Application.\n\n* Big fixes",
+            beta,
+        );
+    }
+            
     if (built.indexOf("gui") >= 0) {
-        versions.gui = {
+        await releases.updateOne({ application: "gui", latest: true, beta }, { $set: { latest: false } }, { upsert: true });
+
+        await releases.insertOne({
             application: "gui",
             version: working.gui.version,
             published: { $date: utc },
             latest: true,
             download: `https://github.com/hoobs-org/gui/releases/download/v${working.gui.version}/hoobs-gui-v${working.gui.version}.tar.gz`,
-            beta: repo === "edge" || repo === "bleeding",
-        };
+            beta,
+        });
+
+        createRelease(
+            join(root, "gui"),
+            "HOOBS Web Interface",
+            working.gui.version,
+            join(root, "repo/src", `hoobs-gui-v${working.gui.version}.tar.gz`),
+            "Interface component for the certified HOOBS stack.\n\n* Big fixes",
+            beta,
+        );
     }
 
     if (built.indexOf("hoobsd") >= 0) {
-        versions.hoobsd = {
+        await releases.updateOne({ application: "hoobsd", latest: true, beta }, { $set: { latest: false } }, { upsert: true });
+
+        await releases.insertOne({
             application: "hoobsd",
             version: working.hoobsd.version,
             published: { $date: utc },
             latest: true,
             download: `https://github.com/hoobs-org/hoobsd/releases/download/v${working.hoobsd.version}/hoobsd-v${working.hoobsd.version}.tar.gz`,
-            beta: repo === "edge" || repo === "bleeding",
-        };
+            beta,
+        });
+
+        createRelease(
+            join(root, "hoobsd"),
+            "HOOBS Daemon",
+            working.hoobsd.version,
+            join(root, "repo/src", `hoobsd-v${working.hoobsd.version}.tar.gz`),
+            "Server component for the certified HOOBS smart home stack.\n\n* Big fixes",
+            beta,
+        );
     }
 
     if (built.indexOf("cli") >= 0) {
-        versions.hbs = {
+        await releases.updateOne({ application: "hbs", latest: true, beta }, { $set: { latest: false } }, { upsert: true });
+        await releases.updateOne({ application: "setup", latest: true, beta: false }, { $set: { latest: false } }, { upsert: true });
+
+        await releases.insertOne({
             application: "hbs",
             version: working.cli.version,
             published: { $date: utc },
             latest: true,
             download: `https://github.com/hoobs-org/cli/releases/download/v${working.cli.version}/hoobs-cli-v${working.cli.version}.tar.gz`,
-            beta: repo === "edge" || repo === "bleeding",
-        };
-    }
+            beta,
+        });
 
-    if (built.indexOf("image") >= 0) {
-        versions.image = {
-            application: "image",
-            version: working.cli.version,
-            published: { $date: utc },
-            latest: true,
-            download: `https://github.com/hoobs-org/repo/releases/download/v${pjson.version}/hoobs-v${pjson.version}.zip`,
-            beta: repo === "edge" || repo === "bleeding",
-        };
-    }
-
-    if (built.indexOf("server") >= 0) {
-        versions.server = {
-            application: "server",
-            version: working.cli.version,
-            published: { $date: utc },
-            latest: true,
-            download: `https://github.com/hoobs-org/repo/releases/download/v${pjson.version}/hoobsd-v${pjson.version}.zip`,
-            beta: repo === "edge" || repo === "bleeding",
-        };
-    }
-
-    if (built.indexOf("box") >= 0) {
-        versions.box = {
-            application: "box",
-            version: working.cli.version,
-            published: { $date: utc },
-            latest: true,
-            download: `https://github.com/hoobs-org/repo/releases/download/v${pjson.version}/hoobs-box-v${pjson.version}.zip`,
-            beta: repo === "edge" || repo === "bleeding",
-        };
-    }
-
-    if (built.indexOf("cli") >= 0) {
-        versions.setup = {
+        await releases.insertOne({
             application: "setup",
             version: working.cli.version,
             published: { $date: utc },
             latest: true,
-            download: `https://dl.hoobs.org/${repo}`,
-            beta: repo === "edge" || repo === "bleeding",
-        };
+            download: `https://dl.hoobs.org/stable`,
+            beta: false,
+        });
+
+        createRelease(
+            join(root, "cli"),
+            "HOOBS Command Line",
+            working.cli.version,
+            join(root, "repo/src", `hoobs-cli-v${working.cli.version}.tar.gz`),
+            "Command line interface for the certified HOOBS smart home stack.\n\n* Big fixes",
+            beta,
+        );
     }
 
-    writeFileSync(join(root, "repo", "versions.json"), JSON.stringify(versions, null, 4));
+    if (built.indexOf("image") >= 0 || built.indexOf("server") >= 0 || built.indexOf("box") >= 0) {
+        await releases.updateOne({ application: "image", latest: true, beta }, { $set: { latest: false } }, { upsert: true });
+        await releases.updateOne({ application: "server", latest: true, beta }, { $set: { latest: false } }, { upsert: true });
+        await releases.updateOne({ application: "box", latest: true, beta }, { $set: { latest: false } }, { upsert: true });
+
+        await releases.insertOne({
+            application: "image",
+            version: pjson.version,
+            published: { $date: utc },
+            latest: true,
+            download: `https://github.com/hoobs-org/repo/releases/download/v${pjson.version}/hoobs-v${pjson.version}.zip`,
+            beta,
+        });
+
+        await releases.insertOne({
+            application: "server",
+            version: pjson.version,
+            published: { $date: utc },
+            latest: true,
+            download: `https://github.com/hoobs-org/repo/releases/download/v${pjson.version}/hoobsd-v${pjson.version}.zip`,
+            beta,
+        });
+
+        await releases.insertOne({
+            application: "box",
+            version: pjson.version,
+            published: { $date: utc },
+            latest: true,
+            download: `https://github.com/hoobs-org/repo/releases/download/v${pjson.version}/hoobs-box-v${pjson.version}.zip`,
+            beta,
+        });
+
+        createRelease(
+            join(root, "repo"),
+            "HOOBS",
+            pjson.version,
+            join(root, "repo/img", `hoobs*-v${pjson.version}.*`),
+            "HOOBS image for Raspberry Pi.\n\n* Big fixes",
+            beta,
+        );
+    }
 }
 
 Program.version(pjson.version, "-v, --version", "output the current version")
@@ -726,8 +818,8 @@ Program.command("release")
                 const built = [];
 
                 await buildPackages(result.repo, credentials, result.version, built);
+                await publishPackage(result.repo, credentials, built);
 
-                publishPackage(result.repo, built);
                 buildImage(result.node, built);
             });
         }
