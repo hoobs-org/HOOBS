@@ -32,8 +32,8 @@ NAME='WiFi Connect Raspbian Installer'
 INSTALL_BIN_DIR="$WFC_INSTALL_ROOT/sbin"
 INSTALL_UI_DIR="$WFC_INSTALL_ROOT/share/wifi-connect/ui"
 
-WFC_VERSION="4.4.5"
-RELEASE_URL="https://github.com/balena-io/wifi-connect/releases/download/v$WFC_VERSION/wifi-connect-v$WFC_VERSION-linux-rpi.tar.gz"
+WFC_VERSION="4.4.6"
+RELEASE_URL="https://github.com/balena-os/wifi-connect/releases/download/v$WFC_VERSION/wifi-connect-v$WFC_VERSION-linux-rpi.tar.gz"
 
 CONFIRMATION=true
 
