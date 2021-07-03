@@ -7,6 +7,7 @@ Build your Smart Home with HOOBS. Connect over 2,000 Accessories from your favor
 ![](https://raw.githubusercontent.com/hoobs-org/HOOBS/development/screenshot.png)
 
 ## What is HOOBS?
+
 HOOBS™ makes smart accessories compatible with your favorite ecosystem. Whether you prefer Apple Homekit™, Google Home™, or Amazon Alexa™, you’re unlikely to find compatible accessories and services that all work together nicely under one roof.
 
 There are many different Smart Home Solutions out there, but many of them are still built as walled garden. HOOBS™ is here to close the gaps make connections to all different kind of home automation system and bring them together and communicate with eachother.
