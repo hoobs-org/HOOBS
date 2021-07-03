@@ -11,6 +11,14 @@ HOOBS is a plug and play hub that makes smart accessories compatible with your f
 
 **HOOBS** aims to unify and simplify your smart home. It is designed to be accessible for beginners, yet robust and versatile for advanced users, opening a world of possibilities for automating your home.
 
+## Products
+
+[![](https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/products/hoobs-box.png)](https://hoobs.com/product/hoobs-in-a-box-starter-kit/)
+
+[![](https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/products/hoobs-card.png)](https://hoobs.com/product/hoobs-on-microsd/)
+
+[![](https://raw.githubusercontent.com/hoobs-org/HOOBS/master/docs/products/hoobs-download.png)](https://hoobs.com/product/hoobs-to-download/)
+
 ## HOOBS Community
 [HOOBS Website](https://hoobs.org)  
 [HOOBS Support](https://support.hoobs.org)  
