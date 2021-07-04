@@ -43,10 +43,6 @@
         {
             "name": "repo",
             "path": "./repo"
-        },
-        {
-            "name": "docs",
-            "path": "./docs"
         }
     ],
     "settings": {
