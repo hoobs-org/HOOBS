@@ -15,10 +15,6 @@
         {
             "name": "builds",
             "path": "./builds"
-        },
-        {
-            "name": "docs",
-            "path": "./docs"
         }
     ],
     "settings": {
