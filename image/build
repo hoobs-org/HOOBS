@@ -79,14 +79,6 @@ function existsWaterfall(root, repo, filename) {
     return true;
 }
 
-function existsRemote(credentials, path) {
-    return execRemote(credentials, `ls ${path}`, { cwd: root, stdio: "pipe" }) === path;
-}
-
-function execRemote(credentials, command, options) {
-    return execLocal(`sshpass -p '${credentials.pass}' ssh ${credentials.user}@${credentials.host} '${command}'`, options);
-}
-
 function downloadRemote(credentials, source, destination) {
     execLocal(`sshpass -p '${credentials.pass}' scp ${credentials.user}@${credentials.host}:${source} ${destination}`);
 }
@@ -341,18 +333,6 @@ async function buildPackages(repo, credentials, version, built) {
 
     if (darwin && (!existsLocal(join(root, "repo/bin", `hoobs-desktop-v${working.desktop.version}.exe`)) || !existsLocal(join(root, "repo/bin", `hoobs-desktop-v${working.desktop.version}.dmg`)))) {
         console.log("building hoobs desktop");
-
-        /*
-        if (!existsRemote(darwin, join(darwin.path, "repo/bin", `hoobs-desktop-v${working.desktop.version}.exe`)) || !existsRemote(darwin, join(darwin.path, "repo/bin", `hoobs-desktop-v${working.desktop.version}.dmg`))) {
-            execRemote(darwin, `PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin; git config --global user.email "${darwin.gituser}@gmail.com"`);
-            execRemote(darwin, `PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin; git config --global user.name "${darwin.gituser}"`);
-            execRemote(darwin, `PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin; git config --global user.password "${darwin.gitpass}"`);
-            execRemote(darwin, "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin; git config --global pull.rebase false");
-
-            execRemote(darwin, `cd ${darwin.path} && PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin; yarn pull`);
-            execRemote(darwin, `cd ${join(darwin.path, "desktop")} && PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin; yarn build --target win mac`);
-        }
-        */
 
         downloadRemote(darwin, join(darwin.path, "repo/bin", `hoobs-desktop-v${working.desktop.version}.exe`), join(root, "repo/bin", `hoobs-desktop-v${working.desktop.version}.exe`));
         downloadRemote(darwin, join(darwin.path, "repo/bin", `hoobs-desktop-v${working.desktop.version}.dmg`), join(root, "repo/bin", `hoobs-desktop-v${working.desktop.version}.dmg`));
