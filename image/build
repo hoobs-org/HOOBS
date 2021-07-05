@@ -710,6 +710,20 @@ async function publishPackage(repo, credentials, built) {
                 beta,
             );
         }
+    }
+
+    return;
+}
+
+async function publishImage(repo, credentials, built) {
+    if (repo === "edge" || repo === "stable") {
+        const beta = repo === "edge" || repo === "bleeding";
+        const client = new MongoClient(credentials.db, { useUnifiedTopology: true });
+
+        await client.connect();
+
+        const database = client.db("support");
+        const releases = database.collection("releases");
 
         if (built.indexOf("image") >= 0 || built.indexOf("server") >= 0 || built.indexOf("box") >= 0) {
             await releases.updateOne({ application: "image", latest: true, beta }, { $set: { latest: false } }, { upsert: true });
@@ -807,6 +821,8 @@ Program.command("release")
                 await publishPackage(result.repo, credentials, built);
 
                 buildImage(result.node, built);
+
+                await publishImage(result.repo, credentials, built);
 
                 process.exit();
             });
