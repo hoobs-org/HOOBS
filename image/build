@@ -613,7 +613,7 @@ async function publishPackage(repo, credentials, built) {
         }
 
         if (built.indexOf("desktop") >= 0) {
-            await releases.updateOne({ application: "desktop", latest: true, beta: false }, { $set: { latest: false } }, { upsert: true });
+            await releases.updateOne({ application: "desktop", latest: true, beta }, { $set: { latest: false } }, { upsert: true });
 
             await releases.insertOne({
                 application: "desktop",
