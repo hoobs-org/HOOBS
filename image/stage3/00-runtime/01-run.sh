@@ -25,7 +25,4 @@ on_chroot << EOF
     set -x
 
     systemctl enable avahi-daemon.service
-
-    echo 0 | tee /sys/class/leds/led0/brightness
-    echo 0 | tee /sys/class/leds/led1/brightness
 EOF
