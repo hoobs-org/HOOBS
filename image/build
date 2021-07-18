@@ -615,6 +615,8 @@ async function publishPackage(repo, credentials, built) {
         if (built.indexOf("desktop") >= 0) {
             await releases.updateOne({ application: "desktop", latest: true, beta }, { $set: { latest: false } }, { upsert: true });
 
+            if (!beta) await releases.updateOne({ application: "desktop", latest: true, beta: true }, { $set: { latest: false } }, { upsert: true });
+
             await releases.insertOne({
                 application: "desktop",
                 version: working.desktop.version,
@@ -638,6 +640,8 @@ async function publishPackage(repo, credentials, built) {
         if (built.indexOf("gui") >= 0) {
             await releases.updateOne({ application: "gui", latest: true, beta }, { $set: { latest: false } }, { upsert: true });
 
+            if (!beta) await releases.updateOne({ application: "gui", latest: true, beta: true }, { $set: { latest: false } }, { upsert: true });
+
             await releases.insertOne({
                 application: "gui",
                 version: working.gui.version,
@@ -659,6 +663,8 @@ async function publishPackage(repo, credentials, built) {
 
         if (built.indexOf("hoobsd") >= 0) {
             await releases.updateOne({ application: "hoobsd", latest: true, beta }, { $set: { latest: false } }, { upsert: true });
+
+            if (!beta) await releases.updateOne({ application: "hoobsd", latest: true, beta: true }, { $set: { latest: false } }, { upsert: true });
 
             await releases.insertOne({
                 application: "hoobsd",
@@ -682,6 +688,8 @@ async function publishPackage(repo, credentials, built) {
         if (built.indexOf("cli") >= 0) {
             await releases.updateOne({ application: "hbs", latest: true, beta }, { $set: { latest: false } }, { upsert: true });
             await releases.updateOne({ application: "setup", latest: true, beta: false }, { $set: { latest: false } }, { upsert: true });
+
+            if (!beta) await releases.updateOne({ application: "hbs", latest: true, beta: true }, { $set: { latest: false } }, { upsert: true });
 
             await releases.insertOne({
                 application: "hbs",
@@ -729,6 +737,12 @@ async function publishImage(repo, credentials, built) {
             await releases.updateOne({ application: "image", latest: true, beta }, { $set: { latest: false } }, { upsert: true });
             await releases.updateOne({ application: "server", latest: true, beta }, { $set: { latest: false } }, { upsert: true });
             await releases.updateOne({ application: "box", latest: true, beta }, { $set: { latest: false } }, { upsert: true });
+
+            if (!beta) {
+                await releases.updateOne({ application: "image", latest: true, beta: true }, { $set: { latest: false } }, { upsert: true });
+                await releases.updateOne({ application: "server", latest: true, beta: true }, { $set: { latest: false } }, { upsert: true });
+                await releases.updateOne({ application: "box", latest: true, beta: true }, { $set: { latest: false } }, { upsert: true });
+            }
 
             await releases.insertOne({
                 application: "image",
