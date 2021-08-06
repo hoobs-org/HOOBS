@@ -221,6 +221,7 @@
     "permissions": "Permissions",
     "personalize": "Personalize",
     "plugin": "Plugin",
+    "plugin_deleted": "This plugin is no longer available.",
     "plugin_install": "Install",
     "plugin_install_add_bridge": "Create a new bridge to install this plugin on.",
     "plugin_install_bridge": "Or select a bridge to install this plugin on.",
