@@ -32,5 +32,5 @@ on_chroot apt-key add - < files/yarn.gpg.key
 on_chroot apt-key add - < files/hoobs.gpg.key
 
 on_chroot << EOF
-    apt-get update
+    apt-get update --allow-releaseinfo-change
 EOF
