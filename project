@@ -1,0 +1,89 @@
+#!/bin/bash
+
+clone () {
+    echo "cloning $1"
+
+    case $1 in
+        console )  [[ -d console ]] || git clone https://github.com/hoobs-org/helm.git
+                   [[ -d console ]] || mv helm console
+                   (cd console && git checkout blackwing)
+                   ;;
+
+        repo )      [[ -d repo ]] || git clone https://github.com/hoobs-org/repo.git
+                    ;;
+
+        security )  [[ -d security ]] || git clone https://github.com/hoobs-org/security.git
+                    ;;
+
+        * )         [[ -d $1 ]] || git clone https://github.com/hoobs-org/$1.git
+                    (cd $1 && git checkout blackwing)
+                    ;;
+    esac
+}
+
+install () {
+    echo "installing $1"
+
+    (cd $1 && npm install)
+}
+
+push () {
+    echo "pushing $1"
+
+    (cd $1 && git push)
+}
+
+pull () {
+    echo "pulling $1"
+
+    (cd $1 && git pull && git checkout blackwing)
+}
+
+edit () {
+    case $1 in
+        scripts )  nano project
+                   ;;
+
+        * )        nano HOOBS.code-workspace
+                   ;;
+    esac
+}
+
+case $1 in
+    setup )  clone console
+             clone image
+             clone network
+             clone portal
+             clone repo
+             clone security
+
+             install console
+             install network
+             install portal
+             ;;
+
+    push )   push console
+             push image
+             push network
+             push portal
+             push repo
+             push security
+             ;;
+
+    pull )   pull console
+             pull image
+             pull network
+             pull portal
+             pull repo
+             pull security
+
+             install console
+             install network
+             install portal
+             ;;
+
+    edit )   edit $2
+             ;;
+
+    * )      ;;
+esac

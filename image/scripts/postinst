@@ -1,4 +1,0 @@
-#!/bin/sh
-
-hbs install --port 80
-hoobsd service restart
