@@ -13,6 +13,10 @@
             "path": "./network"
         },
         {
+            "name": "pam",
+            "path": "./pam"
+        },
+        {
             "name": "image",
             "path": "./image"
         },

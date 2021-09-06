@@ -119,6 +119,7 @@ dist
 /migration
 /mobile
 /network
+/pam
 /portal
 /repo
 /sdk

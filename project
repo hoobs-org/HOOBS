@@ -53,18 +53,21 @@ case $1 in
     setup )  clone console
              clone image
              clone network
+             clone pam
              clone portal
              clone repo
              clone security
 
              install console
              install network
+             install pam
              install portal
              ;;
 
     push )   push console
              push image
              push network
+             push pam
              push portal
              push repo
              push security
@@ -73,6 +76,7 @@ case $1 in
     pull )   pull console
              pull image
              pull network
+             pull pam
              pull portal
              pull repo
              pull security
