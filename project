@@ -39,6 +39,29 @@ pull () {
     (cd $1 && git pull && git checkout blackwing)
 }
 
+build () {
+    case $1 in
+        console )  (cd console && project build)
+                   ;;
+
+        image )    (cd image && project build $2)
+                   ;;
+
+        lang )     ;;
+
+        network )  (cd network && project build)
+                   ;;
+
+        pam )      (cd pam && project build)
+                   ;;
+
+        portal )   (cd portal && project build)
+                   ;;
+
+        * )        ;;
+    esac
+}
+
 edit () {
     case $1 in
         scripts )  nano project
@@ -84,6 +107,9 @@ case $1 in
              install console
              install network
              install portal
+             ;;
+
+    build )  build $2 $3
              ;;
 
     edit )   edit $2
