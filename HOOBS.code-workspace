@@ -5,8 +5,12 @@
             "path": "./console"
         },
         {
-            "name": "portal",
-            "path": "./portal"
+            "name": "image",
+            "path": "./image"
+        },
+        {
+            "name": "lang",
+            "path": "./lang"
         },
         {
             "name": "network",
@@ -17,8 +21,8 @@
             "path": "./pam"
         },
         {
-            "name": "image",
-            "path": "./image"
+            "name": "portal",
+            "path": "./portal"
         },
         {
             "name": "repo",
