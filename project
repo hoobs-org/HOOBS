@@ -97,8 +97,26 @@ rebuild() {
 
 publish() {
     case $1 in
+        list )
+            list $2
+            ;;
+
         sdk | portal | console | network | pam )
             (cd $1 && ./project publish $2 $3)
+            ;;
+    esac
+}
+
+list () {
+    case $1 in
+        stable | edge | bleeding )
+            reprepro -b ./repo/debian list $1
+            ;;
+
+        * )
+            reprepro -b ./repo/debian list stable
+            reprepro -b ./repo/debian list edge
+            reprepro -b ./repo/debian list bleeding
             ;;
     esac
 }
