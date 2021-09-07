@@ -79,12 +79,14 @@ case $1 in
              clone pam
              clone portal
              clone repo
+             clone sdk
              clone security
 
              install console
              install network
              install pam
              install portal
+             install sdk
              ;;
 
     push )   push console
@@ -93,6 +95,7 @@ case $1 in
              push pam
              push portal
              push repo
+             push sdk
              push security
              ;;
 
@@ -102,11 +105,14 @@ case $1 in
              pull pam
              pull portal
              pull repo
+             pull sdk
              pull security
 
              install console
              install network
+             install pam
              install portal
+             install sdk
              ;;
 
     build )  build $2 $3
