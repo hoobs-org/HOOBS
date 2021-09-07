@@ -63,16 +63,19 @@ yarn () {
             case $COMMAND in
                 install )
                     printf "\033[0;36mInstall $PROJECT\033[0m\n"
+
                     (cd $PROJECT && ../node_modules/.bin/yarn install)
                     ;;
 
                 add )
                     printf "\033[0;36mAdd $PROJECT\033[0m\n"
+
                     (cd $PROJECT && ../node_modules/.bin/yarn add $@)
                     ;;
 
                 remove )
                     printf "\033[0;36mRemove $PROJECT\033[0m\n"
+
                     (cd $PROJECT && ../node_modules/.bin/yarn remove $@)
                     ;;
             esac
@@ -81,9 +84,13 @@ yarn () {
 }
 
 version () {
-    case $1 in
+    PROJECT=$1
+
+    shift
+
+    case $PROJECT in
         gui | sdk | portal | console | network | pam | image )
-            (cd $1 && ./project version $2)
+            (cd $PROJECT && ./project version $@)
             ;;
     esac
 }
@@ -91,7 +98,9 @@ version () {
 lint() {
     case $1 in
         gui | sdk | portal | console | network )
-            (cd $1 && ./project version $2)
+            printf "\033[0;36mLint $1\033[0m\n"
+
+            (cd $1 && ./project lint)
             ;;
     esac
 }
@@ -99,19 +108,29 @@ lint() {
 debug() {
     case $1 in
         gui | portal | console )
+            printf "\033[0;36mDebug $1\033[0m\n"
+
             (cd $1 && ./project debug)
             ;;
     esac
 }
 
 build() {
-    case $1 in
+    PROJECT=$1
+
+    shift
+
+    case $PROJECT in
         localization )
+            printf "\033[0;36mBuild $PROJECT\033[0m\n"
+
             (cd lang && ./build)
             ;;
 
         gui | sdk | portal | console | network | pam | image )
-            (cd $1 && ./project build $2)
+            printf "\033[0;36mBuild $1\033[0m\n"
+
+            (cd $PROJECT && ./project build $@)
             ;;
     esac
 }
@@ -119,19 +138,27 @@ build() {
 rebuild() {
     case $1 in
         image )
+            printf "\033[0;36mRebuild $1\033[0m\n"
+
             (cd $1 && ./project rebuild)
             ;;
     esac
 }
 
 publish() {
-    case $1 in
+    PROJECT=$1
+
+    shift
+
+    case $PROJECT in
         list )
-            list $2
+            list $@
             ;;
 
         gui | sdk | portal | console | network | pam )
-            (cd $1 && ./project publish $2 $3)
+            printf "\033[0;36mPublish $PROJECT\033[0m\n"
+
+            (cd $PROJECT && ./project publish $@)
             ;;
     esac
 }
@@ -153,6 +180,8 @@ list () {
 clean() {
     case $1 in
         gui | sdk | portal | console | network | pam | image )
+            printf "\033[0;36mClean $1\033[0m\n"
+
             (cd $1 && ./project clean)
             ;;
     esac 
