@@ -13,7 +13,7 @@ edit () {
 }
 
 clone () {
-    echo "cloning $1"
+    printf "\033[0;36mCloning $1\033[0m\n"
 
     case $1 in
         console )
@@ -34,19 +34,19 @@ clone () {
 }
 
 install () {
-    echo "installing $1"
+    printf "\033[0;36mInstalling $1\033[0m\n"
 
     (cd $1 && ../node_modules/.bin/yarn install)
 }
 
 push () {
-    echo "pushing $1"
+    printf "\033[0;36mPushing $1\033[0m\n"
 
     (cd $1 && git push)
 }
 
 pull () {
-    echo "pulling $1"
+    printf "\033[0;36mPulling $1\033[0m\n"
 
     (cd $1 && git pull && git checkout blackwing)
 }
@@ -58,21 +58,24 @@ yarn () {
     shift
     shift
 
-    case $COMMAND in
-        install )
-            (cd $PROJECT && ../node_modules/.bin/yarn install)
-            ;;
+    case $PROJECT in
+        cli | console | desktop | gui | hoobsd | network | pam | portal | sdk )
+            case $COMMAND in
+                install )
+                    printf "\033[0;36mInstall $PROJECT\033[0m\n"
+                    (cd $PROJECT && ../node_modules/.bin/yarn install)
+                    ;;
 
-        add )
-            (cd $PROJECT && ../node_modules/.bin/yarn add $@)
-            ;;
+                add )
+                    printf "\033[0;36mAdd $PROJECT\033[0m\n"
+                    (cd $PROJECT && ../node_modules/.bin/yarn add $@)
+                    ;;
 
-        remove )
-            (cd $PROJECT && ../node_modules/.bin/yarn remove $@)
-            ;;
-
-        cache )
-            (cd $PROJECT && ../node_modules/.bin/yarn cache $@)
+                remove )
+                    printf "\033[0;36mRemove $PROJECT\033[0m\n"
+                    (cd $PROJECT && ../node_modules/.bin/yarn remove $@)
+                    ;;
+            esac
             ;;
     esac
 }
@@ -250,7 +253,7 @@ case $1 in
 
     cache )
         shift
-        yarn cache $@
+        ./node_modules/.bin/yarn cache $@
         ;;
 
     version )
