@@ -3,11 +3,11 @@
 edit () {
     case $1 in
         scripts )
-            nano project
+            nano ./project
             ;;
 
         * )
-            nano HOOBS.code-workspace
+            nano ./HOOBS.code-workspace
             ;;
     esac
 }
@@ -54,7 +54,7 @@ pull () {
 version () {
     case $1 in
         sdk | portal | console | network | pam | image )
-            (cd $1 && project version $2)
+            (cd $1 && ./project version $2)
             ;;
     esac
 }
@@ -62,7 +62,7 @@ version () {
 lint() {
     case $1 in
         sdk | portal | console | network )
-            (cd $1 && project version $2)
+            (cd $1 && ./project version $2)
             ;;
     esac
 }
@@ -70,15 +70,19 @@ lint() {
 debug() {
     case $1 in
         portal | console )
-            (cd $1 && project debug)
+            (cd $1 && ./project debug)
             ;;
     esac
 }
 
 build() {
     case $1 in
+        localization )
+            (cd lang && ./build)
+            ;;
+
         sdk | portal | console | network | pam | image )
-            (cd $1 && project build $2)
+            (cd $1 && ./project build $2)
             ;;
     esac
 }
@@ -86,7 +90,7 @@ build() {
 rebuild() {
     case $1 in
         image )
-            (cd $1 && project rebuild)
+            (cd $1 && ./project rebuild)
             ;;
     esac
 }
@@ -94,7 +98,7 @@ rebuild() {
 publish() {
     case $1 in
         sdk | portal | console | network | pam )
-            (cd $1 && project publish $2 $3)
+            (cd $1 && ./project publish $2 $3)
             ;;
     esac
 }
@@ -102,7 +106,7 @@ publish() {
 clean() {
     case $1 in
         sdk | portal | console | network | pam | image )
-            (cd $1 && project clean)
+            (cd $1 && ./project clean)
             ;;
     esac 
 }

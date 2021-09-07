@@ -1,0 +1,63 @@
+#!/usr/bin/env node
+
+const Loco = require("loco-api-js");
+const { join } = require("path");
+const { existsSync, writeFileSync, unlinkSync, mkdirSync } = require("fs");
+const apikey = require("../security/credentials.json").loco;
+const builds = join(__dirname, "builds");
+
+async function sync() {
+    const loco = new Loco(apikey);
+    const locales = await loco.getLocales();
+    const source = require("./strings.json");
+    const keys = Object.keys(source);
+
+    keys.sort();
+
+    const missing = {};
+
+    if (!existsSync(builds)) mkdirSync(builds);
+    if (existsSync(join(builds, "missing.json"))) unlinkSync(join(builds, "missing.json"));
+
+    for (let i = 0; i < locales.length; i += 1) {
+        const local = locales[i].code.split("-")[0];
+        const output = {};
+
+        output[local] = {};
+
+        if (existsSync(join(builds, `${local}.json`))) unlinkSync(join(builds, `${local}.json`));
+
+        if (local === "en") {
+            for (let j = 0; j < keys.length; j += 1) {
+                output[local][keys[j]] = (source[keys[j]] || "").trim();
+            }
+        } else {
+            const resource = (await loco.exportLocale(locales[i].code));
+
+            for (let j = 0; j < keys.length; j += 1) {
+                if (resource[keys[j]] === undefined) missing[keys[j]] = (source[keys[j]] || "").trim();
+
+                output[local][keys[j]] = (resource[keys[j]] || source[keys[j]] || "").trim();
+            }
+        }
+
+        console.log(`updated localization "${local}"`);
+
+        writeFileSync(join(builds, `${local}.json`), JSON.stringify(output, null, 4));
+    }
+
+    if (Object.keys(missing).length > 0) {
+        console.log("missing language strings need to up uploaded, https://localise.biz/session/auth/login");
+        writeFileSync(join(builds, "missing.json"), JSON.stringify(missing, null, 4));
+    }
+
+    if (existsSync(join(builds, "countries.json"))) unlinkSync(join(builds, "countries.json"));
+    if (existsSync(join(builds, "emojis.json"))) unlinkSync(join(builds, "emojis.json"));
+
+    execLocal(`cp ${join(__dirname, "countries.json")} ${join(builds, "countries.json")}`);
+    execLocal(`cp ${join(__dirname, "emojis.json")} ${join(builds, "emojis.json")}`);
+}
+
+sync().finally(() => {
+    process.exit();
+});
