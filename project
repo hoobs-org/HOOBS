@@ -113,7 +113,11 @@ case $1 in
         ;;
 
     setup )
+        clone cli
         clone console
+        clone desktop
+        clone gui
+        clone hoobsd
         clone image
         clone network
         clone pam
@@ -122,7 +126,11 @@ case $1 in
         clone sdk
         clone security
 
+        install cli
         install console
+        install desktop
+        install gui
+        install hoobsd
         install network
         install pam
         install portal
@@ -130,7 +138,11 @@ case $1 in
         ;;
 
     push )
+        push cli
         push console
+        push desktop
+        push gui
+        push hoobsd
         push image
         push network
         push pam
@@ -141,7 +153,11 @@ case $1 in
         ;;
 
     pull )
+        pull cli
         pull console
+        pull desktop
+        pull gui
+        pull hoobsd
         pull image
         pull network
         pull pam
@@ -150,7 +166,11 @@ case $1 in
         pull sdk
         pull security
 
+        install cli
         install console
+        install desktop
+        install gui
+        install hoobsd
         install network
         install pam
         install portal

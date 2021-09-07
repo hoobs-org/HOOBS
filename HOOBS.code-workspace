@@ -1,8 +1,24 @@
 {
     "folders": [
         {
+            "name": "GUI",
+            "path": "gui"
+        },
+        {
+            "name": "Desktop",
+            "path": "desktop"
+        },
+        {
             "name": "SDK",
             "path": "sdk"
+        },
+        {
+            "name": "CLI",
+            "path": "cli"
+        },
+        {
+            "name": "HOOBSD",
+            "path": "hoobsd"
         },
         {
             "name": "Portal",
