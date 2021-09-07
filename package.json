@@ -1,0 +1,23 @@
+{
+    "name": "hoobs",
+    "version": "4.1.1",
+    "description": "Pronounced as \"huːbz\"",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/hoobs-org/HOOBS.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/hoobs-org/HOOBS/issues"
+    },
+    "homepage": "https://github.com/hoobs-org/HOOBS#readme",
+    "dependencies": {
+        "loco-api-js": "^1.3.2",
+        "yarn": "^1.22.11"
+    }
+}

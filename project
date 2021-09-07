@@ -36,7 +36,7 @@ clone () {
 install () {
     echo "installing $1"
 
-    (cd $1 && npm install)
+    (cd $1 && ../node_modules/.bin/yarn install)
 }
 
 push () {
@@ -49,6 +49,32 @@ pull () {
     echo "pulling $1"
 
     (cd $1 && git pull && git checkout blackwing)
+}
+
+yarn () {
+    COMMAND=$1
+    PROJECT=$2
+
+    shift
+    shift
+
+    case $COMMAND in
+        install )
+            (cd $PROJECT && ../node_modules/.bin/yarn install)
+            ;;
+
+        add )
+            (cd $PROJECT && ../node_modules/.bin/yarn add $@)
+            ;;
+
+        remove )
+            (cd $PROJECT && ../node_modules/.bin/yarn remove $@)
+            ;;
+
+        cache )
+            (cd $PROJECT && ../node_modules/.bin/yarn cache $@)
+            ;;
+    esac
 }
 
 version () {
@@ -131,10 +157,13 @@ clean() {
 
 case $1 in
     edit )
-        edit $2
+        shift
+        edit $@
         ;;
 
     setup )
+        npm install
+
         clone cli
         clone console
         clone desktop
@@ -160,6 +189,8 @@ case $1 in
         ;;
 
     push )
+        git push
+
         push cli
         push console
         push desktop
@@ -175,6 +206,9 @@ case $1 in
         ;;
 
     pull )
+        git pull
+        npm install
+
         pull cli
         pull console
         pull desktop
@@ -199,31 +233,58 @@ case $1 in
         install sdk
         ;;
 
+    install )
+        shift
+        yarn install $@
+        ;;
+
+    add )
+        shift
+        yarn add $@
+        ;;
+
+    remove )
+        shift
+        yarn remove $@
+        ;;
+
+    cache )
+        shift
+        yarn cache $@
+        ;;
+
     version )
-        version $2 $3
+        shift
+        version $@
         ;;
 
     lint )
-        lint $2
+        shift
+        lint $@
         ;;
 
     debug )
-        debug $2
+        shift
+        debug $@
         ;;
 
     build )
-        build $2 $3
+        shift
+        build $@
         ;;
 
     rebuild )
-        rebuild $2
+        shift
+        rebuild $@
         ;;
 
     publish )
-        publish $2 $3 $4
+        shift
+        publish $@
         ;;
 
     clean )
-        clean $2
+        shift
+        clean $@
         ;;
 esac
