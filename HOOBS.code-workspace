@@ -1,36 +1,36 @@
 {
     "folders": [
         {
-            "name": "console",
-            "path": "./console"
+            "name": "SDK",
+            "path": "sdk"
         },
         {
-            "name": "image",
-            "path": "./image"
+            "name": "Portal",
+            "path": "portal"
         },
         {
-            "name": "lang",
-            "path": "./lang"
+            "name": "Console",
+            "path": "console"
         },
         {
-            "name": "network",
-            "path": "./network"
+            "name": "Network",
+            "path": "network"
         },
         {
-            "name": "pam",
-            "path": "./pam"
+            "name": "PAM",
+            "path": "pam"
         },
         {
-            "name": "portal",
-            "path": "./portal"
+            "name": "Image",
+            "path": "image"
         },
         {
-            "name": "repo",
-            "path": "./repo"
+            "name": "Repository",
+            "path": "repo"
         },
         {
-            "name": "sdk",
-            "path": "./sdk"
+            "name": "Languages",
+            "path": "lang"
         }
     ],
     "settings": {
@@ -46,7 +46,6 @@
         "scss.lint.duplicateProperties": "warning",
         "scss.lint.ieHack": "warning",
         "typescriptHero.imports.stringQuoteStyle": "\"",
-        "prettier.packageManager": "yarn",
         "[vue]": {
             "editor.defaultFormatter": "octref.vetur"
         },
