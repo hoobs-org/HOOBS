@@ -1,6 +1,6 @@
 #!/bin/bash
 
-edit () {
+edit() {
     case $1 in
         scripts )
             nano ./project
@@ -12,7 +12,7 @@ edit () {
     esac
 }
 
-clone () {
+clone() {
     printf "\033[0;36mCloning $1\033[0m\n"
 
     case $1 in
@@ -33,25 +33,25 @@ clone () {
     esac
 }
 
-install () {
+install() {
     printf "\033[0;36mInstalling $1\033[0m\n"
 
     (cd $1 && ../node_modules/.bin/yarn install)
 }
 
-push () {
+push() {
     printf "\033[0;36mPushing $1\033[0m\n"
 
     (cd $1 && git push)
 }
 
-pull () {
+pull() {
     printf "\033[0;36mPulling $1\033[0m\n"
 
     (cd $1 && git pull && git checkout blackwing)
 }
 
-yarn () {
+yarn() {
     COMMAND=$1
     PROJECT=$2
 
@@ -83,7 +83,7 @@ yarn () {
     esac
 }
 
-version () {
+version() {
     PROJECT=$1
 
     shift
@@ -163,7 +163,7 @@ publish() {
     esac
 }
 
-list () {
+list() {
     case $1 in
         stable | edge | bleeding )
             reprepro -b ./repo/debian list $1
