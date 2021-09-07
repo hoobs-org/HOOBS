@@ -53,7 +53,7 @@ pull () {
 
 version () {
     case $1 in
-        sdk | portal | console | network | pam | image )
+        gui | sdk | portal | console | network | pam | image )
             (cd $1 && ./project version $2)
             ;;
     esac
@@ -61,7 +61,7 @@ version () {
 
 lint() {
     case $1 in
-        sdk | portal | console | network )
+        gui | sdk | portal | console | network )
             (cd $1 && ./project version $2)
             ;;
     esac
@@ -69,7 +69,7 @@ lint() {
 
 debug() {
     case $1 in
-        portal | console )
+        gui | portal | console )
             (cd $1 && ./project debug)
             ;;
     esac
@@ -81,7 +81,7 @@ build() {
             (cd lang && ./build)
             ;;
 
-        sdk | portal | console | network | pam | image )
+        gui | sdk | portal | console | network | pam | image )
             (cd $1 && ./project build $2)
             ;;
     esac
@@ -101,7 +101,7 @@ publish() {
             list $2
             ;;
 
-        sdk | portal | console | network | pam )
+        gui | sdk | portal | console | network | pam )
             (cd $1 && ./project publish $2 $3)
             ;;
     esac
@@ -123,7 +123,7 @@ list () {
 
 clean() {
     case $1 in
-        sdk | portal | console | network | pam | image )
+        gui | sdk | portal | console | network | pam | image )
             (cd $1 && ./project clean)
             ;;
     esac 
