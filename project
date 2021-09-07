@@ -1,23 +1,35 @@
 #!/bin/bash
 
+edit () {
+    case $1 in
+        scripts )
+            nano project
+            ;;
+
+        * )
+            nano HOOBS.code-workspace
+            ;;
+    esac
+}
+
 clone () {
     echo "cloning $1"
 
     case $1 in
-        console )  [[ -d console ]] || git clone https://github.com/hoobs-org/helm.git
-                   [[ -d console ]] || mv helm console
-                   (cd console && git checkout blackwing)
-                   ;;
+        console )
+            [[ -d console ]] || git clone https://github.com/hoobs-org/helm.git
+            [[ -d console ]] || mv helm console
+            (cd console && git checkout blackwing)
+            ;;
 
-        repo )      [[ -d repo ]] || git clone https://github.com/hoobs-org/repo.git
-                    ;;
+        repo | security )
+            [[ -d $1 ]] || git clone https://github.com/hoobs-org/$1.git
+            ;;
 
-        security )  [[ -d security ]] || git clone https://github.com/hoobs-org/security.git
-                    ;;
-
-        * )         [[ -d $1 ]] || git clone https://github.com/hoobs-org/$1.git
-                    (cd $1 && git checkout blackwing)
-                    ;;
+        * )
+            [[ -d $1 ]] || git clone https://github.com/hoobs-org/$1.git
+            (cd $1 && git checkout blackwing)
+            ;;
     esac
 }
 
@@ -39,87 +51,137 @@ pull () {
     (cd $1 && git pull && git checkout blackwing)
 }
 
-build () {
+version () {
     case $1 in
-        console )  (cd console && project build)
-                   ;;
-
-        image )    (cd image && project build $2)
-                   ;;
-
-        lang )     ;;
-
-        network )  (cd network && project build)
-                   ;;
-
-        pam )      (cd pam && project build)
-                   ;;
-
-        portal )   (cd portal && project build)
-                   ;;
-
-        * )        ;;
+        sdk | portal | console | network | pam | image )
+            (cd $1 && project version $2)
+            ;;
     esac
 }
 
-edit () {
+lint() {
     case $1 in
-        scripts )  nano project
-                   ;;
-
-        * )        nano HOOBS.code-workspace
-                   ;;
+        sdk | portal | console | network )
+            (cd $1 && project version $2)
+            ;;
     esac
+}
+
+debug() {
+    case $1 in
+        portal | console )
+            (cd $1 && project debug)
+            ;;
+    esac
+}
+
+build() {
+    case $1 in
+        sdk | portal | console | network | pam | image )
+            (cd $1 && project build $2)
+            ;;
+    esac
+}
+
+rebuild() {
+    case $1 in
+        image )
+            (cd $1 && project rebuild)
+            ;;
+    esac
+}
+
+publish() {
+    case $1 in
+        sdk | portal | console | network | pam )
+            (cd $1 && project publish $2 $3)
+            ;;
+    esac
+}
+
+clean() {
+    case $1 in
+        sdk | portal | console | network | pam | image )
+            (cd $1 && project clean)
+            ;;
+    esac 
 }
 
 case $1 in
-    setup )  clone console
-             clone image
-             clone network
-             clone pam
-             clone portal
-             clone repo
-             clone sdk
-             clone security
+    edit )
+        edit $2
+        ;;
 
-             install console
-             install network
-             install pam
-             install portal
-             install sdk
-             ;;
+    setup )
+        clone console
+        clone image
+        clone network
+        clone pam
+        clone portal
+        clone repo
+        clone sdk
+        clone security
 
-    push )   push console
-             push image
-             push network
-             push pam
-             push portal
-             push repo
-             push sdk
-             push security
-             ;;
+        install console
+        install network
+        install pam
+        install portal
+        install sdk
+        ;;
 
-    pull )   pull console
-             pull image
-             pull network
-             pull pam
-             pull portal
-             pull repo
-             pull sdk
-             pull security
+    push )
+        push console
+        push image
+        push network
+        push pam
+        push portal
+        push repo
+        push sdk
+        push security
+        ;;
 
-             install console
-             install network
-             install pam
-             install portal
-             install sdk
-             ;;
+    pull )
+        pull console
+        pull image
+        pull network
+        pull pam
+        pull portal
+        pull repo
+        pull sdk
+        pull security
 
-    build )  build $2 $3
-             ;;
+        install console
+        install network
+        install pam
+        install portal
+        install sdk
+        ;;
 
-    edit )   edit $2
-             ;;
+    version )
+        version $2 $3
+        ;;
 
-    * )      ;;
+    lint )
+        lint $2
+        ;;
+
+    debug )
+        debug $2
+        ;;
+
+    build )
+        build $2 $3
+        ;;
+
+    rebuild )
+        rebuild $2
+        ;;
+
+    publish )
+        publish $2 $3 $4
+        ;;
+
+    clean )
+        clean $2
+        ;;
 esac
