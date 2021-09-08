@@ -89,7 +89,7 @@ version() {
     shift
 
     case $PROJECT in
-        gui | sdk | portal | console | network | pam | image )
+        cli | gui | sdk | portal | console | network | pam | image )
             (cd $PROJECT && ./project version $@)
             ;;
     esac
@@ -97,7 +97,7 @@ version() {
 
 lint() {
     case $1 in
-        gui | sdk | portal | console | network )
+        cli | gui | sdk | portal | console | network )
             printf "\033[0;36mLint $1\033[0m\n"
 
             (cd $1 && ./project lint)
@@ -106,11 +106,13 @@ lint() {
 }
 
 debug() {
-    case $1 in
-        gui | portal | console )
-            printf "\033[0;36mDebug $1\033[0m\n"
+    PROJECT=$1
 
-            (cd $1 && ./project debug)
+    shift
+
+    case $PROJECT in
+        cli | gui | portal | console )
+            (cd $PROJECT && ./project debug $@)
             ;;
     esac
 }
@@ -127,7 +129,7 @@ build() {
             (cd lang && ./build)
             ;;
 
-        gui | sdk | portal | console | network | pam | image )
+        cli | gui | sdk | portal | console | network | pam | image )
             printf "\033[0;36mBuild $1\033[0m\n"
 
             (cd $PROJECT && ./project build $@)
@@ -155,7 +157,7 @@ publish() {
             list $@
             ;;
 
-        gui | sdk | portal | console | network | pam )
+        cli | gui | sdk | portal | console | network | pam )
             printf "\033[0;36mPublish $PROJECT\033[0m\n"
 
             (cd $PROJECT && ./project publish $@)
@@ -179,7 +181,7 @@ list() {
 
 clean() {
     case $1 in
-        gui | sdk | portal | console | network | pam | image )
+        cli | gui | sdk | portal | console | network | pam | image )
             printf "\033[0;36mClean $1\033[0m\n"
 
             (cd $1 && ./project clean)
