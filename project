@@ -130,7 +130,7 @@ build() {
             ;;
 
         cli | gui | hoobsd | sdk | portal | console | network | pam | image )
-            printf "\033[0;36mBuild $1\033[0m\n"
+            printf "\033[0;36mBuild $PROJECT\033[0m\n"
 
             (cd $PROJECT && ./project build $@)
             ;;
