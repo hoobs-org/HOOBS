@@ -17,7 +17,7 @@ async function sync() {
     const missing = {};
 
     if (!existsSync(builds)) mkdirSync(builds);
-    if (existsSync(join(builds, "missing.json"))) unlinkSync(join(builds, "missing.json"));
+    if (existsSync(join(__dirname, "missing.json"))) unlinkSync(join(__dirname, "missing.json"));
 
     for (let i = 0; i < locales.length; i += 1) {
         const local = locales[i].code.split("-")[0];
@@ -48,7 +48,7 @@ async function sync() {
 
     if (Object.keys(missing).length > 0) {
         console.log("missing language strings need to up uploaded, https://localise.biz/session/auth/login");
-        writeFileSync(join(builds, "missing.json"), JSON.stringify(missing, null, 4));
+        writeFileSync(join(__dirname, "missing.json"), JSON.stringify(missing, null, 4));
     }
 
     if (existsSync(join(builds, "countries.json"))) unlinkSync(join(builds, "countries.json"));

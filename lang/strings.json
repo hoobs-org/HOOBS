@@ -209,6 +209,8 @@
     "password_confirm": "Reenter Password",
     "password_confirm_description": "Enter your desired password again.",
     "password_mismatch": "Passwords don't match.",
+    "password_reset": "Reset Password",
+    "password_reset_warning": "This will reset the terminal password to hoobsadmin for the hoobs user. Are you sure you want to continue?",
     "password_weak": "Password too weak.",
     "permission_accessories": "View & Control Accessories",
     "permission_controller": "Edit Main System Settings",
