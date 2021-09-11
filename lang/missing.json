@@ -1,3 +1,7 @@
 {
-    "network": "Network"
+    "connected": "Connected",
+    "network": "Network",
+    "networks": "Networks",
+    "status": "Status",
+    "wifi": "Wi-Fi"
 }

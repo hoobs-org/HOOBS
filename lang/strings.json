@@ -79,6 +79,7 @@
     "configuration": "Configuration",
     "confirm": "Confirm",
     "connect": "Connect",
+    "connected": "Connected",
     "connecting": "Connecting",
     "cors_orgin": "Cross Site Resource Sharing",
     "cors_orgin_description": "Restrict this interface to specific URLs (it's best to leave this blank).",
@@ -180,6 +181,7 @@
     "name": "Name",
     "name_description": "Enter your full name.",
     "network": "Network",
+    "networks": "Networks",
     "night": "Night",
     "no_accessories": "No accessories available",
     "no_carbon_monoxide": "No Carbon Monoxide",
@@ -292,6 +294,7 @@
     "sort_dashboard": "Sort Dashboard",
     "sort_rooms": "Sort Rooms",
     "start": "Start",
+    "status": "Status",
     "stop": "Stop",
     "sunday": "Sunday",
     "sunday_abbr": "Sun",
@@ -394,5 +397,6 @@
     "wednesday_abbr": "Wed",
     "welcome": "Welcome to HOOBS™",
     "widgets": "Widgets",
+    "wifi": "Wi-Fi",
     "write_review": "Write a Review"
 }
