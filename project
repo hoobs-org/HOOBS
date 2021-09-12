@@ -111,6 +111,11 @@ debug() {
     shift
 
     case $PROJECT in
+        hoobsd )
+            (cd cli && ./project debug -v)
+            (cd $PROJECT && ./project debug $@)
+            ;;
+
         cli | gui | hoobsd | portal | console )
             (cd $PROJECT && ./project debug $@)
             ;;
