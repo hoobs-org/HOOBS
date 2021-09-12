@@ -398,5 +398,7 @@
     "welcome": "Welcome to HOOBS™",
     "widgets": "Widgets",
     "wifi": "Wi-Fi",
+    "wifi_disable_warning": "There are no other connections available. Are you sure you want to disable Wi-Fi?",
+    "wifi_password_message": "Enter the password for",
     "write_review": "Write a Review"
 }

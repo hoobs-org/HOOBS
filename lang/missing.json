@@ -3,5 +3,7 @@
     "network": "Network",
     "networks": "Networks",
     "status": "Status",
-    "wifi": "Wi-Fi"
+    "wifi": "Wi-Fi",
+    "wifi_disable_warning": "There are no other connections available. Are you sure you want to disable Wi-Fi?",
+    "wifi_password_message": "Enter the password for"
 }
