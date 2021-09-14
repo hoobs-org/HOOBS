@@ -36,6 +36,6 @@ fi
 on_chroot apt-key add - < files/raspi.gpg.key
 
 on_chroot << EOF
-    apt-get update
+    apt-get update --allow-releaseinfo-change
     apt-get dist-upgrade -y
 EOF

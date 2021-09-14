@@ -798,6 +798,7 @@ Program.command("release")
                 type: "list",
                 name: "repo",
                 message: "Select the repo to publish to",
+                default: "edge",
                 choices: [{
                     name: "Stable",
                     value: "stable"

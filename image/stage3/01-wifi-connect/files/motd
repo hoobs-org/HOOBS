@@ -1,10 +1,9 @@
 #!/bin/bash
 
 MODEL=$(tr -d '\0' </proc/device-tree/model)
-printf "$MODEL\n"
-
 IP=$(hostname -I)
 
+printf "$MODEL\n"
 printf "\n\n*** HOOBS - User Friendly Home Automation for Everyone ***\n"
 
 printf "\n"
@@ -32,4 +31,4 @@ done
 
 printf "\n\n"
 printf "HOOBS and the HOOBS logo are registered trademarks of HOOBS Inc.\n"
-printf "Copyright (C) 2020 HOOBS Inc. All rights reserved.\n"
+printf "Copyright (C) 2021 HOOBS Inc. All rights reserved.\n"

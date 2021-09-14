@@ -11,9 +11,8 @@ ntpdate
 libc-ares2
 libc6
 libgcc1
-libicu63
+libicu67
 libnghttp2-14
-libnode64
 libssl1.1
 libstdc++6
 libuv1
