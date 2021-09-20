@@ -89,7 +89,7 @@ version() {
     shift
 
     case $PROJECT in
-        cli | gui | hoobsd | sdk | portal | console | network | pam | image )
+        cli | gui | desktop | hoobsd | sdk | portal | console | network | pam | image )
             (cd $PROJECT && ./project version $@)
             ;;
     esac
@@ -97,7 +97,7 @@ version() {
 
 lint() {
     case $1 in
-        cli | gui | hoobsd | sdk | portal | console | network )
+        cli | gui | desktop | hoobsd | sdk | portal | console | network )
             printf "\033[0;36mLint $1\033[0m\n"
 
             (cd $1 && ./project lint)
@@ -128,6 +128,14 @@ build() {
     shift
 
     case $PROJECT in
+        desktop)
+            if [[ "$OSTYPE" == "darwin"* ]]; then
+                printf "\033[0;36mBuild $PROJECT\033[0m\n"
+
+                (cd desktop && ./project build $@)
+            fi
+            ;;
+
         localization )
             printf "\033[0;36mBuild $PROJECT\033[0m\n"
 
@@ -186,7 +194,7 @@ list() {
 
 clean() {
     case $1 in
-        cli | gui | hoobsd | sdk | portal | console | network | pam | image )
+        cli | gui | desktop | hoobsd | sdk | portal | console | network | pam | image )
             printf "\033[0;36mClean $1\033[0m\n"
 
             (cd $1 && ./project clean)
