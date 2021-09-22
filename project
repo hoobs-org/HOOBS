@@ -133,8 +133,6 @@ build() {
                 printf "\033[0;36mBuild $PROJECT\033[0m\n"
 
                 (cd desktop && ./project build $@)
-            else
-                # REMOTE BUILD
             fi
             ;;
 
