@@ -13,37 +13,37 @@
 yarn install
 
 cd ./hoobsd
-git checkout development
+git checkout sierra
 yarn install
 
 cd ../cli
-git checkout development
+git checkout sierra
 yarn install
 yarn build
 
 cd ../gui
-git checkout development
+git checkout sierra
 yarn install
 
 cd ../mobile
-git checkout development
+git checkout sierra
 yarn install
 
 cd ../desktop
-git checkout development
+git checkout sierra
 yarn install
 
 cd ../sdk
-git checkout development
+git checkout sierra
 yarn install
 yarn build
 
 cd ../connect
-git checkout development
+git checkout sierra
 yarn install
 
 cd ../migration
-git checkout development
+git checkout sierra
 yarn install
 
 cd ../

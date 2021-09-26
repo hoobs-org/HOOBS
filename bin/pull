@@ -1,47 +1,48 @@
 #!/bin/bash
 
 git pull
+git checkout sierra
 
 cd ./hoobsd
 git pull
-git checkout development
+git checkout sierra
 yarn install
 
 cd ../cli
 git pull
-git checkout development
+git checkout sierra
 yarn install
 yarn build
 
 cd ../gui
 git pull
-git checkout development
+git checkout sierra
 yarn install
 
 cd ../mobile
 git pull
-git checkout development
+git checkout sierra
 yarn install
 
 cd ../desktop
 git pull
-git checkout development
+git checkout sierra
 yarn install
 
 cd ../sdk
 git pull
-git checkout development
+git checkout sierra
 yarn install
 yarn build
 
 cd ../connect
 git pull
-git checkout development
+git checkout sierra
 yarn install
 
 cd ../migration
 git pull
-git checkout development
+git checkout sierra
 yarn install
 
 cd ../repo
