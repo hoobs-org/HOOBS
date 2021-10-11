@@ -144,7 +144,7 @@ build() {
             fi
 
             eval "sshpass -p '$DARWIN_PASSWD' ssh -o 'StrictHostKeyChecking no' $DARWIN_USER@$DARWIN_HOST 'source /etc/profile; (cd $PROJECT_PATH/desktop && ./project build)'"
-            eval "sshpass -p '$DARWIN_PASSWD' scp -o 'StrictHostKeyChecking no' $DARWIN_USER@$DARWIN_HOST:$PROJECT_PATH/desktop/builds/hoobs-desktop-v$VERSION.* ./builds/"
+            eval "sshpass -p '$DARWIN_PASSWD' scp -o 'StrictHostKeyChecking no' $DARWIN_USER@$DARWIN_HOST:$PROJECT_PATH/desktop/builds/hoobs-desktop-v$VERSION.* ./desktop/builds/"
             ;;
 
         localization )
