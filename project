@@ -128,21 +128,13 @@ build() {
     shift
 
     case $PROJECT in
-        desktop)
-            if [[ "$OSTYPE" == "darwin"* ]]; then
-                printf "\033[0;36mBuild $PROJECT\033[0m\n"
-
-                (cd desktop && ./project build $@)
-            fi
-            ;;
-
         localization )
             printf "\033[0;36mBuild $PROJECT\033[0m\n"
 
             (cd lang && ./build)
             ;;
 
-        cli | gui | hoobsd | sdk | portal | console | network | pam | image )
+        cli | gui | desktop | hoobsd | sdk | portal | console | network | pam | image )
             printf "\033[0;36mBuild $PROJECT\033[0m\n"
 
             (cd $PROJECT && ./project build $@)
