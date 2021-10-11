@@ -128,13 +128,32 @@ build() {
     shift
 
     case $PROJECT in
+        desktop)
+            printf "\033[0;36mBuild $PROJECT\033[0m\n"
+
+            VERSION=$(./desktop/project version)
+
+            mkdir -p desktop/
+
+            if [[ "|$(command -v apt-get)|" != "||" ]]; then
+                sudo apt-get install -y sshpass > /dev/null 2>&1
+            fi
+
+            if [ -f .env ]; then
+                . .env
+            fi
+
+            sshpass -p '$DARWIN_PASSWD' ssh -o 'StrictHostKeyChecking no' $DARWIN_USER@$DARWIN_HOST 'source /etc/profile; (cd $PROJECT_PATH/desktop && ./project build)'
+            sshpass -p '$DARWIN_PASSWD' scp -o 'StrictHostKeyChecking no' $DARWIN_USER@$DARWIN_HOST:$PROJECT_PATH/desktop/builds/hoobs-desktop-v$VERSION.* ./builds/
+            ;;
+
         localization )
             printf "\033[0;36mBuild $PROJECT\033[0m\n"
 
             (cd lang && ./build)
             ;;
 
-        cli | gui | desktop | hoobsd | sdk | portal | console | network | pam | image )
+        cli | gui | hoobsd | sdk | portal | console | network | pam | image )
             printf "\033[0;36mBuild $PROJECT\033[0m\n"
 
             (cd $PROJECT && ./project build $@)
