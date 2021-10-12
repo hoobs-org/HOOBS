@@ -59,7 +59,7 @@ yarn() {
     shift
 
     case $PROJECT in
-        cli | console | desktop | gui | hoobsd | network | pam | portal | sdk )
+        cli | console | desktop | gui | hoobsd | network | pam | portal | sdk | image )
             case $COMMAND in
                 install )
                     printf "\033[0;36mInstall $PROJECT\033[0m\n"
@@ -129,15 +129,9 @@ build() {
 
     case $PROJECT in
         desktop)
-            printf "\033[0;36mBuild $PROJECT\033[0m\n"
-
             VERSION=$(./desktop/project version)
 
             mkdir -p desktop/
-
-            if [[ "|$(command -v apt-get)|" != "||" ]]; then
-                sudo apt-get install -y sshpass > /dev/null 2>&1
-            fi
 
             if [ -f .env ]; then
                 . .env
@@ -181,7 +175,7 @@ publish() {
             list $@
             ;;
 
-        cli | gui | hoobsd | sdk | portal | console | network | pam )
+        cli | gui | desktop | hoobsd | sdk | portal | console | network | pam | image )
             printf "\033[0;36mPublish $PROJECT\033[0m\n"
 
             (cd $PROJECT && ./project publish $@)
@@ -220,6 +214,29 @@ case $1 in
         ;;
 
     setup )
+        if [[ "|$(command -v apt-get)|" != "||" ]]; then
+            sudo apt-get update
+            sudo apt-get install -y curl wget vmdb2 dosfstools f2fs-tools debootstrap binfmt-support time kpartx bmap-tools reprepro ca-certificates dpkg make git
+            sudo apt-get install -y gcc g++ gcc-arm-linux-gnueabi libc6-dev libc6-dev-armel-cross libc6-dev-armhf-cross libc6-dev-arm64-cross libc6-dev-i386-cross
+            sudo apt-get install -y qemu-utils qemu-user-static qemu-system-arm fakemachine libpam-dev dpkg-sig
+
+            git config --global pull.rebase false
+            git config --global credential.helper store
+
+            curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | sudo gpg --dearmor | sudo tee /usr/share/keyrings/nodesource.gpg > /dev/null
+            curl -s https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo gpg --dearmor | sudo tee /usr/share/keyrings/github.gpg > /dev/null
+
+            echo "deb [signed-by=/usr/share/keyrings/nodesource.gpg] https://deb.nodesource.com/node_14.x bullseye main" | sudo tee /etc/apt/sources.list.d/nodesource.list
+            echo "deb-src [signed-by=/usr/share/keyrings/nodesource.gpg] https://deb.nodesource.com/node_14.x bullseye main" | sudo tee -a /etc/apt/sources.list.d/nodesource.list
+            echo "deb [arch=amd64 signed-by=/usr/share/keyrings/github.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github.list
+
+            sudo apt-get update
+            sudo apt-get install -y gh nodejs nano python3-minimal python3-pip sshpass
+
+            gpg --import ./security/repo/publickey.gpg && gpg --allow-secret-key-import --import ./security/repo/privatekey.gpg
+            sudo gpg --import ./security/repo/publickey.gpg && sudo gpg --allow-secret-key-import --import ./security/repo/privatekey.gpg
+        fi
+
         npm install
 
         clone cli
