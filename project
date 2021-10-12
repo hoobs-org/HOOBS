@@ -48,7 +48,15 @@ push() {
 pull() {
     printf "\033[0;36mPulling $1\033[0m\n"
 
-    (cd $1 && git pull && git checkout blackwing)
+    case $1 in
+        repo | security )
+            (cd $1 && git pull)
+            ;;
+
+        * )
+            (cd $1 && git pull && git checkout blackwing)
+            ;;
+    esac
 }
 
 yarn() {
