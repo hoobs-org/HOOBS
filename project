@@ -123,6 +123,12 @@ debug() {
 }
 
 build() {
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        echo "the toolchain can not be ran on macos"
+
+        exit 1
+    fi
+
     PROJECT=$1
 
     shift
@@ -156,6 +162,12 @@ build() {
 }
 
 rebuild() {
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        echo "the toolchain can not be ran on macos"
+
+        exit 1
+    fi
+
     case $1 in
         image )
             printf "\033[0;36mRebuild $1\033[0m\n"
@@ -166,6 +178,12 @@ rebuild() {
 }
 
 publish() {
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        echo "the toolchain can not be ran on macos"
+
+        exit 1
+    fi
+
     PROJECT=$1
 
     shift
@@ -184,6 +202,12 @@ publish() {
 }
 
 list() {
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        echo "the toolchain can not be ran on macos"
+
+        exit 1
+    fi
+
     case $1 in
         stable | edge | bleeding )
             reprepro -b ./repo/debian list $1
