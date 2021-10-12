@@ -36,7 +36,7 @@ clone() {
 install() {
     printf "\033[0;36mInstalling $1\033[0m\n"
 
-    (cd $1 && ../node_modules/.bin/yarn install)
+    (cd $1 && ../node_modules/.bin/yarn install --ignore-engines)
 }
 
 push() {
