@@ -131,18 +131,18 @@ debug() {
 }
 
 build() {
-    if [[ "$OSTYPE" == "darwin"* ]]; then
-        echo "the toolchain can not be ran on macos"
-
-        exit 1
-    fi
-
     PROJECT=$1
 
     shift
 
     case $PROJECT in
         desktop)
+            if [[ "$OSTYPE" == "darwin"* ]]; then
+                echo "the toolchain can not be ran on macos"
+
+                exit 1
+            fi
+
             VERSION=$(./desktop/project version)
 
             mkdir -p desktop/
@@ -170,12 +170,6 @@ build() {
 }
 
 rebuild() {
-    if [[ "$OSTYPE" == "darwin"* ]]; then
-        echo "the toolchain can not be ran on macos"
-
-        exit 1
-    fi
-
     case $1 in
         image )
             printf "\033[0;36mRebuild $1\033[0m\n"
