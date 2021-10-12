@@ -18,25 +18,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.                          *
  **************************************************************************************************/
 
-const OS = require("os");
 const Program = require("commander");
 const Inquirer = require("inquirer");
 const { join } = require("path");
 const { execSync } = require("child_process");
 const { MongoClient } = require("mongodb");
-
-const {
-    existsSync,
-    readFileSync,
-    writeFileSync,
-    unlinkSync,
-    mkdirSync,
-} = require("fs");
+const { existsSync, readFileSync, mkdirSync } = require("fs");
 
 const root = join(__dirname, "../");
 const pjson = JSON.parse(readFileSync(join(root, "package.json")).toString());
-
-const prompt = Inquirer.createPromptModule();
 
 function execLocal(command, options) {
     try {
@@ -46,16 +36,8 @@ function execLocal(command, options) {
     }
 }
 
-function downloadRemote(credentials, source, destination) {
-    execLocal(`sshpass -p '${credentials.pass}' scp ${credentials.user}@${credentials.host}:${source} ${destination}`);
-}
-
-function createRelease(repo, title, version, files, notes, beta) {
-    if (beta) {
-        execLocal(`gh release create v${version} ${files} -p -t '${title} ${version}' -n '${notes}'`, { cwd: repo, stdio: "inherit" });
-    } else {
-        execLocal(`gh release create v${version} ${files} -t '${title} ${version}' -n '${notes}'`, { cwd: repo, stdio: "inherit" });
-    }
+function createRelease(repo, title, version, files, notes) {
+    execLocal(`gh release create v${version} ${files} -t '${title} ${version}' -n '${notes}'`, { cwd: repo, stdio: "inherit" });
 }
 
 function checkEnviornment() {
@@ -99,7 +81,6 @@ function checkEnviornment() {
         !existsSync(join(root, "./cli", "package.json"))
      || !existsSync(join(root, "./gui", "package.json"))
      || !existsSync(join(root, "./hoobsd", "package.json"))
-     || !existsSync(join(root, "./desktop", "package.json"))
      || !existsSync(join(root, "./migration", "package.json"))
     ) {
         console.log("workspace not initilized, https://git.io/JOKhF");
@@ -135,75 +116,7 @@ async function buildPackages(built) {
         cli: JSON.parse(readFileSync(join(root, "./cli", "package.json")).toString()),
         gui: JSON.parse(readFileSync(join(root, "./gui", "package.json")).toString()),
         hoobsd: JSON.parse(readFileSync(join(root, "./hoobsd", "package.json")).toString()),
-        desktop: JSON.parse(readFileSync(join(root, "./desktop", "package.json")).toString()),
         migration: JSON.parse(readFileSync(join(root, "./migration", "package.json")).toString()),
-    }
-
-    let darwin;
-
-    if (!existsSync(join(root, "desktop/builds", `hoobs-desktop-v${working.desktop.version}.exe`)) || !existsSync(join(root, "desktop/builds", `hoobs-desktop-v${working.desktop.version}.dmg`))) {
-        let confirm = false;
-
-        confirm = (await prompt([{
-            type: "confirm",
-            name: "confirm",
-            default: true,
-            message: "Do you want to build HOOBS desktop",
-            format: (value) => value.toLowerCase(),
-        }])).confirm;
-
-        if (confirm) {
-            try {
-                darwin = JSON.parse(readFileSync(join(OS.homedir(), "hoobs.darwin.build")).toString());
-            } catch (_error) {
-                darwin = undefined;
-            }
-    
-            if (darwin) {
-                confirm = (await prompt([{
-                    type: "confirm",
-                    name: "confirm",
-                    default: true,
-                    message: "Use stored build credentials",
-                    format: (value) => value.toLowerCase(),
-                }])).confirm;
-            }
-    
-            if (!darwin || !confirm) {
-                darwin = await prompt([{
-                    type: "string",
-                    name: "host",
-                    message: "Enter the macOS build host",
-                }, {
-                    type: "string",
-                    name: "user",
-                    message: "Username",
-                }, {
-                    type: "password",
-                    name: "pass",
-                    message: "Password",
-                }, {
-                    type: "string",
-                    name: "path",
-                    default: "~/Projects/HOOBS",
-                    message: "Project path",
-                }, {
-                    type: "string",
-                    name: "gituser",
-                    message: "GitHub Username",
-                }, {
-                    type: "password",
-                    name: "gitpass",
-                    message: "GitHub Password",
-                }]);
-            }
-
-            if (darwin) {
-                writeFileSync(join(OS.homedir(), "hoobs.darwin.build"), JSON.stringify(darwin, null, 4));
-            } else if (existsSync(join(OS.homedir(), "hoobs.darwin.build"))) {
-                unlinkSync(join(OS.homedir(), "hoobs.darwin.build"));
-            }
-        }
     }
 
     if (!existsSync(join(root, "cli/builds", `hoobs-cli-v${working.cli.version}.deb`))) {
@@ -230,23 +143,13 @@ async function buildPackages(built) {
         execLocal(`bin/build --lint --pack`, { cwd: join(root, "./gui"), stdio: "inherit" });
         built.push("gui");
     }
-
-    if (darwin && (!existsSync(join(root, "desktop/builds", `hoobs-desktop-v${working.desktop.version}.exe`)) || !existsSync(join(root, "desktop/builds", `hoobs-desktop-v${working.desktop.version}.dmg`)))) {
-        console.log("building hoobs desktop");
-
-        downloadRemote(darwin, join(darwin.path, "desktop/builds", `hoobs-desktop-v${working.desktop.version}.exe`), join(root, "desktop/builds", `hoobs-desktop-v${working.desktop.version}.exe`));
-        downloadRemote(darwin, join(darwin.path, "desktop/builds", `hoobs-desktop-v${working.desktop.version}.dmg`), join(root, "desktop/builds", `hoobs-desktop-v${working.desktop.version}.dmg`));
-
-        built.push("desktop");
-    }
 }
 
-async function publishPackage(repo, credentials, built) {
+async function publishPackage(credentials, built) {
     const working = {
         cli: JSON.parse(readFileSync(join(root, "./cli", "package.json")).toString()),
         gui: JSON.parse(readFileSync(join(root, "./gui", "package.json")).toString()),
         hoobsd: JSON.parse(readFileSync(join(root, "./hoobsd", "package.json")).toString()),
-        desktop: JSON.parse(readFileSync(join(root, "./desktop", "package.json")).toString()),
         migration: JSON.parse(readFileSync(join(root, "./migration", "package.json")).toString()),
     }
 
@@ -262,35 +165,11 @@ async function publishPackage(repo, credentials, built) {
 
     console.log("updating repository");
 
-    switch (repo) {
-        case "stable":
-            if (built.indexOf("cli") >= 0) {
-                execLocal(`reprepro includedeb buster ${join(root, "cli/builds", `hoobs-cli-v${working.cli.version}.deb`)}`, { cwd: join(root, "repo/deb/stable"), stdio: "inherit" });
-                execLocal(`reprepro includedeb buster ${join(root, "cli/builds", `hoobs-cli-v${working.cli.version}.deb`)}`, { cwd: join(root, "repo/deb/edge"), stdio: "inherit" });
-            }
+    if (built.indexOf("cli") >= 0) execLocal(`reprepro includedeb buster ${join(root, "cli/builds", `hoobs-cli-v${working.cli.version}.deb`)}`, { cwd: join(root, "repo/deb/stable"), stdio: "inherit" });
+    if (built.indexOf("hoobsd") >= 0) execLocal(`reprepro includedeb buster ${join(root, "hoobsd/builds", `hoobsd-v${working.hoobsd.version}.deb`)}`, { cwd: join(root, "repo/deb/stable"), stdio: "inherit" });
+    if (built.indexOf("gui") >= 0) execLocal(`reprepro includedeb buster ${join(root, "gui/builds", `hoobs-gui-v${working.gui.version}.deb`)}`, { cwd: join(root, "repo/deb/stable"), stdio: "inherit" });
 
-            if (built.indexOf("hoobsd") >= 0) {
-                execLocal(`reprepro includedeb buster ${join(root, "hoobsd/builds", `hoobsd-v${working.hoobsd.version}.deb`)}`, { cwd: join(root, "repo/deb/stable"), stdio: "inherit" });
-                execLocal(`reprepro includedeb buster ${join(root, "hoobsd/builds", `hoobsd-v${working.hoobsd.version}.deb`)}`, { cwd: join(root, "repo/deb/edge"), stdio: "inherit" });
-            }
-
-            if (built.indexOf("gui") >= 0) {
-                execLocal(`reprepro includedeb buster ${join(root, "gui/builds", `hoobs-gui-v${working.gui.version}.deb`)}`, { cwd: join(root, "repo/deb/stable"), stdio: "inherit" });
-                execLocal(`reprepro includedeb buster ${join(root, "gui/builds", `hoobs-gui-v${working.gui.version}.deb`)}`, { cwd: join(root, "repo/deb/edge"), stdio: "inherit" });
-            }
-
-            execLocal("reprepro list buster", { cwd: join(root, "repo/deb/stable"), stdio: "inherit" });
-            execLocal("reprepro list buster", { cwd: join(root, "repo/deb/edge"), stdio: "inherit" });
-            break;
-
-        default:
-            if (built.indexOf("cli") >= 0) execLocal(`reprepro includedeb buster ${join(root, "cli/builds", `hoobs-cli-v${working.cli.version}.deb`)}`, { cwd: join(root, "repo/deb/edge"), stdio: "inherit" });
-            if (built.indexOf("hoobsd") >= 0) execLocal(`reprepro includedeb buster ${join(root, "hoobsd/builds", `hoobsd-v${working.hoobsd.version}.deb`)}`, { cwd: join(root, "repo/deb/edge"), stdio: "inherit" });
-            if (built.indexOf("gui") >= 0) execLocal(`reprepro includedeb buster ${join(root, "gui/builds", `hoobs-gui-v${working.gui.version}.deb`)}`, { cwd: join(root, "repo/deb/edge"), stdio: "inherit" });
-
-            execLocal("reprepro list buster", { cwd: join(root, "repo/deb/edge"), stdio: "inherit" });
-            break;
-    }
+    execLocal("reprepro list buster", { cwd: join(root, "repo/deb/stable"), stdio: "inherit" });
 
     if (built.indexOf("gui") >= 0 || built.indexOf("hoobsd") >= 0 || built.indexOf("cli") >= 0) {
         console.log("syncing repository");
@@ -301,132 +180,84 @@ async function publishPackage(repo, credentials, built) {
         execLocal("git push", { cwd: join(root, "repo"), stdio: "inherit" });
     }
 
-    if (repo === "edge" || repo === "stable") {
-        const beta = repo === "edge";
-        const client = new MongoClient(credentials.db, { useUnifiedTopology: true });
+    const client = new MongoClient(credentials.db, { useUnifiedTopology: true });
 
-        await client.connect();
+    await client.connect();
 
-        const database = client.db("support");
-        const releases = database.collection("releases");
+    const database = client.db("support");
+    const releases = database.collection("releases");
 
-        if (built.indexOf("migration") >= 0) {
-            createRelease(
-                join(root, "migration"),
-                "HOOBS Migration",
-                working.migration.version,
-                join(root, "migration/builds", `hoobs-migration-v${working.migration.version}.tgz`),
-                "HOOBS 4 Migration Utility.\n\n* Big fixes",
-                false,
-            );
-        }
+    if (built.indexOf("migration") >= 0) {
+        createRelease(
+            join(root, "migration"),
+            "HOOBS Migration",
+            working.migration.version,
+            join(root, "migration/builds", `hoobs-migration-v${working.migration.version}.tgz`),
+            "HOOBS 4 Migration Utility.\n\n* Big fixes",
+        );
+    }
+           
+    if (built.indexOf("gui") >= 0) {
+        await releases.updateOne({ application: "gui", latest: true, beta: false }, { $set: { latest: false } }, { upsert: true });
 
-        if (built.indexOf("desktop") >= 0) {
-            await releases.updateOne({ application: "desktop", latest: true, beta }, { $set: { latest: false } }, { upsert: true });
+        await releases.insertOne({
+            application: "gui",
+            version: working.gui.version,
+            published: new Date(),
+            latest: true,
+            download: `https://github.com/hoobs-org/gui/releases/download/v${working.gui.version}/hoobs-gui-v${working.gui.version}.tar.gz`,
+            beta: false,
+        });
 
-            if (!beta) await releases.updateOne({ application: "desktop", latest: true, beta: true }, { $set: { latest: false } }, { upsert: true });
+        createRelease(
+            join(root, "gui"),
+            "HOOBS Web Interface",
+            working.gui.version,
+            join(root, "gui/builds", `hoobs-gui-v${working.gui.version}.tar.gz`),
+            "Interface component for the certified HOOBS stack.\n\n* Big fixes",
+        );
+    }
 
-            await releases.insertOne({
-                application: "desktop",
-                version: working.desktop.version,
-                published: new Date(),
-                latest: true,
-                download_win: `https://github.com/hoobs-org/desktop/releases/download/v${working.desktop.version}/hoobs-desktop-v${working.desktop.version}.exe`,
-                download_mac: `https://github.com/hoobs-org/desktop/releases/download/v${working.desktop.version}/hoobs-desktop-v${working.desktop.version}.dmg`,
-                beta,
-            });
+    if (built.indexOf("hoobsd") >= 0) {
+        await releases.updateOne({ application: "hoobsd", latest: true, beta: false }, { $set: { latest: false } }, { upsert: true });
 
-            createRelease(
-                join(root, "desktop"),
-                "HOOBS Desktop",
-                working.desktop.version,
-                join(root, "desktop/builds", `hoobs-desktop-v${working.desktop.version}.*`),
-                "HOOBS Desktop Application.\n\n* Big fixes",
-                beta,
-            );
-        }
-                
-        if (built.indexOf("gui") >= 0) {
-            await releases.updateOne({ application: "gui", latest: true, beta }, { $set: { latest: false } }, { upsert: true });
+        await releases.insertOne({
+            application: "hoobsd",
+            version: working.hoobsd.version,
+            published: new Date(),
+            latest: true,
+            download: `https://github.com/hoobs-org/hoobsd/releases/download/v${working.hoobsd.version}/hoobsd-v${working.hoobsd.version}.tar.gz`,
+            beta: false,
+        });
 
-            if (!beta) await releases.updateOne({ application: "gui", latest: true, beta: true }, { $set: { latest: false } }, { upsert: true });
+        createRelease(
+            join(root, "hoobsd"),
+            "HOOBS Daemon",
+            working.hoobsd.version,
+            join(root, "hoobsd/builds", `hoobsd-v${working.hoobsd.version}.tar.gz`),
+            "Server component for the certified HOOBS smart home stack.\n\n* Big fixes",
+        );
+    }
 
-            await releases.insertOne({
-                application: "gui",
-                version: working.gui.version,
-                published: new Date(),
-                latest: true,
-                download: `https://github.com/hoobs-org/gui/releases/download/v${working.gui.version}/hoobs-gui-v${working.gui.version}.tar.gz`,
-                beta,
-            });
+    if (built.indexOf("cli") >= 0) {
+        await releases.updateOne({ application: "hbs", latest: true, beta: false }, { $set: { latest: false } }, { upsert: true });
 
-            createRelease(
-                join(root, "gui"),
-                "HOOBS Web Interface",
-                working.gui.version,
-                join(root, "gui/builds", `hoobs-gui-v${working.gui.version}.tar.gz`),
-                "Interface component for the certified HOOBS stack.\n\n* Big fixes",
-                beta,
-            );
-        }
+        await releases.insertOne({
+            application: "hbs",
+            version: working.cli.version,
+            published: new Date(),
+            latest: true,
+            download: `https://github.com/hoobs-org/cli/releases/download/v${working.cli.version}/hoobs-cli-v${working.cli.version}.tar.gz`,
+            beta: false,
+        });
 
-        if (built.indexOf("hoobsd") >= 0) {
-            await releases.updateOne({ application: "hoobsd", latest: true, beta }, { $set: { latest: false } }, { upsert: true });
-
-            if (!beta) await releases.updateOne({ application: "hoobsd", latest: true, beta: true }, { $set: { latest: false } }, { upsert: true });
-
-            await releases.insertOne({
-                application: "hoobsd",
-                version: working.hoobsd.version,
-                published: new Date(),
-                latest: true,
-                download: `https://github.com/hoobs-org/hoobsd/releases/download/v${working.hoobsd.version}/hoobsd-v${working.hoobsd.version}.tar.gz`,
-                beta,
-            });
-
-            createRelease(
-                join(root, "hoobsd"),
-                "HOOBS Daemon",
-                working.hoobsd.version,
-                join(root, "hoobsd/builds", `hoobsd-v${working.hoobsd.version}.tar.gz`),
-                "Server component for the certified HOOBS smart home stack.\n\n* Big fixes",
-                beta,
-            );
-        }
-
-        if (built.indexOf("cli") >= 0) {
-            await releases.updateOne({ application: "hbs", latest: true, beta }, { $set: { latest: false } }, { upsert: true });
-            await releases.updateOne({ application: "setup", latest: true, beta: false }, { $set: { latest: false } }, { upsert: true });
-
-            if (!beta) await releases.updateOne({ application: "hbs", latest: true, beta: true }, { $set: { latest: false } }, { upsert: true });
-
-            await releases.insertOne({
-                application: "hbs",
-                version: working.cli.version,
-                published: new Date(),
-                latest: true,
-                download: `https://github.com/hoobs-org/cli/releases/download/v${working.cli.version}/hoobs-cli-v${working.cli.version}.tar.gz`,
-                beta,
-            });
-
-            await releases.insertOne({
-                application: "setup",
-                version: working.cli.version,
-                published: new Date(),
-                latest: true,
-                download: `https://dl.hoobs.org/stable`,
-                beta: false,
-            });
-
-            createRelease(
-                join(root, "cli"),
-                "HOOBS Command Line",
-                working.cli.version,
-                join(root, "cli/builds", `hoobs-cli-v${working.cli.version}.tar.gz`),
-                "Command line interface for the certified HOOBS smart home stack.\n\n* Big fixes",
-                beta,
-            );
-        }
+        createRelease(
+            join(root, "cli"),
+            "HOOBS Command Line",
+            working.cli.version,
+            join(root, "cli/builds", `hoobs-cli-v${working.cli.version}.tar.gz`),
+            "Command line interface for the certified HOOBS smart home stack.\n\n* Big fixes",
+        );
     }
 
     return;
@@ -437,30 +268,15 @@ Program.version(pjson.version, "-v, --version", "output the current version")
 
 Program.command("release")
     .description("build hoobs image")
-    .action(() => {
+    .action(async () => {
         if (process.platform === "linux" && checkEnviornment()) {
             const credentials = require("../security/credentials.json");
+            const built = [];
 
-            prompt([{
-                type: "list",
-                name: "repo",
-                message: "Select the repo to publish to",
-                default: "edge",
-                choices: [{
-                    name: "Stable",
-                    value: "stable"
-                }, {
-                    name: "Edge",
-                    value: "edge"
-                }],
-            }]).then(async (result) => {
-                const built = [];
+            await buildPackages(built);
+            await publishPackage(credentials, built);
 
-                await buildPackages(built);
-                await publishPackage(result.repo, credentials, built);
-
-                process.exit();
-            });
+            process.exit();
         }
     });
 
