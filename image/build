@@ -19,7 +19,6 @@
  **************************************************************************************************/
 
 const Program = require("commander");
-const Inquirer = require("inquirer");
 const { join } = require("path");
 const { execSync } = require("child_process");
 const { MongoClient } = require("mongodb");
