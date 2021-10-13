@@ -1,5 +1,184 @@
 #!/bin/bash
 
+semver() {
+    if [[ $1 == $2 ]]; then
+        return 0
+    fi
+
+    local IFS=.
+    local i OLD=($1) NEW=($2)
+
+    for ((i=${#OLD[@]}; i<${#NEW[@]}; i++)); do
+        OLD[i]=0
+    done
+
+    for ((i=0; i<${#OLD[@]}; i++)); do
+        if [[ -z ${NEW[i]} ]]; then
+            NEW[i]=0
+        fi
+
+        if ((10#${OLD[i]} > 10#${NEW[i]})); then
+            return 0
+        fi
+
+        if ((10#${OLD[i]} < 10#${NEW[i]})); then
+            return 1
+        fi
+    done
+
+    return 0
+}
+
+include() {
+    case $1 in
+        gui | cli | hoobsd | portal | console )
+            case $2 in
+                stable | edge | bleeding )
+                    local PACKAGE=""
+
+                    case $1 in
+                        gui )
+                            PACKAGE="hoobs-gui"
+                            ;;
+
+                        cli )
+                            PACKAGE="hoobs-cli"
+                            ;;
+
+                        hoobsd )
+                            PACKAGE="hoobsd"
+                            ;;
+
+                        portal )
+                            PACKAGE="hbs-portal"
+                            ;;
+
+                        console )
+                            PACKAGE="helm"
+                            ;;
+                    esac
+
+                    local LINES=$(reprepro -b repo/debian list $2 $PACKAGE)
+                    local CURRENT="0"
+                    local DEVELOPMENT=$(cd $1 && ./project version)
+                    local COUNT=0
+                    local MOD=0
+
+                    for LINE in $LINES; do
+                        MOD=$(expr $COUNT % 3)
+
+                        if [[ $(expr $COUNT % 3) == 2 ]]; then
+                            semver "0" "$LINE"
+
+                            if [ $? == 1 ]; then
+                                CURRENT="$LINE"
+                            fi
+                        fi
+
+                        let "COUNT += 1"
+                    done
+
+                    semver "$CURRENT" "$DEVELOPMENT"
+
+                    if [ $? == 1 ]; then
+                        return 1
+                    fi
+                    ;;
+            esac
+
+            ;;
+
+        desktop | image )
+            case $2 in
+                stable | edge )
+                    local DEVELOPMENT=$(cd $1 && ./project version)
+                    local CURRENT=$(cd $1 && ./project version $2)
+
+                    semver "$CURRENT" "$DEVELOPMENT"
+
+                    if [ $? == 1 ]; then
+                        return 1
+                    fi
+
+                    ;;
+            esac
+
+            ;;
+    esac
+
+    return 0
+}
+
+repository() {
+    case $2 in
+        bleeding | edge | stable )
+            local DEVELOPMENT=$(cd $1 && ./project version)
+            local LINES=$(node image/publish repository $2)
+            local PACKAGE=""
+            local COUNT=0
+
+            for LINE in $LINES; do
+                MOD=$(expr $COUNT % 3)
+
+                if [[ $(expr $COUNT % 2) == 0 ]]; then
+                    case $LINE in
+                        hoobs-gui )
+                            PACKAGE="gui"
+                            ;;
+
+                        hoobs-cli )
+                            PACKAGE="cli"
+                            ;;
+
+                        hoobsd )
+                            PACKAGE="hoobsd"
+                            ;;
+
+                        hbs-portal )
+                            PACKAGE="portal"
+                            ;;
+
+                        helm )
+                            PACKAGE="console"
+                            ;;
+                    esac
+                fi
+
+                if [[ $(expr $COUNT % 2) == 1 && "$PACKAGE" == "$1" ]]; then
+                    semver "$LINE" "$DEVELOPMENT"
+
+                    if [ $? == 0 ]; then
+                        return 1
+                    fi
+                fi
+
+                let "COUNT += 1"
+            done
+            ;;
+    esac
+
+    return 0
+}
+
+published() {
+    repository gui $1
+    GUI_LIVE=$?
+    repository cli $1
+    CLI_LIVE=$?
+    repository hoobsd $1
+    HOOBSD_LIVE=$?
+    repository portal $1
+    PORTAL_LIVE=$?
+    repository console $1
+    CONSOLE_LIVE=$?
+
+    if [[ $GUI_LIVE == 1 && $CLI_LIVE == 1 && $HOOBSD_LIVE == 1 && $PORTAL_LIVE == 1 && $CONSOLE_LIVE == 1 ]]; then
+        return 1
+    fi
+
+    return 0
+}
+
 edit() {
     case $1 in
         scripts )
@@ -382,6 +561,114 @@ case $1 in
     publish )
         shift
         publish $@
+        ;;
+
+    release )
+        shift
+
+        COMMIT=0
+        include gui $1
+        GUI=$?
+        include desktop $1
+        DESKTOP=$?
+        include cli $1
+        CLI=$?
+        include hoobsd $1
+        HOOBSD=$?
+        include portal $1
+        PORTAL=$?
+        include console $1
+        CONSOLE=$?
+        include image $1
+        IMAGE=$?
+
+        if [ $GUI == 1 ]; then
+            build gui
+        fi
+
+        if [ $DESKTOP == 1 ]; then
+            build desktop
+        fi
+
+        if [ $CLI == 1 ]; then
+            build cli
+        fi
+
+        if [ $HOOBSD == 1 ]; then
+            build hoobsd
+        fi
+
+        if [ $PORTAL == 1 ]; then
+            build portal
+        fi
+
+        if [ $CONSOLE == 1 ]; then
+            build console
+        fi
+
+        if [ $GUI == 1 ]; then
+            publish gui $1
+
+            COMMIT=1
+        fi
+
+        if [ $DESKTOP == 1 ]; then
+            publish desktop $1
+        fi
+
+        if [ $CLI == 1 ]; then
+            publish cli $1
+
+            COMMIT=1
+        fi
+
+        if [ $HOOBSD == 1 ]; then
+            publish hoobsd $1
+
+            COMMIT=1
+        fi
+
+        if [ $PORTAL == 1 ]; then
+            publish portal $1
+
+            COMMIT=1
+        fi
+
+        if [ $CONSOLE == 1 ]; then
+            publish console $1
+
+            COMMIT=1
+        fi
+
+        if [ $COMMIT == 1 ]; then
+            printf "\033[0;36mPush changes\033[0m\n"
+
+            (cd repo && git pull)
+            (cd repo && git add --all)
+            (cd repo && git commit -m 'image push')
+            (cd repo && git push)
+        fi
+
+        printf "\033[0;36mWaiting for $1 branch\033[0m\n"
+
+        published $1
+        PUBLISHED=$?
+
+        while [ $PUBLISHED == 0 ]; do
+            sleep 5m
+
+            published $1
+            PUBLISHED=$?
+        done
+
+        if [ $IMAGE == 1 ]; then
+            build image
+        fi
+
+        if [ $IMAGE == 1 ]; then
+            publish image $1
+        fi
+
         ;;
 
     clean )
