@@ -649,24 +649,23 @@ case $1 in
             (cd repo && git push)
         fi
 
-        printf "\033[0;36mWaiting for $1 branch\033[0m\n"
-
-        published $1
-        PUBLISHED=$?
-
-        while [ $PUBLISHED == 0 ]; do
-            sleep 5m
+        if [ $IMAGE == 1 ]; then
+            printf "\033[0;36mWaiting for $1 branch\033[0m\n"
 
             published $1
             PUBLISHED=$?
-        done
 
-        if [ $IMAGE == 1 ]; then
-            build image
-        fi
+            while [ $PUBLISHED == 0 ]; do
+                sleep 5m
 
-        if [ $IMAGE == 1 ]; then
-            publish image $1
+                published $1
+                PUBLISHED=$?
+            done
+
+            if [ $PUBLISHED == 1 ]; then
+                build image
+                publish image $1
+            fi
         fi
 
         ;;
