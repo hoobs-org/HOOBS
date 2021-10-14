@@ -579,8 +579,11 @@ case $1 in
         PORTAL=$?
         include console $1
         CONSOLE=$?
-        include image $1
-        IMAGE=$?
+
+        if [[ "$1" == "stable" ]]; then
+            include image $1
+            IMAGE=$?
+        fi
 
         if [ $GUI == 1 ]; then
             build gui
