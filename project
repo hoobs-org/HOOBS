@@ -322,7 +322,7 @@ build() {
                 exit 1
             fi
 
-            VERSION=$(./desktop/project version)
+            VERSION=$(./project version desktop)
 
             mkdir -p desktop/
 
@@ -330,8 +330,8 @@ build() {
                 . .env
             fi
 
-            sshpass -p '$DARWIN_PASSWD' ssh $DARWIN_USER@$DARWIN_HOST 'source /etc/profile; (cd $PROJECT_PATH/desktop && ./project build)'
-            sshpass -p '$DARWIN_PASSWD' scp $DARWIN_USER@$DARWIN_HOST:$PROJECT_PATH/desktop/builds/hoobs-desktop-v$VERSION.* ./desktop/builds/
+            eval "sshpass -p '$DARWIN_PASSWD' ssh $DARWIN_USER@$DARWIN_HOST 'source /etc/profile; (cd $PROJECT_PATH/desktop && ./project build)'"
+            eval "sshpass -p '$DARWIN_PASSWD' scp $DARWIN_USER@$DARWIN_HOST:$PROJECT_PATH/desktop/builds/hoobs-desktop-v$VERSION.* ./desktop/builds/"
             ;;
 
         localization )
@@ -579,6 +579,7 @@ case $1 in
         PORTAL=$?
         include console $1
         CONSOLE=$?
+        IMAGE=0
 
         if [[ "$1" == "stable" ]]; then
             include image $1
