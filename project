@@ -330,9 +330,8 @@ build() {
                 . .env
             fi
 
-            eval "sshpass -p '$DARWIN_PASSWD' ssh -o 'StrictHostKeyChecking no' $DARWIN_USER@$DARWIN_HOST 'source /etc/profile; (cd $PROJECT_PATH/desktop && ./project build)'"
-            sleep 5
-            eval "sshpass -p '$DARWIN_PASSWD' scp -o 'StrictHostKeyChecking no' $DARWIN_USER@$DARWIN_HOST:$PROJECT_PATH/desktop/builds/hoobs-desktop-v$VERSION.* ./desktop/builds/"
+            sshpass -p '$DARWIN_PASSWD' ssh $DARWIN_USER@$DARWIN_HOST 'source /etc/profile; (cd $PROJECT_PATH/desktop && ./project build)'
+            sshpass -p '$DARWIN_PASSWD' scp $DARWIN_USER@$DARWIN_HOST:$PROJECT_PATH/desktop/builds/hoobs-desktop-v$VERSION.* ./desktop/builds/
             ;;
 
         localization )
