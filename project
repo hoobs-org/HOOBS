@@ -389,17 +389,7 @@ list() {
         exit 1
     fi
 
-    case $1 in
-        stable | edge | bleeding )
-            reprepro -b ./repo/debian list $1
-            ;;
-
-        * )
-            reprepro -b ./repo/debian list stable
-            reprepro -b ./repo/debian list edge
-            reprepro -b ./repo/debian list bleeding
-            ;;
-    esac
+    node image/publish published $@
 }
 
 clean() {
