@@ -141,6 +141,10 @@ repository() {
                         helm )
                             PACKAGE="console"
                             ;;
+
+                        hbs-vendor )
+                            PACKAGE="vendor"
+                            ;;
                     esac
                 fi
 
@@ -171,8 +175,10 @@ published() {
     PORTAL_LIVE=$?
     repository console $1
     CONSOLE_LIVE=$?
+    repository vendor $1
+    VENDOR_LIVE=$?
 
-    if [[ $GUI_LIVE == 1 && $CLI_LIVE == 1 && $HOOBSD_LIVE == 1 && $PORTAL_LIVE == 1 && $CONSOLE_LIVE == 1 ]]; then
+    if [[ $GUI_LIVE == 1 && $CLI_LIVE == 1 && $HOOBSD_LIVE == 1 && $PORTAL_LIVE == 1 && $CONSOLE_LIVE == 1 && VENDOR_LIVE == 1 ]]; then
         return 1
     fi
 
