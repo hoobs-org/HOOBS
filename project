@@ -359,6 +359,12 @@ build() {
             (cd lang && ./build)
             ;;
 
+        vendor )
+            printf "\033[0;36mBuild $PROJECT\033[0m\n"
+
+            (cd image && ./project build vendor)
+            ;;
+
         cli | gui | hoobsd | sdk | portal | console | network | pam | image )
             printf "\033[0;36mBuild $PROJECT\033[0m\n"
 
@@ -391,6 +397,12 @@ publish() {
     case $PROJECT in
         list )
             list $@
+            ;;
+
+        vendor )
+            printf "\033[0;36mPublish $PROJECT\033[0m\n"
+
+            (cd image && ./project publish vendor $@)
             ;;
 
         cli | gui | desktop | hoobsd | sdk | portal | console | network | pam | image )
@@ -588,6 +600,8 @@ case $1 in
         PORTAL=$?
         include console $1
         CONSOLE=$?
+        include image $1
+        VENDOR=$?
         IMAGE=0
 
         if [[ "$1" == "stable" ]]; then
@@ -617,6 +631,10 @@ case $1 in
 
         if [ $CONSOLE == 1 ]; then
             build console
+        fi
+
+        if [ $VENDOR == 1 ]; then
+            build vendor
         fi
 
         if [ $GUI == 1 ]; then
@@ -649,6 +667,12 @@ case $1 in
 
         if [ $CONSOLE == 1 ]; then
             publish console $1
+
+            COMMIT=1
+        fi
+
+        if [ $VENDOR == 1 ]; then
+            publish vendor  $1
 
             COMMIT=1
         fi
