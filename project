@@ -315,6 +315,25 @@ build() {
     shift
 
     case $PROJECT in
+        package )
+            if [[ "$OSTYPE" == "darwin"* ]]; then
+                echo "the toolchain can not be ran on macos"
+
+                exit 1
+            fi
+
+            VERSION=$(./project version image)
+
+            mkdir -p image/
+
+            if [ -f .env ]; then
+                . .env
+            fi
+
+            eval "sshpass -p '$DARWIN_PASSWD' ssh $DARWIN_USER@$DARWIN_HOST 'source /etc/profile; (cd $PROJECT_PATH/image && ./project build package)'"
+            eval "sshpass -p '$DARWIN_PASSWD' scp $DARWIN_USER@$DARWIN_HOST:$PROJECT_PATH/image/builds/hoobs-v$VERSION-darwin.pkg ./image/builds/"
+            ;;
+
         desktop)
             if [[ "$OSTYPE" == "darwin"* ]]; then
                 echo "the toolchain can not be ran on macos"
@@ -657,6 +676,7 @@ case $1 in
             done
 
             if [ $PUBLISHED == 1 ]; then
+                build package
                 build image
                 publish image $1
             fi
