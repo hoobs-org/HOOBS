@@ -450,6 +450,11 @@ case $1 in
         ;;
 
     setup )
+        if [[ "$OSTYPE" == "darwin"* ]]; then
+            printf "\033[0;36mXcode certificates\033[0m\n"
+            security unlock-keychain login.keychain
+        fi
+
         if [[ "|$(command -v apt-get)|" != "||" ]]; then
             sudo apt-get update
             sudo apt-get install -y curl wget vmdb2 dosfstools f2fs-tools debootstrap binfmt-support time kpartx bmap-tools reprepro ca-certificates dpkg make git
@@ -500,6 +505,11 @@ case $1 in
         ;;
 
     push )
+        if [[ "$OSTYPE" == "darwin"* ]]; then
+            printf "\033[0;36mXcode certificates\033[0m\n"
+            security unlock-keychain login.keychain
+        fi
+
         git push
 
         push cli
@@ -517,6 +527,11 @@ case $1 in
         ;;
 
     pull )
+        if [[ "$OSTYPE" == "darwin"* ]]; then
+            printf "\033[0;36mXcode certificates\033[0m\n"
+            security unlock-keychain login.keychain
+        fi
+
         git pull
         npm install
 
