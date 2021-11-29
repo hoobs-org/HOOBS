@@ -235,11 +235,15 @@ pull() {
 
     case $1 in
         repo | security )
+            (cd $1 && git checkout .)
             (cd $1 && git pull)
             ;;
 
         * )
-            (cd $1 && git pull && git checkout blackwing)
+            (cd $1 && git checkout .)
+            (cd $1 && git checkout blackwing)
+            (cd $1 && git pull)
+            (cd $1 && git checkout blackwing)
             ;;
     esac
 }
