@@ -52,10 +52,8 @@ async function sync() {
     }
 
     if (existsSync(join(builds, "countries.json"))) unlinkSync(join(builds, "countries.json"));
-    if (existsSync(join(builds, "emojis.json"))) unlinkSync(join(builds, "emojis.json"));
 
     execLocal(`cp ${join(__dirname, "countries.json")} ${join(builds, "countries.json")}`);
-    execLocal(`cp ${join(__dirname, "emojis.json")} ${join(builds, "emojis.json")}`);
 }
 
 sync().finally(() => {
