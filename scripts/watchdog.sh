@@ -75,7 +75,7 @@ cat > /etc/watchdog.conf <<EOL
 
 # Uncomment this to use the watchdog device driver access "file".
 
-#watchdog-device                = /dev/watchdog
+watchdog-device                = /dev/watchdog
 
 # Uncomment and edit this line for hardware timeout values that differ
 # from the default of one minute.
