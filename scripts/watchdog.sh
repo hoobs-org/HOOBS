@@ -1,8 +1,11 @@
 #!/bin/bash
 
+# DO NOT USE THIS SCRIPT - ITS IN TESTING STATE AND MAY CORRUPT YOUR HOOBS DEVICE
+
+
 # HOW TO RUN THE SCRIPT
 
-wget -q -O - https://raw.githubusercontent.com/hoobs-org/HOOBS/main/scripts/watchdog.sh | sudo bash -
+# wget -q -O - https://raw.githubusercontent.com/hoobs-org/HOOBS/main/scripts/watchdog.sh | sudo bash -
 
 
 
