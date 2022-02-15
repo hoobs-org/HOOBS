@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# HOW TO RUN THE SCRIPT
+
+wget -q -O - https://raw.githubusercontent.com/hoobs-org/HOOBS/main/scripts/watchdog.sh | sudo bash -
+
+
+
 ##################################################################################################
 # hoobs-watchdog                                                                           #
 # Copyright (C) 2022 HOOBS                                                                       #
@@ -45,7 +51,7 @@ cat > /etc/watchdog.conf <<EOL
 
 EOL
 echo "----------------------------------------------------------------"
-echo "Watchdog installed - Setting up Service"
+echo "Watchdog installed"
 echo "----------------------------------------------------------------"
 echo "Setting up Service....."
 sudo systemctl enable watchdog
@@ -60,7 +66,7 @@ echo "use journalctl -u watchdog.service to display the log"
 echo "----------------------------------------------------------------"
 echo "use :(){ :|:& };: to crash the system on purpose"
 echo "----------------------------------------------------------------"
-echo "Getting Status Status"
+echo "Getting Status Status close with ctrl+c"
 echo "----------------------------------------------------------------"
 sudo systemctl -l status watchdog
 
