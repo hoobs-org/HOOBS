@@ -27,23 +27,16 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.                          #
 ##################################################################################################
 # Author: Bobby Slope     
-echo " "
-echo " "
-echo " "
-echo " "
+
 echo "----------------------------------------------------------------"
 echo "This script will Setup Watchdog for HOOBS"
 echo "----------------------------------------------------------------"
-echo " "
-echo " "
 echo " "
 echo "----------------------------------------------------------------"
 echo "This will automatically soft reboot your system if it got stuck"
 echo "----------------------------------------------------------------"
 echo "This Watchdog will prevent the need of reflash"
 echo "----------------------------------------------------------------"
-echo " "
-echo " "
 echo " "
 echo "Setup Watchdog...."
 sudo apt-get update --yes
@@ -67,13 +60,16 @@ echo "----------------------------------------------------------------"
 echo "Starting Starting"
 sudo systemctl start watchdog
 echo "----------------------------------------------------------------"
-echo "use journalctl -u watchdog.service to display the log"
+echo "use sudo journalctl -u watchdog.service to display the log"
 echo "----------------------------------------------------------------"
 echo "use :(){ :|:& };: to crash the system on purpose"
 echo "----------------------------------------------------------------"
 echo "Getting Status Status close with ctrl+c"
 echo "----------------------------------------------------------------"
-journalctl -u watchdog.service
+echo "----------------------------------------------------------------"
+echo "rebooting now"
+echo "----------------------------------------------------------------"
+sudo reboot
 
 
 
