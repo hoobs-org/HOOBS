@@ -1,750 +1,733 @@
 #!/bin/bash
 
 semver() {
-    if [[ $1 == $2 ]]; then
-        return 0
-    fi
+	if [[ $1 == $2 ]]; then
+		return 0
+	fi
 
-    local IFS=.
-    local i OLD=($1) NEW=($2)
+	local IFS=.
+	local i OLD=($1) NEW=($2)
 
-    for ((i=${#OLD[@]}; i<${#NEW[@]}; i++)); do
-        OLD[i]=0
-    done
+	for ((i=${#OLD[@]}; i<${#NEW[@]}; i++)); do
+		OLD[i]=0
+	done
 
-    for ((i=0; i<${#OLD[@]}; i++)); do
-        if [[ -z ${NEW[i]} ]]; then
-            NEW[i]=0
-        fi
+	for ((i=0; i<${#OLD[@]}; i++)); do
+		if [[ -z ${NEW[i]} ]]; then
+			NEW[i]=0
+		fi
 
-        if ((10#${OLD[i]} > 10#${NEW[i]})); then
-            return 0
-        fi
+		if ((10#${OLD[i]} > 10#${NEW[i]})); then
+			return 0
+		fi
 
-        if ((10#${OLD[i]} < 10#${NEW[i]})); then
-            return 1
-        fi
-    done
+		if ((10#${OLD[i]} < 10#${NEW[i]})); then
+			return 1
+		fi
+	done
 
-    return 0
+	return 0
 }
 
 include() {
-    case $1 in
-        gui | cli | hoobsd | portal | console )
-            case $2 in
-                stable | edge | bleeding )
-                    local PACKAGE=""
+	case $1 in
+		gui | cli | hoobsd | portal | console )
+			case $2 in
+				stable | edge | bleeding )
+					local PACKAGE=""
 
-                    case $1 in
-                        gui )
-                            PACKAGE="hoobs-gui"
-                            ;;
+					case $1 in
+						gui )
+							PACKAGE="hoobs-gui"
+							;;
 
-                        cli )
-                            PACKAGE="hoobs-cli"
-                            ;;
+						cli )
+							PACKAGE="hoobs-cli"
+							;;
 
-                        hoobsd )
-                            PACKAGE="hoobsd"
-                            ;;
+						hoobsd )
+							PACKAGE="hoobsd"
+							;;
 
-                        portal )
-                            PACKAGE="hbs-portal"
-                            ;;
+						portal )
+							PACKAGE="hbs-portal"
+							;;
 
-                        console )
-                            PACKAGE="helm"
-                            ;;
-                    esac
+						console )
+							PACKAGE="helm"
+							;;
+					esac
 
-                    local LINES=$(reprepro -b repo/debian list $2 $PACKAGE)
-                    local CURRENT="0"
-                    local DEVELOPMENT=$(cd $1 && ./project version)
-                    local COUNT=0
-                    local MOD=0
+					local LINES=$(reprepro -b repo/debian list $2 $PACKAGE)
+					local CURRENT="0"
+					local DEVELOPMENT=$(cd $1 && ./project version)
+					local COUNT=0
+					local MOD=0
 
-                    for LINE in $LINES; do
-                        MOD=$(expr $COUNT % 3)
+					for LINE in $LINES; do
+						MOD=$(expr $COUNT % 3)
 
-                        if [[ $(expr $COUNT % 3) == 2 ]]; then
-                            semver "0" "$LINE"
+						if [[ $(expr $COUNT % 3) == 2 ]]; then
+							semver "0" "$LINE"
 
-                            if [ $? == 1 ]; then
-                                CURRENT="$LINE"
-                            fi
-                        fi
+							if [ $? == 1 ]; then
+								CURRENT="$LINE"
+							fi
+						fi
 
-                        let "COUNT += 1"
-                    done
+						let "COUNT += 1"
+					done
 
-                    semver "$CURRENT" "$DEVELOPMENT"
+					semver "$CURRENT" "$DEVELOPMENT"
 
-                    if [ $? == 1 ]; then
-                        return 1
-                    fi
-                    ;;
-            esac
+					if [ $? == 1 ]; then
+						return 1
+					fi
+					;;
+			esac
 
-            ;;
+			;;
 
-        desktop | image )
-            case $2 in
-                stable | edge )
-                    local DEVELOPMENT=$(cd $1 && ./project version)
-                    local CURRENT=$(cd $1 && ./project version $2)
+		desktop | image )
+			case $2 in
+				stable | edge )
+					local DEVELOPMENT=$(cd $1 && ./project version)
+					local CURRENT=$(cd $1 && ./project version $2)
 
-                    semver "$CURRENT" "$DEVELOPMENT"
+					semver "$CURRENT" "$DEVELOPMENT"
 
-                    if [ $? == 1 ]; then
-                        return 1
-                    fi
+					if [ $? == 1 ]; then
+						return 1
+					fi
 
-                    ;;
-            esac
+					;;
+			esac
 
-            ;;
-    esac
+			;;
+	esac
 
-    return 0
+	return 0
 }
 
 repository() {
-    case $2 in
-        bleeding | edge | stable )
-            local DEVELOPMENT=$(cd $1 && ./project version)
-            local LINES=$(node image/publish repository $2)
-            local PACKAGE=""
-            local COUNT=0
+	case $2 in
+		bleeding | edge | stable )
+			local DEVELOPMENT=$(cd $1 && ./project version)
+			local LINES=$(node image/publish repository $2)
+			local PACKAGE=""
+			local COUNT=0
 
-            for LINE in $LINES; do
-                MOD=$(expr $COUNT % 3)
+			for LINE in $LINES; do
+				MOD=$(expr $COUNT % 3)
 
-                if [[ $(expr $COUNT % 2) == 0 ]]; then
-                    case $LINE in
-                        hoobs-gui )
-                            PACKAGE="gui"
-                            ;;
+				if [[ $(expr $COUNT % 2) == 0 ]]; then
+					case $LINE in
+						hoobs-gui )
+							PACKAGE="gui"
+							;;
 
-                        hoobs-cli )
-                            PACKAGE="cli"
-                            ;;
+						hoobs-cli )
+							PACKAGE="cli"
+							;;
 
-                        hoobsd )
-                            PACKAGE="hoobsd"
-                            ;;
+						hoobsd )
+							PACKAGE="hoobsd"
+							;;
 
-                        hbs-portal )
-                            PACKAGE="portal"
-                            ;;
+						hbs-portal )
+							PACKAGE="portal"
+							;;
 
-                        helm )
-                            PACKAGE="console"
-                            ;;
+						helm )
+							PACKAGE="console"
+							;;
 
-                        hbs-vendor )
-                            PACKAGE="vendor"
-                            ;;
-                    esac
-                fi
+						hbs-vendor )
+							PACKAGE="vendor"
+							;;
+					esac
+				fi
 
-                if [[ $(expr $COUNT % 2) == 1 && "$PACKAGE" == "$1" ]]; then
-                    semver "$LINE" "$DEVELOPMENT"
+				if [[ $(expr $COUNT % 2) == 1 && "$PACKAGE" == "$1" ]]; then
+					semver "$LINE" "$DEVELOPMENT"
 
-                    if [ $? == 0 ]; then
-                        return 1
-                    fi
-                fi
+					if [ $? == 0 ]; then
+						return 1
+					fi
+				fi
 
-                let "COUNT += 1"
-            done
-            ;;
-    esac
+				let "COUNT += 1"
+			done
+			;;
+	esac
 
-    return 0
+	return 0
 }
 
 published() {
-    repository gui $1
-    GUI_LIVE=$?
-    repository cli $1
-    CLI_LIVE=$?
-    repository hoobsd $1
-    HOOBSD_LIVE=$?
-    repository portal $1
-    PORTAL_LIVE=$?
-    repository console $1
-    CONSOLE_LIVE=$?
-    repository vendor $1
-    VENDOR_LIVE=$?
+	repository gui $1
+	GUI_LIVE=$?
+	repository cli $1
+	CLI_LIVE=$?
+	repository hoobsd $1
+	HOOBSD_LIVE=$?
+	repository portal $1
+	PORTAL_LIVE=$?
+	repository console $1
+	CONSOLE_LIVE=$?
+	repository vendor $1
+	VENDOR_LIVE=$?
 
-    if [[ $GUI_LIVE == 1 && $CLI_LIVE == 1 && $HOOBSD_LIVE == 1 && $PORTAL_LIVE == 1 && $CONSOLE_LIVE == 1 && VENDOR_LIVE == 1 ]]; then
-        return 1
-    fi
+	if [[ $GUI_LIVE == 1 && $CLI_LIVE == 1 && $HOOBSD_LIVE == 1 && $PORTAL_LIVE == 1 && $CONSOLE_LIVE == 1 && VENDOR_LIVE == 1 ]]; then
+		return 1
+	fi
 
-    return 0
+	return 0
 }
 
 edit() {
-    case $1 in
-        scripts )
-            nano ./project
-            ;;
+	case $1 in
+		scripts )
+			nano ./project
+			;;
 
-        * )
-            nano ./HOOBS.code-workspace
-            ;;
-    esac
+		* )
+			nano ./HOOBS.code-workspace
+			;;
+	esac
 }
 
 clone() {
-    printf "\033[0;36mCloning $1\033[0m\n"
+	printf "\033[0;36mCloning $1\033[0m\n"
 
-    case $1 in
-        console )
-            [[ -d console ]] || git clone https://github.com/hoobs-org/helm.git
-            [[ -d console ]] || mv helm console
-            (cd console && git checkout blackwing)
-            ;;
+	case $1 in
+		console )
+			[[ -d console ]] || git clone https://github.com/hoobs-org/helm.git
+			[[ -d console ]] || mv helm console
+			(cd console && git checkout blackwing)
+			;;
 
-        repo | security )
-            [[ -d $1 ]] || git clone https://github.com/hoobs-org/$1.git
-            ;;
+		repo | security )
+			[[ -d $1 ]] || git clone https://github.com/hoobs-org/$1.git
+			;;
 
-        * )
-            [[ -d $1 ]] || git clone https://github.com/hoobs-org/$1.git
-            (cd $1 && git checkout blackwing)
-            ;;
-    esac
+		* )
+			[[ -d $1 ]] || git clone https://github.com/hoobs-org/$1.git
+			(cd $1 && git checkout blackwing)
+			;;
+	esac
 }
 
 install() {
-    printf "\033[0;36mInstalling $1\033[0m\n"
-
-    (cd $1 && ../node_modules/.bin/yarn install --ignore-engines)
+	printf "\033[0;36mInstalling $1\033[0m\n"
+	(cd $1 && ../node_modules/.bin/yarn install --ignore-engines)
 }
 
 push() {
-    printf "\033[0;36mPushing $1\033[0m\n"
-
-    (cd $1 && git push)
+	printf "\033[0;36mPushing $1\033[0m\n"
+	(cd $1 && git push)
 }
 
 pull() {
-    printf "\033[0;36mPulling $1\033[0m\n"
+	printf "\033[0;36mPulling $1\033[0m\n"
 
-    case $1 in
-        repo | security )
-            (cd $1 && git checkout .)
-            (cd $1 && git pull)
-            ;;
+	case $1 in
+		repo | security )
+			(cd $1 && git checkout .)
+			(cd $1 && git pull)
+			;;
 
-        * )
-            (cd $1 && git checkout .)
-            (cd $1 && git checkout blackwing)
-            (cd $1 && git pull)
-            (cd $1 && git checkout blackwing)
-            ;;
-    esac
+		* )
+			(cd $1 && git checkout .)
+			(cd $1 && git checkout blackwing)
+			(cd $1 && git pull)
+			(cd $1 && git checkout blackwing)
+			;;
+	esac
 }
 
 yarn() {
-    COMMAND=$1
-    PROJECT=$2
+	COMMAND=$1
+	PROJECT=$2
 
-    shift
-    shift
+	shift
+	shift
 
-    case $PROJECT in
-        cli | console | desktop | gui | hoobsd | network | pam | portal | sdk | image )
-            case $COMMAND in
-                install )
-                    printf "\033[0;36mInstall $PROJECT\033[0m\n"
+	case $PROJECT in
+		cli | console | desktop | gui | hoobsd | network | pam | portal | sdk | image )
+			case $COMMAND in
+				install )
+					printf "\033[0;36mInstall $PROJECT\033[0m\n"
+					(cd $PROJECT && ../node_modules/.bin/yarn install)
+					;;
 
-                    (cd $PROJECT && ../node_modules/.bin/yarn install)
-                    ;;
+				add )
+					printf "\033[0;36mAdd $PROJECT\033[0m\n"
+					(cd $PROJECT && ../node_modules/.bin/yarn add $@)
+					;;
 
-                add )
-                    printf "\033[0;36mAdd $PROJECT\033[0m\n"
-
-                    (cd $PROJECT && ../node_modules/.bin/yarn add $@)
-                    ;;
-
-                remove )
-                    printf "\033[0;36mRemove $PROJECT\033[0m\n"
-
-                    (cd $PROJECT && ../node_modules/.bin/yarn remove $@)
-                    ;;
-            esac
-            ;;
-    esac
+				remove )
+					printf "\033[0;36mRemove $PROJECT\033[0m\n"
+					(cd $PROJECT && ../node_modules/.bin/yarn remove $@)
+					;;
+			esac
+			;;
+	esac
 }
 
 version() {
-    PROJECT=$1
+	PROJECT=$1
 
-    shift
+	shift
 
-    case $PROJECT in
-        cli | gui | desktop | hoobsd | sdk | portal | console | network | pam | image )
-            (cd $PROJECT && ./project version $@)
-            ;;
-    esac
+	case $PROJECT in
+		cli | gui | desktop | hoobsd | sdk | portal | console | network | pam | image )
+			(cd $PROJECT && ./project version $@)
+			;;
+	esac
 }
 
 lint() {
-    case $1 in
-        cli | gui | desktop | hoobsd | sdk | portal | console | network )
-            printf "\033[0;36mLint $1\033[0m\n"
-
-            (cd $1 && ./project lint)
-            ;;
-    esac
+	case $1 in
+		cli | gui | desktop | hoobsd | sdk | portal | console | network )
+			printf "\033[0;36mLint $1\033[0m\n"
+			(cd $1 && ./project lint)
+			;;
+	esac
 }
 
 debug() {
-    PROJECT=$1
+	PROJECT=$1
 
-    shift
+	shift
 
-    case $PROJECT in
-        hoobsd )
-            (cd cli && ./project debug -v)
-            (cd $PROJECT && ./project debug $@)
-            ;;
+	case $PROJECT in
+		hoobsd )
+			(cd cli && ./project debug -v)
+			(cd $PROJECT && ./project debug $@)
+			;;
 
-        cli | gui | hoobsd | portal | console )
-            (cd $PROJECT && ./project debug $@)
-            ;;
-    esac
+		cli | gui | hoobsd | portal | console )
+			(cd $PROJECT && ./project debug $@)
+			;;
+	esac
 }
 
 build() {
-    PROJECT=$1
+	PROJECT=$1
 
-    shift
+	shift
 
-    case $PROJECT in
-        package )
-            if [[ "$OSTYPE" == "darwin"* ]]; then
-                echo "the toolchain can not be ran on macos"
+	case $PROJECT in
+		package )
+			if [[ "$OSTYPE" == "darwin"* ]]; then
+				echo "the toolchain can not be ran on macos"
 
-                exit 1
-            fi
+				exit 1
+			fi
 
-            VERSION=$(./project version image)
+			VERSION=$(./project version image)
 
-            mkdir -p image/
+			mkdir -p image/
 
-            if [ -f .env ]; then
-                . .env
-            fi
+			if [ -f .env ]; then
+				. .env
+			fi
 
-            eval "sshpass -p '$DARWIN_PASSWD' ssh $DARWIN_USER@$DARWIN_HOST 'source /etc/profile; (cd $PROJECT_PATH/image && ./project build package)'"
-            eval "sshpass -p '$DARWIN_PASSWD' scp $DARWIN_USER@$DARWIN_HOST:$PROJECT_PATH/image/builds/hoobs-v$VERSION-darwin.pkg ./image/builds/"
-            ;;
+			eval "sshpass -p '$DARWIN_PASSWD' ssh $DARWIN_USER@$DARWIN_HOST 'source /etc/profile; (cd $PROJECT_PATH/image && ./project build package)'"
+			eval "sshpass -p '$DARWIN_PASSWD' scp $DARWIN_USER@$DARWIN_HOST:$PROJECT_PATH/image/output/images/hoobs-v$VERSION-darwin.pkg ./image/output/images/"
 
-        desktop)
-            if [[ "$OSTYPE" == "darwin"* ]]; then
-                echo "the toolchain can not be ran on macos"
+			printf "\033[0;36mImage output\033[0m\n"
+			ls -la image/output/image
+			;;
 
-                exit 1
-            fi
+		desktop)
+			if [[ "$OSTYPE" == "darwin"* ]]; then
+				echo "the toolchain can not be ran on macos"
 
-            VERSION=$(./project version desktop)
+				exit 1
+			fi
 
-            mkdir -p desktop/
+			VERSION=$(./project version desktop)
 
-            if [ -f .env ]; then
-                . .env
-            fi
+			mkdir -p desktop/
 
-            eval "sshpass -p '$DARWIN_PASSWD' ssh $DARWIN_USER@$DARWIN_HOST 'source /etc/profile; (cd $PROJECT_PATH/desktop && ./project build)'"
-            eval "sshpass -p '$DARWIN_PASSWD' scp $DARWIN_USER@$DARWIN_HOST:$PROJECT_PATH/desktop/builds/hoobs-desktop-v$VERSION.* ./desktop/builds/"
-            ;;
+			if [ -f .env ]; then
+				. .env
+			fi
 
-        localization )
-            printf "\033[0;36mBuild $PROJECT\033[0m\n"
+			eval "sshpass -p '$DARWIN_PASSWD' ssh $DARWIN_USER@$DARWIN_HOST 'source /etc/profile; (cd $PROJECT_PATH/desktop && ./project build)'"
+			eval "sshpass -p '$DARWIN_PASSWD' scp $DARWIN_USER@$DARWIN_HOST:$PROJECT_PATH/desktop/builds/hoobs-desktop-v$VERSION.* ./desktop/builds/"
+			;;
 
-            (cd lang && ./build)
-            ;;
+		localization )
+			printf "\033[0;36mBuild $PROJECT\033[0m\n"
+			(cd lang && ./build)
+			;;
 
-        vendor )
-            printf "\033[0;36mBuild $PROJECT\033[0m\n"
+		vendor )
+			printf "\033[0;36mBuild $PROJECT\033[0m\n"
+			(cd image && ./project build vendor)
+			;;
 
-            (cd image && ./project build vendor)
-            ;;
+		image )
+			printf "\033[0;36mBuild box images\033[0m\n"
+			(cd image && ./project build box)
 
-        image )
-            printf "\033[0;36mBuild box images\033[0m\n"
+			printf "\033[0;36mBuild sd card images\033[0m\n"
+			(cd image && ./project build card)
 
-            (cd image && ./project build box)
+			printf "\033[0;36mImage output\033[0m\n"
+			ls -la image/output/image
+			;;
 
-            printf "\033[0;36mBuild sd card images\033[0m\n"
-
-            (cd image && ./project build card)
-            ;;
-
-        cli | gui | hoobsd | sdk | portal | console | network | pam )
-            printf "\033[0;36mBuild $PROJECT\033[0m\n"
-
-            (cd $PROJECT && ./project build $@)
-            ;;
-    esac
+		cli | gui | hoobsd | sdk | portal | console | network | pam )
+			printf "\033[0;36mBuild $PROJECT\033[0m\n"
+			(cd $PROJECT && ./project build $@)
+			;;
+	esac
 }
 
 rebuild() {
-    case $1 in
-        image )
-            printf "\033[0;36mRebuild $1\033[0m\n"
-
-            (cd $1 && ./project rebuild)
-            ;;
-    esac
+	case $1 in
+		image )
+			printf "\033[0;36mRebuild $1\033[0m\n"
+			(cd $1 && ./project rebuild)
+			;;
+	esac
 }
 
 publish() {
-    if [[ "$OSTYPE" == "darwin"* ]]; then
-        echo "the toolchain can not be ran on macos"
+	if [[ "$OSTYPE" == "darwin"* ]]; then
+		echo "the toolchain can not be ran on macos"
+		exit 1
+	fi
 
-        exit 1
-    fi
+	PROJECT=$1
 
-    PROJECT=$1
+	shift
 
-    shift
+	case $PROJECT in
+		list )
+			list $@
+			;;
 
-    case $PROJECT in
-        list )
-            list $@
-            ;;
+		vendor )
+			printf "\033[0;36mPublish $PROJECT\033[0m\n"
+			(cd image && ./project publish vendor $@)
+			;;
 
-        vendor )
-            printf "\033[0;36mPublish $PROJECT\033[0m\n"
-
-            (cd image && ./project publish vendor $@)
-            ;;
-
-        cli | gui | desktop | hoobsd | sdk | portal | console | network | pam | image )
-            printf "\033[0;36mPublish $PROJECT\033[0m\n"
-
-            (cd $PROJECT && ./project publish $@)
-            ;;
-    esac
+		cli | gui | desktop | hoobsd | sdk | portal | console | network | pam | image )
+			printf "\033[0;36mPublish $PROJECT\033[0m\n"
+			(cd $PROJECT && ./project publish $@)
+			;;
+	esac
 }
 
 list() {
-    if [[ "$OSTYPE" == "darwin"* ]]; then
-        echo "the toolchain can not be ran on macos"
+	if [[ "$OSTYPE" == "darwin"* ]]; then
+		echo "the toolchain can not be ran on macos"
+		exit 1
+	fi
 
-        exit 1
-    fi
-
-    node image/publish published $@
+	node image/publish published $@
 }
 
 clean() {
-    case $1 in
-        cli | gui | desktop | hoobsd | sdk | portal | console | network | pam | image )
-            printf "\033[0;36mClean $1\033[0m\n"
-
-            (cd $1 && ./project clean)
-            ;;
-    esac 
+	case $1 in
+		cli | gui | desktop | hoobsd | sdk | portal | console | network | pam | image )
+			printf "\033[0;36mClean $1\033[0m\n"
+			(cd $1 && ./project clean)
+			;;
+	esac 
 }
 
 case $1 in
-    edit )
-        shift
-        edit $@
-        ;;
+	edit )
+		shift
+		edit $@
+		;;
 
-    setup )
-        if [[ "$OSTYPE" == "darwin"* ]]; then
-            printf "\033[0;36mXcode certificates\033[0m\n"
-            security unlock-keychain login.keychain
-        fi
+	setup )
+		if [[ "$OSTYPE" == "darwin"* ]]; then
+			printf "\033[0;36mXcode certificates\033[0m\n"
+			security unlock-keychain login.keychain
+		fi
 
-        if [[ "|$(command -v apt-get)|" != "||" ]]; then
-            sudo apt-get update
-            sudo apt-get install -y curl wget vmdb2 dosfstools f2fs-tools debootstrap binfmt-support time kpartx bmap-tools reprepro ca-certificates dpkg make git
-            sudo apt-get install -y gcc g++ gcc-arm-linux-gnueabi libc6-dev libc6-dev-armel-cross libc6-dev-armhf-cross libc6-dev-arm64-cross libc6-dev-i386-cross
-            sudo apt-get install -y qemu-utils qemu-user-static qemu-system-arm fakemachine libpam-dev dpkg-sig
+		if [[ "|$(command -v apt-get)|" != "||" ]]; then
+			sudo apt-get update
+			sudo apt-get install -y curl wget vmdb2 dosfstools f2fs-tools debootstrap binfmt-support time kpartx bmap-tools reprepro ca-certificates dpkg make git
+			sudo apt-get install -y gcc g++ gcc-arm-linux-gnueabi libc6-dev libc6-dev-armel-cross libc6-dev-armhf-cross libc6-dev-arm64-cross libc6-dev-i386-cross
+			sudo apt-get install -y qemu-utils qemu-user-static qemu-system-arm fakemachine libpam-dev dpkg-sig
 
-            git config --global pull.rebase false
-            git config --global credential.helper store
+			git config --global pull.rebase false
+			git config --global credential.helper store
 
-            curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | sudo gpg --dearmor | sudo tee /usr/share/keyrings/nodesource.gpg > /dev/null
-            curl -s https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo gpg --dearmor | sudo tee /usr/share/keyrings/github.gpg > /dev/null
+			curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | sudo gpg --dearmor | sudo tee /usr/share/keyrings/nodesource.gpg > /dev/null
+			curl -s https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo gpg --dearmor | sudo tee /usr/share/keyrings/github.gpg > /dev/null
 
-            echo "deb [signed-by=/usr/share/keyrings/nodesource.gpg] https://deb.nodesource.com/node_14.x bullseye main" | sudo tee /etc/apt/sources.list.d/nodesource.list
-            echo "deb-src [signed-by=/usr/share/keyrings/nodesource.gpg] https://deb.nodesource.com/node_14.x bullseye main" | sudo tee -a /etc/apt/sources.list.d/nodesource.list
-            echo "deb [arch=amd64 signed-by=/usr/share/keyrings/github.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github.list
+			echo "deb [signed-by=/usr/share/keyrings/nodesource.gpg] https://deb.nodesource.com/node_14.x bullseye main" | sudo tee /etc/apt/sources.list.d/nodesource.list
+			echo "deb-src [signed-by=/usr/share/keyrings/nodesource.gpg] https://deb.nodesource.com/node_14.x bullseye main" | sudo tee -a /etc/apt/sources.list.d/nodesource.list
+			echo "deb [arch=amd64 signed-by=/usr/share/keyrings/github.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github.list
 
-            sudo apt-get update
-            sudo apt-get install -y gh nodejs nano python3-minimal python3-pip sshpass
+			sudo apt-get update
+			sudo apt-get install -y gh nodejs nano python3-minimal python3-pip sshpass
 
-            gpg --import ./security/repo/publickey.gpg && gpg --allow-secret-key-import --import ./security/repo/privatekey.gpg
-            sudo gpg --import ./security/repo/publickey.gpg && sudo gpg --allow-secret-key-import --import ./security/repo/privatekey.gpg
-        fi
+			gpg --import ./security/repo/publickey.gpg && gpg --allow-secret-key-import --import ./security/repo/privatekey.gpg
+			sudo gpg --import ./security/repo/publickey.gpg && sudo gpg --allow-secret-key-import --import ./security/repo/privatekey.gpg
+		fi
 
-        npm install
+		npm install
 
-        clone cli
-        clone console
-        clone desktop
-        clone gui
-        clone hoobsd
-        clone image
-        clone network
-        clone pam
-        clone portal
-        clone repo
-        clone sdk
-        clone security
+		clone cli
+		clone console
+		clone desktop
+		clone gui
+		clone hoobsd
+		clone image
+		clone network
+		clone pam
+		clone portal
+		clone repo
+		clone sdk
+		clone security
 
-        install cli
-        install console
-        install desktop
-        install gui
-        install hoobsd
-        install network
-        install pam
-        install portal
-        install sdk
-        ;;
+		install cli
+		install console
+		install desktop
+		install gui
+		install hoobsd
+		install network
+		install pam
+		install portal
+		install sdk
+		;;
 
-    push )
-        if [[ "$OSTYPE" == "darwin"* ]]; then
-            printf "\033[0;36mXcode certificates\033[0m\n"
-            security unlock-keychain login.keychain
-        fi
+	push )
+		if [[ "$OSTYPE" == "darwin"* ]]; then
+			printf "\033[0;36mXcode certificates\033[0m\n"
+			security unlock-keychain login.keychain
+		fi
 
-        git push
+		git push
 
-        push cli
-        push console
-        push desktop
-        push gui
-        push hoobsd
-        push image
-        push network
-        push pam
-        push portal
-        push repo
-        push sdk
-        push security
-        ;;
+		push cli
+		push console
+		push desktop
+		push gui
+		push hoobsd
+		push image
+		push network
+		push pam
+		push portal
+		push repo
+		push sdk
+		push security
+		;;
 
-    pull )
-        if [[ "$OSTYPE" == "darwin"* ]]; then
-            printf "\033[0;36mXcode certificates\033[0m\n"
-            security unlock-keychain login.keychain
-        fi
+	pull )
+		if [[ "$OSTYPE" == "darwin"* ]]; then
+			printf "\033[0;36mXcode certificates\033[0m\n"
+			security unlock-keychain login.keychain
+		fi
 
-        git pull
-        npm install
+		git pull
+		npm install
 
-        pull cli
-        pull console
-        pull desktop
-        pull gui
-        pull hoobsd
-        pull image
-        pull network
-        pull pam
-        pull portal
-        pull repo
-        pull sdk
-        pull security
+		pull cli
+		pull console
+		pull desktop
+		pull gui
+		pull hoobsd
+		pull image
+		pull network
+		pull pam
+		pull portal
+		pull repo
+		pull sdk
+		pull security
 
-        install cli
-        install console
-        install desktop
-        install gui
-        install hoobsd
-        install network
-        install pam
-        install portal
-        install sdk
-        ;;
+		install cli
+		install console
+		install desktop
+		install gui
+		install hoobsd
+		install network
+		install pam
+		install portal
+		install sdk
+		;;
 
-    install )
-        shift
-        yarn install $@
-        ;;
+	install )
+		shift
+		yarn install $@
+		;;
 
-    add )
-        shift
-        yarn add $@
-        ;;
+	add )
+		shift
+		yarn add $@
+		;;
 
-    remove )
-        shift
-        yarn remove $@
-        ;;
+	remove )
+		shift
+		yarn remove $@
+		;;
 
-    cache )
-        shift
-        ./node_modules/.bin/yarn cache $@
-        ;;
+	cache )
+		shift
+		./node_modules/.bin/yarn cache $@
+		;;
 
-    version )
-        shift
-        version $@
-        ;;
+	version )
+		shift
+		version $@
+		;;
 
-    lint )
-        shift
-        lint $@
-        ;;
+	lint )
+		shift
+		lint $@
+		;;
 
-    debug )
-        shift
-        debug $@
-        ;;
+	debug )
+		shift
+		debug $@
+		;;
 
-    build )
-        shift
-        build $@
-        ;;
+	build )
+		shift
+		build $@
+		;;
 
-    rebuild )
-        shift
-        rebuild $@
-        ;;
+	rebuild )
+		shift
+		rebuild $@
+		;;
 
-    publish )
-        shift
-        publish $@
-        ;;
+	publish )
+		shift
+		publish $@
+		;;
 
-    release )
-        shift
+	release )
+		shift
 
-        COMMIT=0
-        include gui $1
-        GUI=$?
-        include desktop $1
-        DESKTOP=$?
-        include cli $1
-        CLI=$?
-        include hoobsd $1
-        HOOBSD=$?
-        include portal $1
-        PORTAL=$?
-        include console $1
-        CONSOLE=$?
-        include image $1
-        VENDOR=$?
-        IMAGE=0
+		COMMIT=0
+		include gui $1
+		GUI=$?
+		include desktop $1
+		DESKTOP=$?
+		include cli $1
+		CLI=$?
+		include hoobsd $1
+		HOOBSD=$?
+		include portal $1
+		PORTAL=$?
+		include console $1
+		CONSOLE=$?
+		include image $1
+		VENDOR=$?
+		IMAGE=0
 
-        if [[ "$1" == "stable" ]]; then
-            include image $1
-            IMAGE=$?
-        fi
+		if [[ "$1" == "stable" ]]; then
+			include image $1
+			IMAGE=$?
+		fi
 
-        if [ $GUI == 1 ]; then
-            build gui
-        fi
+		if [ $GUI == 1 ]; then
+			build gui
+		fi
 
-        if [ $DESKTOP == 1 ]; then
-            build desktop
-        fi
+		if [ $DESKTOP == 1 ]; then
+			build desktop
+		fi
 
-        if [ $CLI == 1 ]; then
-            build cli
-        fi
+		if [ $CLI == 1 ]; then
+			build cli
+		fi
 
-        if [ $HOOBSD == 1 ]; then
-            build hoobsd
-        fi
+		if [ $HOOBSD == 1 ]; then
+			build hoobsd
+		fi
 
-        if [ $PORTAL == 1 ]; then
-            build portal
-        fi
+		if [ $PORTAL == 1 ]; then
+			build portal
+		fi
 
-        if [ $CONSOLE == 1 ]; then
-            build console
-        fi
+		if [ $CONSOLE == 1 ]; then
+			build console
+		fi
 
-        if [ $VENDOR == 1 ]; then
-            build vendor
-        fi
+		if [ $VENDOR == 1 ]; then
+			build vendor
+		fi
 
-        if [ $GUI == 1 ]; then
-            publish gui $1
+		if [ $GUI == 1 ]; then
+			publish gui $1
+			COMMIT=1
+		fi
 
-            COMMIT=1
-        fi
+		if [ $DESKTOP == 1 ]; then
+			publish desktop $1
+		fi
 
-        if [ $DESKTOP == 1 ]; then
-            publish desktop $1
-        fi
+		if [ $CLI == 1 ]; then
+			publish cli $1
+			COMMIT=1
+		fi
 
-        if [ $CLI == 1 ]; then
-            publish cli $1
+		if [ $HOOBSD == 1 ]; then
+			publish hoobsd $1
+			COMMIT=1
+		fi
 
-            COMMIT=1
-        fi
+		if [ $PORTAL == 1 ]; then
+			publish portal $1
+			COMMIT=1
+		fi
 
-        if [ $HOOBSD == 1 ]; then
-            publish hoobsd $1
+		if [ $CONSOLE == 1 ]; then
+			publish console $1
+			COMMIT=1
+		fi
 
-            COMMIT=1
-        fi
+		if [ $VENDOR == 1 ]; then
+			publish vendor  $1
+			COMMIT=1
+		fi
 
-        if [ $PORTAL == 1 ]; then
-            publish portal $1
+		if [ $COMMIT == 1 ]; then
+			printf "\033[0;36mPush changes\033[0m\n"
 
-            COMMIT=1
-        fi
+			(cd repo && git pull)
+			(cd repo && git add --all)
+			(cd repo && git commit -m 'image push')
+			(cd repo && git push)
+		fi
 
-        if [ $CONSOLE == 1 ]; then
-            publish console $1
+		if [ $IMAGE == 1 ]; then
+			printf "\033[0;36mWaiting for $1 branch\033[0m\n"
 
-            COMMIT=1
-        fi
+			published $1
+			PUBLISHED=$?
 
-        if [ $VENDOR == 1 ]; then
-            publish vendor  $1
+			while [ $PUBLISHED == 0 ]; do
+				sleep 5m
 
-            COMMIT=1
-        fi
+				published $1
+				PUBLISHED=$?
+			done
 
-        if [ $COMMIT == 1 ]; then
-            printf "\033[0;36mPush changes\033[0m\n"
+			if [ $PUBLISHED == 1 ]; then
+				build package
+				build image
+				publish image $1
+			fi
+		fi
 
-            (cd repo && git pull)
-            (cd repo && git add --all)
-            (cd repo && git commit -m 'image push')
-            (cd repo && git push)
-        fi
+		;;
 
-        if [ $IMAGE == 1 ]; then
-            printf "\033[0;36mWaiting for $1 branch\033[0m\n"
-
-            published $1
-            PUBLISHED=$?
-
-            while [ $PUBLISHED == 0 ]; do
-                sleep 5m
-
-                published $1
-                PUBLISHED=$?
-            done
-
-            if [ $PUBLISHED == 1 ]; then
-                build package
-                build image
-                publish image $1
-            fi
-        fi
-
-        ;;
-
-    clean )
-        shift
-        clean $@
-        ;;
+	clean )
+		shift
+		clean $@
+		;;
 esac
