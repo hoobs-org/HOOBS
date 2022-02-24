@@ -21,11 +21,6 @@ Please let us know if you upgraded from a previous version.
 **Pervious version**
 If you upgraded, please let us know your previous version.
 
-**Did you orginally upgrade to HOOBS 3 from HOOBS 2.1.1?**
-Did you perform an upgrade from HOOBS 2.1.1? Some things are different.
-- [ ] Yes
-- [ ] No
-
 **What device are you using?**
 Please let us know the device you are running HOOBS on.
 - [ ] HOOBS Box
