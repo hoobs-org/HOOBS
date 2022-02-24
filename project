@@ -375,7 +375,17 @@ build() {
             (cd image && ./project build vendor)
             ;;
 
-        cli | gui | hoobsd | sdk | portal | console | network | pam | image )
+        image )
+            printf "\033[0;36mBuild box images\033[0m\n"
+
+            (cd image && ./project build box)
+
+            printf "\033[0;36mBuild sd card images\033[0m\n"
+
+            (cd image && ./project build card)
+            ;;
+
+        cli | gui | hoobsd | sdk | portal | console | network | pam )
             printf "\033[0;36mBuild $PROJECT\033[0m\n"
 
             (cd $PROJECT && ./project build $@)
