@@ -378,7 +378,7 @@ build() {
 			(cd image && ./project build card)
 
 			printf "\033[0;36mImage output\033[0m\n"
-			ls -la image/output/image
+			ls -la image/output/images
 			;;
 
 		cli | gui | hoobsd | sdk | portal | console | network | pam )
