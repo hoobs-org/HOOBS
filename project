@@ -358,6 +358,12 @@ build() {
 
 			eval "sshpass -p '$DARWIN_PASSWD' ssh $DARWIN_USER@$DARWIN_HOST 'source /etc/profile; (cd $PROJECT_PATH/desktop && ./project build)'"
 			eval "sshpass -p '$DARWIN_PASSWD' scp $DARWIN_USER@$DARWIN_HOST:$PROJECT_PATH/desktop/builds/hoobs-desktop-v$VERSION.* ./desktop/builds/"
+
+            mv desktop/builds/hoobs-desktop-v$VERSION.dmg desktop/builds/hoobs-desktop-v$VERSION-darwin.dmg
+            mv desktop/builds/hoobs-desktop-v$VERSION.exe desktop/builds/hoobs-desktop-v$VERSION-win.exe
+
+            (cd desktop/builds/ && openssl sha256 hoobs-desktop-v$VERSION-darwin.dmg | awk '{print $2}' > hoobs-desktop-v$VERSION-darwin.sha265)
+            (cd desktop/builds/ && openssl sha256 hoobs-desktop-v$VERSION-win.exe | awk '{print $2}' > hoobs-desktop-v$VERSION-win.sha265)
 			;;
 
 		localization )
@@ -372,10 +378,13 @@ build() {
 
 		image )
 			printf "\033[0;36mBuild box images\033[0m\n"
-			(cd image && ./project build box)
+			(cd image && ./project build box $@)
 
 			printf "\033[0;36mBuild sd card images\033[0m\n"
-			(cd image && ./project build card)
+			(cd image && ./project build card $@)
+
+			printf "\033[0;36mBuild darwin package\033[0m\n"
+			build package
 
 			printf "\033[0;36mImage output\033[0m\n"
 			ls -la image/output/images
