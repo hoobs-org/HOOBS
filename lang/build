@@ -932,6 +932,10 @@ const {
     mdiEyeOff,
     mdiWidgets,
     mdiSprinklerVariant,
+    mdiWindowMinimize,
+    mdiWindowMaximize,
+    mdiWindowRestore,
+    mdiArrowExpand,
     mdiTelevisionClassic,
 } = require("@mdi/js");
 
@@ -1912,6 +1916,10 @@ async function sync() {
         "eye-off": mdiEyeOff,
         widgets: mdiWidgets,
         sprinkler: mdiSprinklerVariant,
+        minimize: mdiWindowMinimize,
+        maximize: mdiWindowMaximize,
+        restore: mdiWindowRestore,
+        "mac-restore": mdiArrowExpand,
         television: mdiTelevisionClassic,
     };
 
