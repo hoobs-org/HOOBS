@@ -337,8 +337,7 @@ build() {
 			eval "sshpass -p '$DARWIN_PASSWD' ssh $DARWIN_USER@$DARWIN_HOST 'source /etc/profile; (cd $PROJECT_PATH/image && ./project build package)'"
 			eval "sshpass -p '$DARWIN_PASSWD' scp $DARWIN_USER@$DARWIN_HOST:$PROJECT_PATH/image/output/images/hoobs-v$VERSION-darwin.pkg ./image/output/images/"
 
-			printf "\033[0;36mImage output\033[0m\n"
-			ls -la image/output/image
+			(cd image/output/images/ && openssl sha256 hoobs-v$VERSION-darwin.pkg | awk '{print $2}' > hoobs-v$VERSION-darwin.sha265)
 			;;
 
 		desktop)
