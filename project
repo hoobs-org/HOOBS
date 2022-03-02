@@ -379,9 +379,6 @@ build() {
 		image )
 			case $1 in
 				edge )
-					printf "\033[0;36mBuild box images\033[0m\n"
-					(cd image && ./project build box edge)
-
 					printf "\033[0;36mBuild sd card images\033[0m\n"
 					(cd image && ./project build card edge)
 					;;
