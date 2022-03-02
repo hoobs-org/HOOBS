@@ -434,7 +434,12 @@ publish() {
 			(cd image && ./project publish vendor $@)
 			;;
 
-		cli | gui | desktop | hoobsd | sdk | portal | console | network | pam | image )
+		image )
+			printf "\033[0;36mPublish $PROJECT\033[0m\n"
+			(cd image && ./project publish image $@)
+			;;
+
+		cli | gui | desktop | hoobsd | sdk | portal | console | network | pam )
 			printf "\033[0;36mPublish $PROJECT\033[0m\n"
 			(cd $PROJECT && ./project publish $@)
 			;;
